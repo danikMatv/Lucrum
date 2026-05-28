@@ -1,0 +1,149 @@
+{
+  "brand": {
+    "name": "LUCRUM"
+  },
+  "nav": {
+    "learn": "Apprendre",
+    "tools": "Outils",
+    "pricing": "Tarifs"
+  },
+  "buttons": {
+    "login": "Connexion",
+    "getStarted": "Commencer",
+    "backHome": "Accueil"
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Outils d'investissement pour débutants",
+      "headlineLineOne": "Investissez mieux.",
+      "headlineLineTwo": "Créez du patrimoine.",
+      "subtext": "Planifiez votre prochain mouvement avec des calculateurs simples, des estimations de juste valeur et des analyses d'actions pensées pour les investisseurs long terme.",
+      "primaryCta": "Explorer les outils",
+      "secondaryCta": "Apprendre",
+      "chartLabel": "Mini graphique de croissance du portefeuille",
+      "pills": {
+        "free": "Calculateurs gratuits",
+        "beginner": "Pensé pour débuter",
+        "bilingual": "EN et FR"
+      },
+      "portfolio": {
+        "label": "Valeur du portefeuille",
+        "value": "128 430 $",
+        "change": "+12,8 %"
+      },
+      "stats": {
+        "fairValue": {
+          "label": "Juste valeur",
+          "value": "18 % potentiel"
+        },
+        "dca": {
+          "label": "DCA",
+          "value": "500 $/mois"
+        },
+        "fire": {
+          "label": "FIRE",
+          "value": "14 ans"
+        },
+        "invest": {
+          "label": "Invest Calc",
+          "value": "7,2 % CAGR"
+        }
+      }
+    },
+    "trusted": {
+      "label": "Inspiré par les données de",
+      "logos": {
+        "yahoo": "Yahoo Finance",
+        "bloomberg": "Bloomberg",
+        "seekingAlpha": "Seeking Alpha",
+        "marketWatch": "MarketWatch",
+        "investopedia": "Investopedia"
+      }
+    },
+    "tools": {
+      "kicker": "Boîte à outils gratuite",
+      "title": "Choisissez le bon calculateur.",
+      "description": "Modélisez vos objectifs, comparez des stratégies et comprenez les actions sans diplôme en finance.",
+      "freeBadge": "Gratuit",
+      "arrow": "Ouvrir ->",
+      "items": {
+        "investCalc": {
+          "title": "Invest Calc",
+          "description": "Estimez la valeur future d'un portefeuille selon les versements, rendements et horizons."
+        },
+        "fire": {
+          "title": "FIRE",
+          "description": "Trouvez le taux d'épargne et le calendrier vers l'indépendance financière."
+        },
+        "dca": {
+          "title": "DCA",
+          "description": "Simulez des investissements réguliers et comparez les effets du timing."
+        },
+        "fairPrice": {
+          "title": "Juste valeur",
+          "description": "Lancez une estimation de valeur accessible avec fondamentaux et hypothèses."
+        },
+        "stock": {
+          "title": "Analyse d'action",
+          "description": "Recherchez un ticker et consultez les métriques clés dans une vue claire."
+        }
+      }
+    }
+  },
+  "pages": {
+    "placeholder": {
+      "kicker": "Espace Lucrum"
+    },
+    "learn": {
+      "title": "Apprendre",
+      "description": "Les guides pédagogiques et bases de l'investissement vivront ici."
+    },
+    "tools": {
+      "title": "Outils",
+      "description": "Le répertoire complet des calculateurs vivra ici."
+    },
+    "investCalc": {
+      "title": "Calculateur d'investissement",
+      "description": "Un espace réservé pour le calculateur de valeur future."
+    },
+    "fire": {
+      "title": "Calculateur FIRE",
+      "description": "Un espace réservé pour le calculateur d'indépendance financière."
+    },
+    "dca": {
+      "title": "Simulateur DCA",
+      "description": "Un espace réservé pour le simulateur d'investissement programmé."
+    },
+    "fairPrice": {
+      "title": "Juste valeur",
+      "description": "Un espace réservé pour le calculateur de juste valeur et DCF."
+    },
+    "stock": {
+      "title": "Analyse d'action",
+      "description": "Un espace réservé pour l'analyse par ticker."
+    },
+    "dashboard": {
+      "title": "Tableau de bord",
+      "description": "Un espace réservé pour le tableau de bord protégé."
+    },
+    "pricing": {
+      "title": "Tarifs",
+      "description": "Les options d'abonnement vivront ici."
+    },
+    "login": {
+      "title": "Connexion",
+      "description": "Un espace réservé pour la connexion."
+    },
+    "register": {
+      "title": "Créer un compte",
+      "description": "Un espace réservé pour l'inscription."
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "Un espace réservé pour l'espace administrateur."
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 Lucrum. Tous droits réservés."
+  }
+}

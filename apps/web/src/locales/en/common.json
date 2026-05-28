@@ -1,0 +1,149 @@
+{
+  "brand": {
+    "name": "LUCRUM"
+  },
+  "nav": {
+    "learn": "Learn",
+    "tools": "Tools",
+    "pricing": "Pricing"
+  },
+  "buttons": {
+    "login": "Log in",
+    "getStarted": "Get Started",
+    "backHome": "Back home"
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Beginner-friendly investment tools",
+      "headlineLineOne": "Invest smarter.",
+      "headlineLineTwo": "Grow wealth.",
+      "subtext": "Plan your next move with simple calculators, fair value checks, and stock insights built for long-term investors.",
+      "primaryCta": "Explore tools",
+      "secondaryCta": "Start learning",
+      "chartLabel": "Portfolio growth mini chart",
+      "pills": {
+        "free": "Free calculators",
+        "beginner": "Beginner focused",
+        "bilingual": "EN and FR"
+      },
+      "portfolio": {
+        "label": "Portfolio value",
+        "value": "$128,430",
+        "change": "+12.8%"
+      },
+      "stats": {
+        "fairValue": {
+          "label": "Fair Value",
+          "value": "18% upside"
+        },
+        "dca": {
+          "label": "DCA",
+          "value": "$500/mo"
+        },
+        "fire": {
+          "label": "FIRE",
+          "value": "14 years"
+        },
+        "invest": {
+          "label": "Invest Calc",
+          "value": "7.2% CAGR"
+        }
+      }
+    },
+    "trusted": {
+      "label": "Inspired by data from",
+      "logos": {
+        "yahoo": "Yahoo Finance",
+        "bloomberg": "Bloomberg",
+        "seekingAlpha": "Seeking Alpha",
+        "marketWatch": "MarketWatch",
+        "investopedia": "Investopedia"
+      }
+    },
+    "tools": {
+      "kicker": "Free toolkit",
+      "title": "Choose the right calculator.",
+      "description": "Model goals, compare strategies, and understand stocks without needing a finance degree.",
+      "freeBadge": "Free",
+      "arrow": "Open ->",
+      "items": {
+        "investCalc": {
+          "title": "Invest Calc",
+          "description": "Estimate future portfolio value from deposits, returns, and time horizon."
+        },
+        "fire": {
+          "title": "FIRE",
+          "description": "Find the savings rate and timeline that can support financial independence."
+        },
+        "dca": {
+          "title": "DCA",
+          "description": "Simulate recurring investments and compare market timing outcomes."
+        },
+        "fairPrice": {
+          "title": "Fair Price",
+          "description": "Run a beginner-friendly fair value check using fundamentals and assumptions."
+        },
+        "stock": {
+          "title": "Stock Analysis",
+          "description": "Look up a ticker and review key company metrics in one focused view."
+        }
+      }
+    }
+  },
+  "pages": {
+    "placeholder": {
+      "kicker": "Lucrum workspace"
+    },
+    "learn": {
+      "title": "Learn",
+      "description": "Educational guides and investing basics will live here."
+    },
+    "tools": {
+      "title": "Tools",
+      "description": "The complete calculator directory will live here."
+    },
+    "investCalc": {
+      "title": "Invest Calculator",
+      "description": "A future value calculator placeholder for recurring investments."
+    },
+    "fire": {
+      "title": "FIRE Calculator",
+      "description": "A financial independence calculator placeholder."
+    },
+    "dca": {
+      "title": "DCA Simulator",
+      "description": "A dollar-cost averaging simulator placeholder."
+    },
+    "fairPrice": {
+      "title": "Fair Price",
+      "description": "A fair value and DCF calculator placeholder."
+    },
+    "stock": {
+      "title": "Stock Analysis",
+      "description": "A ticker analysis placeholder."
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "description": "The protected user dashboard placeholder."
+    },
+    "pricing": {
+      "title": "Pricing",
+      "description": "Subscription options will live here."
+    },
+    "login": {
+      "title": "Log in",
+      "description": "The authentication login placeholder."
+    },
+    "register": {
+      "title": "Create account",
+      "description": "The registration placeholder."
+    },
+    "admin": {
+      "title": "Admin",
+      "description": "The admin workspace placeholder."
+    }
+  },
+  "footer": {
+    "copyright": "© 2026 Lucrum. All rights reserved."
+  }
+}

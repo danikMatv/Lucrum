@@ -1,0 +1,12 @@
+name = "lucrum-worker"
+main = "src/index.ts"
+compatibility_date = "2025-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "lucrum-db"
+database_id = "placeholder"
+
+[[kv_namespaces]]
+binding = "KV"
+id = "placeholder"
