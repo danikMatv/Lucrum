@@ -1,9 +1,13 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { NumberInput, SegmentedControl, SliderInput, TextInput } from '../components/calculators/CalculatorControls.tsx'
+import { NumberInput, SegmentedControl, SliderInput } from '../components/calculators/CalculatorControls.tsx'
+import {
+  CompanySearchInput,
+} from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { calculateFairPrice, type MarginOfSafety } from '../utils/fairPrice.ts'
+import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -42,7 +46,13 @@ export const FairPricePage = () => {
 
   const sidebar = (
     <>
-      <TextInput id="fair-ticker" label={t('tools.fairPrice.inputs.ticker')} value={ticker} onChange={setTicker} />
+      <CompanySearchInput
+        id="fair-ticker"
+        label={t('tools.fairPrice.inputs.ticker')}
+        value={ticker}
+        onChange={setTicker}
+        onSelect={(company) => setTicker(company.ticker)}
+      />
       <NumberInput id="fair-eps" label={t('tools.fairPrice.inputs.eps')} value={eps} min={0} step={0.1} onChange={setEps} />
       <NumberInput id="fair-market-price" label={t('tools.fairPrice.inputs.marketPrice')} value={marketPrice} min={0} step={1} onChange={setMarketPrice} />
       <SliderInput id="fair-growth" label={t('tools.fairPrice.inputs.growth')} value={growthRate} min={0} max={40} step={0.5} suffix="%" onChange={setGrowthRate} />
@@ -65,7 +75,7 @@ export const FairPricePage = () => {
     <SidebarLayout title={t('tools.fairPrice.title')} description={t('tools.fairPrice.description')} sidebar={sidebar}>
       <div className="grid gap-5">
         <div className="grid gap-4 lg:grid-cols-2">
-          <HeroMetric label={t('tools.fairPrice.hero.fairPrice', { ticker: ticker.toUpperCase() })} value={currency.format(result.fairPrice)} />
+          <HeroMetric label={t('tools.fairPrice.hero.fairPrice', { ticker: normalizeCompanyQuery(ticker) })} value={currency.format(result.fairPrice)} />
           <HeroMetric label={t('tools.fairPrice.hero.safeBuy')} value={currency.format(result.safeBuyPrice)} tone="success" />
         </div>
 

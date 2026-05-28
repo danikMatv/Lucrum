@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { ChangeEvent } from 'react'
 
 interface NumberInputProps {
@@ -16,6 +18,11 @@ interface TextInputProps {
   label: string
   value: string
   onChange: (value: string) => void
+}
+
+interface MonthYearInputProps extends TextInputProps {
+  minYear?: number
+  maxYear?: number
 }
 
 interface SelectOption<T extends string | number> {
@@ -137,6 +144,70 @@ export const MonthInput = ({ id, label, value, onChange }: TextInputProps) => (
     />
   </label>
 )
+
+export const MonthYearInput = ({
+  id,
+  label,
+  value,
+  onChange,
+  minYear = 1980,
+  maxYear = new Date().getFullYear(),
+}: MonthYearInputProps) => {
+  const { i18n } = useTranslation('common')
+  const [selectedYear, selectedMonth] = value.split('-')
+  const safeYear = Number(selectedYear) || maxYear
+  const safeMonth = Number(selectedMonth) || 1
+  const monthOptions = useMemo(
+    () =>
+      Array.from({ length: 12 }, (_, index) => ({
+        value: String(index + 1).padStart(2, '0'),
+        label: new Intl.DateTimeFormat(i18n.resolvedLanguage ?? i18n.language, {
+          month: 'long',
+        }).format(new Date(2026, index, 1)),
+      })),
+    [i18n.language, i18n.resolvedLanguage],
+  )
+  const yearOptions = useMemo(
+    () =>
+      Array.from({ length: maxYear - minYear + 1 }, (_, index) => maxYear - index),
+    [maxYear, minYear],
+  )
+
+  const handleMonthChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    onChange(`${safeYear}-${event.target.value}`)
+  }
+
+  const handleYearChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    onChange(`${event.target.value}-${String(safeMonth).padStart(2, '0')}`)
+  }
+
+  return (
+    <fieldset id={id} className="grid gap-2">
+      <legend className="text-sm font-medium text-text-muted">{label}</legend>
+      <div className="grid grid-cols-[1fr_88px] gap-2">
+        <select
+          aria-label={label}
+          value={String(safeMonth).padStart(2, '0')}
+          onChange={handleMonthChange}
+          className={controlClass}
+        >
+          {monthOptions.map((month) => (
+            <option key={month.value} value={month.value}>
+              {month.label}
+            </option>
+          ))}
+        </select>
+        <select value={safeYear} onChange={handleYearChange} className={controlClass}>
+          {yearOptions.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </select>
+      </div>
+    </fieldset>
+  )
+}
 
 export const SelectInput = <T extends string | number>({
   id,

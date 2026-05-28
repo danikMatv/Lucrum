@@ -10,12 +10,15 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { MonthInput, NumberInput, TextInput } from '../components/calculators/CalculatorControls.tsx'
+import { MonthYearInput, NumberInput } from '../components/calculators/CalculatorControls.tsx'
+import {
+  CompanySearchInput,
+} from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { calculateDcaSimulation, type DcaInput } from '../utils/dca.ts'
 import { toolsService } from '../services/toolsService.ts'
-import { parseApiError } from '../utils/errorHandler.ts'
+import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import type { DcaResult as ApiDcaResult } from '../types/api.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
@@ -38,27 +41,6 @@ const monthYearsAgo = (yearsAgo: number) => {
   const date = new Date()
   date.setFullYear(date.getFullYear() - yearsAgo)
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
-}
-
-const tickerAliases: Record<string, string> = {
-  APPLE: 'AAPL',
-  'APPLE INC': 'AAPL',
-  'APPLE INC.': 'AAPL',
-  MICROSOFT: 'MSFT',
-  AMAZON: 'AMZN',
-  GOOGLE: 'GOOGL',
-  ALPHABET: 'GOOGL',
-  META: 'META',
-  FACEBOOK: 'META',
-  TESLA: 'TSLA',
-  NVIDIA: 'NVDA',
-  'S&P 500': 'SPY',
-  SP500: 'SPY',
-}
-
-const normalizeTicker = (value: string) => {
-  const normalized = value.trim().toUpperCase()
-  return tickerAliases[normalized] ?? normalized.replaceAll(' ', '')
 }
 
 const mapApiDcaResult = (result: ApiDcaResult, inflationPercent: number) => {
@@ -99,7 +81,6 @@ export const DcaPage = () => {
     inflationPercent: 2.5,
   })
   const [apiResult, setApiResult] = useState<ReturnType<typeof mapApiDcaResult> | null>(null)
-  const [fallbackNotice, setFallbackNotice] = useState('')
 
   const fallbackResult = useMemo(() => calculateDcaSimulation(submittedInput), [submittedInput])
   const result = apiResult ?? fallbackResult
@@ -109,16 +90,14 @@ export const DcaPage = () => {
       toolsService.getDCA(input.ticker, input.startDate, input.monthlyInvestment),
     onSuccess: (data, input) => {
       setApiResult(mapApiDcaResult(data, input.inflationPercent))
-      setFallbackNotice('')
     },
-    onError: (error) => {
+    onError: () => {
       setApiResult(null)
-      setFallbackNotice(parseApiError(error, t('errors.generic')))
     },
   })
 
   const handleCalculate = () => {
-    const normalizedTicker = normalizeTicker(ticker)
+    const normalizedTicker = normalizeCompanyQuery(ticker)
     const nextInput = {
       ticker: normalizedTicker,
       monthlyInvestment,
@@ -132,9 +111,9 @@ export const DcaPage = () => {
 
   const sidebar = (
     <>
-      <TextInput id="dca-ticker" label={t('tools.dca.inputs.ticker')} value={ticker} onChange={setTicker} />
+      <CompanySearchInput id="dca-ticker" label={t('tools.dca.inputs.ticker')} value={ticker} onChange={setTicker} />
       <NumberInput id="dca-monthly" label={t('tools.dca.inputs.monthly')} value={monthlyInvestment} min={0} step={50} onChange={setMonthlyInvestment} />
-      <MonthInput id="dca-start" label={t('tools.dca.inputs.startDate')} value={startDate} onChange={setStartDate} />
+      <MonthYearInput id="dca-start" label={t('tools.dca.inputs.startDate')} value={startDate} minYear={1980} onChange={setStartDate} />
       <NumberInput id="dca-inflation" label={t('tools.dca.inputs.inflation')} value={inflation} min={0} max={15} step={0.1} suffix="%" onChange={setInflation} />
       <button
         type="button"
@@ -150,24 +129,6 @@ export const DcaPage = () => {
   return (
     <SidebarLayout title={t('tools.dca.title')} description={t('tools.dca.description')} sidebar={sidebar}>
       <div className="grid gap-5">
-        {fallbackNotice ? (
-          <Panel>
-            <p className="text-sm font-semibold uppercase text-primary">{t('tools.dca.notice.title')}</p>
-            <p className="mt-3 text-sm leading-6 text-text-muted">
-              {t('tools.dca.notice.fallback', { message: fallbackNotice })}
-            </p>
-          </Panel>
-        ) : null}
-
-        {result.source === 'mock' && !fallbackNotice ? (
-          <Panel>
-            <p className="text-sm font-semibold uppercase text-primary">{t('tools.dca.notice.title')}</p>
-            <p className="mt-3 text-sm leading-6 text-text-muted">
-              {t('tools.dca.notice.backendFallback')}
-            </p>
-          </Panel>
-        ) : null}
-
         <HeroMetric
           label={t('tools.dca.hero.value', { ticker: result.ticker })}
           value={currency.format(result.portfolioValue)}

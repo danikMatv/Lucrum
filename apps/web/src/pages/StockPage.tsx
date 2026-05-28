@@ -10,11 +10,13 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { TextInput } from '../components/calculators/CalculatorControls.tsx'
+import {
+  CompanySearchInput,
+} from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { companiesService } from '../services/companiesService.ts'
-import { parseApiError } from '../utils/errorHandler.ts'
+import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import {
   getMockStockAnalysis,
   type StockAnalysisResult,
@@ -44,7 +46,6 @@ interface StockApiPayload {
   ticker: string
   company: Company | null
   fundamentals: CompanyFundamentals | null
-  warning: string
 }
 
 const verdictFromMetrics = (metrics: StockMetricSnapshot): StockAnalysisResult['verdict'] =>
@@ -100,12 +101,10 @@ export const StockPage = () => {
   const { t } = useTranslation('common')
   const [tickerInput, setTickerInput] = useState('AAPL')
   const [stock, setStock] = useState<StockAnalysisResult>(() => getMockStockAnalysis('AAPL'))
-  const [errorMessage, setErrorMessage] = useState('')
-  const [fallbackNotice, setFallbackNotice] = useState('')
 
   const stockMutation = useMutation({
     mutationFn: async (ticker: string): Promise<StockApiPayload> => {
-      const normalizedTicker = ticker.trim().toUpperCase() || 'AAPL'
+      const normalizedTicker = normalizeCompanyQuery(ticker) || 'AAPL'
       const [companyResult, fundamentalsResult] = await Promise.allSettled([
         companiesService.getByTicker(normalizedTicker),
         companiesService.getFundamentals(normalizedTicker),
@@ -121,31 +120,20 @@ export const StockPage = () => {
           : new Error(t('tools.stock.notice.notFound'))
       }
 
-      const warning =
-        companyResult.status === 'rejected'
-          ? parseApiError(companyResult.reason, t('errors.generic'))
-          : fundamentalsResult.status === 'rejected'
-            ? parseApiError(fundamentalsResult.reason, t('errors.generic'))
-            : ''
-
       return {
         ticker: normalizedTicker,
         company,
         fundamentals,
-        warning,
       }
     },
-    onSuccess: ({ ticker, company, fundamentals, warning }) => {
+    onSuccess: ({ ticker, company, fundamentals }) => {
       setStock(mergeStockData(ticker, company, fundamentals))
-      setErrorMessage('')
-      setFallbackNotice(warning)
+      setTickerInput(ticker)
     },
-    onError: (error) => {
-      const normalizedTicker = tickerInput.trim().toUpperCase() || 'AAPL'
-      const message = parseApiError(error, t('errors.generic'))
+    onError: () => {
+      const normalizedTicker = normalizeCompanyQuery(tickerInput) || 'AAPL'
       setStock(getMockStockAnalysis(normalizedTicker))
-      setErrorMessage(message)
-      setFallbackNotice(message)
+      setTickerInput(normalizedTicker)
     },
   })
 
@@ -157,7 +145,7 @@ export const StockPage = () => {
 
   const sidebar = (
     <>
-      <TextInput id="stock-ticker" label={t('tools.stock.inputs.ticker')} value={tickerInput} onChange={setTickerInput} />
+      <CompanySearchInput id="stock-ticker" label={t('tools.stock.inputs.ticker')} value={tickerInput} onChange={setTickerInput} />
       <button
         type="button"
         onClick={handleAnalyze}
@@ -172,22 +160,6 @@ export const StockPage = () => {
   return (
     <SidebarLayout title={t('tools.stock.title')} description={t('tools.stock.description')} sidebar={sidebar}>
       <div className="grid gap-5">
-        {errorMessage ? (
-          <Panel>
-            <p className="text-sm font-semibold uppercase text-danger">{t('tools.stock.notice.error')}</p>
-            <p className="mt-3 text-sm leading-6 text-text-muted">{errorMessage}</p>
-          </Panel>
-        ) : null}
-
-        {fallbackNotice ? (
-          <Panel>
-            <p className="text-sm font-semibold uppercase text-primary">{t('tools.stock.notice.title')}</p>
-            <p className="mt-3 text-sm leading-6 text-text-muted">
-              {t('tools.stock.notice.fallback', { message: fallbackNotice })}
-            </p>
-          </Panel>
-        ) : null}
-
         <Panel>
           <p className="text-sm font-semibold uppercase text-primary">{stock.exchange} · {stock.sector}</p>
           <h2 className="mt-2 font-heading text-4xl font-bold text-text-primary">{stock.name}</h2>

@@ -116,7 +116,7 @@
     },
     "dca": {
       "title": "DCA Simulator",
-      "description": "Simulate recurring monthly investments with live history when available and a stable mock fallback.",
+      "description": "Simulate recurring monthly investments using historical market prices when available.",
       "inputs": {
         "ticker": "Ticker",
         "monthly": "Monthly investment",
@@ -125,7 +125,7 @@
       },
       "hero": {
         "value": "{{ticker}} portfolio value",
-        "helper": "Uses backend market history when available, with generated prices as a fallback."
+        "helper": "Uses historical market prices when available."
       },
       "stats": {
         "invested": "Invested",
@@ -145,9 +145,9 @@
         "months": "Months invested"
       },
       "notice": {
-        "title": "Mock fallback active",
-        "fallback": "Live history is unavailable, so this run uses deterministic mock prices. Reason: {{message}}",
-        "backendFallback": "Live market history is unavailable right now, so this run uses deterministic mock prices from the backend."
+        "title": "Estimated data active",
+        "fallback": "Live history is unavailable, so this run uses estimated prices.",
+        "backendFallback": "Live market history is unavailable right now, so this run uses estimated prices."
       }
     },
     "fairPrice": {
@@ -202,7 +202,7 @@
     },
     "stock": {
       "title": "Stock Analysis",
-      "description": "Review company fundamentals from the backend with deterministic mock fallbacks for unavailable fields.",
+      "description": "Review company fundamentals and a simple valuation snapshot.",
       "inputs": {
         "ticker": "Ticker / company name"
       },
@@ -229,22 +229,22 @@
       "verdict": {
         "strong": {
           "title": "Attractive fundamentals",
-          "text": "The mock profile has a reasonable valuation, manageable leverage, and healthy cash generation."
+          "text": "The profile has a reasonable valuation, manageable leverage, and healthy cash generation."
         },
         "balanced": {
           "title": "Balanced profile",
-          "text": "The mock profile looks financially strong, but valuation is not obviously cheap."
+          "text": "The profile looks financially strong, but valuation is not obviously cheap."
         },
         "expensive": {
           "title": "Expensive or higher risk",
-          "text": "The mock profile suggests investors should demand a larger margin of safety."
+          "text": "The profile suggests investors should demand a larger margin of safety."
         }
       },
       "notice": {
-        "title": "Partial mock fallback",
-        "error": "Ticker lookup failed",
+        "title": "Estimated data active",
+        "error": "Ticker lookup unavailable",
         "notFound": "Ticker was not found.",
-        "fallback": "Some live data is unavailable, so Lucrum filled the gaps with deterministic mock data. Reason: {{message}}"
+        "fallback": "Some live data is unavailable, so Lucrum filled the gaps with estimates."
       }
     }
   },

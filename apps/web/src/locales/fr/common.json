@@ -116,7 +116,7 @@
     },
     "dca": {
       "title": "Simulateur DCA",
-      "description": "Simulez des investissements mensuels avec l'historique réel quand il est disponible et un repli fictif stable.",
+      "description": "Simulez des investissements mensuels avec l'historique de marché quand il est disponible.",
       "inputs": {
         "ticker": "Ticker",
         "monthly": "Investissement mensuel",
@@ -125,7 +125,7 @@
       },
       "hero": {
         "value": "Valeur du portefeuille {{ticker}}",
-        "helper": "Utilise l'historique de marché du backend quand il est disponible, avec des prix générés en repli."
+        "helper": "Utilise l'historique de marché quand il est disponible."
       },
       "stats": {
         "invested": "Investi",
@@ -145,9 +145,9 @@
         "months": "Mois investis"
       },
       "notice": {
-        "title": "Repli fictif actif",
-        "fallback": "L'historique réel est indisponible, donc cette simulation utilise des prix fictifs déterministes. Raison : {{message}}",
-        "backendFallback": "L'historique de marché réel est indisponible pour le moment, donc cette simulation utilise les prix fictifs déterministes du backend."
+        "title": "Données estimées actives",
+        "fallback": "L'historique réel est indisponible, donc cette simulation utilise des prix estimés.",
+        "backendFallback": "L'historique de marché réel est indisponible pour le moment, donc cette simulation utilise des prix estimés."
       }
     },
     "fairPrice": {
@@ -202,7 +202,7 @@
     },
     "stock": {
       "title": "Analyse d'action",
-      "description": "Consultez les fondamentaux du backend avec des replis fictifs déterministes pour les champs indisponibles.",
+      "description": "Consultez les fondamentaux d'une société et un aperçu simple de valorisation.",
       "inputs": {
         "ticker": "Ticker / nom de société"
       },
@@ -229,22 +229,22 @@
       "verdict": {
         "strong": {
           "title": "Fondamentaux attractifs",
-          "text": "Le profil fictif montre une valorisation raisonnable, un endettement maîtrisé et une bonne génération de trésorerie."
+          "text": "Le profil montre une valorisation raisonnable, un endettement maîtrisé et une bonne génération de trésorerie."
         },
         "balanced": {
           "title": "Profil équilibré",
-          "text": "Le profil fictif semble solide, mais la valorisation n'est pas clairement bon marché."
+          "text": "Le profil semble solide, mais la valorisation n'est pas clairement bon marché."
         },
         "expensive": {
           "title": "Cher ou plus risqué",
-          "text": "Le profil fictif suggère qu'une marge de sécurité plus élevée serait nécessaire."
+          "text": "Le profil suggère qu'une marge de sécurité plus élevée serait nécessaire."
         }
       },
       "notice": {
-        "title": "Repli fictif partiel",
-        "error": "La recherche du ticker a échoué",
+        "title": "Données estimées actives",
+        "error": "La recherche du ticker est indisponible",
         "notFound": "Ticker introuvable.",
-        "fallback": "Certaines données réelles sont indisponibles, donc Lucrum complète avec des données fictives déterministes. Raison : {{message}}"
+        "fallback": "Certaines données réelles sont indisponibles, donc Lucrum complète avec des estimations."
       }
     }
   },
