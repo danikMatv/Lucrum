@@ -129,19 +129,19 @@ Scheduled Worker refreshes top-100 tickers nightly (~100 req/day).
 
 ---
 
-## ADR-007: EN + FR Languages (No Ukrainian)
+## ADR-007: EN + FR + UK Languages
 
 **Date:** May 2026
 **Status:** Accepted
 
 ### Decision
-Launch with **English** (primary) and **Français** — not Ukrainian.
+Launch with **English** (primary), **Français**, and **Українська**.
 
 ### Reasoning
 - Broader international audience
 - EN is universal for finance content
 - FR opens Western European market
-- Ukrainian can be added later as a locale
+- UK supports Ukrainian-speaking users and the product team's home context
 
 ### i18n implementation
 `react-i18next` with namespace-based translation files.

@@ -5,14 +5,22 @@
   "nav": {
     "learn": "Apprendre",
     "tools": "Outils",
-    "pricing": "Tarifs"
+    "pricing": "Tarifs",
+    "dashboard": "Tableau de bord"
   },
   "buttons": {
     "login": "Connexion",
     "getStarted": "Commencer",
     "backHome": "Accueil",
     "calculate": "Calculer",
-    "analyze": "Analyser"
+    "analyze": "Analyser",
+    "logout": "Déconnexion"
+  },
+  "common": {
+    "loading": "Chargement..."
+  },
+  "errors": {
+    "generic": "Une erreur est survenue. Veuillez réessayer."
   },
   "tools": {
     "common": {
@@ -108,7 +116,7 @@
     },
     "dca": {
       "title": "Simulateur DCA",
-      "description": "Simulez des investissements mensuels avec des prix fictifs déterministes.",
+      "description": "Simulez des investissements mensuels avec l'historique réel quand il est disponible et un repli fictif stable.",
       "inputs": {
         "ticker": "Ticker",
         "monthly": "Investissement mensuel",
@@ -117,7 +125,7 @@
       },
       "hero": {
         "value": "Valeur du portefeuille {{ticker}}",
-        "helper": "Utilise des prix générés de type S&P 500 jusqu'à la connexion aux données de marché."
+        "helper": "Utilise l'historique de marché du backend quand il est disponible, avec des prix générés en repli."
       },
       "stats": {
         "invested": "Investi",
@@ -133,8 +141,12 @@
       "table": {
         "title": "Statistiques d'investissement",
         "shares": "Actions accumulées",
-        "finalPrice": "Dernier prix fictif",
+        "finalPrice": "Dernier prix",
         "months": "Mois investis"
+      },
+      "notice": {
+        "title": "Repli fictif actif",
+        "fallback": "L'historique réel est indisponible, donc cette simulation utilise des prix fictifs déterministes. Raison : {{message}}"
       }
     },
     "fairPrice": {
@@ -189,7 +201,7 @@
     },
     "stock": {
       "title": "Analyse d'action",
-      "description": "Consultez des fondamentaux fictifs et un verdict simple avant la connexion aux données réelles.",
+      "description": "Consultez les fondamentaux du backend avec des replis fictifs déterministes pour les champs indisponibles.",
       "inputs": {
         "ticker": "Ticker / nom de société"
       },
@@ -226,6 +238,12 @@
           "title": "Cher ou plus risqué",
           "text": "Le profil fictif suggère qu'une marge de sécurité plus élevée serait nécessaire."
         }
+      },
+      "notice": {
+        "title": "Repli fictif partiel",
+        "error": "La recherche du ticker a échoué",
+        "notFound": "Ticker introuvable.",
+        "fallback": "Certaines données réelles sont indisponibles, donc Lucrum complète avec des données fictives déterministes. Raison : {{message}}"
       }
     }
   },
@@ -241,7 +259,7 @@
       "pills": {
         "free": "Calculateurs gratuits",
         "beginner": "Pensé pour débuter",
-        "bilingual": "EN et FR"
+        "bilingual": "EN, FR et UK"
       },
       "portfolio": {
         "label": "Valeur du portefeuille",
@@ -305,6 +323,57 @@
           "description": "Recherchez un ticker et consultez les métriques clés dans une vue claire."
         }
       }
+    }
+  },
+  "auth": {
+    "common": {
+      "loading": "Veuillez patienter..."
+    },
+    "fields": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe"
+    },
+    "login": {
+      "title": "Bon retour",
+      "noAccount": "Pas encore de compte ?"
+    },
+    "register": {
+      "title": "Créer votre compte",
+      "submit": "Créer le compte",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "passwordLength": "Le mot de passe doit contenir au moins 8 caractères.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas."
+    },
+    "forbidden": {
+      "kicker": "Non autorisé",
+      "title": "Accès administrateur requis",
+      "description": "Cet espace est réservé aux administrateurs de Lucrum."
+    }
+  },
+  "dashboard": {
+    "kicker": "Espace protégé",
+    "title": "Bon retour, {{firstName}}",
+    "fallbackName": "investisseur",
+    "stats": {
+      "portfolio": "Valeur du portefeuille",
+      "calculations": "Calculs enregistrés",
+      "watchlist": "Liste de suivi"
+    },
+    "calculations": {
+      "title": "Calculs récents",
+      "empty": "Vos simulations enregistrées apparaîtront ici."
+    },
+    "watchlist": {
+      "title": "Liste de suivi",
+      "tickerPlaceholder": "Ticker",
+      "companyPlaceholder": "Nom de société",
+      "add": "Ajouter",
+      "remove": "Retirer",
+      "empty": "Ajoutez les tickers que vous voulez suivre.",
+      "unknownCompany": "Nom de société indisponible"
     }
   },
   "pages": {

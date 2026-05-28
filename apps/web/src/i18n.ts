@@ -3,8 +3,9 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 import enCommon from './locales/en/common.json'
 import frCommon from './locales/fr/common.json'
+import ukCommon from './locales/uk/common.json'
 
-export const supportedLanguages = ['en', 'fr'] as const
+export const supportedLanguages = ['en', 'fr', 'uk'] as const
 
 i18n
   .use(LanguageDetector)
@@ -16,6 +17,9 @@ i18n
       },
       fr: {
         common: frCommon,
+      },
+      uk: {
+        common: ukCommon,
       },
     },
     fallbackLng: 'en',

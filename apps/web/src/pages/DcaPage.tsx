@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
   Area,
@@ -13,6 +14,9 @@ import { MonthInput, NumberInput, TextInput } from '../components/calculators/Ca
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { calculateDcaSimulation, type DcaInput } from '../utils/dca.ts'
+import { toolsService } from '../services/toolsService.ts'
+import { parseApiError } from '../utils/errorHandler.ts'
+import type { DcaResult as ApiDcaResult } from '../types/api.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -36,6 +40,30 @@ const monthYearsAgo = (yearsAgo: number) => {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
 }
 
+const mapApiDcaResult = (result: ApiDcaResult, inflationPercent: number) => {
+  const rows = result.rows.map((row, index) => ({
+    label: row.date.slice(0, 7),
+    price: row.price,
+    shares: row.shares,
+    invested: row.invested,
+    portfolioValue: row.portfolioValue,
+    realPortfolioValue: row.portfolioValue / Math.pow(1 + inflationPercent / 100, index / 12),
+  }))
+  const finalRow = rows.at(-1)
+
+  return {
+    ticker: result.ticker.toUpperCase(),
+    rows,
+    invested: result.invested,
+    portfolioValue: result.portfolioValue,
+    profit: result.profit,
+    returnPercent: result.returnPercent,
+    averagePrice: result.averagePrice,
+    shares: result.shares,
+    finalPrice: finalRow?.price ?? 0,
+  }
+}
+
 export const DcaPage = () => {
   const { t } = useTranslation('common')
   const [ticker, setTicker] = useState('SPY')
@@ -48,16 +76,34 @@ export const DcaPage = () => {
     startDate: monthYearsAgo(10),
     inflationPercent: 2.5,
   })
+  const [apiResult, setApiResult] = useState<ReturnType<typeof mapApiDcaResult> | null>(null)
+  const [fallbackNotice, setFallbackNotice] = useState('')
 
-  const result = useMemo(() => calculateDcaSimulation(submittedInput), [submittedInput])
+  const fallbackResult = useMemo(() => calculateDcaSimulation(submittedInput), [submittedInput])
+  const result = apiResult ?? fallbackResult
+
+  const dcaMutation = useMutation({
+    mutationFn: (input: DcaInput) =>
+      toolsService.getDCA(input.ticker, input.startDate, input.monthlyInvestment),
+    onSuccess: (data, input) => {
+      setApiResult(mapApiDcaResult(data, input.inflationPercent))
+      setFallbackNotice('')
+    },
+    onError: (error) => {
+      setApiResult(null)
+      setFallbackNotice(parseApiError(error, t('errors.generic')))
+    },
+  })
 
   const handleCalculate = () => {
-    setSubmittedInput({
+    const nextInput = {
       ticker,
       monthlyInvestment,
       startDate,
       inflationPercent: inflation,
-    })
+    }
+    setSubmittedInput(nextInput)
+    dcaMutation.mutate(nextInput)
   }
 
   const sidebar = (
@@ -69,9 +115,10 @@ export const DcaPage = () => {
       <button
         type="button"
         onClick={handleCalculate}
-        className="rounded-md bg-primary px-4 py-3 text-sm font-bold text-background transition hover:opacity-90"
+        disabled={dcaMutation.isPending}
+        className="rounded-md bg-primary px-4 py-3 text-sm font-bold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {t('buttons.calculate')}
+        {dcaMutation.isPending ? t('common.loading') : t('buttons.calculate')}
       </button>
     </>
   )
@@ -79,6 +126,15 @@ export const DcaPage = () => {
   return (
     <SidebarLayout title={t('tools.dca.title')} description={t('tools.dca.description')} sidebar={sidebar}>
       <div className="grid gap-5">
+        {fallbackNotice ? (
+          <Panel>
+            <p className="text-sm font-semibold uppercase text-primary">{t('tools.dca.notice.title')}</p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">
+              {t('tools.dca.notice.fallback', { message: fallbackNotice })}
+            </p>
+          </Panel>
+        ) : null}
+
         <HeroMetric
           label={t('tools.dca.hero.value', { ticker: result.ticker })}
           value={currency.format(result.portfolioValue)}

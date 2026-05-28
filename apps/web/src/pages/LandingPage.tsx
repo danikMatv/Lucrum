@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supportedLanguages } from '../i18n.ts'
+import { useAuthStore } from '../store/useAuthStore.ts'
 
 const navLinks = [
   { to: '/learn', labelKey: 'nav.learn' },
@@ -60,10 +61,15 @@ const tools = [
 
 export const LandingPage = () => {
   const { t, i18n } = useTranslation('common')
+  const { user, isAuthenticated, logout } = useAuthStore()
   const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
   const handleLanguageChange = (language: string) => {
     void i18n.changeLanguage(language)
+  }
+
+  const handleLogout = () => {
+    void logout()
   }
 
   return (
@@ -105,18 +111,41 @@ export const LandingPage = () => {
                 </button>
               ))}
             </div>
-            <Link
-              to="/auth/login"
-              className="hidden rounded-md px-4 py-2 text-sm font-semibold text-text-muted transition hover:text-text-primary sm:inline-flex"
-            >
-              {t('buttons.login')}
-            </Link>
-            <Link
-              to="/auth/register"
-              className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
-            >
-              {t('buttons.getStarted')}
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <span className="hidden text-sm font-semibold text-text-muted lg:inline">
+                  {user?.firstName}
+                </span>
+                <Link
+                  to="/dashboard"
+                  className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
+                >
+                  {t('nav.dashboard')}
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="hidden rounded-md px-4 py-2 text-sm font-semibold text-text-muted transition hover:text-text-primary sm:inline-flex"
+                >
+                  {t('buttons.logout')}
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/auth/login"
+                  className="hidden rounded-md px-4 py-2 text-sm font-semibold text-text-muted transition hover:text-text-primary sm:inline-flex"
+                >
+                  {t('buttons.login')}
+                </Link>
+                <Link
+                  to="/auth/register"
+                  className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
+                >
+                  {t('buttons.getStarted')}
+                </Link>
+              </>
+            )}
           </div>
         </nav>
       </header>

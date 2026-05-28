@@ -5,14 +5,22 @@
   "nav": {
     "learn": "Learn",
     "tools": "Tools",
-    "pricing": "Pricing"
+    "pricing": "Pricing",
+    "dashboard": "Dashboard"
   },
   "buttons": {
     "login": "Log in",
     "getStarted": "Get Started",
     "backHome": "Back home",
     "calculate": "Calculate",
-    "analyze": "Analyze"
+    "analyze": "Analyze",
+    "logout": "Log out"
+  },
+  "common": {
+    "loading": "Loading..."
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again."
   },
   "tools": {
     "common": {
@@ -108,7 +116,7 @@
     },
     "dca": {
       "title": "DCA Simulator",
-      "description": "Simulate recurring monthly investments with deterministic mock price data.",
+      "description": "Simulate recurring monthly investments with live history when available and a stable mock fallback.",
       "inputs": {
         "ticker": "Ticker",
         "monthly": "Monthly investment",
@@ -117,7 +125,7 @@
       },
       "hero": {
         "value": "{{ticker}} portfolio value",
-        "helper": "Uses generated S&P 500-like prices until market data is connected."
+        "helper": "Uses backend market history when available, with generated prices as a fallback."
       },
       "stats": {
         "invested": "Invested",
@@ -133,8 +141,12 @@
       "table": {
         "title": "Investment stats",
         "shares": "Shares accumulated",
-        "finalPrice": "Final mock price",
+        "finalPrice": "Final price",
         "months": "Months invested"
+      },
+      "notice": {
+        "title": "Mock fallback active",
+        "fallback": "Live history is unavailable, so this run uses deterministic mock prices. Reason: {{message}}"
       }
     },
     "fairPrice": {
@@ -189,7 +201,7 @@
     },
     "stock": {
       "title": "Stock Analysis",
-      "description": "Review mock company fundamentals and a simple valuation verdict before live data is connected.",
+      "description": "Review company fundamentals from the backend with deterministic mock fallbacks for unavailable fields.",
       "inputs": {
         "ticker": "Ticker / company name"
       },
@@ -226,6 +238,12 @@
           "title": "Expensive or higher risk",
           "text": "The mock profile suggests investors should demand a larger margin of safety."
         }
+      },
+      "notice": {
+        "title": "Partial mock fallback",
+        "error": "Ticker lookup failed",
+        "notFound": "Ticker was not found.",
+        "fallback": "Some live data is unavailable, so Lucrum filled the gaps with deterministic mock data. Reason: {{message}}"
       }
     }
   },
@@ -241,7 +259,7 @@
       "pills": {
         "free": "Free calculators",
         "beginner": "Beginner focused",
-        "bilingual": "EN and FR"
+        "bilingual": "EN, FR and UK"
       },
       "portfolio": {
         "label": "Portfolio value",
@@ -305,6 +323,57 @@
           "description": "Look up a ticker and review key company metrics in one focused view."
         }
       }
+    }
+  },
+  "auth": {
+    "common": {
+      "loading": "Please wait..."
+    },
+    "fields": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password"
+    },
+    "login": {
+      "title": "Welcome back",
+      "noAccount": "No account yet?"
+    },
+    "register": {
+      "title": "Create your account",
+      "submit": "Create account",
+      "hasAccount": "Already have an account?",
+      "passwordLength": "Password must be at least 8 characters.",
+      "passwordMismatch": "Passwords do not match."
+    },
+    "forbidden": {
+      "kicker": "Not authorized",
+      "title": "Admin access required",
+      "description": "This workspace is limited to Lucrum administrators."
+    }
+  },
+  "dashboard": {
+    "kicker": "Protected workspace",
+    "title": "Welcome back, {{firstName}}",
+    "fallbackName": "investor",
+    "stats": {
+      "portfolio": "Portfolio Value",
+      "calculations": "Saved Calculations",
+      "watchlist": "Watchlist"
+    },
+    "calculations": {
+      "title": "Recent Calculations",
+      "empty": "Saved calculator runs will appear here."
+    },
+    "watchlist": {
+      "title": "Watchlist",
+      "tickerPlaceholder": "Ticker",
+      "companyPlaceholder": "Company name",
+      "add": "Add",
+      "remove": "Remove",
+      "empty": "Add tickers you want to follow.",
+      "unknownCompany": "Company name unavailable"
     }
   },
   "pages": {

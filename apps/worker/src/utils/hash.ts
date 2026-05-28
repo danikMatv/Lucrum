@@ -1,4 +1,4 @@
-const PBKDF2_ITERATIONS = 210_000
+const PBKDF2_ITERATIONS = 100_000
 const HASH_LENGTH_BITS = 256
 
 const bytesToBase64 = (bytes: Uint8Array) => {
