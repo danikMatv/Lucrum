@@ -5,9 +5,10 @@ import { z } from 'zod'
 import { logToolUsage } from '../db/queries'
 import { getOptionalUser } from '../middleware/auth'
 import { CacheTtl, getJsonCache, putJsonCache } from '../services/cache'
+import { getFmpHistoricalPrices } from '../services/fmp'
 import { getYahooHistory, type StockHistory } from '../services/yahoo'
 import type { AppEnv } from '../types'
-import { calculateDca } from '../utils/dca'
+import { calculateDca, calculateMockDca } from '../utils/dca'
 import { createError, createSuccess } from '../utils/response'
 
 const tools = new Hono<AppEnv>()
@@ -34,6 +35,25 @@ const logUsage = async (c: Context, toolType: string, ticker: string | null) => 
   await logToolUsage(c.env.DB, { userId: user?.id ?? null, toolType, ticker })
 }
 
+const periodToFromDate = (period: string) => {
+  const match = /^(\d+)([ym])$/.exec(period)
+  const date = new Date()
+  if (!match) {
+    date.setFullYear(date.getFullYear() - 5)
+    return date.toISOString().slice(0, 10)
+  }
+
+  const amount = Number(match[1])
+  const unit = match[2]
+  if (unit === 'y') {
+    date.setFullYear(date.getFullYear() - amount)
+  } else {
+    date.setMonth(date.getMonth() - amount)
+  }
+
+  return date.toISOString().slice(0, 10)
+}
+
 const getHistory = async (c: Context, ticker: string, period: string) => {
   const normalizedTicker = ticker.toUpperCase()
   const cacheKey = `history:${normalizedTicker}:${period}`
@@ -42,7 +62,17 @@ const getHistory = async (c: Context, ticker: string, period: string) => {
     return cached
   }
 
-  const history = await getYahooHistory(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker, period)
+  let history: StockHistory
+  try {
+    history = await getFmpHistoricalPrices(
+      normalizedTicker,
+      c.env.FMP_API_KEY,
+      periodToFromDate(period),
+    )
+  } catch {
+    history = await getYahooHistory(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker, period)
+  }
+
   await putJsonCache(c.env.KV, cacheKey, history, CacheTtl.history)
   return history
 }
@@ -69,7 +99,7 @@ tools.get('/dca', zValidator('query', dcaSchema, validatorHook), async (c) => {
     const history = await getHistory(c, normalizedTicker, '10y')
     return c.json(createSuccess(calculateDca(normalizedTicker, amount, history, from)))
   } catch {
-    return c.json(createError('DCA_FAILED', 'DCA simulation failed'), 502)
+    return c.json(createSuccess(calculateMockDca(normalizedTicker, amount, from)))
   }
 })
 

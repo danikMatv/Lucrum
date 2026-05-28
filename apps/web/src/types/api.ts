@@ -65,6 +65,7 @@ export interface DcaResult {
   profit: number
   returnPercent: number
   averagePrice: number
+  source?: 'live' | 'mock'
   rows: Array<{
     date: string
     price: number

@@ -1,4 +1,5 @@
 import type { Company, CompanyFundamentals } from '../types'
+import type { StockHistory } from './yahoo'
 
 interface FmpSearchResult {
   symbol?: string
@@ -36,7 +37,18 @@ interface FmpIncomeStatementResult {
   eps?: number
 }
 
+interface FmpHistoricalPriceResult {
+  date?: string
+  close?: number
+  adjClose?: number
+}
+
+interface FmpHistoricalPriceResponse {
+  historical?: FmpHistoricalPriceResult[]
+}
+
 const fmpBaseUrl = 'https://financialmodelingprep.com/api'
+const fmpStableBaseUrl = 'https://financialmodelingprep.com/stable'
 
 const fetchFmp = async <T>(path: string, apiKey: string): Promise<T> => {
   const separator = path.includes('?') ? '&' : '?'
@@ -45,6 +57,44 @@ const fetchFmp = async <T>(path: string, apiKey: string): Promise<T> => {
     throw new Error(`FMP request failed with ${response.status}`)
   }
   return (await response.json()) as T
+}
+
+const fetchFmpStable = async <T>(path: string, apiKey: string): Promise<T> => {
+  const separator = path.includes('?') ? '&' : '?'
+  const response = await fetch(`${fmpStableBaseUrl}${path}${separator}apikey=${apiKey}`)
+  if (!response.ok) {
+    throw new Error(`FMP stable request failed with ${response.status}`)
+  }
+  return (await response.json()) as T
+}
+
+const isHistoricalPriceArray = (value: unknown): value is FmpHistoricalPriceResult[] =>
+  Array.isArray(value)
+
+const toMonthlyStockHistory = (rows: FmpHistoricalPriceResult[]): StockHistory => {
+  const monthlyPrices = new Map<string, { date: string; price: number }>()
+
+  rows
+    .filter((row) => row.date && typeof row.close === 'number' && Number.isFinite(row.close))
+    .sort((left, right) => String(left.date).localeCompare(String(right.date)))
+    .forEach((row) => {
+      const date = row.date ?? ''
+      const close = row.adjClose ?? row.close
+      if (typeof close !== 'number' || !Number.isFinite(close)) {
+        return
+      }
+      monthlyPrices.set(date.slice(0, 7), { date, price: close })
+    })
+
+  const monthlyRows = Array.from(monthlyPrices.values())
+  if (monthlyRows.length === 0) {
+    throw new Error('FMP returned no historical prices')
+  }
+
+  return {
+    dates: monthlyRows.map((row) => row.date),
+    prices: monthlyRows.map((row) => row.price),
+  }
 }
 
 const createCompany = (input: {
@@ -132,4 +182,32 @@ export const getFmpFundamentals = async (
     recordedDate: income?.date ?? null,
     createdAt: new Date().toISOString(),
   }
+}
+
+export const getFmpHistoricalPrices = async (
+  ticker: string,
+  apiKey: string,
+  fromDate: string,
+): Promise<StockHistory> => {
+  try {
+    const stableData = await fetchFmpStable<unknown>(
+      `/historical-price-eod/full?symbol=${encodeURIComponent(
+        ticker.toUpperCase(),
+      )}&from=${encodeURIComponent(fromDate)}`,
+      apiKey,
+    )
+    if (isHistoricalPriceArray(stableData)) {
+      return toMonthlyStockHistory(stableData)
+    }
+  } catch {
+    // Fall back to the legacy v3 endpoint below.
+  }
+
+  const legacyData = await fetchFmp<FmpHistoricalPriceResponse>(
+    `/v3/historical-price-full/${encodeURIComponent(
+      ticker.toUpperCase(),
+    )}?from=${encodeURIComponent(fromDate)}&serietype=line`,
+    apiKey,
+  )
+  return toMonthlyStockHistory(legacyData.historical ?? [])
 }

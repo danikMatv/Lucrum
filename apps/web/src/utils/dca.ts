@@ -24,6 +24,7 @@ export interface DcaResult {
   averagePrice: number
   shares: number
   finalPrice: number
+  source: 'mock'
 }
 
 const monthDiff = (startDate: Date, endDate: Date) =>
@@ -86,5 +87,6 @@ export const calculateDcaSimulation = (input: DcaInput): DcaResult => {
     averagePrice: shares > 0 ? invested / shares : 0,
     shares,
     finalPrice: lastRow?.price ?? 0,
+    source: 'mock',
   }
 }

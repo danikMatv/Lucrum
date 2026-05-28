@@ -146,7 +146,8 @@
       },
       "notice": {
         "title": "Repli fictif actif",
-        "fallback": "L'historique réel est indisponible, donc cette simulation utilise des prix fictifs déterministes. Raison : {{message}}"
+        "fallback": "L'historique réel est indisponible, donc cette simulation utilise des prix fictifs déterministes. Raison : {{message}}",
+        "backendFallback": "L'historique de marché réel est indisponible pour le moment, donc cette simulation utilise les prix fictifs déterministes du backend."
       }
     },
     "fairPrice": {

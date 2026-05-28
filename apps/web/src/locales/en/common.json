@@ -146,7 +146,8 @@
       },
       "notice": {
         "title": "Mock fallback active",
-        "fallback": "Live history is unavailable, so this run uses deterministic mock prices. Reason: {{message}}"
+        "fallback": "Live history is unavailable, so this run uses deterministic mock prices. Reason: {{message}}",
+        "backendFallback": "Live market history is unavailable right now, so this run uses deterministic mock prices from the backend."
       }
     },
     "fairPrice": {

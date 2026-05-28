@@ -40,6 +40,27 @@ const monthYearsAgo = (yearsAgo: number) => {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
 }
 
+const tickerAliases: Record<string, string> = {
+  APPLE: 'AAPL',
+  'APPLE INC': 'AAPL',
+  'APPLE INC.': 'AAPL',
+  MICROSOFT: 'MSFT',
+  AMAZON: 'AMZN',
+  GOOGLE: 'GOOGL',
+  ALPHABET: 'GOOGL',
+  META: 'META',
+  FACEBOOK: 'META',
+  TESLA: 'TSLA',
+  NVIDIA: 'NVDA',
+  'S&P 500': 'SPY',
+  SP500: 'SPY',
+}
+
+const normalizeTicker = (value: string) => {
+  const normalized = value.trim().toUpperCase()
+  return tickerAliases[normalized] ?? normalized.replaceAll(' ', '')
+}
+
 const mapApiDcaResult = (result: ApiDcaResult, inflationPercent: number) => {
   const rows = result.rows.map((row, index) => ({
     label: row.date.slice(0, 7),
@@ -61,6 +82,7 @@ const mapApiDcaResult = (result: ApiDcaResult, inflationPercent: number) => {
     averagePrice: result.averagePrice,
     shares: result.shares,
     finalPrice: finalRow?.price ?? 0,
+    source: result.source ?? 'live',
   }
 }
 
@@ -96,12 +118,14 @@ export const DcaPage = () => {
   })
 
   const handleCalculate = () => {
+    const normalizedTicker = normalizeTicker(ticker)
     const nextInput = {
-      ticker,
+      ticker: normalizedTicker,
       monthlyInvestment,
       startDate,
       inflationPercent: inflation,
     }
+    setTicker(normalizedTicker)
     setSubmittedInput(nextInput)
     dcaMutation.mutate(nextInput)
   }
@@ -131,6 +155,15 @@ export const DcaPage = () => {
             <p className="text-sm font-semibold uppercase text-primary">{t('tools.dca.notice.title')}</p>
             <p className="mt-3 text-sm leading-6 text-text-muted">
               {t('tools.dca.notice.fallback', { message: fallbackNotice })}
+            </p>
+          </Panel>
+        ) : null}
+
+        {result.source === 'mock' && !fallbackNotice ? (
+          <Panel>
+            <p className="text-sm font-semibold uppercase text-primary">{t('tools.dca.notice.title')}</p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">
+              {t('tools.dca.notice.backendFallback')}
             </p>
           </Panel>
         ) : null}
