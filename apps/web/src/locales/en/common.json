@@ -355,6 +355,149 @@
       }
     }
   },
+  "pricing": {
+    "kicker": "Pricing",
+    "title": "Start free. Upgrade when you need more signal.",
+    "description": "Lucrum is free for core planning. Pro adds saved workspaces, watchlists, exports, and richer market data when you are ready.",
+    "popular": "Popular",
+    "plans": {
+      "free": {
+        "eyebrow": "Beginner",
+        "name": "Free",
+        "price": "$0",
+        "period": "Forever",
+        "description": "For learning the basics and running quick calculations without an account.",
+        "cta": "Use free tools",
+        "features": {
+          "calculators": "All core calculators",
+          "mock": "Estimated fallback data when live data is unavailable",
+          "education": "Beginner-friendly explanations"
+        }
+      },
+      "pro": {
+        "eyebrow": "Investor",
+        "name": "Pro",
+        "price": "$9",
+        "period": "per month",
+        "description": "For investors who want to save scenarios, track tickers, and make cleaner decisions.",
+        "cta": "Create account",
+        "features": {
+          "realtime": "Richer company and market data",
+          "saved": "Saved calculations and scenarios",
+          "watchlist": "Personal watchlist",
+          "exports": "CSV/PDF exports when available"
+        }
+      },
+      "founder": {
+        "eyebrow": "Early access",
+        "name": "Founder",
+        "price": "$99",
+        "period": "one-time",
+        "description": "For early supporters who want lifetime access to the Pro workspace.",
+        "cta": "Join early",
+        "features": {
+          "lifetime": "Lifetime Pro access",
+          "future": "Future premium calculators",
+          "priority": "Priority feedback channel"
+        }
+      }
+    },
+    "compare": {
+      "kicker": "Compare",
+      "title": "Pick the workspace that fits your pace.",
+      "description": "The free tier stays useful. Paid plans are for saving, tracking, and going deeper.",
+      "feature": "Feature",
+      "rows": {
+        "calculators": {
+          "label": "Financial calculators",
+          "free": "Included",
+          "pro": "Included",
+          "founder": "Included"
+        },
+        "marketData": {
+          "label": "Market data",
+          "free": "Basic",
+          "pro": "Expanded",
+          "founder": "Expanded"
+        },
+        "savedCalculations": {
+          "label": "Saved calculations",
+          "free": "Limited",
+          "pro": "Unlimited",
+          "founder": "Unlimited"
+        },
+        "watchlist": {
+          "label": "Watchlist",
+          "free": "Preview",
+          "pro": "Included",
+          "founder": "Included"
+        },
+        "exports": {
+          "label": "Exports",
+          "free": "No",
+          "pro": "Yes",
+          "founder": "Yes"
+        }
+      }
+    }
+  },
+  "learn": {
+    "kicker": "Learn investing",
+    "title": "A calm place to understand the basics.",
+    "description": "Short answers for beginner investors: how compounding works, why DCA matters, what FIRE means, and how to think about fair value.",
+    "rule": {
+      "title": "Simple rule",
+      "text": "Lucrum is for planning and education. It helps you compare assumptions, not predict the future."
+    },
+    "cards": {
+      "compound": {
+        "title": "Compounding",
+        "text": "Small contributions can become meaningful when time, return, and consistency work together.",
+        "cta": "Try Invest Calc ->"
+      },
+      "dca": {
+        "title": "Dollar-cost averaging",
+        "text": "DCA means investing a fixed amount regularly, so you buy more shares when prices are lower and fewer when prices are higher.",
+        "cta": "Try DCA ->"
+      },
+      "valuation": {
+        "title": "Fair value",
+        "text": "A stock can be a great company and still be too expensive. Valuation helps you estimate the price that gives you a margin of safety.",
+        "cta": "Try Fair Price ->"
+      }
+    },
+    "faq": {
+      "kicker": "FAQ",
+      "title": "Beginner questions",
+      "description": "Quick answers before you open a calculator.",
+      "items": {
+        "start": {
+          "question": "Where should I start?",
+          "answer": "Start with your goal. If you want long-term growth, use Invest Calc. If you want financial independence, use FIRE. If you want to test monthly investing, use DCA."
+        },
+        "dca": {
+          "question": "Is DCA better than investing all at once?",
+          "answer": "Not always. Lump-sum investing can win when markets rise quickly, but DCA is easier emotionally and reduces the risk of investing everything right before a drop."
+        },
+        "fire": {
+          "question": "What is FIRE?",
+          "answer": "FIRE means Financial Independence, Retire Early. The basic idea is to build a portfolio large enough to cover expenses through withdrawals."
+        },
+        "fairPrice": {
+          "question": "What is a fair price?",
+          "answer": "A fair price is an estimate of what a business might be worth today based on future earnings, growth, and risk. It is an estimate, not a precise truth."
+        },
+        "risk": {
+          "question": "What is margin of safety?",
+          "answer": "Margin of safety means buying below your estimated fair value so small mistakes in your assumptions do not immediately break the investment case."
+        },
+        "data": {
+          "question": "Are calculator results financial advice?",
+          "answer": "No. They are educational planning tools. Use them to understand scenarios, then do deeper research before investing."
+        }
+      }
+    }
+  },
   "auth": {
     "common": {
       "loading": "Please wait..."

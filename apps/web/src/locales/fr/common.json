@@ -355,6 +355,149 @@
       }
     }
   },
+  "pricing": {
+    "kicker": "Tarifs",
+    "title": "Commencez gratuitement. Passez au niveau supérieur quand vous avez besoin de plus de signal.",
+    "description": "Lucrum reste gratuit pour la planification de base. Pro ajoute les espaces enregistrés, listes de suivi, exports et données de marché enrichies.",
+    "popular": "Populaire",
+    "plans": {
+      "free": {
+        "eyebrow": "Débutant",
+        "name": "Gratuit",
+        "price": "0 $",
+        "period": "Pour toujours",
+        "description": "Pour apprendre les bases et lancer des calculs rapides sans compte.",
+        "cta": "Utiliser les outils",
+        "features": {
+          "calculators": "Tous les calculateurs principaux",
+          "mock": "Données estimées si les données réelles sont indisponibles",
+          "education": "Explications pensées pour débuter"
+        }
+      },
+      "pro": {
+        "eyebrow": "Investisseur",
+        "name": "Pro",
+        "price": "9 $",
+        "period": "par mois",
+        "description": "Pour les investisseurs qui veulent sauvegarder des scénarios, suivre des tickers et décider plus clairement.",
+        "cta": "Créer un compte",
+        "features": {
+          "realtime": "Données société et marché enrichies",
+          "saved": "Calculs et scénarios sauvegardés",
+          "watchlist": "Liste de suivi personnelle",
+          "exports": "Exports CSV/PDF quand disponibles"
+        }
+      },
+      "founder": {
+        "eyebrow": "Accès anticipé",
+        "name": "Founder",
+        "price": "99 $",
+        "period": "paiement unique",
+        "description": "Pour les premiers soutiens qui veulent un accès à vie à l'espace Pro.",
+        "cta": "Rejoindre",
+        "features": {
+          "lifetime": "Accès Pro à vie",
+          "future": "Futurs calculateurs premium",
+          "priority": "Canal de feedback prioritaire"
+        }
+      }
+    },
+    "compare": {
+      "kicker": "Comparer",
+      "title": "Choisissez l'espace adapté à votre rythme.",
+      "description": "L'offre gratuite reste utile. Les plans payants servent à sauvegarder, suivre et aller plus loin.",
+      "feature": "Fonctionnalité",
+      "rows": {
+        "calculators": {
+          "label": "Calculateurs financiers",
+          "free": "Inclus",
+          "pro": "Inclus",
+          "founder": "Inclus"
+        },
+        "marketData": {
+          "label": "Données de marché",
+          "free": "Basique",
+          "pro": "Étendues",
+          "founder": "Étendues"
+        },
+        "savedCalculations": {
+          "label": "Calculs sauvegardés",
+          "free": "Limité",
+          "pro": "Illimité",
+          "founder": "Illimité"
+        },
+        "watchlist": {
+          "label": "Liste de suivi",
+          "free": "Aperçu",
+          "pro": "Inclus",
+          "founder": "Inclus"
+        },
+        "exports": {
+          "label": "Exports",
+          "free": "Non",
+          "pro": "Oui",
+          "founder": "Oui"
+        }
+      }
+    }
+  },
+  "learn": {
+    "kicker": "Apprendre à investir",
+    "title": "Un espace calme pour comprendre les bases.",
+    "description": "Des réponses courtes pour débuter : capitalisation, DCA, FIRE et juste valeur.",
+    "rule": {
+      "title": "Règle simple",
+      "text": "Lucrum sert à apprendre et planifier. Il aide à comparer des hypothèses, pas à prédire l'avenir."
+    },
+    "cards": {
+      "compound": {
+        "title": "Capitalisation",
+        "text": "De petits versements peuvent devenir significatifs quand le temps, le rendement et la régularité travaillent ensemble.",
+        "cta": "Essayer Invest Calc ->"
+      },
+      "dca": {
+        "title": "Investissement programmé",
+        "text": "Le DCA consiste à investir un montant fixe régulièrement, pour acheter plus quand les prix sont bas et moins quand ils sont élevés.",
+        "cta": "Essayer DCA ->"
+      },
+      "valuation": {
+        "title": "Juste valeur",
+        "text": "Une action peut être une excellente entreprise et rester trop chère. La valorisation aide à estimer un prix avec marge de sécurité.",
+        "cta": "Essayer Juste valeur ->"
+      }
+    },
+    "faq": {
+      "kicker": "FAQ",
+      "title": "Questions de débutant",
+      "description": "Des réponses rapides avant d'ouvrir un calculateur.",
+      "items": {
+        "start": {
+          "question": "Par où commencer ?",
+          "answer": "Commencez par votre objectif. Pour la croissance long terme, utilisez Invest Calc. Pour l'indépendance financière, utilisez FIRE. Pour tester l'investissement mensuel, utilisez DCA."
+        },
+        "dca": {
+          "question": "Le DCA est-il meilleur qu'investir tout d'un coup ?",
+          "answer": "Pas toujours. Investir en une fois peut gagner quand les marchés montent vite, mais le DCA est plus simple émotionnellement et réduit le risque d'entrer juste avant une baisse."
+        },
+        "fire": {
+          "question": "Qu'est-ce que FIRE ?",
+          "answer": "FIRE signifie Financial Independence, Retire Early. L'idée est de construire un portefeuille assez grand pour couvrir les dépenses par des retraits."
+        },
+        "fairPrice": {
+          "question": "Qu'est-ce qu'une juste valeur ?",
+          "answer": "C'est une estimation de la valeur actuelle d'une entreprise selon ses bénéfices futurs, sa croissance et son risque. C'est une estimation, pas une vérité précise."
+        },
+        "risk": {
+          "question": "Qu'est-ce qu'une marge de sécurité ?",
+          "answer": "C'est acheter sous votre estimation de juste valeur pour que de petites erreurs d'hypothèses ne détruisent pas immédiatement l'idée d'investissement."
+        },
+        "data": {
+          "question": "Les résultats sont-ils un conseil financier ?",
+          "answer": "Non. Ce sont des outils pédagogiques de planification. Utilisez-les pour comprendre des scénarios, puis approfondissez avant d'investir."
+        }
+      }
+    }
+  },
   "auth": {
     "common": {
       "loading": "Veuillez patienter..."

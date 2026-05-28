@@ -7,17 +7,13 @@ import { FairPricePage } from '../pages/FairPricePage.tsx'
 import { FirePage } from '../pages/FirePage.tsx'
 import { InvestCalcPage } from '../pages/InvestCalcPage.tsx'
 import { LandingPage } from '../pages/LandingPage.tsx'
-import { PlaceholderPage } from '../pages/PlaceholderPage.tsx'
+import { LearnPage } from '../pages/LearnPage.tsx'
+import { PricingPage } from '../pages/PricingPage.tsx'
 import { StockPage } from '../pages/StockPage.tsx'
 import { ToolsPage } from '../pages/ToolsPage.tsx'
 import { LoginPage } from '../pages/auth/LoginPage.tsx'
 import { RegisterPage } from '../pages/auth/RegisterPage.tsx'
 import { useAuthStore } from '../store/useAuthStore.ts'
-
-const routes = [
-  { path: '/learn', titleKey: 'pages.learn.title', descriptionKey: 'pages.learn.description' },
-  { path: '/pricing', titleKey: 'pages.pricing.title', descriptionKey: 'pages.pricing.description' },
-] as const
 
 export const App = () => {
   const fetchMe = useAuthStore((state) => state.fetchMe)
@@ -30,6 +26,8 @@ export const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/learn" element={<LearnPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
         <Route path="/tools" element={<ToolsPage />} />
         <Route path="/tools/invest-calc" element={<InvestCalcPage />} />
         <Route path="/tools/fire" element={<FirePage />} />
@@ -50,25 +48,10 @@ export const App = () => {
           path="/admin"
           element={
             <ProtectedRoute requireAdmin>
-              <PlaceholderPage
-                titleKey="pages.admin.title"
-                descriptionKey="pages.admin.description"
-              />
+              <DashboardPage />
             </ProtectedRoute>
           }
         />
-        {routes.map((route) => (
-          <Route
-            key={route.path}
-            path={route.path}
-            element={
-              <PlaceholderPage
-                titleKey={route.titleKey}
-                descriptionKey={route.descriptionKey}
-              />
-            }
-          />
-        ))}
       </Routes>
     </BrowserRouter>
   )
