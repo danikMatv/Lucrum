@@ -9,8 +9,6 @@ const navLinks = [
   { to: '/pricing', labelKey: 'nav.pricing' },
 ] as const
 
-const featurePills = ['landing.hero.pills.free', 'landing.hero.pills.beginner', 'landing.hero.pills.bilingual'] as const
-
 const statCards = [
   { labelKey: 'landing.hero.stats.fairValue.label', valueKey: 'landing.hero.stats.fairValue.value' },
   { labelKey: 'landing.hero.stats.dca.label', valueKey: 'landing.hero.stats.dca.value' },
@@ -173,16 +171,6 @@ export const LandingPage = () => {
             >
               {t('landing.hero.secondaryCta')}
             </Link>
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {featurePills.map((pillKey) => (
-              <span
-                key={pillKey}
-                className="rounded-full border-[0.5px] border-border bg-primary-dim px-4 py-2 text-sm font-medium text-primary"
-              >
-                {t(pillKey)}
-              </span>
-            ))}
           </div>
         </div>
 

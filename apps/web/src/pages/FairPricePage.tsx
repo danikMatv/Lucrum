@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { NumberInput, SegmentedControl, SliderInput } from '../components/calculators/CalculatorControls.tsx'
-import {
-  CompanySearchInput,
-} from '../components/calculators/CompanySearchInput.tsx'
+import { CompanySearchInput } from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { calculateFairPrice, type MarginOfSafety } from '../utils/fairPrice.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
+import { companiesService } from '../services/companiesService.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -29,6 +29,33 @@ export const FairPricePage = () => {
   const [discountRate, setDiscountRate] = useState(10)
   const [marginOfSafety, setMarginOfSafety] = useState<MarginOfSafety>(30)
 
+  const fundamentalsMutation = useMutation({
+    mutationFn: async (tickerValue: string) => {
+      const normalizedTicker = normalizeCompanyQuery(tickerValue) || 'AAPL'
+      const [companyResult, fundamentalsResult] = await Promise.allSettled([
+        companiesService.getByTicker(normalizedTicker),
+        companiesService.getFundamentals(normalizedTicker),
+      ])
+
+      return {
+        ticker: companyResult.status === 'fulfilled' ? companyResult.value.ticker : normalizedTicker,
+        fundamentals: fundamentalsResult.status === 'fulfilled' ? fundamentalsResult.value : null,
+      }
+    },
+    onSuccess: ({ ticker: nextTicker, fundamentals }) => {
+      setTicker(nextTicker)
+      if (fundamentals?.epsTtm) {
+        setEps(Number(fundamentals.epsTtm.toFixed(2)))
+      }
+      if (fundamentals?.peRatio && fundamentals.epsTtm) {
+        setMarketPrice(Number((fundamentals.peRatio * fundamentals.epsTtm).toFixed(2)))
+      }
+    },
+    onError: () => {
+      setTicker((currentTicker) => normalizeCompanyQuery(currentTicker) || 'AAPL')
+    },
+  })
+
   const result = useMemo(
     () =>
       calculateFairPrice({
@@ -43,6 +70,10 @@ export const FairPricePage = () => {
   )
 
   const isUndervalued = result.verdict === 'undervalued'
+
+  const handleCalculate = () => {
+    fundamentalsMutation.mutate(ticker)
+  }
 
   const sidebar = (
     <>
@@ -68,6 +99,14 @@ export const FairPricePage = () => {
           { value: 40, label: t('tools.fairPrice.margin.aggressive') },
         ]}
       />
+      <button
+        type="button"
+        onClick={handleCalculate}
+        disabled={fundamentalsMutation.isPending}
+        className="rounded-md bg-primary px-4 py-3 text-sm font-bold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+      >
+        {fundamentalsMutation.isPending ? t('common.loading') : t('buttons.calculate')}
+      </button>
     </>
   )
 

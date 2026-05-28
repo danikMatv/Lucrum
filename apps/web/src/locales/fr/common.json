@@ -326,6 +326,35 @@
       }
     }
   },
+  "toolsDirectory": {
+    "kicker": "Répertoire des calculateurs",
+    "title": "Tous les outils d'investissement au même endroit.",
+    "description": "Commencez par un objectif, testez vos hypothèses, puis analysez une société ou une stratégie avant votre prochain mouvement.",
+    "openTool": "Ouvrir l'outil ->",
+    "workflow": {
+      "title": "Parcours suggéré",
+      "plan": "Planifiez la croissance long terme avec Invest Calc ou FIRE.",
+      "test": "Comparez les investissements réguliers avec DCA.",
+      "decide": "Vérifiez la valorisation avec Juste valeur et Analyse d'action."
+    },
+    "items": {
+      "investCalc": {
+        "detail": "Idéal pour voir comment capital initial, versements, inflation et croissance composent sur plusieurs décennies."
+      },
+      "fire": {
+        "detail": "Idéal pour estimer votre objectif d'indépendance, votre progression et les années restantes selon un taux de retrait."
+      },
+      "dca": {
+        "detail": "Idéal pour tester l'investissement mensuel dans un ticker avec l'historique de prix quand il est disponible."
+      },
+      "fairPrice": {
+        "detail": "Idéal pour transformer EPS, croissance, taux d'actualisation et marge de sécurité en zone de prix d'achat."
+      },
+      "stock": {
+        "detail": "Idéal pour un aperçu rapide d'une société avec fondamentaux, rentabilité, levier et verdict de valorisation."
+      }
+    }
+  },
   "auth": {
     "common": {
       "loading": "Veuillez patienter..."

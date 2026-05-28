@@ -326,6 +326,35 @@
       }
     }
   },
+  "toolsDirectory": {
+    "kicker": "Calculator directory",
+    "title": "All investment tools in one place.",
+    "description": "Start with a goal, test assumptions, then inspect a company or strategy before making your next move.",
+    "openTool": "Open tool ->",
+    "workflow": {
+      "title": "Suggested flow",
+      "plan": "Plan long-term growth with Invest Calc or FIRE.",
+      "test": "Compare recurring investments with DCA.",
+      "decide": "Check valuation with Fair Price and Stock Analysis."
+    },
+    "items": {
+      "investCalc": {
+        "detail": "Best for seeing how starting capital, contributions, inflation, and growth compound over decades."
+      },
+      "fire": {
+        "detail": "Best for estimating your independence target, progress, and years left at a chosen withdrawal rate."
+      },
+      "dca": {
+        "detail": "Best for testing monthly investing into a ticker using historical prices when available."
+      },
+      "fairPrice": {
+        "detail": "Best for turning EPS, growth, discount rate, and margin of safety into a simple buy-price range."
+      },
+      "stock": {
+        "detail": "Best for a quick company snapshot with fundamentals, profitability, leverage, and a valuation verdict."
+      }
+    }
+  },
   "auth": {
     "common": {
       "loading": "Please wait..."

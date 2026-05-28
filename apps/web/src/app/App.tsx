@@ -9,13 +9,13 @@ import { InvestCalcPage } from '../pages/InvestCalcPage.tsx'
 import { LandingPage } from '../pages/LandingPage.tsx'
 import { PlaceholderPage } from '../pages/PlaceholderPage.tsx'
 import { StockPage } from '../pages/StockPage.tsx'
+import { ToolsPage } from '../pages/ToolsPage.tsx'
 import { LoginPage } from '../pages/auth/LoginPage.tsx'
 import { RegisterPage } from '../pages/auth/RegisterPage.tsx'
 import { useAuthStore } from '../store/useAuthStore.ts'
 
 const routes = [
   { path: '/learn', titleKey: 'pages.learn.title', descriptionKey: 'pages.learn.description' },
-  { path: '/tools', titleKey: 'pages.tools.title', descriptionKey: 'pages.tools.description' },
   { path: '/pricing', titleKey: 'pages.pricing.title', descriptionKey: 'pages.pricing.description' },
 ] as const
 
@@ -30,6 +30,7 @@ export const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/tools" element={<ToolsPage />} />
         <Route path="/tools/invest-calc" element={<InvestCalcPage />} />
         <Route path="/tools/fire" element={<FirePage />} />
         <Route path="/tools/dca" element={<DcaPage />} />
