@@ -17,6 +17,7 @@ app.use(
       const allowedOrigins = new Set([
         'http://localhost:5173',
         'http://localhost:5174',
+        'http://localhost:5175',
         c.env.FRONTEND_ORIGIN,
       ])
       return allowedOrigins.has(origin) ? origin : null

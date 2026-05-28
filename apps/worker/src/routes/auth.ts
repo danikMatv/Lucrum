@@ -35,22 +35,31 @@ const setAuthCookies = (c: Context, accessToken: string, refreshToken: string) =
   setCookie(c, 'access_token', accessToken, {
     httpOnly: true,
     secure,
-    sameSite: 'Lax',
+    sameSite: secure ? 'None' : 'Lax',
     maxAge: 15 * 60,
     path: '/',
   })
   setCookie(c, 'refresh_token', refreshToken, {
     httpOnly: true,
     secure,
-    sameSite: 'Lax',
+    sameSite: secure ? 'None' : 'Lax',
     maxAge: 7 * 24 * 60 * 60,
     path: '/',
   })
 }
 
 const clearAuthCookies = (c: Context) => {
-  deleteCookie(c, 'access_token', { path: '/' })
-  deleteCookie(c, 'refresh_token', { path: '/' })
+  const secure = new URL(c.req.url).protocol === 'https:'
+  deleteCookie(c, 'access_token', {
+    path: '/',
+    secure,
+    sameSite: secure ? 'None' : 'Lax',
+  })
+  deleteCookie(c, 'refresh_token', {
+    path: '/',
+    secure,
+    sameSite: secure ? 'None' : 'Lax',
+  })
 }
 
 auth.post('/register', zValidator('json', registerSchema, validatorHook), async (c) => {
@@ -106,10 +115,11 @@ auth.post('/refresh', async (c) => {
     }
 
     const accessToken = await signAccessToken(mapUser(user), c.env.JWT_SECRET)
+    const secure = new URL(c.req.url).protocol === 'https:'
     setCookie(c, 'access_token', accessToken, {
       httpOnly: true,
-      secure: new URL(c.req.url).protocol === 'https:',
-      sameSite: 'Lax',
+      secure,
+      sameSite: secure ? 'None' : 'Lax',
       maxAge: 15 * 60,
       path: '/',
     })
