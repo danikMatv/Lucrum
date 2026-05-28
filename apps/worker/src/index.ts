@@ -1,17 +1,44 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
+import admin from './routes/admin'
+import auth from './routes/auth'
+import companies from './routes/companies'
+import dashboard from './routes/dashboard'
+import tools from './routes/tools'
+import type { AppEnv } from './types'
+import { createError } from './utils/response'
 
-type Bindings = {
-  DB: D1Database
-  KV: KVNamespace
-  JWT_SECRET: string
-  FMP_API_KEY: string
-}
+const app = new Hono<AppEnv>()
 
-const app = new Hono<{ Bindings: Bindings }>()
-
-app.use('*', cors())
+app.use(
+  '*',
+  cors({
+    origin: (origin, c) => {
+      const allowedOrigins = new Set([
+        'http://localhost:5173',
+        'http://localhost:5174',
+        c.env.FRONTEND_ORIGIN,
+      ])
+      return allowedOrigins.has(origin) ? origin : null
+    },
+    allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  }),
+)
 
 app.get('/', (c) => c.json({ status: 'ok', project: 'Lucrum API' }))
+
+app.route('/api/auth', auth)
+app.route('/api/companies', companies)
+app.route('/api/tools', tools)
+app.route('/api/dashboard', dashboard)
+app.route('/api/admin', admin)
+
+app.notFound((c) => c.json(createError('NOT_FOUND', 'Route not found'), 404))
+
+app.onError((error, c) => {
+  return c.json(createError('INTERNAL_ERROR', error.message || 'Internal server error'), 500)
+})
 
 export default app

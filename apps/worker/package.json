@@ -4,17 +4,26 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "wrangler dev",
+    "build": "wrangler build",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "wrangler d1 migrations apply DB",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260527.1",
     "typescript": "~6.0.3",
     "wrangler": "^4.94.0"
   },
   "dependencies": {
-    "hono": "^4.12.23"
+    "@hono/zod-validator": "^0.8.0",
+    "hono": "^4.12.23",
+    "jose": "^6.2.3",
+    "zod": "^4.4.3"
   }
 }
