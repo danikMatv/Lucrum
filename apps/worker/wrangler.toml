@@ -1,17 +1,17 @@
 name = "lucrum-worker"
 main = "src/index.ts"
-compatibility_date = "2026-05-28"
+compatibility_date = "2025-01-01"
 
 [vars]
 YAHOO_FINANCE_BASE_URL = "https://query1.finance.yahoo.com"
-FRONTEND_ORIGIN = "http://localhost:5173"
+FRONTEND_ORIGIN = "https://lucrum.pages.dev"
 
 [[d1_databases]]
 binding = "DB"
 database_name = "lucrum-db"
-database_id = "placeholder"
+database_id = "2db2fe8a-2fca-4325-978b-43ec94263329"
 migrations_dir = "src/db/migrations"
 
 [[kv_namespaces]]
 binding = "KV"
-id = "placeholder"
+id = "aa9497b19f5e4431b1d6f45a9abc1336"
