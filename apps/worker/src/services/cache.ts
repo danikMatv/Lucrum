@@ -2,6 +2,7 @@ export const CacheTtl = {
   company: 60 * 60,
   fundamentals: 6 * 60 * 60,
   history: 24 * 60 * 60,
+  quote: 15 * 60,
   search: 60 * 60,
 } as const
 

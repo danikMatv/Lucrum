@@ -56,6 +56,13 @@ export interface StockHistory {
   prices: number[]
 }
 
+export interface StockQuote {
+  ticker: string
+  price: number
+  currency: string | null
+  marketTime: string | null
+}
+
 export interface DcaResult {
   ticker: string
   amount: number

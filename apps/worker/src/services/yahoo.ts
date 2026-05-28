@@ -3,9 +3,23 @@ export interface StockHistory {
   prices: number[]
 }
 
+export interface StockQuote {
+  ticker: string
+  price: number
+  currency: string | null
+  marketTime: string | null
+}
+
 interface YahooChartResponse {
   chart?: {
     result?: Array<{
+      meta?: {
+        symbol?: string
+        regularMarketPrice?: number
+        previousClose?: number
+        currency?: string
+        regularMarketTime?: number
+      }
       timestamp?: number[]
       indicators?: {
         quote?: Array<{
@@ -48,4 +62,32 @@ export const getYahooHistory = async (
   })
 
   return { dates, prices: validPrices }
+}
+
+export const getYahooQuote = async (baseUrl: string, ticker: string): Promise<StockQuote> => {
+  const normalizedTicker = ticker.toUpperCase()
+  const url = new URL(`/v8/finance/chart/${normalizedTicker}`, baseUrl)
+  url.searchParams.set('range', '1d')
+  url.searchParams.set('interval', '1d')
+
+  const response = await fetch(url.toString())
+  if (!response.ok) {
+    throw new Error(`Yahoo Finance quote request failed with ${response.status}`)
+  }
+
+  const data = (await response.json()) as YahooChartResponse
+  const meta = data.chart?.result?.at(0)?.meta
+  const price = meta?.regularMarketPrice ?? meta?.previousClose
+  if (typeof price !== 'number' || !Number.isFinite(price)) {
+    throw new Error('Yahoo Finance returned no quote price')
+  }
+
+  return {
+    ticker: meta?.symbol?.toUpperCase() ?? normalizedTicker,
+    price,
+    currency: meta?.currency ?? null,
+    marketTime: meta?.regularMarketTime
+      ? new Date(meta.regularMarketTime * 1000).toISOString()
+      : null,
+  }
 }

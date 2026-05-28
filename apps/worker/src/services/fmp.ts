@@ -1,5 +1,5 @@
 import type { Company, CompanyFundamentals } from '../types'
-import type { StockHistory } from './yahoo'
+import type { StockHistory, StockQuote } from './yahoo'
 
 interface FmpSearchResult {
   symbol?: string
@@ -150,6 +150,22 @@ export const getFmpCompanyProfile = async (ticker: string, apiKey: string): Prom
     industry: profile.industry ?? null,
     description: profile.description ?? null,
   })
+}
+
+export const getFmpQuote = async (ticker: string, apiKey: string): Promise<StockQuote> => {
+  const normalizedTicker = ticker.toUpperCase()
+  const results = await fetchFmp<FmpProfileResult[]>(`/v3/profile/${normalizedTicker}`, apiKey)
+  const profile = results.at(0)
+  if (typeof profile?.price !== 'number' || !Number.isFinite(profile.price)) {
+    throw new Error('FMP returned no quote price')
+  }
+
+  return {
+    ticker: profile.symbol?.toUpperCase() ?? normalizedTicker,
+    price: profile.price,
+    currency: null,
+    marketTime: null,
+  }
 }
 
 export const getFmpFundamentals = async (

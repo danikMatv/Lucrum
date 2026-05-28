@@ -20,7 +20,8 @@
     "loading": "Chargement..."
   },
   "errors": {
-    "generic": "Une erreur est survenue. Veuillez réessayer."
+    "generic": "Une erreur est survenue. Veuillez réessayer.",
+    "validation": "Vérifiez les champs saisis puis réessayez."
   },
   "tools": {
     "common": {
@@ -166,6 +167,11 @@
         "conservative": "20 % Prudent",
         "moderate": "30 % Modéré",
         "aggressive": "40 % Agressif"
+      },
+      "lookup": {
+        "title": "Données du ticker",
+        "updated": "Les champs live disponibles ont été chargés. Vérifiez les hypothèses avant de vous fier au résultat DCF.",
+        "noData": "Les données live de ce ticker sont indisponibles pour le moment. Vous pouvez toujours modifier l'EPS et le prix de marché manuellement."
       },
       "hero": {
         "fairPrice": "Juste valeur {{ticker}}",
@@ -359,6 +365,20 @@
     "kicker": "Tarifs",
     "title": "Commencez gratuitement. Passez au niveau supérieur quand vous avez besoin de plus de signal.",
     "description": "Lucrum reste gratuit pour la planification de base. Pro ajoute les espaces enregistrés, listes de suivi, exports et données de marché enrichies.",
+    "stub": {
+      "title": "Les tarifs ne sont pas encore disponibles.",
+      "description": "Pour l'instant, Lucrum se concentre sur les calculateurs, les pages d'apprentissage et la première version de l'espace investisseur.",
+      "cardKicker": "Plus tard",
+      "cardTitle": "Aucune offre payante n'est active",
+      "cardText": "Nous ajouterons les tarifs seulement quand le produit sera assez utile pour les mériter. En attendant, les outils disponibles restent libres d'accès.",
+      "items": {
+        "tools": "Tous les calculateurs actuels restent disponibles.",
+        "account": "Les comptes et espaces sauvegardés sont encore en construction.",
+        "notice": "Les offres payantes seront annoncées clairement avant tout changement."
+      },
+      "toolsCta": "Utiliser les outils",
+      "learnCta": "Ouvrir l'apprentissage"
+    },
     "popular": "Populaire",
     "plans": {
       "free": {

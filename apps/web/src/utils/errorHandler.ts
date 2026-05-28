@@ -7,17 +7,40 @@ const isApiErrorResponse = (value: unknown): value is Extract<ApiResponse<unknow
   return candidate.success === false && typeof candidate.error?.message === 'string'
 }
 
-export const parseApiError = (error: unknown, fallbackMessage = 'Something went wrong. Please try again.') => {
+const isValidationIssue = (value: unknown): value is { message: string } => {
+  if (!value || typeof value !== 'object') return false
+  const candidate = value as { message?: unknown }
+  return typeof candidate.message === 'string'
+}
+
+const parseValidationMessage = (message: string, validationMessage?: string) => {
+  try {
+    const parsed = JSON.parse(message) as unknown
+    if (Array.isArray(parsed) && parsed.some(isValidationIssue)) {
+      return validationMessage ?? parsed.find(isValidationIssue)?.message ?? message
+    }
+  } catch {
+    return message
+  }
+
+  return message
+}
+
+export const parseApiError = (
+  error: unknown,
+  fallbackMessage = 'Something went wrong. Please try again.',
+  validationMessage?: string,
+) => {
   if (error instanceof AxiosError) {
     const response = error.response?.data
     if (isApiErrorResponse(response)) {
-      return response.error.message
+      return parseValidationMessage(response.error.message, validationMessage)
     }
-    return error.message
+    return parseValidationMessage(error.message, validationMessage)
   }
 
   if (error instanceof Error) {
-    return error.message
+    return parseValidationMessage(error.message, validationMessage)
   }
 
   return fallbackMessage

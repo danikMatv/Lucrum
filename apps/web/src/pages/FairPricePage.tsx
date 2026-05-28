@@ -8,6 +8,8 @@ import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { calculateFairPrice, type MarginOfSafety } from '../utils/fairPrice.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import { companiesService } from '../services/companiesService.ts'
+import { toolsService } from '../services/toolsService.ts'
+import { parseApiError } from '../utils/errorHandler.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -28,31 +30,52 @@ export const FairPricePage = () => {
   const [terminalGrowth, setTerminalGrowth] = useState(3)
   const [discountRate, setDiscountRate] = useState(10)
   const [marginOfSafety, setMarginOfSafety] = useState<MarginOfSafety>(30)
+  const [lookupNotice, setLookupNotice] = useState('')
 
   const fundamentalsMutation = useMutation({
     mutationFn: async (tickerValue: string) => {
       const normalizedTicker = normalizeCompanyQuery(tickerValue) || 'AAPL'
-      const [companyResult, fundamentalsResult] = await Promise.allSettled([
+      const [companyResult, fundamentalsResult, quoteResult] = await Promise.allSettled([
         companiesService.getByTicker(normalizedTicker),
         companiesService.getFundamentals(normalizedTicker),
+        toolsService.getQuote(normalizedTicker),
       ])
+      const fundamentals =
+        fundamentalsResult.status === 'fulfilled' ? fundamentalsResult.value : null
+      const quote = quoteResult.status === 'fulfilled' ? quoteResult.value : null
 
       return {
         ticker: companyResult.status === 'fulfilled' ? companyResult.value.ticker : normalizedTicker,
-        fundamentals: fundamentalsResult.status === 'fulfilled' ? fundamentalsResult.value : null,
+        fundamentals,
+        quote,
       }
     },
-    onSuccess: ({ ticker: nextTicker, fundamentals }) => {
+    onSuccess: ({ ticker: nextTicker, fundamentals, quote }) => {
+      let updatedFields = 0
+
       setTicker(nextTicker)
-      if (fundamentals?.epsTtm) {
+      if (fundamentals?.epsTtm && fundamentals.epsTtm > 0) {
         setEps(Number(fundamentals.epsTtm.toFixed(2)))
+        updatedFields += 1
       }
-      if (fundamentals?.peRatio && fundamentals.epsTtm) {
+
+      if (quote?.price && quote.price > 0) {
+        setMarketPrice(Number(quote.price.toFixed(2)))
+        updatedFields += 1
+      } else if (fundamentals?.peRatio && fundamentals.peRatio > 0 && fundamentals.epsTtm && fundamentals.epsTtm > 0) {
         setMarketPrice(Number((fundamentals.peRatio * fundamentals.epsTtm).toFixed(2)))
+        updatedFields += 1
       }
+
+      setLookupNotice(
+        updatedFields > 0
+          ? t('tools.fairPrice.lookup.updated')
+          : t('tools.fairPrice.lookup.noData'),
+      )
     },
-    onError: () => {
+    onError: (error) => {
       setTicker((currentTicker) => normalizeCompanyQuery(currentTicker) || 'AAPL')
+      setLookupNotice(parseApiError(error, t('errors.generic'), t('errors.validation')))
     },
   })
 
@@ -72,6 +95,7 @@ export const FairPricePage = () => {
   const isUndervalued = result.verdict === 'undervalued'
 
   const handleCalculate = () => {
+    setLookupNotice('')
     fundamentalsMutation.mutate(ticker)
   }
 
@@ -113,6 +137,15 @@ export const FairPricePage = () => {
   return (
     <SidebarLayout title={t('tools.fairPrice.title')} description={t('tools.fairPrice.description')} sidebar={sidebar}>
       <div className="grid gap-5">
+        {lookupNotice ? (
+          <Panel>
+            <p className="text-sm font-semibold uppercase text-primary">
+              {t('tools.fairPrice.lookup.title')}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">{lookupNotice}</p>
+          </Panel>
+        ) : null}
+
         <div className="grid gap-4 lg:grid-cols-2">
           <HeroMetric label={t('tools.fairPrice.hero.fairPrice', { ticker: normalizeCompanyQuery(ticker) })} value={currency.format(result.fairPrice)} />
           <HeroMetric label={t('tools.fairPrice.hero.safeBuy')} value={currency.format(result.safeBuyPrice)} tone="success" />

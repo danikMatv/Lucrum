@@ -3,6 +3,10 @@ import type { FormEvent } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import {
+  CompanySearchInput,
+  type CompanySuggestion,
+} from '../components/calculators/CompanySearchInput.tsx'
 import { dashboardService } from '../services/dashboardService.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
 import { parseApiError } from '../utils/errorHandler.ts'
@@ -51,7 +55,13 @@ export const DashboardPage = () => {
   })
 
   const addWatchlistMutation = useMutation({
-    mutationFn: () => dashboardService.addToWatchlist(ticker.trim(), companyName.trim()),
+    mutationFn: () => {
+      const normalizedTicker = ticker.trim().toUpperCase()
+      return dashboardService.addToWatchlist(
+        normalizedTicker,
+        companyName.trim() || normalizedTicker,
+      )
+    },
     onSuccess: async () => {
       setTicker('')
       setCompanyName('')
@@ -75,7 +85,7 @@ export const DashboardPage = () => {
       watchlistQuery.error ??
       addWatchlistMutation.error ??
       removeWatchlistMutation.error
-    return error ? parseApiError(error, t('errors.generic')) : ''
+    return error ? parseApiError(error, t('errors.generic'), t('errors.validation')) : ''
   }, [
     addWatchlistMutation.error,
     calculationsQuery.error,
@@ -88,6 +98,11 @@ export const DashboardPage = () => {
     event.preventDefault()
     if (!ticker.trim()) return
     addWatchlistMutation.mutate()
+  }
+
+  const handleCompanySelect = (company: CompanySuggestion) => {
+    setTicker(company.ticker)
+    setCompanyName(company.name)
   }
 
   const handleLogout = () => {
@@ -174,25 +189,21 @@ export const DashboardPage = () => {
 
           <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
             <h2 className="text-xl font-bold text-text-primary">{t('dashboard.watchlist.title')}</h2>
-            <form onSubmit={handleAddWatchlist} className="mt-5 grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
-              <input
-                type="text"
+            <form onSubmit={handleAddWatchlist} className="mt-5 grid gap-3 sm:grid-cols-[1fr_auto]">
+              <CompanySearchInput
+                id="dashboard-watchlist-ticker"
+                label={t('dashboard.watchlist.tickerPlaceholder')}
                 value={ticker}
-                onChange={(event) => setTicker(event.target.value)}
-                placeholder={t('dashboard.watchlist.tickerPlaceholder')}
-                className="rounded-md border-[0.5px] border-border bg-surface-alt px-3 py-2 text-sm text-text-primary outline-none transition placeholder:text-text-subtle focus:border-primary"
-              />
-              <input
-                type="text"
-                value={companyName}
-                onChange={(event) => setCompanyName(event.target.value)}
-                placeholder={t('dashboard.watchlist.companyPlaceholder')}
-                className="rounded-md border-[0.5px] border-border bg-surface-alt px-3 py-2 text-sm text-text-primary outline-none transition placeholder:text-text-subtle focus:border-primary"
+                onChange={(value) => {
+                  setTicker(value)
+                  setCompanyName('')
+                }}
+                onSelect={handleCompanySelect}
               />
               <button
                 type="submit"
-                disabled={addWatchlistMutation.isPending}
-                className="rounded-md bg-primary px-4 py-2 text-sm font-bold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={addWatchlistMutation.isPending || !ticker.trim()}
+                className="self-end rounded-md bg-primary px-4 py-2 text-sm font-bold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {addWatchlistMutation.isPending ? t('common.loading') : t('dashboard.watchlist.add')}
               </button>

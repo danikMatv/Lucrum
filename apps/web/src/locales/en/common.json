@@ -20,7 +20,8 @@
     "loading": "Loading..."
   },
   "errors": {
-    "generic": "Something went wrong. Please try again."
+    "generic": "Something went wrong. Please try again.",
+    "validation": "Please check the entered fields and try again."
   },
   "tools": {
     "common": {
@@ -166,6 +167,11 @@
         "conservative": "20% Conservative",
         "moderate": "30% Moderate",
         "aggressive": "40% Aggressive"
+      },
+      "lookup": {
+        "title": "Ticker data",
+        "updated": "Live fields were loaded where available. Review the assumptions before relying on the DCF result.",
+        "noData": "Live data is unavailable for this ticker right now. You can still edit EPS and market price manually."
       },
       "hero": {
         "fairPrice": "{{ticker}} fair price",
@@ -359,6 +365,20 @@
     "kicker": "Pricing",
     "title": "Start free. Upgrade when you need more signal.",
     "description": "Lucrum is free for core planning. Pro adds saved workspaces, watchlists, exports, and richer market data when you are ready.",
+    "stub": {
+      "title": "Pricing is not available yet.",
+      "description": "For now, Lucrum is focused on the calculators, learning pages, and the first version of the investor workspace.",
+      "cardKicker": "Coming later",
+      "cardTitle": "No paid plans are active right now",
+      "cardText": "We will add pricing only after the product is useful enough to deserve it. Until then, keep using the available tools freely.",
+      "items": {
+        "tools": "All current calculators remain available.",
+        "account": "Accounts and saved workspaces are still being shaped.",
+        "notice": "Paid plans will be announced clearly before anything changes."
+      },
+      "toolsCta": "Use tools",
+      "learnCta": "Open learning"
+    },
     "popular": "Popular",
     "plans": {
       "free": {

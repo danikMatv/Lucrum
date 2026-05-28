@@ -5,8 +5,9 @@ import { z } from 'zod'
 import { logToolUsage } from '../db/queries'
 import { getOptionalUser } from '../middleware/auth'
 import { CacheTtl, getJsonCache, putJsonCache } from '../services/cache'
-import { getFmpHistoricalPrices } from '../services/fmp'
-import { getYahooHistory, type StockHistory } from '../services/yahoo'
+import { getFmpHistoricalPrices, getFmpQuote } from '../services/fmp'
+import { getStooqQuote } from '../services/stooq'
+import { getYahooHistory, getYahooQuote, type StockHistory, type StockQuote } from '../services/yahoo'
 import type { AppEnv } from '../types'
 import { calculateDca, calculateMockDca } from '../utils/dca'
 import { createError, createSuccess } from '../utils/response'
@@ -16,6 +17,10 @@ const tools = new Hono<AppEnv>()
 const stockHistorySchema = z.object({
   ticker: z.string().min(1).max(12),
   period: z.string().min(2).max(10).default('5y'),
+})
+
+const quoteSchema = z.object({
+  ticker: z.string().min(1).max(12),
 })
 
 const dcaSchema = z.object({
@@ -77,6 +82,29 @@ const getHistory = async (c: Context, ticker: string, period: string) => {
   return history
 }
 
+const getQuote = async (c: Context, ticker: string) => {
+  const normalizedTicker = ticker.toUpperCase()
+  const cacheKey = `quote:${normalizedTicker}`
+  const cached = await getJsonCache<StockQuote>(c.env.KV, cacheKey)
+  if (cached) {
+    return cached
+  }
+
+  let quote: StockQuote
+  try {
+    quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
+  } catch {
+    try {
+      quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
+    } catch {
+      quote = await getStooqQuote(normalizedTicker)
+    }
+  }
+
+  await putJsonCache(c.env.KV, cacheKey, quote, CacheTtl.quote)
+  return quote
+}
+
 tools.get('/stock-history', zValidator('query', stockHistorySchema, validatorHook), async (c) => {
   const { ticker, period } = c.req.valid('query')
   const normalizedTicker = ticker.toUpperCase()
@@ -87,6 +115,19 @@ tools.get('/stock-history', zValidator('query', stockHistorySchema, validatorHoo
     return c.json(createSuccess(history))
   } catch {
     return c.json(createError('HISTORY_FETCH_FAILED', 'Stock history fetch failed'), 502)
+  }
+})
+
+tools.get('/quote', zValidator('query', quoteSchema, validatorHook), async (c) => {
+  const { ticker } = c.req.valid('query')
+  const normalizedTicker = ticker.toUpperCase()
+  c.executionCtx.waitUntil(logUsage(c, 'QUOTE', normalizedTicker).catch(() => undefined))
+
+  try {
+    const quote = await getQuote(c, normalizedTicker)
+    return c.json(createSuccess(quote))
+  } catch {
+    return c.json(createError('QUOTE_FETCH_FAILED', 'Quote fetch failed'), 502)
   }
 })
 
