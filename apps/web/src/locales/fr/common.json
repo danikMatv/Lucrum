@@ -466,6 +466,88 @@
         "cta": "Essayer Juste valeur ->"
       }
     },
+    "study": {
+      "kicker": "Parcours d'apprentissage",
+      "title": "Quoi apprendre en premier",
+      "description": "Un ordre pratique pour gagner en confiance avant de comparer des actions ou viser des stratégies complexes.",
+      "stepLabel": "Étape {{number}}",
+      "steps": {
+        "budget": {
+          "title": "Savoir combien investir",
+          "text": "Commencez par un montant mensuel que vous pouvez répéter sans fragiliser votre budget quotidien.",
+          "cta": "Planifier les versements ->"
+        },
+        "fire": {
+          "title": "Définir une cible",
+          "text": "Estimez la taille du portefeuille qui pourrait couvrir vos dépenses et transformez une idée vague en nombre.",
+          "cta": "Estimer FIRE ->"
+        },
+        "dca": {
+          "title": "Pratiquer l'investissement régulier",
+          "text": "Le DCA permet de voir comment la régularité se comporte selon les chemins de marché et les périodes.",
+          "cta": "Simuler le DCA ->"
+        },
+        "review": {
+          "title": "Analyser l'entreprise",
+          "text": "Regardez le chiffre d'affaires, le bénéfice, le cash-flow, la dette, la valorisation et la cohérence de l'histoire.",
+          "cta": "Analyser une action ->"
+        }
+      }
+    },
+    "glossary": {
+      "kicker": "Glossaire",
+      "title": "Termes que vous verrez souvent",
+      "terms": {
+        "cagr": {
+          "term": "CAGR",
+          "definition": "Taux de croissance annuel composé. Il montre la croissance annuelle lissée sur une période."
+        },
+        "eps": {
+          "term": "BPA",
+          "definition": "Bénéfice par action. Il indique la part de bénéfice attribuée à une action."
+        },
+        "pe": {
+          "term": "Ratio P/E",
+          "definition": "Prix divisé par bénéfices. Une façon rapide de comparer le prix aux profits actuels."
+        },
+        "fcf": {
+          "term": "Free cash-flow",
+          "definition": "Trésorerie restante après les opérations et les investissements nécessaires de l'entreprise."
+        },
+        "swr": {
+          "term": "SWR",
+          "definition": "Taux de retrait soutenable. Les plans FIRE l'utilisent souvent pour estimer les retraits annuels."
+        },
+        "margin": {
+          "term": "Marge de sécurité",
+          "definition": "Un coussin entre votre valeur estimée et le prix que vous êtes prêt à payer."
+        }
+      }
+    },
+    "resources": {
+      "kicker": "Liens utiles",
+      "title": "Sources externes à garder",
+      "description": "Des ressources neutres pour les bases, les calculateurs, les données de marché et le contexte économique.",
+      "open": "Ouvrir la ressource ->",
+      "links": {
+        "investorIntro": {
+          "title": "Investor.gov : introduction à l'investissement",
+          "text": "Une ressource SEC accessible sur les objectifs, le risque, la diversification et la protection des investisseurs."
+        },
+        "compoundCalc": {
+          "title": "Investor.gov : calculateur d'intérêts composés",
+          "text": "Un calculateur officiel simple pour tester le temps, les versements et le rendement attendu."
+        },
+        "finraBasics": {
+          "title": "FINRA : bases de l'investissement",
+          "text": "Des explications claires sur les classes d'actifs, le risque, la diversification et les bases du marché."
+        },
+        "fred": {
+          "title": "FRED : données économiques",
+          "text": "Une base gratuite de la Federal Reserve Bank of St. Louis pour l'inflation, les taux, le PIB et plus encore."
+        }
+      }
+    },
     "faq": {
       "kicker": "FAQ",
       "title": "Questions de débutant",

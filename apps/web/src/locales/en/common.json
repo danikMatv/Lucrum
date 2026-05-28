@@ -466,6 +466,88 @@
         "cta": "Try Fair Price ->"
       }
     },
+    "study": {
+      "kicker": "Study path",
+      "title": "What to learn first",
+      "description": "A practical order for building confidence before you compare stocks or chase complex strategies.",
+      "stepLabel": "Step {{number}}",
+      "steps": {
+        "budget": {
+          "title": "Know how much you can invest",
+          "text": "Start with a monthly amount you can repeat without breaking your everyday budget.",
+          "cta": "Plan contributions ->"
+        },
+        "fire": {
+          "title": "Set a target",
+          "text": "Estimate the portfolio size that could support your expenses and turn a vague dream into a number.",
+          "cta": "Estimate FIRE ->"
+        },
+        "dca": {
+          "title": "Practice regular investing",
+          "text": "Use DCA to see how consistency behaves across different market paths and time periods.",
+          "cta": "Simulate DCA ->"
+        },
+        "review": {
+          "title": "Review the business",
+          "text": "Check revenue, profit, cash flow, debt, valuation, and whether the story still makes sense.",
+          "cta": "Analyze a stock ->"
+        }
+      }
+    },
+    "glossary": {
+      "kicker": "Glossary",
+      "title": "Terms you will see often",
+      "terms": {
+        "cagr": {
+          "term": "CAGR",
+          "definition": "Compound annual growth rate. It shows the smoothed yearly growth rate over a period."
+        },
+        "eps": {
+          "term": "EPS",
+          "definition": "Earnings per share. It tells you how much profit belongs to one share."
+        },
+        "pe": {
+          "term": "P/E ratio",
+          "definition": "Price divided by earnings. It is a quick way to compare price with current profits."
+        },
+        "fcf": {
+          "term": "Free cash flow",
+          "definition": "Cash left after a company pays for operations and necessary investments."
+        },
+        "swr": {
+          "term": "SWR",
+          "definition": "Safe withdrawal rate. FIRE plans often use it to estimate sustainable yearly withdrawals."
+        },
+        "margin": {
+          "term": "Margin of safety",
+          "definition": "A buffer between your estimated value and the price you are willing to pay."
+        }
+      }
+    },
+    "resources": {
+      "kicker": "Useful links",
+      "title": "External sources worth bookmarking",
+      "description": "Neutral resources for basics, calculators, market data, and economic context.",
+      "open": "Open resource ->",
+      "links": {
+        "investorIntro": {
+          "title": "Investor.gov: introduction to investing",
+          "text": "A beginner-friendly SEC resource on goals, risk, diversification, and investor protection."
+        },
+        "compoundCalc": {
+          "title": "Investor.gov compound interest calculator",
+          "text": "A simple official calculator for testing time, contributions, and expected return."
+        },
+        "finraBasics": {
+          "title": "FINRA investing basics",
+          "text": "Plain-language guidance on asset classes, risk, diversification, and market basics."
+        },
+        "fred": {
+          "title": "FRED economic data",
+          "text": "A free database from the Federal Reserve Bank of St. Louis for inflation, rates, GDP, and more."
+        }
+      }
+    },
     "faq": {
       "kicker": "FAQ",
       "title": "Beginner questions",
