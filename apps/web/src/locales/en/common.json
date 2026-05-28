@@ -10,7 +10,224 @@
   "buttons": {
     "login": "Log in",
     "getStarted": "Get Started",
-    "backHome": "Back home"
+    "backHome": "Back home",
+    "calculate": "Calculate",
+    "analyze": "Analyze"
+  },
+  "tools": {
+    "common": {
+      "allTools": "All tools",
+      "inputs": "Inputs",
+      "year": "Year"
+    },
+    "invest": {
+      "title": "Invest Calculator",
+      "description": "Project recurring investments, returns, inflation, and contribution growth over time.",
+      "inputs": {
+        "years": "Planning horizon",
+        "startingCapital": "Starting capital",
+        "contribution": "Contribution amount",
+        "frequency": "Contribution frequency",
+        "return": "Expected annual return",
+        "inflation": "Inflation rate",
+        "contributionGrowth": "Annual contribution growth"
+      },
+      "frequency": {
+        "monthly": "Monthly",
+        "quarterly": "Quarterly",
+        "yearly": "Yearly"
+      },
+      "hero": {
+        "real": "Real value",
+        "nominal": "Nominal value",
+        "helper": "Projected after {{years}} years."
+      },
+      "toggle": {
+        "label": "Display mode",
+        "real": "Real",
+        "nominal": "Nominal"
+      },
+      "stats": {
+        "totalContributions": "Total contributions",
+        "netProfit": "Net profit",
+        "nominalValue": "Nominal value",
+        "inflationLoss": "Inflation loss"
+      },
+      "chart": {
+        "title": "Portfolio growth",
+        "nominal": "Nominal",
+        "real": "Real"
+      },
+      "table": {
+        "title": "Yearly details",
+        "contributionYear": "Contribution/year",
+        "totalContributed": "Total contributed",
+        "nominal": "Nominal",
+        "real": "Real",
+        "profit": "Profit"
+      }
+    },
+    "fire": {
+      "title": "FIRE Calculator",
+      "description": "Estimate the portfolio needed for financial independence and the timeline to reach it.",
+      "inputs": {
+        "expenses": "Monthly expenses",
+        "portfolio": "Current portfolio",
+        "contribution": "Monthly contributions",
+        "return": "Annual return, real",
+        "swr": "Withdrawal rate"
+      },
+      "swr": {
+        "conservative": "3% Conservative",
+        "classic": "4% Classic",
+        "aggressive": "5% Aggressive"
+      },
+      "hero": {
+        "fireNumber": "FIRE number",
+        "fireNumberHelper": "Monthly expenses × 12 ÷ safe withdrawal rate.",
+        "years": "Years to FIRE",
+        "yearsValue": "{{years}} years"
+      },
+      "progress": {
+        "label": "Progress to FIRE"
+      },
+      "stats": {
+        "currentPortfolio": "Current portfolio",
+        "totalContributions": "Total contributions",
+        "growthProfit": "Growth profit",
+        "passiveIncome": "Monthly passive income"
+      },
+      "chart": {
+        "title": "Portfolio path",
+        "portfolio": "Portfolio"
+      },
+      "rule": {
+        "title": "4% Rule — Trinity Study",
+        "description": "The classic rule suggests a diversified portfolio can often support annual withdrawals near 4% of the starting balance. Use it as a planning shortcut, not a guarantee."
+      }
+    },
+    "dca": {
+      "title": "DCA Simulator",
+      "description": "Simulate recurring monthly investments with deterministic mock price data.",
+      "inputs": {
+        "ticker": "Ticker",
+        "monthly": "Monthly investment",
+        "startDate": "Start date",
+        "inflation": "Annual inflation"
+      },
+      "hero": {
+        "value": "{{ticker}} portfolio value",
+        "helper": "Uses generated S&P 500-like prices until market data is connected."
+      },
+      "stats": {
+        "invested": "Invested",
+        "profit": "Profit",
+        "return": "Return",
+        "averagePrice": "Average price"
+      },
+      "chart": {
+        "title": "Value vs invested",
+        "invested": "Invested",
+        "value": "Portfolio value"
+      },
+      "table": {
+        "title": "Investment stats",
+        "shares": "Shares accumulated",
+        "finalPrice": "Final mock price",
+        "months": "Months invested"
+      }
+    },
+    "fairPrice": {
+      "title": "Fair Price / DCF",
+      "description": "Estimate a fair value from EPS growth, terminal growth, discount rate, and margin of safety.",
+      "inputs": {
+        "ticker": "Company / ticker",
+        "eps": "EPS (TTM)",
+        "marketPrice": "Current market price",
+        "growth": "Growth rate, years 1-5",
+        "terminalGrowth": "Terminal growth rate",
+        "discount": "Discount rate",
+        "margin": "Margin of safety"
+      },
+      "margin": {
+        "conservative": "20% Conservative",
+        "moderate": "30% Moderate",
+        "aggressive": "40% Aggressive"
+      },
+      "hero": {
+        "fairPrice": "{{ticker}} fair price",
+        "safeBuy": "Safe buy price"
+      },
+      "stats": {
+        "marketPrice": "Market price",
+        "upside": "Upside / downside",
+        "forecastPv": "PV, years 1-5",
+        "terminalPv": "Terminal PV"
+      },
+      "verdict": {
+        "undervalued": "Undervalued",
+        "overvalued": "Overvalued",
+        "undervaluedText": "The market price is below the safety-adjusted buy price.",
+        "overvaluedText": "The market price is above the safety-adjusted buy price."
+      },
+      "table": {
+        "title": "DCF breakdown",
+        "eps": "EPS forecast",
+        "discountFactor": "Discount factor",
+        "presentValue": "Present value",
+        "terminal": "Terminal value",
+        "yearFive": "Year 5"
+      },
+      "formula": {
+        "title": "Formula",
+        "text": "Sum PV (years 1-5) + Terminal PV = Fair Price."
+      },
+      "how": {
+        "title": "How it works",
+        "text": "Think of a company like an apple tree. EPS is the apples it produces today, growth estimates more apples in the next five years, and the discount rate asks what those future apples are worth in today's money."
+      }
+    },
+    "stock": {
+      "title": "Stock Analysis",
+      "description": "Review mock company fundamentals and a simple valuation verdict before live data is connected.",
+      "inputs": {
+        "ticker": "Ticker / company name"
+      },
+      "price": {
+        "current": "Current price",
+        "high": "52w high",
+        "low": "52w low"
+      },
+      "metrics": {
+        "pe": "P/E ratio",
+        "eps": "EPS",
+        "marketCap": "Market Cap",
+        "revenue": "Revenue",
+        "netIncome": "Net Income",
+        "fcf": "FCF",
+        "debt": "Debt/Equity",
+        "dividend": "Dividend Yield"
+      },
+      "chart": {
+        "title": "Revenue vs Net Income",
+        "revenue": "Revenue",
+        "netIncome": "Net Income"
+      },
+      "verdict": {
+        "strong": {
+          "title": "Attractive fundamentals",
+          "text": "The mock profile has a reasonable valuation, manageable leverage, and healthy cash generation."
+        },
+        "balanced": {
+          "title": "Balanced profile",
+          "text": "The mock profile looks financially strong, but valuation is not obviously cheap."
+        },
+        "expensive": {
+          "title": "Expensive or higher risk",
+          "text": "The mock profile suggests investors should demand a larger margin of safety."
+        }
+      }
+    }
   },
   "landing": {
     "hero": {

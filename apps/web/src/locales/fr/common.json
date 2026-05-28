@@ -10,7 +10,224 @@
   "buttons": {
     "login": "Connexion",
     "getStarted": "Commencer",
-    "backHome": "Accueil"
+    "backHome": "Accueil",
+    "calculate": "Calculer",
+    "analyze": "Analyser"
+  },
+  "tools": {
+    "common": {
+      "allTools": "Tous les outils",
+      "inputs": "Paramètres",
+      "year": "Année"
+    },
+    "invest": {
+      "title": "Calculateur d'investissement",
+      "description": "Projetez des investissements réguliers avec rendement, inflation et hausse des versements.",
+      "inputs": {
+        "years": "Horizon de planification",
+        "startingCapital": "Capital initial",
+        "contribution": "Montant du versement",
+        "frequency": "Fréquence des versements",
+        "return": "Rendement annuel attendu",
+        "inflation": "Taux d'inflation",
+        "contributionGrowth": "Hausse annuelle des versements"
+      },
+      "frequency": {
+        "monthly": "Mensuelle",
+        "quarterly": "Trimestrielle",
+        "yearly": "Annuelle"
+      },
+      "hero": {
+        "real": "Valeur réelle",
+        "nominal": "Valeur nominale",
+        "helper": "Projection après {{years}} ans."
+      },
+      "toggle": {
+        "label": "Mode d'affichage",
+        "real": "Réel",
+        "nominal": "Nominal"
+      },
+      "stats": {
+        "totalContributions": "Versements totaux",
+        "netProfit": "Gain net",
+        "nominalValue": "Valeur nominale",
+        "inflationLoss": "Perte liée à l'inflation"
+      },
+      "chart": {
+        "title": "Croissance du portefeuille",
+        "nominal": "Nominal",
+        "real": "Réel"
+      },
+      "table": {
+        "title": "Détails annuels",
+        "contributionYear": "Versement/an",
+        "totalContributed": "Total versé",
+        "nominal": "Nominal",
+        "real": "Réel",
+        "profit": "Gain"
+      }
+    },
+    "fire": {
+      "title": "Calculateur FIRE",
+      "description": "Estimez le portefeuille nécessaire à l'indépendance financière et le délai pour l'atteindre.",
+      "inputs": {
+        "expenses": "Dépenses mensuelles",
+        "portfolio": "Portefeuille actuel",
+        "contribution": "Versements mensuels",
+        "return": "Rendement annuel réel",
+        "swr": "Taux de retrait"
+      },
+      "swr": {
+        "conservative": "3 % Prudent",
+        "classic": "4 % Classique",
+        "aggressive": "5 % Agressif"
+      },
+      "hero": {
+        "fireNumber": "Montant FIRE",
+        "fireNumberHelper": "Dépenses mensuelles × 12 ÷ taux de retrait prudent.",
+        "years": "Années avant FIRE",
+        "yearsValue": "{{years}} ans"
+      },
+      "progress": {
+        "label": "Progression vers FIRE"
+      },
+      "stats": {
+        "currentPortfolio": "Portefeuille actuel",
+        "totalContributions": "Versements totaux",
+        "growthProfit": "Gain de croissance",
+        "passiveIncome": "Revenu passif mensuel"
+      },
+      "chart": {
+        "title": "Trajectoire du portefeuille",
+        "portfolio": "Portefeuille"
+      },
+      "rule": {
+        "title": "Règle des 4 % — Trinity Study",
+        "description": "La règle classique suggère qu'un portefeuille diversifié peut souvent soutenir des retraits annuels proches de 4 % du capital initial. C'est un repère, pas une garantie."
+      }
+    },
+    "dca": {
+      "title": "Simulateur DCA",
+      "description": "Simulez des investissements mensuels avec des prix fictifs déterministes.",
+      "inputs": {
+        "ticker": "Ticker",
+        "monthly": "Investissement mensuel",
+        "startDate": "Date de début",
+        "inflation": "Inflation annuelle"
+      },
+      "hero": {
+        "value": "Valeur du portefeuille {{ticker}}",
+        "helper": "Utilise des prix générés de type S&P 500 jusqu'à la connexion aux données de marché."
+      },
+      "stats": {
+        "invested": "Investi",
+        "profit": "Gain",
+        "return": "Rendement",
+        "averagePrice": "Prix moyen"
+      },
+      "chart": {
+        "title": "Valeur vs investi",
+        "invested": "Investi",
+        "value": "Valeur du portefeuille"
+      },
+      "table": {
+        "title": "Statistiques d'investissement",
+        "shares": "Actions accumulées",
+        "finalPrice": "Dernier prix fictif",
+        "months": "Mois investis"
+      }
+    },
+    "fairPrice": {
+      "title": "Juste valeur / DCF",
+      "description": "Estimez une juste valeur avec EPS, croissance, taux d'actualisation et marge de sécurité.",
+      "inputs": {
+        "ticker": "Société / ticker",
+        "eps": "EPS (TTM)",
+        "marketPrice": "Prix de marché actuel",
+        "growth": "Croissance années 1-5",
+        "terminalGrowth": "Croissance terminale",
+        "discount": "Taux d'actualisation",
+        "margin": "Marge de sécurité"
+      },
+      "margin": {
+        "conservative": "20 % Prudent",
+        "moderate": "30 % Modéré",
+        "aggressive": "40 % Agressif"
+      },
+      "hero": {
+        "fairPrice": "Juste valeur {{ticker}}",
+        "safeBuy": "Prix d'achat prudent"
+      },
+      "stats": {
+        "marketPrice": "Prix de marché",
+        "upside": "Potentiel / baisse",
+        "forecastPv": "VA années 1-5",
+        "terminalPv": "VA terminale"
+      },
+      "verdict": {
+        "undervalued": "Sous-évaluée",
+        "overvalued": "Surévaluée",
+        "undervaluedText": "Le prix de marché est inférieur au prix d'achat ajusté par la marge de sécurité.",
+        "overvaluedText": "Le prix de marché est supérieur au prix d'achat ajusté par la marge de sécurité."
+      },
+      "table": {
+        "title": "Détail DCF",
+        "eps": "Prévision EPS",
+        "discountFactor": "Facteur d'actualisation",
+        "presentValue": "Valeur actuelle",
+        "terminal": "Valeur terminale",
+        "yearFive": "Année 5"
+      },
+      "formula": {
+        "title": "Formule",
+        "text": "Somme des VA (années 1-5) + VA terminale = juste valeur."
+      },
+      "how": {
+        "title": "Comment ça marche",
+        "text": "Imaginez une entreprise comme un pommier. L'EPS représente les pommes produites aujourd'hui, la croissance estime les pommes des cinq prochaines années, et le taux d'actualisation demande ce que ces pommes futures valent aujourd'hui."
+      }
+    },
+    "stock": {
+      "title": "Analyse d'action",
+      "description": "Consultez des fondamentaux fictifs et un verdict simple avant la connexion aux données réelles.",
+      "inputs": {
+        "ticker": "Ticker / nom de société"
+      },
+      "price": {
+        "current": "Prix actuel",
+        "high": "Plus haut 52 sem.",
+        "low": "Plus bas 52 sem."
+      },
+      "metrics": {
+        "pe": "Ratio P/E",
+        "eps": "EPS",
+        "marketCap": "Capitalisation",
+        "revenue": "Chiffre d'affaires",
+        "netIncome": "Résultat net",
+        "fcf": "FCF",
+        "debt": "Dette/Fonds propres",
+        "dividend": "Rendement du dividende"
+      },
+      "chart": {
+        "title": "Chiffre d'affaires vs résultat net",
+        "revenue": "Chiffre d'affaires",
+        "netIncome": "Résultat net"
+      },
+      "verdict": {
+        "strong": {
+          "title": "Fondamentaux attractifs",
+          "text": "Le profil fictif montre une valorisation raisonnable, un endettement maîtrisé et une bonne génération de trésorerie."
+        },
+        "balanced": {
+          "title": "Profil équilibré",
+          "text": "Le profil fictif semble solide, mais la valorisation n'est pas clairement bon marché."
+        },
+        "expensive": {
+          "title": "Cher ou plus risqué",
+          "text": "Le profil fictif suggère qu'une marge de sécurité plus élevée serait nécessaire."
+        }
+      }
+    }
   },
   "landing": {
     "hero": {

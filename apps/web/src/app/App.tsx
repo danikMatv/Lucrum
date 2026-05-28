@@ -1,23 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { DcaPage } from '../pages/DcaPage.tsx'
+import { FairPricePage } from '../pages/FairPricePage.tsx'
+import { FirePage } from '../pages/FirePage.tsx'
+import { InvestCalcPage } from '../pages/InvestCalcPage.tsx'
 import { LandingPage } from '../pages/LandingPage.tsx'
 import { PlaceholderPage } from '../pages/PlaceholderPage.tsx'
+import { StockPage } from '../pages/StockPage.tsx'
 
 const routes = [
   { path: '/learn', titleKey: 'pages.learn.title', descriptionKey: 'pages.learn.description' },
   { path: '/tools', titleKey: 'pages.tools.title', descriptionKey: 'pages.tools.description' },
-  {
-    path: '/tools/invest-calc',
-    titleKey: 'pages.investCalc.title',
-    descriptionKey: 'pages.investCalc.description',
-  },
-  { path: '/tools/fire', titleKey: 'pages.fire.title', descriptionKey: 'pages.fire.description' },
-  { path: '/tools/dca', titleKey: 'pages.dca.title', descriptionKey: 'pages.dca.description' },
-  {
-    path: '/tools/fair-price',
-    titleKey: 'pages.fairPrice.title',
-    descriptionKey: 'pages.fairPrice.description',
-  },
-  { path: '/tools/stock', titleKey: 'pages.stock.title', descriptionKey: 'pages.stock.description' },
   {
     path: '/dashboard',
     titleKey: 'pages.dashboard.title',
@@ -38,6 +30,11 @@ export const App = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/tools/invest-calc" element={<InvestCalcPage />} />
+        <Route path="/tools/fire" element={<FirePage />} />
+        <Route path="/tools/dca" element={<DcaPage />} />
+        <Route path="/tools/fair-price" element={<FairPricePage />} />
+        <Route path="/tools/stock" element={<StockPage />} />
         {routes.map((route) => (
           <Route
             key={route.path}
