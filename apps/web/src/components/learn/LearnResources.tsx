@@ -5,7 +5,6 @@ import { learnService, type LearnResourceInput } from '../../services/learnServi
 import { useAuthStore } from '../../store/useAuthStore.ts'
 import type { LearnResource, LearnResourceType } from '../../types/api.ts'
 import { UserRole } from '../../types/api.ts'
-import { parseApiError } from '../../utils/errorHandler.ts'
 
 interface LearnResourcesProps {
   topic: string
@@ -105,39 +104,27 @@ export const LearnResources = ({ topic }: LearnResourcesProps) => {
   const mutationError = addMutation.error ?? updateMutation.error ?? deleteMutation.error
 
   return (
-    <section className="rounded-lg border-[0.5px] border-border bg-surface p-6">
-      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p className="text-sm font-semibold uppercase text-primary">
-            {t('learnResources.kicker')}
-          </p>
-          <h2 className="mt-2 text-2xl font-bold text-text-primary">
-            {t('learnResources.title')}
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-text-muted">
-            {t('learnResources.description')}
-          </p>
-        </div>
-      </div>
+    <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+      <h2 className="text-xl font-bold text-text-primary">{t('learnResources.title')}</h2>
 
       {resourcesQuery.isLoading ? (
-        <p className="mt-6 text-sm text-text-muted">{t('learnResources.loading')}</p>
+        <p className="mt-5 text-sm text-text-muted">{t('learnResources.loading')}</p>
       ) : resourcesQuery.isError ? (
-        <p className="mt-6 rounded-md border-[0.5px] border-danger px-4 py-3 text-sm text-danger">
-          {parseApiError(resourcesQuery.error, t('learnResources.error'))}
+        <p className="mt-5 rounded-md border-[0.5px] border-border px-3 py-3 text-sm text-text-muted">
+          {t('learnResources.empty')}
         </p>
       ) : resources.length === 0 ? (
-        <p className="mt-6 rounded-md border-[0.5px] border-border px-4 py-3 text-sm text-text-muted">
+        <p className="mt-5 rounded-md border-[0.5px] border-border px-3 py-3 text-sm text-text-muted">
           {t('learnResources.empty')}
         </p>
       ) : (
-        <div className="mt-6 grid gap-3">
+        <div className="mt-5 grid gap-3">
           {resources.map((resource) => (
             <article
               key={resource.id}
-              className="rounded-md border-[0.5px] border-border p-4 transition hover:border-border-hover"
+              className="rounded-md border-[0.5px] border-border p-3 transition hover:border-border-hover"
             >
-              <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+              <div className="grid gap-3">
                 <div className="min-w-0">
                   <span className="inline-flex rounded-md bg-surface-hover px-2 py-1 text-xs font-bold uppercase text-primary">
                     {t(`learnResources.types.${resource.type}`)}
@@ -190,19 +177,19 @@ export const LearnResources = ({ topic }: LearnResourcesProps) => {
       {canManage ? (
         <form
           onSubmit={handleSubmit}
-          className="mt-6 grid gap-4 rounded-md border-[0.5px] border-border p-4"
+          className="mt-5 grid gap-4 rounded-md border-[0.5px] border-border p-3"
         >
-          <h3 className="text-lg font-bold text-text-primary">
+          <h3 className="text-base font-bold text-text-primary">
             {editingResource ? t('learnResources.editTitle') : t('learnResources.manageTitle')}
           </h3>
 
           {mutationError ? (
-            <p className="rounded-md border-[0.5px] border-danger px-4 py-3 text-sm text-danger">
-              {parseApiError(mutationError, t('learnResources.error'))}
+            <p className="rounded-md border-[0.5px] border-danger px-3 py-3 text-sm text-danger">
+              {t('learnResources.error')}
             </p>
           ) : null}
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4">
             <label className="grid gap-2 text-sm font-semibold text-text-muted">
               {t('learnResources.fields.title')}
               <input
@@ -244,7 +231,7 @@ export const LearnResources = ({ topic }: LearnResourcesProps) => {
               </select>
             </label>
 
-            <label className="grid gap-2 text-sm font-semibold text-text-muted md:col-span-2">
+            <label className="grid gap-2 text-sm font-semibold text-text-muted">
               {t('learnResources.fields.description')}
               <textarea
                 value={form.description}

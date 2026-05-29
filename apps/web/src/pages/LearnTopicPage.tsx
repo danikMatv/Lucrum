@@ -78,7 +78,7 @@ export const LearnTopicPage = () => {
         </nav>
       </header>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[280px_1fr] lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[280px_1fr] xl:grid-cols-[280px_minmax(0,1fr)_300px] lg:px-8">
         <aside className="h-fit rounded-lg border-[0.5px] border-border bg-surface p-5 lg:sticky lg:top-6">
           <p className="text-sm font-semibold uppercase text-primary">
             {t('learnAcademy.topic.contents')}
@@ -112,8 +112,6 @@ export const LearnTopicPage = () => {
               {t(`learnAcademy.topics.${topic.id}.intro`)}
             </p>
           </section>
-
-          <LearnResources topic={topic.id} />
 
           <section className="grid gap-4 md:grid-cols-2">
             {sectionKeys.map((section) => (
@@ -228,6 +226,10 @@ export const LearnTopicPage = () => {
             </div>
           </section>
         </article>
+
+        <aside className="h-fit lg:sticky lg:top-6">
+          <LearnResources topic={topic.id} />
+        </aside>
       </section>
     </main>
   )
