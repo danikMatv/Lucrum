@@ -10,19 +10,13 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import {
-  CompanySearchInput,
-} from '../components/calculators/CompanySearchInput.tsx'
+import { CompanySearchInput } from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { companiesService } from '../services/companiesService.ts'
+import type { CompanySnapshot } from '../types/api.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
-import {
-  getMockStockAnalysis,
-  type StockAnalysisResult,
-  type StockMetricSnapshot,
-} from '../utils/stockAnalysis.ts'
-import type { Company, CompanyFundamentals } from '../types/api.ts'
+import { parseApiError } from '../utils/errorHandler.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -42,98 +36,77 @@ const number = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 1,
 })
 
-interface StockApiPayload {
-  ticker: string
-  company: Company | null
-  fundamentals: CompanyFundamentals | null
+interface StockFinancialRow {
+  year: string
+  revenue: number | null
+  netIncome: number | null
 }
 
-const verdictFromMetrics = (metrics: StockMetricSnapshot): StockAnalysisResult['verdict'] =>
-  metrics.peRatio < 22 && metrics.debtToEquity < 1
-    ? 'strong'
-    : metrics.peRatio > 35 || metrics.debtToEquity > 2
-      ? 'expensive'
-      : 'balanced'
+const formatCurrency = (value: number | null | undefined) =>
+  typeof value === 'number' && Number.isFinite(value) ? currency.format(value) : '—'
 
-const mergeStockData = (
-  ticker: string,
-  company: Company | null,
-  fundamentals: CompanyFundamentals | null,
-) => {
-  const mock = getMockStockAnalysis(ticker)
-  const metrics: StockMetricSnapshot = {
-    peRatio: fundamentals?.peRatio ?? mock.metrics.peRatio,
-    eps: fundamentals?.epsTtm ?? mock.metrics.eps,
-    marketCap: fundamentals?.marketCap ?? mock.metrics.marketCap,
-    revenue: fundamentals?.revenue ?? mock.metrics.revenue,
-    netIncome: fundamentals?.netIncome ?? mock.metrics.netIncome,
-    freeCashFlow: fundamentals?.freeCashFlow ?? mock.metrics.freeCashFlow,
-    debtToEquity: fundamentals?.debtToEquity ?? mock.metrics.debtToEquity,
-    dividendYield: fundamentals?.dividendYield ?? mock.metrics.dividendYield,
+const formatCompactCurrency = (value: number | null | undefined) =>
+  typeof value === 'number' && Number.isFinite(value) ? compactCurrency.format(value) : '—'
+
+const formatNumber = (value: number | null | undefined, digits = 1) =>
+  typeof value === 'number' && Number.isFinite(value) ? value.toFixed(digits) : '—'
+
+const formatPercent = (value: number | null | undefined) =>
+  typeof value === 'number' && Number.isFinite(value) ? `${value.toFixed(2)}%` : '—'
+
+const getVerdict = (snapshot: CompanySnapshot) => {
+  const peRatio = snapshot.fundamentals?.peRatio
+  const debtToEquity = snapshot.fundamentals?.debtToEquity
+
+  if (typeof peRatio !== 'number' || typeof debtToEquity !== 'number') {
+    return 'unknown' as const
   }
 
-  const latestYear = mock.financials.at(-1)?.year ?? new Date().getFullYear()
-  const financials = fundamentals
-    ? mock.financials.map((year) =>
-        year.year === latestYear
-          ? {
-              ...year,
-              revenue: fundamentals.revenue ?? year.revenue,
-              netIncome: fundamentals.netIncome ?? year.netIncome,
-            }
-          : year,
-      )
-    : mock.financials
-
-  return {
-    ...mock,
-    ticker: company?.ticker ?? mock.ticker,
-    name: company?.name ?? mock.name,
-    exchange: company?.exchange ?? mock.exchange,
-    sector: company?.sector ?? mock.sector,
-    metrics,
-    financials,
-    verdict: verdictFromMetrics(metrics),
+  if (peRatio < 22 && debtToEquity < 1) {
+    return 'strong' as const
   }
+
+  if (peRatio > 35 || debtToEquity > 2) {
+    return 'expensive' as const
+  }
+
+  return 'balanced' as const
+}
+
+const getFinancialRows = (snapshot: CompanySnapshot): StockFinancialRow[] => {
+  const fundamentals = snapshot.fundamentals
+  if (!fundamentals?.revenue && !fundamentals?.netIncome) {
+    return []
+  }
+
+  return [
+    {
+      year: fundamentals.recordedDate?.slice(0, 4) ?? new Date().getFullYear().toString(),
+      revenue: fundamentals.revenue,
+      netIncome: fundamentals.netIncome,
+    },
+  ]
 }
 
 export const StockPage = () => {
   const { t } = useTranslation('common')
   const [tickerInput, setTickerInput] = useState('AAPL')
-  const [stock, setStock] = useState<StockAnalysisResult>(() => getMockStockAnalysis('AAPL'))
+  const [snapshot, setSnapshot] = useState<CompanySnapshot | null>(null)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const stockMutation = useMutation({
-    mutationFn: async (ticker: string): Promise<StockApiPayload> => {
+    mutationFn: async (ticker: string) => {
       const normalizedTicker = normalizeCompanyQuery(ticker) || 'AAPL'
-      const [companyResult, fundamentalsResult] = await Promise.allSettled([
-        companiesService.getByTicker(normalizedTicker),
-        companiesService.getFundamentals(normalizedTicker),
-      ])
-
-      const company = companyResult.status === 'fulfilled' ? companyResult.value : null
-      const fundamentals =
-        fundamentalsResult.status === 'fulfilled' ? fundamentalsResult.value : null
-
-      if (!company && !fundamentals) {
-        throw companyResult.status === 'rejected'
-          ? companyResult.reason
-          : new Error(t('tools.stock.notice.notFound'))
-      }
-
-      return {
-        ticker: normalizedTicker,
-        company,
-        fundamentals,
-      }
+      return companiesService.getSnapshot(normalizedTicker)
     },
-    onSuccess: ({ ticker, company, fundamentals }) => {
-      setStock(mergeStockData(ticker, company, fundamentals))
-      setTickerInput(ticker)
+    onSuccess: (nextSnapshot) => {
+      setSnapshot(nextSnapshot)
+      setTickerInput(nextSnapshot.ticker)
+      setErrorMessage(null)
     },
-    onError: () => {
-      const normalizedTicker = normalizeCompanyQuery(tickerInput) || 'AAPL'
-      setStock(getMockStockAnalysis(normalizedTicker))
-      setTickerInput(normalizedTicker)
+    onError: (error) => {
+      setSnapshot(null)
+      setErrorMessage(parseApiError(error, t('tools.stock.notice.notFound')))
     },
   })
 
@@ -141,11 +114,23 @@ export const StockPage = () => {
     stockMutation.mutate(tickerInput)
   }
 
-  const verdictTone = stock.verdict === 'strong' ? 'text-success' : stock.verdict === 'expensive' ? 'text-danger' : 'text-primary'
+  const verdict = snapshot ? getVerdict(snapshot) : 'unknown'
+  const verdictTone =
+    verdict === 'strong'
+      ? 'text-success'
+      : verdict === 'expensive'
+        ? 'text-danger'
+        : 'text-primary'
+  const financialRows = snapshot ? getFinancialRows(snapshot) : []
 
   const sidebar = (
     <>
-      <CompanySearchInput id="stock-ticker" label={t('tools.stock.inputs.ticker')} value={tickerInput} onChange={setTickerInput} />
+      <CompanySearchInput
+        id="stock-ticker"
+        label={t('tools.stock.inputs.ticker')}
+        value={tickerInput}
+        onChange={setTickerInput}
+      />
       <button
         type="button"
         onClick={handleAnalyze}
@@ -158,65 +143,137 @@ export const StockPage = () => {
   )
 
   return (
-    <SidebarLayout title={t('tools.stock.title')} description={t('tools.stock.description')} sidebar={sidebar}>
+    <SidebarLayout
+      title={t('tools.stock.title')}
+      description={t('tools.stock.description')}
+      sidebar={sidebar}
+    >
       <div className="grid gap-5">
-        <Panel>
-          <p className="text-sm font-semibold uppercase text-primary">{stock.exchange} · {stock.sector}</p>
-          <h2 className="mt-2 font-heading text-4xl font-bold text-text-primary">{stock.name}</h2>
-          <p className="mt-1 text-lg font-semibold text-text-muted">{stock.ticker}</p>
-        </Panel>
-
-        <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
-          <HeroMetric label={t('tools.stock.price.current')} value={currency.format(stock.currentPrice)} helper={`${stock.changePercent > 0 ? '+' : ''}${stock.changePercent}%`} />
+        {errorMessage ? (
           <Panel>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <p className="text-sm text-text-muted">{t('tools.stock.price.high')}</p>
-                <p className="mt-2 text-2xl font-bold text-text-primary">{currency.format(stock.weekHigh52)}</p>
-              </div>
-              <div>
-                <p className="text-sm text-text-muted">{t('tools.stock.price.low')}</p>
-                <p className="mt-2 text-2xl font-bold text-text-primary">{currency.format(stock.weekLow52)}</p>
-              </div>
-            </div>
+            <p className="text-sm font-semibold uppercase text-danger">
+              {t('tools.stock.notice.error')}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">{errorMessage}</p>
           </Panel>
-        </div>
+        ) : null}
 
-        <StatGrid>
-          <StatCard label={t('tools.stock.metrics.pe')} value={stock.metrics.peRatio.toFixed(1)} />
-          <StatCard label={t('tools.stock.metrics.eps')} value={currency.format(stock.metrics.eps)} />
-          <StatCard label={t('tools.stock.metrics.marketCap')} value={compactCurrency.format(stock.metrics.marketCap)} />
-          <StatCard label={t('tools.stock.metrics.revenue')} value={compactCurrency.format(stock.metrics.revenue)} />
-          <StatCard label={t('tools.stock.metrics.netIncome')} value={compactCurrency.format(stock.metrics.netIncome)} />
-          <StatCard label={t('tools.stock.metrics.fcf')} value={compactCurrency.format(stock.metrics.freeCashFlow)} />
-          <StatCard label={t('tools.stock.metrics.debt')} value={stock.metrics.debtToEquity.toFixed(2)} />
-          <StatCard label={t('tools.stock.metrics.dividend')} value={`${stock.metrics.dividendYield.toFixed(2)}%`} />
-        </StatGrid>
+        {!snapshot ? (
+          <Panel>
+            <p className="text-sm font-semibold uppercase text-primary">
+              {t('tools.stock.notice.readyTitle')}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">
+              {t('tools.stock.notice.readyText')}
+            </p>
+          </Panel>
+        ) : (
+          <>
+            <Panel>
+              <p className="text-sm font-semibold uppercase text-primary">
+                {snapshot.company?.exchange ?? t('tools.stock.unavailable')} ·{' '}
+                {snapshot.company?.sector ?? t('tools.stock.unavailable')}
+              </p>
+              <h2 className="mt-2 font-heading text-4xl font-bold text-text-primary">
+                {snapshot.company?.name ?? snapshot.ticker}
+              </h2>
+              <p className="mt-1 text-lg font-semibold text-text-muted">{snapshot.ticker}</p>
+              {snapshot.missing.length > 0 ? (
+                <p className="mt-4 text-sm leading-6 text-text-muted">
+                  {t('tools.stock.notice.partial')}
+                </p>
+              ) : null}
+            </Panel>
 
-        <Panel>
-          <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.stock.chart.title')}</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={stock.financials}>
-                <CartesianGrid stroke="#1E1E1E" />
-                <XAxis dataKey="year" stroke="#666666" />
-                <YAxis stroke="#666666" tickFormatter={(value) => number.format(Number(value))} />
-                <Tooltip formatter={(value) => compactCurrency.format(Number(value))} />
-                <Bar dataKey="revenue" name={t('tools.stock.chart.revenue')} fill="#C9A84C" />
-                <Bar dataKey="netIncome" name={t('tools.stock.chart.netIncome')} fill="#4CAF50" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </Panel>
+            <div className="grid gap-4 lg:grid-cols-[1fr_1fr]">
+              <HeroMetric
+                label={t('tools.stock.price.current')}
+                value={formatCurrency(snapshot.quote?.price)}
+                helper={snapshot.fetchedAt.quote ?? t('tools.stock.unavailable')}
+              />
+              <Panel>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <p className="text-sm text-text-muted">{t('tools.stock.price.high')}</p>
+                    <p className="mt-2 text-2xl font-bold text-text-primary">—</p>
+                  </div>
+                  <div>
+                    <p className="text-sm text-text-muted">{t('tools.stock.price.low')}</p>
+                    <p className="mt-2 text-2xl font-bold text-text-primary">—</p>
+                  </div>
+                </div>
+              </Panel>
+            </div>
 
-        <Panel>
-          <p className={`text-sm font-semibold uppercase ${verdictTone}`}>
-            {t(`tools.stock.verdict.${stock.verdict}.title`)}
-          </p>
-          <p className="mt-3 text-sm leading-6 text-text-muted">
-            {t(`tools.stock.verdict.${stock.verdict}.text`)}
-          </p>
-        </Panel>
+            <StatGrid>
+              <StatCard
+                label={t('tools.stock.metrics.pe')}
+                value={formatNumber(snapshot.fundamentals?.peRatio)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.eps')}
+                value={formatCurrency(snapshot.fundamentals?.epsTtm)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.marketCap')}
+                value={formatCompactCurrency(snapshot.fundamentals?.marketCap)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.revenue')}
+                value={formatCompactCurrency(snapshot.fundamentals?.revenue)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.netIncome')}
+                value={formatCompactCurrency(snapshot.fundamentals?.netIncome)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.fcf')}
+                value={formatCompactCurrency(snapshot.fundamentals?.freeCashFlow)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.debt')}
+                value={formatNumber(snapshot.fundamentals?.debtToEquity, 2)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.dividend')}
+                value={formatPercent(snapshot.fundamentals?.dividendYield)}
+              />
+            </StatGrid>
+
+            <Panel>
+              <h2 className="mb-4 text-lg font-bold text-text-primary">
+                {t('tools.stock.chart.title')}
+              </h2>
+              {financialRows.length > 0 ? (
+                <div className="h-80">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={financialRows}>
+                      <CartesianGrid stroke="#1E1E1E" />
+                      <XAxis dataKey="year" stroke="#666666" />
+                      <YAxis stroke="#666666" tickFormatter={(value) => number.format(Number(value))} />
+                      <Tooltip formatter={(value) => compactCurrency.format(Number(value))} />
+                      <Bar dataKey="revenue" name={t('tools.stock.chart.revenue')} fill="#C9A84C" />
+                      <Bar dataKey="netIncome" name={t('tools.stock.chart.netIncome')} fill="#4CAF50" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              ) : (
+                <p className="text-sm leading-6 text-text-muted">
+                  {t('tools.stock.notice.noFinancials')}
+                </p>
+              )}
+            </Panel>
+
+            <Panel>
+              <p className={`text-sm font-semibold uppercase ${verdictTone}`}>
+                {t(`tools.stock.verdict.${verdict}.title`)}
+              </p>
+              <p className="mt-3 text-sm leading-6 text-text-muted">
+                {t(`tools.stock.verdict.${verdict}.text`)}
+              </p>
+            </Panel>
+          </>
+        )}
       </div>
     </SidebarLayout>
   )

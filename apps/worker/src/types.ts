@@ -74,3 +74,19 @@ export interface WatchlistItem {
   companyName: string | null
   addedAt: string
 }
+
+export type LearnResourceType = 'article' | 'video' | 'post' | 'podcast' | 'tool'
+
+export interface LearnResource {
+  id: string
+  topic: string
+  title: string
+  url: string
+  type: LearnResourceType
+  description: string | null
+  addedBy: string | null
+  addedByName: string | null
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}

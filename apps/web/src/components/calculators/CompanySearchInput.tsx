@@ -25,6 +25,7 @@ const popularCompanies: CompanySuggestion[] = [
   { ticker: 'GOOGL', name: 'Alphabet Inc.', exchange: 'NASDAQ' },
   { ticker: 'META', name: 'Meta Platforms Inc.', exchange: 'NASDAQ' },
   { ticker: 'TSLA', name: 'Tesla Inc.', exchange: 'NASDAQ' },
+  { ticker: 'NFLX', name: 'Netflix Inc.', exchange: 'NASDAQ' },
   { ticker: 'SOFI', name: 'SoFi Technologies Inc.', exchange: 'NASDAQ' },
   { ticker: 'SPY', name: 'SPDR S&P 500 ETF Trust', exchange: 'NYSEARCA' },
   { ticker: 'VOO', name: 'Vanguard S&P 500 ETF', exchange: 'NYSEARCA' },

@@ -209,6 +209,7 @@
     "stock": {
       "title": "Analyse d'action",
       "description": "Consultez les fondamentaux d'une société et un aperçu simple de valorisation.",
+      "unavailable": "Indisponible",
       "inputs": {
         "ticker": "Ticker / nom de société"
       },
@@ -244,13 +245,21 @@
         "expensive": {
           "title": "Cher ou plus risqué",
           "text": "Le profil suggère qu'une marge de sécurité plus élevée serait nécessaire."
+        },
+        "unknown": {
+          "title": "Données insuffisantes",
+          "text": "Lucrum a besoin de fondamentaux comme le P/E et dette/fonds propres avant d'afficher une évaluation."
         }
       },
       "notice": {
         "title": "Données estimées actives",
         "error": "La recherche du ticker est indisponible",
         "notFound": "Ticker introuvable.",
-        "fallback": "Certaines données réelles sont indisponibles, donc Lucrum complète avec des estimations."
+        "fallback": "Certaines données réelles sont indisponibles, donc Lucrum complète avec des estimations.",
+        "readyTitle": "Prêt à analyser",
+        "readyText": "Entrez un ticker ou un nom de société et Lucrum chargera les données de marché disponibles.",
+        "partial": "Certains champs de l'entreprise sont indisponibles pour le moment, donc seules les données vérifiées sont affichées.",
+        "noFinancials": "Le chiffre d'affaires et le résultat net sont indisponibles pour ce ticker."
       }
     }
   },
@@ -598,6 +607,40 @@
           "answer": "Non. Ce sont des outils pédagogiques de planification. Utilisez-les pour comprendre des scénarios, puis approfondissez avant d'investir."
         }
       }
+    }
+  },
+  "learnResources": {
+    "kicker": "Ressources sélectionnées",
+    "title": "Liens utiles",
+    "description": "Des liens sélectionnés par les modérateurs pour ajouter un contexte pratique à cette leçon.",
+    "loading": "Chargement des liens utiles...",
+    "empty": "Aucun lien utile pour le moment.",
+    "error": "Les liens utiles sont indisponibles pour le moment.",
+    "addedBy": "Ajouté par {{name}}",
+    "manageTitle": "Ajouter un lien",
+    "editTitle": "Modifier le lien",
+    "fields": {
+      "title": "Titre",
+      "url": "URL",
+      "type": "Type",
+      "description": "Description"
+    },
+    "types": {
+      "article": "Article",
+      "video": "Vidéo",
+      "post": "Publication",
+      "podcast": "Podcast",
+      "tool": "Outil"
+    },
+    "actions": {
+      "add": "Ajouter le lien",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "edit": "Modifier",
+      "delete": "Supprimer"
+    },
+    "errors": {
+      "noResource": "Choisissez d'abord une ressource."
     }
   },
   "learnAcademy": {

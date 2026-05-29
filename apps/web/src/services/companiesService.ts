@@ -1,5 +1,5 @@
 import { apiClient, unwrapApiResponse } from './apiClient.ts'
-import type { ApiResponse, Company, CompanyFundamentals } from '../types/api.ts'
+import type { ApiResponse, Company, CompanyFundamentals, CompanySnapshot } from '../types/api.ts'
 
 export const companiesService = {
   search: async (q: string) => {
@@ -15,6 +15,12 @@ export const companiesService = {
   getFundamentals: async (ticker: string) => {
     const response = await apiClient.get<ApiResponse<CompanyFundamentals>>(
       `/api/companies/${ticker}/fundamentals`,
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getSnapshot: async (ticker: string) => {
+    const response = await apiClient.get<ApiResponse<CompanySnapshot>>(
+      `/api/companies/${ticker}/snapshot`,
     )
     return unwrapApiResponse(response.data)
   },

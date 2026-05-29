@@ -37,6 +37,16 @@ CREATE TABLE IF NOT EXISTS company_fundamentals (
   created_at TEXT
 );
 
+CREATE TABLE IF NOT EXISTS company_snapshots (
+  ticker TEXT PRIMARY KEY,
+  company_json TEXT,
+  fundamentals_json TEXT,
+  company_fetched_at TEXT,
+  fundamentals_fetched_at TEXT,
+  created_at TEXT,
+  updated_at TEXT
+);
+
 CREATE TABLE IF NOT EXISTS saved_calculations (
   id TEXT PRIMARY KEY,
   user_id TEXT REFERENCES users(id),
@@ -52,6 +62,20 @@ CREATE TABLE IF NOT EXISTS watchlist (
   ticker TEXT NOT NULL,
   company_name TEXT,
   added_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS learn_resources (
+  id TEXT PRIMARY KEY,
+  topic TEXT NOT NULL,
+  title TEXT NOT NULL,
+  url TEXT NOT NULL,
+  type TEXT DEFAULT 'article',
+  description TEXT,
+  added_by TEXT REFERENCES users(id),
+  added_by_name TEXT,
+  is_active INTEGER DEFAULT 1,
+  created_at TEXT,
+  updated_at TEXT
 );
 
 CREATE TABLE IF NOT EXISTS tool_usage_events (

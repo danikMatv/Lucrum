@@ -11,6 +11,7 @@ import { getYahooHistory, getYahooQuote, type StockHistory, type StockQuote } fr
 import type { AppEnv } from '../types'
 import { calculateDca, calculateMockDca } from '../utils/dca'
 import { createError, createSuccess } from '../utils/response'
+import { normalizeTicker } from '../utils/ticker'
 
 const tools = new Hono<AppEnv>()
 
@@ -60,7 +61,7 @@ const periodToFromDate = (period: string) => {
 }
 
 const getHistory = async (c: Context, ticker: string, period: string) => {
-  const normalizedTicker = ticker.toUpperCase()
+  const normalizedTicker = normalizeTicker(ticker)
   const cacheKey = `history:${normalizedTicker}:${period}`
   const cached = await getJsonCache<StockHistory>(c.env.KV, cacheKey)
   if (cached) {
@@ -83,7 +84,7 @@ const getHistory = async (c: Context, ticker: string, period: string) => {
 }
 
 const getQuote = async (c: Context, ticker: string) => {
-  const normalizedTicker = ticker.toUpperCase()
+  const normalizedTicker = normalizeTicker(ticker)
   const cacheKey = `quote:${normalizedTicker}`
   const cached = await getJsonCache<StockQuote>(c.env.KV, cacheKey)
   if (cached) {
@@ -107,7 +108,7 @@ const getQuote = async (c: Context, ticker: string) => {
 
 tools.get('/stock-history', zValidator('query', stockHistorySchema, validatorHook), async (c) => {
   const { ticker, period } = c.req.valid('query')
-  const normalizedTicker = ticker.toUpperCase()
+  const normalizedTicker = normalizeTicker(ticker)
   c.executionCtx.waitUntil(logUsage(c, 'STOCK_HISTORY', normalizedTicker).catch(() => undefined))
 
   try {
@@ -120,7 +121,7 @@ tools.get('/stock-history', zValidator('query', stockHistorySchema, validatorHoo
 
 tools.get('/quote', zValidator('query', quoteSchema, validatorHook), async (c) => {
   const { ticker } = c.req.valid('query')
-  const normalizedTicker = ticker.toUpperCase()
+  const normalizedTicker = normalizeTicker(ticker)
   c.executionCtx.waitUntil(logUsage(c, 'QUOTE', normalizedTicker).catch(() => undefined))
 
   try {
@@ -133,7 +134,7 @@ tools.get('/quote', zValidator('query', quoteSchema, validatorHook), async (c) =
 
 tools.get('/dca', zValidator('query', dcaSchema, validatorHook), async (c) => {
   const { ticker, from, amount } = c.req.valid('query')
-  const normalizedTicker = ticker.toUpperCase()
+  const normalizedTicker = normalizeTicker(ticker)
   c.executionCtx.waitUntil(logUsage(c, 'DCA', normalizedTicker).catch(() => undefined))
 
   try {

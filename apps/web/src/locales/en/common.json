@@ -209,6 +209,7 @@
     "stock": {
       "title": "Stock Analysis",
       "description": "Review company fundamentals and a simple valuation snapshot.",
+      "unavailable": "Unavailable",
       "inputs": {
         "ticker": "Ticker / company name"
       },
@@ -244,13 +245,21 @@
         "expensive": {
           "title": "Expensive or higher risk",
           "text": "The profile suggests investors should demand a larger margin of safety."
+        },
+        "unknown": {
+          "title": "Not enough data",
+          "text": "Lucrum needs fundamentals such as P/E and debt/equity before showing an assessment."
         }
       },
       "notice": {
         "title": "Estimated data active",
         "error": "Ticker lookup unavailable",
         "notFound": "Ticker was not found.",
-        "fallback": "Some live data is unavailable, so Lucrum filled the gaps with estimates."
+        "fallback": "Some live data is unavailable, so Lucrum filled the gaps with estimates.",
+        "readyTitle": "Ready to analyze",
+        "readyText": "Enter a ticker or company name and Lucrum will load the available market data.",
+        "partial": "Some company fields are unavailable right now, so only verified data is shown.",
+        "noFinancials": "Revenue and net income are unavailable for this ticker."
       }
     }
   },
@@ -598,6 +607,40 @@
           "answer": "No. They are educational planning tools. Use them to understand scenarios, then do deeper research before investing."
         }
       }
+    }
+  },
+  "learnResources": {
+    "kicker": "Curated resources",
+    "title": "Useful links",
+    "description": "Moderator-curated links that add practical context to this lesson.",
+    "loading": "Loading useful links...",
+    "empty": "No useful links yet.",
+    "error": "Useful links are unavailable right now.",
+    "addedBy": "Added by {{name}}",
+    "manageTitle": "Add a link",
+    "editTitle": "Edit link",
+    "fields": {
+      "title": "Title",
+      "url": "URL",
+      "type": "Type",
+      "description": "Description"
+    },
+    "types": {
+      "article": "Article",
+      "video": "Video",
+      "post": "Post",
+      "podcast": "Podcast",
+      "tool": "Tool"
+    },
+    "actions": {
+      "add": "Add link",
+      "save": "Save changes",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "errors": {
+      "noResource": "Choose a resource first."
     }
   },
   "learnAcademy": {

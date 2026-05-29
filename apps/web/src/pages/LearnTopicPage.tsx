@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { LearnResources } from '../components/learn/LearnResources.tsx'
 import { getLearnTopic, learnTopics } from '../data/learnTopics.ts'
 
 const sectionKeys = ['what', 'earn', 'risks', 'mistakes', 'fit'] as const
@@ -224,6 +225,8 @@ export const LearnTopicPage = () => {
               </div>
             </div>
           </section>
+
+          <LearnResources topic={topic.id} />
         </article>
       </section>
     </main>

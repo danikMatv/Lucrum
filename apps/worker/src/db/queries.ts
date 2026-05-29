@@ -2,6 +2,8 @@ import type {
   AuthUser,
   Company,
   CompanyFundamentals,
+  LearnResource,
+  LearnResourceType,
   SavedCalculation,
   UserRole,
   WatchlistItem,
@@ -46,6 +48,16 @@ interface CompanyFundamentalsRow {
   created_at: string
 }
 
+interface CompanySnapshotRow {
+  ticker: string
+  company_json: string | null
+  fundamentals_json: string | null
+  company_fetched_at: string | null
+  fundamentals_fetched_at: string | null
+  created_at: string
+  updated_at: string
+}
+
 interface SavedCalculationRow {
   id: string
   user_id: string
@@ -61,6 +73,20 @@ interface WatchlistRow {
   ticker: string
   company_name: string | null
   added_at: string
+}
+
+interface LearnResourceRow {
+  id: string
+  topic: string
+  title: string
+  url: string
+  type: LearnResourceType
+  description: string | null
+  added_by: string | null
+  added_by_name: string | null
+  is_active: number
+  created_at: string
+  updated_at: string
 }
 
 interface CountRow {
@@ -130,6 +156,64 @@ const mapWatchlistItem = (row: WatchlistRow): WatchlistItem => ({
   companyName: row.company_name,
   addedAt: row.added_at,
 })
+
+const mapLearnResource = (row: LearnResourceRow): LearnResource => ({
+  id: row.id,
+  topic: row.topic,
+  title: row.title,
+  url: row.url,
+  type: row.type,
+  description: row.description,
+  addedBy: row.added_by,
+  addedByName: row.added_by_name,
+  isActive: row.is_active === 1,
+  createdAt: row.created_at,
+  updatedAt: row.updated_at,
+})
+
+export interface CompanySnapshotRecord {
+  ticker: string
+  company: Company | null
+  fundamentals: CompanyFundamentals | null
+  companyFetchedAt: string | null
+  fundamentalsFetchedAt: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+const parseSnapshotJson = <T>(value: string | null): T | null => {
+  if (!value) {
+    return null
+  }
+
+  try {
+    return JSON.parse(value) as T
+  } catch {
+    return null
+  }
+}
+
+const isSnapshotCompany = (value: Company | null): value is Company =>
+  Boolean(value?.id && value.ticker && value.name && value.createdAt)
+
+const isSnapshotFundamentals = (
+  value: CompanyFundamentals | null,
+): value is CompanyFundamentals => Boolean(value?.id && value.companyId && value.createdAt)
+
+const mapCompanySnapshot = (row: CompanySnapshotRow): CompanySnapshotRecord => {
+  const company = parseSnapshotJson<Company>(row.company_json)
+  const fundamentals = parseSnapshotJson<CompanyFundamentals>(row.fundamentals_json)
+
+  return {
+    ticker: row.ticker,
+    company: isSnapshotCompany(company) ? company : null,
+    fundamentals: isSnapshotFundamentals(fundamentals) ? fundamentals : null,
+    companyFetchedAt: row.company_fetched_at,
+    fundamentalsFetchedAt: row.fundamentals_fetched_at,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  }
+}
 
 export const getUserByEmail = async (db: D1Database, email: string) =>
   db.prepare('SELECT * FROM users WHERE email = ?').bind(email.toLowerCase()).first<UserRow>()
@@ -240,6 +324,97 @@ export const upsertFundamentals = async (db: D1Database, fundamentals: CompanyFu
     .run()
 }
 
+export const getCompanySnapshotByTicker = async (db: D1Database, ticker: string) => {
+  const row = await db
+    .prepare('SELECT * FROM company_snapshots WHERE ticker = ?')
+    .bind(ticker.toUpperCase())
+    .first<CompanySnapshotRow>()
+  return row ? mapCompanySnapshot(row) : null
+}
+
+export const upsertCompanySnapshot = async (
+  db: D1Database,
+  input: {
+    ticker: string
+    company?: Company | null
+    fundamentals?: CompanyFundamentals | null
+    companyFetchedAt?: string | null
+    fundamentalsFetchedAt?: string | null
+  },
+) => {
+  const normalizedTicker = input.ticker.toUpperCase()
+  const timestamp = nowIso()
+
+  await db
+    .prepare(
+      'INSERT OR IGNORE INTO company_snapshots (ticker, company_json, fundamentals_json, company_fetched_at, fundamentals_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    )
+    .bind(normalizedTicker, null, null, null, null, timestamp, timestamp)
+    .run()
+
+  if (input.company) {
+    await db
+      .prepare(
+        'UPDATE company_snapshots SET company_json = ?, company_fetched_at = ?, updated_at = ? WHERE ticker = ?',
+      )
+      .bind(
+        JSON.stringify(input.company),
+        input.companyFetchedAt ?? timestamp,
+        timestamp,
+        normalizedTicker,
+      )
+      .run()
+  }
+
+  if (input.fundamentals) {
+    await db
+      .prepare(
+        'UPDATE company_snapshots SET fundamentals_json = ?, fundamentals_fetched_at = ?, updated_at = ? WHERE ticker = ?',
+      )
+      .bind(
+        JSON.stringify(input.fundamentals),
+        input.fundamentalsFetchedAt ?? timestamp,
+        timestamp,
+        normalizedTicker,
+      )
+      .run()
+  }
+
+  return getCompanySnapshotByTicker(db, normalizedTicker)
+}
+
+export const replaceCompanySnapshot = async (
+  db: D1Database,
+  input: {
+    ticker: string
+    company: Company | null
+    fundamentals: CompanyFundamentals | null
+    companyFetchedAt: string | null
+    fundamentalsFetchedAt: string | null
+  },
+) => {
+  const normalizedTicker = input.ticker.toUpperCase()
+  const existing = await getCompanySnapshotByTicker(db, normalizedTicker)
+  const timestamp = nowIso()
+
+  await db
+    .prepare(
+      'INSERT OR REPLACE INTO company_snapshots (ticker, company_json, fundamentals_json, company_fetched_at, fundamentals_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    )
+    .bind(
+      normalizedTicker,
+      input.company ? JSON.stringify(input.company) : null,
+      input.fundamentals ? JSON.stringify(input.fundamentals) : null,
+      input.companyFetchedAt,
+      input.fundamentalsFetchedAt,
+      existing?.createdAt ?? timestamp,
+      timestamp,
+    )
+    .run()
+
+  return getCompanySnapshotByTicker(db, normalizedTicker)
+}
+
 export const listSavedCalculations = async (db: D1Database, userId: string) => {
   const result = await db
     .prepare('SELECT * FROM saved_calculations WHERE user_id = ? ORDER BY created_at DESC')
@@ -291,6 +466,115 @@ export const deleteWatchlistItem = async (db: D1Database, userId: string, ticker
   db
     .prepare('DELETE FROM watchlist WHERE user_id = ? AND ticker = ?')
     .bind(userId, ticker.toUpperCase())
+    .run()
+
+export const listLearnResources = async (db: D1Database, topic: string) => {
+  const result = await db
+    .prepare(
+      'SELECT * FROM learn_resources WHERE topic = ? AND is_active = 1 ORDER BY created_at DESC',
+    )
+    .bind(topic)
+    .all<LearnResourceRow>()
+  return result.results.map(mapLearnResource)
+}
+
+export const getLearnResourceById = async (db: D1Database, topic: string, id: string) => {
+  const row = await db
+    .prepare('SELECT * FROM learn_resources WHERE topic = ? AND id = ?')
+    .bind(topic, id)
+    .first<LearnResourceRow>()
+  return row ? mapLearnResource(row) : null
+}
+
+export const createLearnResource = async (
+  db: D1Database,
+  input: {
+    topic: string
+    title: string
+    url: string
+    type: LearnResourceType
+    description: string | null
+    addedBy: string
+    addedByName: string | null
+  },
+) => {
+  const id = crypto.randomUUID()
+  const createdAt = nowIso()
+
+  await db
+    .prepare(
+      'INSERT INTO learn_resources (id, topic, title, url, type, description, added_by, added_by_name, is_active, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    )
+    .bind(
+      id,
+      input.topic,
+      input.title,
+      input.url,
+      input.type,
+      input.description,
+      input.addedBy,
+      input.addedByName,
+      1,
+      createdAt,
+      createdAt,
+    )
+    .run()
+
+  const resource = await getLearnResourceById(db, input.topic, id)
+  if (!resource) {
+    throw new Error('Learn resource creation failed')
+  }
+  return resource
+}
+
+export const updateLearnResource = async (
+  db: D1Database,
+  topic: string,
+  id: string,
+  input: {
+    title?: string
+    url?: string
+    type?: LearnResourceType
+    description?: string | null
+    isActive?: boolean
+  },
+) => {
+  const hasDescription = input.description !== undefined
+  const hasChanges =
+    input.title !== undefined ||
+    input.url !== undefined ||
+    input.type !== undefined ||
+    hasDescription ||
+    input.isActive !== undefined
+
+  if (!hasChanges) {
+    return getLearnResourceById(db, topic, id)
+  }
+
+  await db
+    .prepare(
+      'UPDATE learn_resources SET title = COALESCE(?, title), url = COALESCE(?, url), type = COALESCE(?, type), description = CASE WHEN ? = 1 THEN ? ELSE description END, is_active = COALESCE(?, is_active), updated_at = ? WHERE topic = ? AND id = ?',
+    )
+    .bind(
+      input.title ?? null,
+      input.url ?? null,
+      input.type ?? null,
+      hasDescription ? 1 : 0,
+      input.description ?? null,
+      input.isActive === undefined ? null : input.isActive ? 1 : 0,
+      nowIso(),
+      topic,
+      id,
+    )
+    .run()
+
+  return getLearnResourceById(db, topic, id)
+}
+
+export const softDeleteLearnResource = async (db: D1Database, topic: string, id: string) =>
+  db
+    .prepare('UPDATE learn_resources SET is_active = 0, updated_at = ? WHERE topic = ? AND id = ?')
+    .bind(nowIso(), topic, id)
     .run()
 
 export const logToolUsage = async (

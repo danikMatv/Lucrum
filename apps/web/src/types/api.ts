@@ -63,6 +63,24 @@ export interface StockQuote {
   marketTime: string | null
 }
 
+export interface CompanySnapshot {
+  ticker: string
+  company: Company | null
+  fundamentals: CompanyFundamentals | null
+  quote: StockQuote | null
+  fetchedAt: {
+    company: string | null
+    fundamentals: string | null
+    quote: string | null
+  }
+  freshness: {
+    company: 'fresh' | 'stale' | 'missing'
+    fundamentals: 'fresh' | 'stale' | 'missing'
+    quote: 'fresh' | 'missing'
+  }
+  missing: Array<'company' | 'fundamentals' | 'quote'>
+}
+
 export interface DcaResult {
   ticker: string
   amount: number
@@ -97,4 +115,20 @@ export interface WatchlistItem {
   ticker: string
   companyName: string | null
   addedAt: string
+}
+
+export type LearnResourceType = 'article' | 'video' | 'post' | 'podcast' | 'tool'
+
+export interface LearnResource {
+  id: string
+  topic: string
+  title: string
+  url: string
+  type: LearnResourceType
+  description: string | null
+  addedBy: string | null
+  addedByName: string | null
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
 }

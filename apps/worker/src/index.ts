@@ -4,6 +4,7 @@ import admin from './routes/admin'
 import auth from './routes/auth'
 import companies from './routes/companies'
 import dashboard from './routes/dashboard'
+import learn from './routes/learn'
 import tools from './routes/tools'
 import type { AppEnv } from './types'
 import { createError } from './utils/response'
@@ -33,6 +34,7 @@ app.get('/', (c) => c.json({ status: 'ok', project: 'Lucrum API' }))
 app.route('/api/auth', auth)
 app.route('/api/companies', companies)
 app.route('/api/tools', tools)
+app.route('/api/learn', learn)
 app.route('/api/dashboard', dashboard)
 app.route('/api/admin', admin)
 
