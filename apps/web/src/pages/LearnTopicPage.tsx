@@ -113,6 +113,8 @@ export const LearnTopicPage = () => {
             </p>
           </section>
 
+          <LearnResources topic={topic.id} />
+
           <section className="grid gap-4 md:grid-cols-2">
             {sectionKeys.map((section) => (
               <div
@@ -225,8 +227,6 @@ export const LearnTopicPage = () => {
               </div>
             </div>
           </section>
-
-          <LearnResources topic={topic.id} />
         </article>
       </section>
     </main>
