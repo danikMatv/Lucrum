@@ -8,6 +8,7 @@ import { FirePage } from '../pages/FirePage.tsx'
 import { InvestCalcPage } from '../pages/InvestCalcPage.tsx'
 import { LandingPage } from '../pages/LandingPage.tsx'
 import { LearnPage } from '../pages/LearnPage.tsx'
+import { LearnTopicPage } from '../pages/LearnTopicPage.tsx'
 import { PricingPage } from '../pages/PricingPage.tsx'
 import { StockPage } from '../pages/StockPage.tsx'
 import { ToolsPage } from '../pages/ToolsPage.tsx'
@@ -27,6 +28,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/learn" element={<LearnPage />} />
+        <Route path="/learn/:topicId" element={<LearnTopicPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/tools" element={<ToolsPage />} />
         <Route path="/tools/invest-calc" element={<InvestCalcPage />} />

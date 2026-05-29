@@ -600,6 +600,352 @@
       }
     }
   },
+  "learnAcademy": {
+    "kicker": "Académie d'investissement",
+    "title": "Comprendre les grandes classes d'actifs avant de choisir un outil.",
+    "description": "Une carte pratique pour débutants : obligations, actions, fonds, crypto, capital-risque et bases du risque.",
+    "note": {
+      "title": "Pédagogique, pas un conseil",
+      "text": "Ces guides expliquent les concepts, les compromis et les risques. Ils ne recommandent pas d'acheter un actif précis."
+    },
+    "principles": {
+      "goal": {
+        "title": "Commencer par l'objectif",
+        "text": "Un besoin de trésorerie court terme, un plan retraite sur 20 ans et une expérience très risquée ne devraient pas utiliser la même allocation."
+      },
+      "risk": {
+        "title": "Nommer le risque",
+        "text": "Chaque actif peut décevoir différemment : baisse de prix, inflation, défaut, frais, fraude ou absence de liquidité."
+      },
+      "time": {
+        "title": "Aligner l'horizon",
+        "text": "Plus l'horizon est long, plus la volatilité est tolérable. Plus il est court, plus la stabilité compte."
+      }
+    },
+    "catalog": {
+      "kicker": "Sections clés",
+      "title": "Choisir un sujet",
+      "description": "Chaque section explique ce qu'est l'actif, comment il peut rapporter ou préserver de la valeur, ce qui peut mal tourner et quels termes connaître.",
+      "open": "Ouvrir la leçon"
+    },
+    "topic": {
+      "back": "Retour à Apprendre",
+      "contents": "Sections",
+      "kicker": "Section d'apprentissage",
+      "risks": "Risques principaux",
+      "mistakes": "Erreurs de débutant",
+      "fit": "Quand cela peut convenir",
+      "terms": "Termes clés",
+      "tools": "Outils Lucrum liés",
+      "resources": "Ressources neutres"
+    },
+    "sections": {
+      "what": "Ce que c'est",
+      "earn": "Comment cela peut rapporter",
+      "risks": "Ce qui peut mal tourner",
+      "mistakes": "Piège fréquent",
+      "fit": "Où cela s'intègre"
+    },
+    "notFound": {
+      "kicker": "Sujet inconnu",
+      "title": "Cette leçon n'est pas disponible.",
+      "description": "La page académie contient la liste actuelle des sections d'investissement.",
+      "cta": "Ouvrir l'académie"
+    },
+    "resources": {
+      "investorIntro": "Investor.gov : introduction à l'investissement",
+      "finraBasics": "FINRA : bases de l'investissement",
+      "treasuryDirect": "TreasuryDirect : titres du Trésor américain",
+      "investorCrypto": "Investor.gov : crypto-actifs",
+      "secPrivate": "Investor.gov : offres privées",
+      "investorRisk": "Investor.gov : évaluer sa tolérance au risque",
+      "fred": "FRED : données économiques"
+    },
+    "topics": {
+      "bonds": {
+        "level": "Débutant",
+        "title": "Obligations",
+        "summary": "Des prêts à des États ou entreprises qui paient souvent des intérêts et remboursent le capital à l'échéance.",
+        "why": "Utile pour le revenu, les dates connues et la réduction de volatilité, mais pas sans risque.",
+        "intro": "Une obligation est un prêt. Vous prêtez de l'argent à un État, une ville ou une entreprise. En échange, l'émetteur paie souvent des intérêts et promet de rembourser le capital à une date d'échéance.",
+        "sections": {
+          "what": "Les obligations sont des titres de dette. L'acheteur devient prêteur, pas propriétaire. Le contrat définit le coupon, l'échéance et la priorité de remboursement.",
+          "earn": "Le rendement vient généralement des coupons, du remboursement à l'échéance et des variations de prix si les taux changent après l'achat.",
+          "risks": "Les prix peuvent baisser quand les taux montent. L'émetteur peut aussi faire défaut, et l'inflation peut réduire la valeur réelle des paiements fixes.",
+          "mistakes": "Un rendement élevé n'est pas automatiquement une bonne affaire. Il peut signaler un risque de crédit ou de duration plus élevé.",
+          "fit": "Les obligations peuvent convenir à l'argent que vous voulez stabiliser, à un besoin de revenu ou à un objectif avec une date plus claire que la croissance long terme."
+        },
+        "risks": {
+          "rates": "Risque de taux : les obligations existantes baissent souvent quand les nouvelles offrent de meilleurs rendements.",
+          "credit": "Risque de crédit : l'émetteur peut avoir du mal à payer les intérêts ou rembourser le capital.",
+          "inflation": "Risque d'inflation : les paiements fixes peuvent acheter moins à l'avenir."
+        },
+        "mistakes": {
+          "yieldOnly": "Choisir uniquement le rendement le plus élevé sans demander pourquoi il est élevé.",
+          "duration": "Ignorer la duration et être surpris quand un fonds obligataire baisse après une hausse des taux.",
+          "cash": "Traiter les obligations comme du cash alors que leur prix peut bouger."
+        },
+        "fit": {
+          "income": "Vous voulez un revenu d'intérêt plus prévisible.",
+          "stability": "Vous voulez une partie du portefeuille qui se comporte autrement que les actions.",
+          "knownDate": "Vous liez l'argent à une date future, comme des études ou un apport immobilier."
+        },
+        "terms": {
+          "coupon": {
+            "term": "Coupon",
+            "definition": "Le paiement d'intérêt annoncé par une obligation, souvent en pourcentage annuel de la valeur nominale."
+          },
+          "yield": {
+            "term": "Rendement",
+            "definition": "Le retour implicite selon le prix, le coupon et le temps jusqu'à l'échéance."
+          },
+          "maturity": {
+            "term": "Échéance",
+            "definition": "La date à laquelle l'émetteur doit rembourser le capital."
+          },
+          "duration": {
+            "term": "Duration",
+            "definition": "Une mesure de la sensibilité d'une obligation ou d'un fonds obligataire aux variations de taux."
+          }
+        }
+      },
+      "stocks": {
+        "level": "Débutant",
+        "title": "Actions",
+        "summary": "Des parts de propriété dans des entreprises, avec des rendements liés aux résultats, aux attentes et aux dividendes.",
+        "why": "Les actions peuvent construire du patrimoine à long terme, mais leur prix peut bouger bien plus que l'entreprise sur une seule année.",
+        "intro": "Une action représente une part de propriété dans une entreprise. Si l'activité grandit, gagne plus et reste bien valorisée, les actionnaires peuvent en profiter.",
+        "sections": {
+          "what": "Les actions sont du capital. Vous possédez une petite part d'une entreprise, pas une promesse fixe de remboursement.",
+          "earn": "Le rendement peut venir de la hausse du prix, des dividendes, des rachats d'actions et de la croissance des bénéfices ou du cash-flow.",
+          "risks": "Une entreprise peut décevoir, être disruptée, trop s'endetter ou simplement devenir trop chère par rapport à ses profits.",
+          "mistakes": "Une marque connue n'est pas automatiquement un bon investissement. Le prix payé compte toujours.",
+          "fit": "Les actions peuvent convenir aux objectifs de croissance long terme si vous acceptez la volatilité et analysez la qualité de l'entreprise."
+        },
+        "risks": {
+          "business": "Risque d'entreprise : chiffre d'affaires, profit ou position concurrentielle peuvent se dégrader.",
+          "valuation": "Risque de valorisation : une bonne entreprise peut donner de mauvais rendements si elle est achetée trop cher.",
+          "volatility": "Risque de volatilité : le prix peut chuter fortement même si l'histoire long terme reste valable."
+        },
+        "mistakes": {
+          "storyOnly": "Acheter seulement parce que l'histoire est attirante.",
+          "singleStock": "Mettre trop d'argent dans une seule entreprise.",
+          "priceVsValue": "Confondre un faible prix par action avec une valorisation bon marché."
+        },
+        "fit": {
+          "growth": "Vous cherchez la croissance long terme et pouvez traverser des cycles de marché.",
+          "ownership": "Vous voulez étudier des entreprises individuelles et leur économie.",
+          "longHorizon": "Votre objectif est assez lointain pour que les variations court terme soient moins dangereuses."
+        },
+        "terms": {
+          "eps": {
+            "term": "BPA",
+            "definition": "Bénéfice par action, c'est-à-dire le profit attribué à chaque action."
+          },
+          "pe": {
+            "term": "Ratio P/E",
+            "definition": "Prix divisé par bénéfice. Il compare ce que les investisseurs paient aux profits actuels."
+          },
+          "dividend": {
+            "term": "Dividende",
+            "definition": "Argent versé par une entreprise aux actionnaires, généralement à partir des profits."
+          },
+          "marketCap": {
+            "term": "Capitalisation boursière",
+            "definition": "La valeur de marché totale d'une entreprise : prix de l'action multiplié par le nombre d'actions."
+          }
+        }
+      },
+      "etfs-funds": {
+        "level": "Débutant",
+        "title": "ETF et fonds",
+        "summary": "Des paniers de titres permettant d'acheter de nombreuses positions avec un seul instrument.",
+        "why": "C'est souvent la manière la plus simple de diversifier sans choisir chaque action ou obligation.",
+        "intro": "Un ETF ou un fonds regroupe de nombreux investissements dans un produit. Il peut suivre un indice, un secteur, des obligations ou une stratégie active.",
+        "sections": {
+          "what": "Les fonds regroupent des positions. Les ETF se négocient en journée comme des actions, tandis que les fonds classiques sont souvent valorisés une fois par jour.",
+          "earn": "Le rendement vient des actifs détenus, moins les frais, plus d'éventuelles distributions.",
+          "risks": "Un fonds peut rester concentré, cher ou mal adapté à votre objectif. Diversifié ne veut pas dire sans perte.",
+          "mistakes": "Posséder beaucoup de fonds peut quand même signifier posséder les mêmes entreprises plusieurs fois.",
+          "fit": "Les ETF et fonds peuvent convenir aux plans simples long terme, aux versements mensuels et à la diversification large."
+        },
+        "risks": {
+          "tracking": "Risque de suivi : le fonds peut ne pas suivre parfaitement l'indice ou l'exposition attendue.",
+          "fees": "Risque de frais : les coûts élevés réduisent les rendements année après année.",
+          "concentration": "Risque de concentration : un nom de fonds peut sembler large alors que quelques positions dominent."
+        },
+        "mistakes": {
+          "tooMany": "Acheter beaucoup d'ETF sans vérifier les chevauchements.",
+          "feeBlind": "Ignorer les frais courants et les coûts de transaction.",
+          "overlap": "Croire que deux noms de fonds différents garantissent deux expositions différentes."
+        },
+        "fit": {
+          "diversification": "Vous voulez une exposition large avec un ou quelques produits.",
+          "simplePlan": "Vous préférez les règles et la régularité au stock picking constant.",
+          "monthly": "Vous investissez chaque mois et voulez une cible DCA simple."
+        },
+        "terms": {
+          "expenseRatio": {
+            "term": "Frais courants",
+            "definition": "Le coût annuel du fonds en pourcentage des actifs."
+          },
+          "indexFund": {
+            "term": "Fonds indiciel",
+            "definition": "Un fonds conçu pour suivre un indice au lieu de sélectionner activement des titres."
+          },
+          "nav": {
+            "term": "Valeur liquidative",
+            "definition": "La valeur des actifs du fonds moins ses passifs."
+          },
+          "distribution": {
+            "term": "Distribution",
+            "definition": "Revenu ou gains versés par un fonds aux investisseurs."
+          }
+        }
+      },
+      "crypto": {
+        "level": "Risque élevé",
+        "title": "Crypto",
+        "summary": "Des actifs et réseaux numériques dont les prix dépendent de l'adoption, de la liquidité, du sentiment et de la spéculation.",
+        "why": "La crypto peut exposer à une nouvelle technologie, mais beaucoup d'actifs n'ont pas de cash-flow et un fort risque de baisse.",
+        "intro": "Les crypto-actifs sont des tokens ou actifs de réseau numériques. Certains servent à payer des frais de réseau, certains revendiquent une utilité, et beaucoup se négocient surtout sur des attentes.",
+        "sections": {
+          "what": "La crypto n'est pas une classe unique avec un seul mode d'emploi. Bitcoin, stablecoins, tokens de gouvernance et NFT ont des mécanismes et risques différents.",
+          "earn": "Le rendement vient souvent de la hausse du prix, de programmes de rendement, du staking ou de l'adoption du réseau, sans garantie.",
+          "risks": "Les prix peuvent être extrêmement volatils. Erreurs de garde, faillite d'exchange, fraude, bugs de smart contracts et réglementation peuvent causer des pertes permanentes.",
+          "mistakes": "Ne traitez pas l'excitation des réseaux sociaux comme une analyse. Si vous ne pouvez pas expliquer l'actif et le risque de garde, la position est trop grande.",
+          "fit": "La crypto ne peut convenir qu'à une petite partie très risquée d'un portefeuille, après l'épargne d'urgence et les investissements de base."
+        },
+        "risks": {
+          "volatility": "Risque de volatilité : de fortes baisses peuvent arriver rapidement.",
+          "custody": "Risque de garde : clés perdues, wallets piratés ou exchanges défaillants peuvent signifier une perte permanente.",
+          "cashFlow": "Risque de cash-flow : beaucoup de tokens ne produisent pas de bénéfices, ce qui complique la valorisation."
+        },
+        "mistakes": {
+          "hype": "Acheter parce qu'un token est tendance.",
+          "keys": "Ignorer la sécurité des wallets, exchanges et clés privées.",
+          "allIn": "Utiliser de l'argent nécessaire au loyer, aux impôts ou à l'épargne d'urgence."
+        },
+        "fit": {
+          "smallAllocation": "Vous pouvez limiter la position à de l'argent que vous pouvez perdre.",
+          "technologyView": "Vous comprenez la thèse technologique et les mécanismes du token.",
+          "riskBudget": "Votre plan principal ne dépend pas du succès de la crypto."
+        },
+        "terms": {
+          "token": {
+            "term": "Token",
+            "definition": "Un actif numérique émis ou suivi sur un réseau blockchain."
+          },
+          "wallet": {
+            "term": "Wallet",
+            "definition": "Logiciel ou matériel utilisé pour contrôler des adresses et clés crypto."
+          },
+          "exchange": {
+            "term": "Exchange",
+            "definition": "Plateforme où les utilisateurs achètent, vendent ou conservent des crypto-actifs."
+          },
+          "stablecoin": {
+            "term": "Stablecoin",
+            "definition": "Token conçu pour suivre un autre actif, souvent le dollar, avec ses propres risques de réserves et d'émetteur."
+          }
+        }
+      },
+      "venture": {
+        "level": "Risque avancé",
+        "title": "Venture et startups",
+        "summary": "Investissement dans des sociétés privées où quelques gagnants peuvent porter les rendements et beaucoup d'investissements peuvent échouer.",
+        "why": "Le venture peut être puissant, mais il est illiquide, difficile à valoriser et rarement adapté comme base pour débutants.",
+        "intro": "Investir en venture signifie financer de jeunes entreprises privées avant leur cotation. Les résultats sont incertains, les délais longs et l'accès souvent restreint.",
+        "sections": {
+          "what": "Les startups sont des titres privés. Les investisseurs peuvent utiliser actions, SAFE, obligations convertibles ou véhicules de fonds.",
+          "earn": "Le rendement nécessite souvent une sortie future : acquisition, vente secondaire ou IPO. Avant cela, les valeurs affichées peuvent être des estimations.",
+          "risks": "Beaucoup de startups échouent ou diluent les premiers investisseurs. Vous pouvez être incapable de vendre pendant des années, et les termes juridiques comptent beaucoup.",
+          "mistakes": "Un excellent produit ne suffit pas. Cap table, termes, runway, taille de marché et exécution des fondateurs comptent.",
+          "fit": "Le venture peut convenir à des investisseurs expérimentés avec forte tolérance au risque, blocage long et approche diversifiée."
+        },
+        "risks": {
+          "illiquidity": "Risque d'illiquidité : vous pouvez ne pas pouvoir vendre quand vous avez besoin de cash.",
+          "dilution": "Risque de dilution : les levées futures peuvent réduire votre pourcentage de propriété.",
+          "failure": "Risque d'échec : beaucoup de startups ne deviennent jamais rentables ou ne sortent jamais."
+        },
+        "mistakes": {
+          "lottery": "Traiter une startup comme un ticket de loterie garanti.",
+          "noTerms": "Ignorer valorisation, préférences de liquidation et droits des investisseurs.",
+          "noDiversification": "Faire un seul investissement privé sans comprendre les mathématiques de portefeuille."
+        },
+        "fit": {
+          "highRisk": "Vous pouvez tolérer une perte totale sur certains deals.",
+          "longLockup": "Vous n'avez pas besoin de l'argent pendant de nombreuses années.",
+          "expertise": "Vous avez assez d'expertise pour évaluer l'entreprise et les termes."
+        },
+        "terms": {
+          "runway": {
+            "term": "Runway",
+            "definition": "Le temps pendant lequel une entreprise peut fonctionner avant de devoir se refinancer."
+          },
+          "dilution": {
+            "term": "Dilution",
+            "definition": "Réduction du pourcentage de propriété lorsque de nouvelles actions sont émises."
+          },
+          "valuationCap": {
+            "term": "Cap de valorisation",
+            "definition": "Valorisation maximale utilisée pour convertir certains instruments de financement en actions."
+          },
+          "liquidity": {
+            "term": "Liquidité",
+            "definition": "La facilité avec laquelle un investissement peut être vendu contre du cash."
+          }
+        }
+      },
+      "cash-risk": {
+        "level": "Fondation",
+        "title": "Cash et bases du risque",
+        "summary": "La couche de sécurité : épargne d'urgence, inflation, horizon, allocation et rééquilibrage.",
+        "why": "Bien investir commence par éviter d'être forcé de vendre des actifs risqués au mauvais moment.",
+        "intro": "Le cash et les bases du risque relient tous les autres sujets. Avant de choisir des actifs, décidez à quoi sert l'argent, quand il sera nécessaire et quelle incertitude vous pouvez supporter.",
+        "sections": {
+          "what": "Cette section parle de planification : fonds d'urgence, cash court terme, inflation, tolérance au risque, allocation et rééquilibrage.",
+          "earn": "Le cash protège la flexibilité. Une allocation équilibrée gagne en laissant les actifs risqués croître pendant que les actifs plus sûrs soutiennent liquidité et discipline.",
+          "risks": "Trop de cash peut perdre du pouvoir d'achat à cause de l'inflation. Trop peu peut forcer une vente panique pendant une baisse.",
+          "mistakes": "La plus grande erreur de débutant est d'investir de l'argent qui devait rester sûr pour des besoins proches.",
+          "fit": "Cela vient avant toute décision d'actif, car cela définit le niveau de risque que votre plan peut réellement porter."
+        },
+        "risks": {
+          "inflation": "Risque d'inflation : le cash peut perdre progressivement du pouvoir d'achat.",
+          "underinvesting": "Risque de sous-investissement : rester trop prudent pour des objectifs longs peut rendre la croissance plus difficile.",
+          "panic": "Risque comportemental : sans réserve de cash, une baisse de marché peut devenir une vente forcée."
+        },
+        "mistakes": {
+          "noEmergency": "Sauter le fonds d'urgence avant de prendre du risque de marché.",
+          "wrongHorizon": "Utiliser des actifs volatils pour de l'argent nécessaire bientôt.",
+          "noRebalance": "Laisser le portefeuille s'éloigner fortement du niveau de risque prévu."
+        },
+        "fit": {
+          "foundation": "Vous construisez la base avant de choisir des investissements.",
+          "shortGoals": "Vous avez des objectifs proches où la stabilité compte plus que le rendement.",
+          "sleep": "Vous voulez un plan que vous pouvez garder pendant les mauvais marchés."
+        },
+        "terms": {
+          "emergencyFund": {
+            "term": "Fonds d'urgence",
+            "definition": "Cash gardé pour les dépenses imprévues afin de ne pas vendre des investissements au mauvais moment."
+          },
+          "inflation": {
+            "term": "Inflation",
+            "definition": "Hausse des prix qui réduit le pouvoir d'achat de l'argent."
+          },
+          "allocation": {
+            "term": "Allocation d'actifs",
+            "definition": "La répartition d'un portefeuille entre actions, obligations, cash et alternatives."
+          },
+          "rebalance": {
+            "term": "Rééquilibrage",
+            "definition": "Ajuster un portefeuille pour revenir vers son allocation cible."
+          }
+        }
+      }
+    }
+  },
   "auth": {
     "common": {
       "loading": "Veuillez patienter..."

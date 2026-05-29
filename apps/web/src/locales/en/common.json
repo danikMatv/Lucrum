@@ -600,6 +600,352 @@
       }
     }
   },
+  "learnAcademy": {
+    "kicker": "Investment academy",
+    "title": "Learn the main asset classes before you choose a tool.",
+    "description": "A practical beginner map for bonds, stocks, funds, crypto, venture investing, and the risk basics that connect them.",
+    "note": {
+      "title": "Educational, not advice",
+      "text": "These guides explain concepts, trade-offs, and risks. They do not recommend buying any specific asset."
+    },
+    "principles": {
+      "goal": {
+        "title": "Start with the goal",
+        "text": "A short-term cash need, a 20-year retirement plan, and a high-risk experiment should not use the same asset mix."
+      },
+      "risk": {
+        "title": "Name the risk",
+        "text": "Every asset has a different way to disappoint you: price drops, inflation, default, fees, scams, or no liquidity."
+      },
+      "time": {
+        "title": "Match the time horizon",
+        "text": "The more time you have, the easier it is to tolerate volatility. The less time you have, the more stability matters."
+      }
+    },
+    "catalog": {
+      "kicker": "Core sections",
+      "title": "Pick a topic",
+      "description": "Each section explains what the asset is, how it can make money or preserve value, what can go wrong, and which terms matter.",
+      "open": "Open lesson"
+    },
+    "topic": {
+      "back": "Back to Learn",
+      "contents": "Sections",
+      "kicker": "Learn section",
+      "risks": "Main risks",
+      "mistakes": "Beginner mistakes",
+      "fit": "When it may fit",
+      "terms": "Key terms",
+      "tools": "Related Lucrum tools",
+      "resources": "Neutral resources"
+    },
+    "sections": {
+      "what": "What it is",
+      "earn": "How it can make money",
+      "risks": "What can go wrong",
+      "mistakes": "Common beginner trap",
+      "fit": "Where it fits"
+    },
+    "notFound": {
+      "kicker": "Unknown topic",
+      "title": "This lesson is not available.",
+      "description": "The academy page has the current list of investing sections.",
+      "cta": "Open academy"
+    },
+    "resources": {
+      "investorIntro": "Investor.gov: introduction to investing",
+      "finraBasics": "FINRA: investing basics",
+      "treasuryDirect": "TreasuryDirect: U.S. Treasury securities",
+      "investorCrypto": "Investor.gov: crypto assets",
+      "secPrivate": "Investor.gov: private offerings",
+      "investorRisk": "Investor.gov: assessing risk tolerance",
+      "fred": "FRED: economic data"
+    },
+    "topics": {
+      "bonds": {
+        "level": "Beginner",
+        "title": "Bonds",
+        "summary": "Loans to governments or companies that usually pay interest and return principal at maturity.",
+        "why": "Useful for income, planning known dates, and reducing portfolio volatility, but not risk-free.",
+        "intro": "A bond is a loan. You lend money to a government, city, or company. In return, the issuer usually pays interest and promises to repay the principal on a maturity date.",
+        "sections": {
+          "what": "Bonds are debt securities. The buyer becomes a lender, not an owner. The bond contract defines the coupon, maturity, and repayment priority.",
+          "earn": "Returns usually come from coupon payments, repayment at maturity, and price changes if rates move after you buy.",
+          "risks": "Bond prices can fall when interest rates rise. Issuers can also default, and inflation can reduce the real value of fixed payments.",
+          "mistakes": "A high yield is not automatically a bargain. It can mean the market sees higher credit or duration risk.",
+          "fit": "Bonds may fit money you want to stabilize, income needs, or goals with a clearer date than long-term stock growth."
+        },
+        "risks": {
+          "rates": "Interest-rate risk: existing bond prices often fall when new bonds offer higher yields.",
+          "credit": "Credit risk: the issuer may struggle to pay interest or repay principal.",
+          "inflation": "Inflation risk: fixed payments can buy less in the future."
+        },
+        "mistakes": {
+          "yieldOnly": "Choosing only the highest yield without asking why the yield is high.",
+          "duration": "Ignoring duration and being surprised when a bond fund falls after rates rise.",
+          "cash": "Treating bonds like cash even though market prices can move."
+        },
+        "fit": {
+          "income": "You want more predictable interest income.",
+          "stability": "You want part of the portfolio to move differently from stocks.",
+          "knownDate": "You are matching money to a future date, like tuition or a home deposit."
+        },
+        "terms": {
+          "coupon": {
+            "term": "Coupon",
+            "definition": "The stated interest payment a bond pays, usually shown as an annual percentage of face value."
+          },
+          "yield": {
+            "term": "Yield",
+            "definition": "The return implied by the bond price, coupon, and time to maturity."
+          },
+          "maturity": {
+            "term": "Maturity",
+            "definition": "The date when the issuer is expected to repay the bond principal."
+          },
+          "duration": {
+            "term": "Duration",
+            "definition": "A measure of how sensitive a bond or bond fund is to interest-rate changes."
+          }
+        }
+      },
+      "stocks": {
+        "level": "Beginner",
+        "title": "Stocks",
+        "summary": "Ownership stakes in companies, with returns driven by business performance, expectations, and dividends.",
+        "why": "Stocks can build long-term wealth, but the price can move far more than the company changes in a single year.",
+        "intro": "A share of stock represents partial ownership in a company. If the business grows, earns more, and the market values it well, shareholders can benefit.",
+        "sections": {
+          "what": "Stocks are equity. You own a small claim on a business, not a fixed promise of repayment.",
+          "earn": "Returns can come from price appreciation, dividends, buybacks, and growth in earnings or cash flow.",
+          "risks": "A company can disappoint, get disrupted, take on too much debt, or simply become too expensive relative to its profits.",
+          "mistakes": "A familiar brand is not automatically a good investment. The price you pay still matters.",
+          "fit": "Stocks may fit long-term growth goals where you can tolerate volatility and research business quality."
+        },
+        "risks": {
+          "business": "Business risk: revenue, profit, or competitive position can weaken.",
+          "valuation": "Valuation risk: a good company can produce poor returns if bought at a very high price.",
+          "volatility": "Volatility risk: stock prices can drop sharply even when the long-term story is intact."
+        },
+        "mistakes": {
+          "storyOnly": "Buying only because the story sounds exciting.",
+          "singleStock": "Putting too much money into one company.",
+          "priceVsValue": "Confusing a low share price with a cheap valuation."
+        },
+        "fit": {
+          "growth": "You want long-term growth and can wait through market cycles.",
+          "ownership": "You want to study individual businesses and their economics.",
+          "longHorizon": "Your goal is far enough away that short-term price swings are less dangerous."
+        },
+        "terms": {
+          "eps": {
+            "term": "EPS",
+            "definition": "Earnings per share, or profit allocated to each share."
+          },
+          "pe": {
+            "term": "P/E ratio",
+            "definition": "Price divided by earnings. It compares what investors pay with current profits."
+          },
+          "dividend": {
+            "term": "Dividend",
+            "definition": "Cash a company pays to shareholders, usually from profits."
+          },
+          "marketCap": {
+            "term": "Market cap",
+            "definition": "The total market value of a company: share price multiplied by shares outstanding."
+          }
+        }
+      },
+      "etfs-funds": {
+        "level": "Beginner",
+        "title": "ETFs and funds",
+        "summary": "Baskets of securities that let investors buy many holdings through one instrument.",
+        "why": "They are often the simplest way to diversify without picking every individual stock or bond.",
+        "intro": "An ETF or fund pools many investments into one product. It can track an index, follow a sector, hold bonds, or use an active strategy.",
+        "sections": {
+          "what": "Funds bundle holdings. ETFs trade during the day like stocks, while mutual funds usually price once per day.",
+          "earn": "Returns come from the performance of the underlying holdings, minus fees, plus any distributions.",
+          "risks": "Funds can still be concentrated, expensive, or poorly matched to your goal. Diversified does not mean loss-proof.",
+          "mistakes": "Owning many funds can still mean owning the same companies repeatedly.",
+          "fit": "ETFs and funds may fit simple long-term plans, monthly investing, and broad diversification."
+        },
+        "risks": {
+          "tracking": "Tracking risk: the fund may not perfectly follow the index or exposure you expect.",
+          "fees": "Fee risk: high costs reduce returns year after year.",
+          "concentration": "Concentration risk: a fund name can sound broad while a few holdings dominate."
+        },
+        "mistakes": {
+          "tooMany": "Buying many ETFs without checking overlap.",
+          "feeBlind": "Ignoring expense ratios and trading costs.",
+          "overlap": "Thinking two different fund names guarantee different exposure."
+        },
+        "fit": {
+          "diversification": "You want broad exposure through one or a few products.",
+          "simplePlan": "You prefer rules and consistency over constant stock picking.",
+          "monthly": "You invest monthly and want an easy DCA target."
+        },
+        "terms": {
+          "expenseRatio": {
+            "term": "Expense ratio",
+            "definition": "The annual fund cost as a percentage of assets."
+          },
+          "indexFund": {
+            "term": "Index fund",
+            "definition": "A fund designed to track a market index instead of picking securities actively."
+          },
+          "nav": {
+            "term": "NAV",
+            "definition": "Net asset value, or the value of the fund holdings minus liabilities."
+          },
+          "distribution": {
+            "term": "Distribution",
+            "definition": "Income or gains paid out by a fund to investors."
+          }
+        }
+      },
+      "crypto": {
+        "level": "High risk",
+        "title": "Crypto",
+        "summary": "Digital assets and networks with prices driven by adoption, liquidity, sentiment, and speculation.",
+        "why": "Crypto can offer exposure to new technology, but many assets have no cash flows and extreme downside risk.",
+        "intro": "Crypto assets are digital tokens or network assets. Some are used to pay network fees, some claim utility, and many trade mainly on expectations.",
+        "sections": {
+          "what": "Crypto is not one asset class with one rulebook. Bitcoin, stablecoins, governance tokens, and NFTs have different mechanics and risks.",
+          "earn": "Returns usually come from price appreciation, yield programs, staking rewards, or network adoption, but none are guaranteed.",
+          "risks": "Prices can be extremely volatile. Custody mistakes, exchange failure, scams, smart contract bugs, and regulation can cause permanent losses.",
+          "mistakes": "Do not treat social media excitement as research. If you cannot explain the asset and custody risk, the position is too large.",
+          "fit": "Crypto may fit only a limited, high-risk part of a portfolio after emergency savings and core investments are handled."
+        },
+        "risks": {
+          "volatility": "Volatility risk: large price drops can happen quickly.",
+          "custody": "Custody risk: lost keys, hacked wallets, or failed exchanges can mean permanent loss.",
+          "cashFlow": "Cash-flow risk: many tokens do not produce earnings, so valuation is harder."
+        },
+        "mistakes": {
+          "hype": "Buying because a token is trending.",
+          "keys": "Ignoring wallet, exchange, and private-key security.",
+          "allIn": "Using money needed for rent, taxes, or emergency savings."
+        },
+        "fit": {
+          "smallAllocation": "You can limit the position to money you can afford to lose.",
+          "technologyView": "You understand the technology thesis and the specific token mechanics.",
+          "riskBudget": "Your core plan does not depend on crypto working out."
+        },
+        "terms": {
+          "token": {
+            "term": "Token",
+            "definition": "A digital asset issued or tracked on a blockchain network."
+          },
+          "wallet": {
+            "term": "Wallet",
+            "definition": "Software or hardware used to control crypto addresses and keys."
+          },
+          "exchange": {
+            "term": "Exchange",
+            "definition": "A platform where users buy, sell, or hold crypto assets."
+          },
+          "stablecoin": {
+            "term": "Stablecoin",
+            "definition": "A token designed to track another asset, often the U.S. dollar, with its own reserve and issuer risks."
+          }
+        }
+      },
+      "venture": {
+        "level": "Advanced risk",
+        "title": "Venture and startups",
+        "summary": "Private company investing where a few winners may drive most returns and many investments can fail.",
+        "why": "Venture can be powerful but is illiquid, hard to value, and usually unsuitable as a beginner core holding.",
+        "intro": "Venture investing means funding young private companies before they trade publicly. Outcomes are uncertain, timelines are long, and access is often restricted.",
+        "sections": {
+          "what": "Startup investments are private securities. Investors may use equity, SAFEs, convertible notes, or fund vehicles.",
+          "earn": "Returns usually require a future exit: acquisition, secondary sale, or IPO. Until then, quoted values can be estimates.",
+          "risks": "Most startups fail or dilute early investors. You may be unable to sell for years, and legal terms can heavily affect outcomes.",
+          "mistakes": "A great product is not enough. Cap table, terms, runway, market size, and founder execution matter.",
+          "fit": "Venture may fit experienced investors with high risk tolerance, long lockups, and a diversified approach."
+        },
+        "risks": {
+          "illiquidity": "Illiquidity risk: you may not be able to sell when you need cash.",
+          "dilution": "Dilution risk: later funding rounds can reduce your ownership percentage.",
+          "failure": "Failure risk: many startups never become profitable or exit."
+        },
+        "mistakes": {
+          "lottery": "Treating one startup as a guaranteed lottery ticket.",
+          "noTerms": "Ignoring valuation, liquidation preferences, and investor rights.",
+          "noDiversification": "Making one private investment instead of understanding portfolio math."
+        },
+        "fit": {
+          "highRisk": "You can tolerate total loss on individual deals.",
+          "longLockup": "You do not need the money for many years.",
+          "expertise": "You have enough domain knowledge to evaluate the company and terms."
+        },
+        "terms": {
+          "runway": {
+            "term": "Runway",
+            "definition": "How long a company can operate before it needs more funding."
+          },
+          "dilution": {
+            "term": "Dilution",
+            "definition": "A reduction in ownership percentage when new shares are issued."
+          },
+          "valuationCap": {
+            "term": "Valuation cap",
+            "definition": "A maximum valuation used to convert some startup financing instruments into equity."
+          },
+          "liquidity": {
+            "term": "Liquidity",
+            "definition": "How easily an investment can be sold for cash."
+          }
+        }
+      },
+      "cash-risk": {
+        "level": "Foundation",
+        "title": "Cash and risk basics",
+        "summary": "The safety layer: emergency cash, inflation, time horizon, allocation, and rebalancing.",
+        "why": "Good investing starts with not being forced to sell risky assets at the wrong time.",
+        "intro": "Cash and risk basics connect every other topic. Before choosing assets, decide what money is for, when it is needed, and how much uncertainty you can handle.",
+        "sections": {
+          "what": "This section is about planning: emergency funds, short-term cash, inflation, risk tolerance, asset allocation, and rebalancing.",
+          "earn": "Cash protects flexibility. A balanced allocation earns by letting risky assets grow while safer assets support liquidity and discipline.",
+          "risks": "Too much cash can lose purchasing power to inflation. Too little cash can force panic selling during a downturn.",
+          "mistakes": "The biggest beginner mistake is investing money that should have stayed safe for near-term needs.",
+          "fit": "This belongs before every asset decision because it defines how much risk your plan can actually carry."
+        },
+        "risks": {
+          "inflation": "Inflation risk: cash can slowly lose purchasing power.",
+          "underinvesting": "Underinvesting risk: staying too safe for long-term goals can make growth harder.",
+          "panic": "Behavior risk: no cash buffer can turn a market drop into a forced sale."
+        },
+        "mistakes": {
+          "noEmergency": "Skipping an emergency fund before taking market risk.",
+          "wrongHorizon": "Using volatile assets for money needed soon.",
+          "noRebalance": "Letting the portfolio drift far from the intended risk level."
+        },
+        "fit": {
+          "foundation": "You are building the base before choosing investments.",
+          "shortGoals": "You have near-term goals where stability matters more than return.",
+          "sleep": "You want a plan you can keep during bad markets."
+        },
+        "terms": {
+          "emergencyFund": {
+            "term": "Emergency fund",
+            "definition": "Cash kept for unexpected expenses so you do not need to sell investments at a bad time."
+          },
+          "inflation": {
+            "term": "Inflation",
+            "definition": "A rise in prices that reduces the purchasing power of money."
+          },
+          "allocation": {
+            "term": "Asset allocation",
+            "definition": "How a portfolio is split across asset types such as stocks, bonds, cash, and alternatives."
+          },
+          "rebalance": {
+            "term": "Rebalancing",
+            "definition": "Adjusting a portfolio back toward its target allocation."
+          }
+        }
+      }
+    }
+  },
   "auth": {
     "common": {
       "loading": "Please wait..."
