@@ -775,6 +775,13 @@
       "mistakes": "Piège fréquent",
       "fit": "Où cela s'intègre"
     },
+    "miniCourse": {
+      "kicker": "Mini-cours",
+      "title": "12 étapes avant votre première action",
+      "description": "Un parcours original pour débuter : bases financières, profil de risque, analyse de l'entreprise, états financiers, valorisation et discipline d'entrée.",
+      "ruleTitle": "Règle centrale",
+      "ruleText": "N'achetez pas une action seulement parce qu'elle est populaire ou qu'elle a baissé. Comprenez d'abord l'entreprise, le prix, le risque, l'horizon et le rôle de cette position dans votre portefeuille."
+    },
     "notFound": {
       "kicker": "Sujet inconnu",
       "title": "Cette leçon n'est pas disponible.",
@@ -850,6 +857,68 @@
           "risks": "Une entreprise peut décevoir, être disruptée, trop s'endetter ou simplement devenir trop chère par rapport à ses profits.",
           "mistakes": "Une marque connue n'est pas automatiquement un bon investissement. Le prix payé compte toujours.",
           "fit": "Les actions peuvent convenir aux objectifs de croissance long terme si vous acceptez la volatilité et analysez la qualité de l'entreprise."
+        },
+        "miniCourse": {
+          "foundation": {
+            "title": "Préparer la base financière",
+            "text": "Avant les actions, il faut une réserve d'urgence, des dettes maîtrisées et une vision claire du cash-flow mensuel. Sinon le marché peut vous forcer à vendre au pire moment.",
+            "action": "Constituez une réserve de 3 à 6 mois de dépenses."
+          },
+          "plan": {
+            "title": "Écrire un plan personnel",
+            "text": "Un plan d'investissement répond à trois questions : pourquoi l'argent est investi, quand il sera nécessaire et quelle baisse vous pouvez vraiment supporter.",
+            "action": "Notez votre objectif, votre horizon et votre versement régulier."
+          },
+          "riskProfile": {
+            "title": "Définir votre profil de risque",
+            "text": "Le risque n'est pas seulement la baisse du prix. Il inclut aussi les chocs de revenu, la panique, la concentration, la devise, le secteur et les erreurs d'hypothèse.",
+            "action": "Fixez le poids maximal d'une seule action dans le portefeuille."
+          },
+          "assetMap": {
+            "title": "Comparer les classes d'actifs",
+            "text": "Les actions donnent une part d'entreprise, les obligations ressemblent davantage à un prêt, les ETF offrent un panier et le cash donne de la flexibilité. Chaque outil a un rôle.",
+            "action": "Décidez quel rôle les actions jouent dans votre portefeuille."
+          },
+          "compound": {
+            "title": "Comprendre les intérêts composés",
+            "text": "Les rendements à long terme viennent du temps, du réinvestissement et de la régularité. Les grands résultats paraissent souvent modestes au début.",
+            "action": "Comparez 5, 10 et 20 ans dans le calculateur d'investissement."
+          },
+          "analysisTypes": {
+            "title": "Séparer analyse fondamentale et technique",
+            "text": "L'analyse fondamentale demande ce qu'est l'entreprise et ce qu'elle peut valoir. L'analyse technique regarde davantage le prix, la tendance et le comportement du marché.",
+            "action": "Expliquez l'entreprise avant de regarder le graphique."
+          },
+          "etfBridge": {
+            "title": "Comparer l'action à un ETF",
+            "text": "Si vous ne pouvez pas expliquer pourquoi une entreprise est meilleure qu'un ETF large, un fonds indiciel peut être le choix le plus simple et le plus honnête.",
+            "action": "Comparez l'entreprise à son ETF sectoriel ou au S&P 500."
+          },
+          "qualityCompany": {
+            "title": "Chercher une entreprise de qualité",
+            "text": "Une entreprise solide a un produit compréhensible, un avantage concurrentiel, des marges saines, une discipline du capital et une direction qui ne détruit pas la confiance.",
+            "action": "Décrivez l'avantage de l'entreprise en une phrase."
+          },
+          "profile": {
+            "title": "Lire le profil de l'entreprise",
+            "text": "Commencez par le secteur, la géographie, les sources de chiffre d'affaires, les clients et les dépendances. Si l'activité est floue, les chiffres se lisent mal.",
+            "action": "Écrivez comment l'entreprise gagne de l'argent."
+          },
+          "statements": {
+            "title": "Examiner les états financiers",
+            "text": "Le chiffre d'affaires montre l'échelle, le profit montre l'efficacité, le cash-flow montre la vraie puissance financière et le bilan montre la résistance et la dette.",
+            "action": "Vérifiez 5 ans de chiffre d'affaires, de profit et de FCF."
+          },
+          "valuation": {
+            "title": "Ne pas ignorer la valorisation",
+            "text": "Même une excellente entreprise peut être un mauvais investissement si le prix est trop élevé. Regardez P/E, P/S, marges, croissance et alternatives.",
+            "action": "Comparez les multiples avec l'historique et les concurrents."
+          },
+          "entry": {
+            "title": "Définir une règle d'entrée",
+            "text": "Le DCA réduit le risque d'un mauvais timing, acheter les baisses demande de la discipline et le lump sum ne convient pas à tout le monde. La règle doit être écrite avant l'achat.",
+            "action": "Choisissez le DCA, un prix limite ou un autre scénario clair."
+          }
         },
         "risks": {
           "business": "Risque d'entreprise : chiffre d'affaires, profit ou position concurrentielle peuvent se dégrader.",

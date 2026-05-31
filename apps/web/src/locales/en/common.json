@@ -775,6 +775,13 @@
       "mistakes": "Common beginner trap",
       "fit": "Where it fits"
     },
+    "miniCourse": {
+      "kicker": "Mini-course",
+      "title": "12 steps before your first stock",
+      "description": "An original beginner path from financial foundations and risk profile to business analysis, statements, valuation, and entry discipline.",
+      "ruleTitle": "Core rule",
+      "ruleText": "Do not buy a stock only because it is popular or has dropped. First understand the business, price, risk, time horizon, and the role this position has in your portfolio."
+    },
     "notFound": {
       "kicker": "Unknown topic",
       "title": "This lesson is not available.",
@@ -850,6 +857,68 @@
           "risks": "A company can disappoint, get disrupted, take on too much debt, or simply become too expensive relative to its profits.",
           "mistakes": "A familiar brand is not automatically a good investment. The price you pay still matters.",
           "fit": "Stocks may fit long-term growth goals where you can tolerate volatility and research business quality."
+        },
+        "miniCourse": {
+          "foundation": {
+            "title": "Prepare your financial base",
+            "text": "Before stocks, you need an emergency fund, debt control, and a clear view of monthly cash flow. Otherwise the market can force you to sell at the worst time.",
+            "action": "Build a reserve for 3-6 months of expenses."
+          },
+          "plan": {
+            "title": "Write a personal plan",
+            "text": "An investing plan answers three questions: why the money is invested, when it is needed, and how much drawdown you can realistically tolerate.",
+            "action": "Write your goal, horizon, and recurring contribution."
+          },
+          "riskProfile": {
+            "title": "Define your risk profile",
+            "text": "Risk is not only price decline. It also includes income shocks, panic, concentration, currency, sector exposure, and mistakes in your assumptions.",
+            "action": "Set a maximum portfolio weight for one stock."
+          },
+          "assetMap": {
+            "title": "Compare asset classes",
+            "text": "Stocks give business ownership, bonds behave more like loans, ETFs give a basket, and cash gives flexibility. Each tool has a different job.",
+            "action": "Decide what role stocks play in your own portfolio."
+          },
+          "compound": {
+            "title": "Understand compounding",
+            "text": "Long-term returns come from time, reinvestment, and consistency. Large outcomes often look boring at the beginning.",
+            "action": "Compare 5, 10, and 20 years in the investment calculator."
+          },
+          "analysisTypes": {
+            "title": "Separate fundamental and technical analysis",
+            "text": "Fundamental analysis asks what the business is and what it may be worth. Technical analysis focuses more on price, trend, and market behavior.",
+            "action": "Explain the business before looking at the chart."
+          },
+          "etfBridge": {
+            "title": "Compare the stock with an ETF",
+            "text": "If you cannot explain why one company is better than a broad ETF, an index fund may be the simpler and more honest choice.",
+            "action": "Compare the company with its sector ETF or the S&P 500."
+          },
+          "qualityCompany": {
+            "title": "Look for a quality business",
+            "text": "A strong company has an understandable product, competitive advantage, healthy margins, capital discipline, and management that does not destroy trust.",
+            "action": "Describe the company's advantage in one sentence."
+          },
+          "profile": {
+            "title": "Read the company profile",
+            "text": "Start with sector, geography, revenue sources, customers, and dependencies. If the business is unclear, the numbers are easy to misread.",
+            "action": "Write how the company makes money."
+          },
+          "statements": {
+            "title": "Review the statements",
+            "text": "Revenue shows scale, profit shows efficiency, cash flow shows real money power, and the balance sheet shows resilience and debt load.",
+            "action": "Check 5 years of revenue, profit, and FCF."
+          },
+          "valuation": {
+            "title": "Do not ignore valuation",
+            "text": "Even a great business can be a poor investment at too high a price. Look at P/E, P/S, margins, growth, and alternatives.",
+            "action": "Compare multiples with history and competitors."
+          },
+          "entry": {
+            "title": "Define an entry rule",
+            "text": "DCA reduces one-bad-timing risk, buying dips requires discipline, and lump sum does not fit everyone. Write the rule before buying.",
+            "action": "Choose DCA, a limit price, or another clear scenario."
+          }
         },
         "risks": {
           "business": "Business risk: revenue, profit, or competitive position can weaken.",

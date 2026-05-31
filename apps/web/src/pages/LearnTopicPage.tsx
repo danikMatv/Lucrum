@@ -4,6 +4,20 @@ import { LearnResources } from '../components/learn/LearnResources.tsx'
 import { getLearnTopic, learnTopics } from '../data/learnTopics.ts'
 
 const sectionKeys = ['what', 'earn', 'risks', 'mistakes', 'fit'] as const
+const stockMiniCourseLessons = [
+  'foundation',
+  'plan',
+  'riskProfile',
+  'assetMap',
+  'compound',
+  'analysisTypes',
+  'etfBridge',
+  'qualityCompany',
+  'profile',
+  'statements',
+  'valuation',
+  'entry',
+] as const
 
 const getToolLabelKey = (path: string) => {
   if (path === '/tools/invest-calc') return 'landing.tools.items.investCalc.title'
@@ -112,6 +126,53 @@ export const LearnTopicPage = () => {
               {t(`learnAcademy.topics.${topic.id}.intro`)}
             </p>
           </section>
+
+          {topic.id === 'stocks' ? (
+            <section className="grid gap-5">
+              <div>
+                <p className="text-sm font-semibold uppercase text-primary">
+                  {t('learnAcademy.miniCourse.kicker')}
+                </p>
+                <h2 className="mt-3 font-heading text-4xl font-bold text-text-primary">
+                  {t('learnAcademy.miniCourse.title')}
+                </h2>
+                <p className="mt-3 max-w-3xl text-base leading-7 text-text-muted">
+                  {t('learnAcademy.miniCourse.description')}
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {stockMiniCourseLessons.map((lesson, index) => (
+                  <article
+                    key={lesson}
+                    className="rounded-lg border-[0.5px] border-border bg-surface p-5"
+                  >
+                    <p className="text-sm font-semibold uppercase text-primary">
+                      {String(index + 1).padStart(2, '0')}
+                    </p>
+                    <h3 className="mt-3 text-xl font-bold text-text-primary">
+                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.title`)}
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-text-muted">
+                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.text`)}
+                    </p>
+                    <p className="mt-4 text-sm font-semibold text-primary">
+                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.action`)}
+                    </p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="rounded-lg border-[0.5px] border-primary/40 bg-primary-dim p-5">
+                <h3 className="text-xl font-bold text-text-primary">
+                  {t('learnAcademy.miniCourse.ruleTitle')}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-text-muted">
+                  {t('learnAcademy.miniCourse.ruleText')}
+                </p>
+              </div>
+            </section>
+          ) : null}
 
           <section className="grid gap-4 md:grid-cols-2">
             {sectionKeys.map((section) => (
