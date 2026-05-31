@@ -4,20 +4,6 @@ import { LearnResources } from '../components/learn/LearnResources.tsx'
 import { getLearnTopic, learnTopics } from '../data/learnTopics.ts'
 
 const sectionKeys = ['what', 'earn', 'risks', 'mistakes', 'fit'] as const
-const stockMiniCourseLessons = [
-  'foundation',
-  'plan',
-  'riskProfile',
-  'assetMap',
-  'compound',
-  'analysisTypes',
-  'etfBridge',
-  'qualityCompany',
-  'profile',
-  'statements',
-  'valuation',
-  'entry',
-] as const
 
 const getToolLabelKey = (path: string) => {
   if (path === '/tools/invest-calc') return 'landing.tools.items.investCalc.title'
@@ -128,57 +114,58 @@ export const LearnTopicPage = () => {
           </section>
 
           {topic.id === 'stocks' ? (
-            <section className="grid gap-5">
-              <div>
+            <section className="rounded-lg border-[0.5px] border-primary/40 bg-primary-dim p-6">
+              <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
+                <div>
+                  <p className="text-sm font-semibold uppercase text-primary">
+                    {t('learnAcademy.miniCourse.kicker')}
+                  </p>
+                  <h2 className="mt-3 font-heading text-4xl font-bold text-text-primary">
+                    {t('learnAcademy.miniCourse.title')}
+                  </h2>
+                  <p className="mt-3 max-w-3xl text-base leading-7 text-text-muted">
+                    {t('learnAcademy.miniCourse.description')}
+                  </p>
+                </div>
+                <Link
+                  to="/learn/stocks/course"
+                  className="inline-flex justify-center rounded-md bg-primary px-5 py-3 text-sm font-bold text-background transition hover:bg-primary-hover"
+                >
+                  {t('learnAcademy.miniCourse.openCourse')}
+                </Link>
+              </div>
+
+              <div className="mt-6 grid gap-3 md:grid-cols-3">
+                <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-4">
+                  <p className="text-sm font-semibold text-primary">
+                    {t('learnAcademy.miniCourse.previewOneTitle')}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-text-muted">
+                    {t('learnAcademy.miniCourse.previewOneText')}
+                  </p>
+                </div>
+                <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-4">
+                  <p className="text-sm font-semibold text-primary">
+                    {t('learnAcademy.miniCourse.previewTwoTitle')}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-text-muted">
+                    {t('learnAcademy.miniCourse.previewTwoText')}
+                  </p>
+                </div>
+                <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-4">
+                  <p className="text-sm font-semibold text-primary">
+                    {t('learnAcademy.miniCourse.previewThreeTitle')}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-text-muted">
+                    {t('learnAcademy.miniCourse.previewThreeText')}
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 border-t-[0.5px] border-primary/30 pt-5">
                 <p className="text-sm font-semibold uppercase text-primary">
-                  {t('learnAcademy.miniCourse.kicker')}
-                </p>
-                <h2 className="mt-3 font-heading text-4xl font-bold text-text-primary">
-                  {t('learnAcademy.miniCourse.title')}
-                </h2>
-                <p className="mt-3 max-w-3xl text-base leading-7 text-text-muted">
-                  {t('learnAcademy.miniCourse.description')}
-                </p>
-              </div>
-
-              <div className="grid gap-3">
-                {stockMiniCourseLessons.map((lesson, index) => (
-                  <details
-                    key={lesson}
-                    className="group rounded-lg border-[0.5px] border-border bg-surface"
-                  >
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 marker:hidden">
-                      <span className="grid gap-1">
-                        <span className="text-sm font-semibold uppercase text-primary">
-                          {String(index + 1).padStart(2, '0')}
-                        </span>
-                        <span className="text-xl font-bold text-text-primary">
-                          {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.title`)}
-                        </span>
-                      </span>
-                      <span
-                        aria-hidden="true"
-                        className="grid h-8 w-8 shrink-0 place-items-center rounded-md border-[0.5px] border-border text-lg font-bold text-primary transition group-open:rotate-45 group-hover:border-border-hover"
-                      >
-                        +
-                      </span>
-                    </summary>
-                    <div className="border-t-[0.5px] border-border px-5 pb-5 pt-4">
-                      <p className="text-sm leading-6 text-text-muted">
-                        {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.text`)}
-                      </p>
-                      <p className="mt-4 text-sm font-semibold text-primary">
-                        {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.action`)}
-                      </p>
-                    </div>
-                  </details>
-                ))}
-              </div>
-
-              <div className="rounded-lg border-[0.5px] border-primary/40 bg-primary-dim p-5">
-                <h3 className="text-xl font-bold text-text-primary">
                   {t('learnAcademy.miniCourse.ruleTitle')}
-                </h3>
+                </p>
                 <p className="mt-3 text-sm leading-6 text-text-muted">
                   {t('learnAcademy.miniCourse.ruleText')}
                 </p>

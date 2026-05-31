@@ -778,9 +778,32 @@
     "miniCourse": {
       "kicker": "Mini-course",
       "title": "12 steps before your first stock",
-      "description": "An original beginner path from financial foundations and risk profile to business analysis, statements, valuation, and entry discipline.",
+      "description": "A full original beginner path through financial foundations, risk profile, asset choice, business analysis, statements, valuation, and entry discipline.",
+      "openCourse": "Open mini-course",
+      "backToStocks": "Back to stocks",
+      "contents": "Course lessons",
+      "lessonLabel": "Lesson {{number}}",
+      "concept": "Core idea",
+      "example": "Example",
+      "practice": "Practice",
+      "watchOut": "Watch out",
+      "previewOneTitle": "Not only tickers",
+      "previewOneText": "The course starts with personal finances because even a good stock cannot fix a weak plan.",
+      "previewTwoTitle": "More examples",
+      "previewTwoText": "Each lesson includes a practical situation: how to think, what to check, and where beginners often slip.",
+      "previewThreeTitle": "Dedicated page",
+      "previewThreeText": "The stocks topic stays compact, while the deeper material opens as its own learning path.",
+      "statOneLabel": "Format",
+      "statOneValue": "12 lessons",
+      "statTwoLabel": "Focus",
+      "statTwoValue": "Practice",
+      "statThreeLabel": "Level",
+      "statThreeValue": "Beginner",
       "ruleTitle": "Core rule",
-      "ruleText": "Do not buy a stock only because it is popular or has dropped. First understand the business, price, risk, time horizon, and the role this position has in your portfolio."
+      "ruleText": "Do not buy a stock only because it is popular or has dropped. First understand the business, price, risk, time horizon, and the role this position has in your portfolio.",
+      "finalTitle": "Final check before buying",
+      "finalText": "After the course you should have a short investment note: why this company, how it makes money, what can go wrong, what valuation you accept, what your horizon is, and what would make you change your mind. If you cannot write that note in simple words, it is probably too early to buy.",
+      "analyzeTool": "Open stock analysis"
     },
     "notFound": {
       "kicker": "Unknown topic",
@@ -862,62 +885,98 @@
           "foundation": {
             "title": "Prepare your financial base",
             "text": "Before stocks, you need an emergency fund, debt control, and a clear view of monthly cash flow. Otherwise the market can force you to sell at the worst time.",
-            "action": "Build a reserve for 3-6 months of expenses."
+            "details": "Stocks move around. Even a strong company can fall 20-40% because of the market, rates, an earnings report, or investor fear. If you do not have a reserve, an ordinary life problem can force you to sell for cash instead of because the investment thesis changed. The financial base is not boring paperwork; it protects you from forced decisions.",
+            "example": "Imagine someone invests $1,000 in a stock and two months later loses part of their income or needs to replace a laptop. Without a reserve, they may sell at a loss even if the business is still healthy. Someone with a reserve can separate a life problem from an investing decision.",
+            "action": "Build a reserve for 3-6 months of expenses, list high-interest debts, and calculate the amount you can realistically invest each month.",
+            "warning": "Do not invest money that may be needed soon for rent, healthcare, education, taxes, or other required payments."
           },
           "plan": {
             "title": "Write a personal plan",
             "text": "An investing plan answers three questions: why the money is invested, when it is needed, and how much drawdown you can realistically tolerate.",
-            "action": "Write your goal, horizon, and recurring contribution."
+            "details": "Without a plan, an investor keeps reacting to noise: news, chats, red days, and other people's gains. A plan should define the goal, horizon, contribution rhythm, maximum size of one stock, and selling rules. It does not guarantee profit, but it reduces chaos. A good plan is short enough to read in a minute when the market feels emotional.",
+            "example": "A plan can say: I invest for 10 years, add $300 each month, keep one stock below 8% of the portfolio, buy only profitable and understandable businesses, and sell because the thesis breaks rather than because the price fell.",
+            "action": "Write your goal, horizon, recurring contribution, maximum position size, and selling rule.",
+            "warning": "A plan that changes after every video or post is not a plan. It is an emotional reaction with a better name."
           },
           "riskProfile": {
             "title": "Define your risk profile",
             "text": "Risk is not only price decline. It also includes income shocks, panic, concentration, currency, sector exposure, and mistakes in your assumptions.",
-            "action": "Set a maximum portfolio weight for one stock."
+            "details": "A risk profile is not about how brave you sound. It is about how you behave when the portfolio really falls. For stocks, think about volatility, concentration, currency exposure, sector dependence, and emotional comfort. Beginners often overestimate their tolerance during good markets and discover their real risk level only in a drawdown.",
+            "example": "Two people may have the same amount of money but different risk profiles. One has stable income, a reserve, and a 15-year horizon. The other needs a home deposit next year. The same market drop may be tolerable for the first person and damaging for the second.",
+            "action": "Set maximum weights for one stock, one sector, and all risky assets in your portfolio.",
+            "warning": "If a 10% fall keeps you awake, do not build a portfolio as if a 50% fall would be easy."
           },
           "assetMap": {
             "title": "Compare asset classes",
             "text": "Stocks give business ownership, bonds behave more like loans, ETFs give a basket, and cash gives flexibility. Each tool has a different job.",
-            "action": "Decide what role stocks play in your own portfolio."
+            "details": "One stock should not replace the whole investing toolkit. Stocks can provide growth, but they charge for it with volatility. Bonds can stabilize part of the portfolio. ETFs offer broad diversification. Cash or short-term instruments provide flexibility. When you understand each asset's job, you are less likely to expect the wrong thing from it.",
+            "example": "If your goal is long-term growth, stocks or ETFs can be the core. If your goal is 18 months away, such as a home deposit, a volatile single stock may be the wrong tool even if you like the company.",
+            "action": "Decide whether stocks are your portfolio core, a small active sleeve, or a learning position.",
+            "warning": "Do not call a risky bet an investment only because it was made through a brokerage app."
           },
           "compound": {
             "title": "Understand compounding",
             "text": "Long-term returns come from time, reinvestment, and consistency. Large outcomes often look boring at the beginning.",
-            "action": "Compare 5, 10, and 20 years in the investment calculator."
+            "details": "Compounding is not magic; it is repetition. Returns start earning future returns. The hard part is that the first years can look slow, so beginners often abandon a systematic strategy and chase a quick jump. Time, regular contributions, dividend reinvestment, and fee control often matter more than one brilliant purchase.",
+            "example": "When you invest the same amount every month, early results depend more on contributions than returns. Later, the accumulated base starts moving the portfolio more strongly. That is why horizon and discipline matter so much.",
+            "action": "Compare 5, 10, and 20 years in the investment calculator with different contributions and expected returns.",
+            "warning": "Do not use unrealistic 30-50% annual returns as your base case. They can make a weak idea look beautiful on a screen."
           },
           "analysisTypes": {
             "title": "Separate fundamental and technical analysis",
             "text": "Fundamental analysis asks what the business is and what it may be worth. Technical analysis focuses more on price, trend, and market behavior.",
-            "action": "Explain the business before looking at the chart."
+            "details": "Fundamental analysis starts with the business: what it sells, to whom, at what margin, how it grows, how much debt it carries, and what price the market asks for it. Technical analysis may help with timing or sentiment, but it does not tell you whether the business is good. For a long-term investor, a chart without business understanding becomes guesswork.",
+            "example": "A stock may break out to a new high while margins are falling and debt is expensive. Another stock may look weak after a broad market selloff while the company still produces steady cash flow and keeps its competitive advantage.",
+            "action": "Explain the business and profit sources first, then look at the chart and entry point.",
+            "warning": "Do not use a technical signal as an excuse to buy a company you do not understand."
           },
           "etfBridge": {
             "title": "Compare the stock with an ETF",
             "text": "If you cannot explain why one company is better than a broad ETF, an index fund may be the simpler and more honest choice.",
-            "action": "Compare the company with its sector ETF or the S&P 500."
+            "details": "Every single stock has to answer a simple question: why take company-specific risk when you can buy a basket? An ETF does not make you lazy. It gives you a baseline alternative that your idea must beat. If the expected advantage is unclear and the risk is higher, a broad index may be the better decision.",
+            "example": "If you want one technology company, compare it with a technology ETF or the S&P 500. Is revenue growing faster? Are margins better? Is valuation reasonable? Does everything depend on one product? If the answer is vague, an ETF may be calmer.",
+            "action": "Compare the company with its sector ETF or the S&P 500 on growth, margins, valuation, and risks.",
+            "warning": "Do not buy one stock only because it feels more exciting than an ETF. More exciting does not always mean better."
           },
           "qualityCompany": {
             "title": "Look for a quality business",
             "text": "A strong company has an understandable product, competitive advantage, healthy margins, capital discipline, and management that does not destroy trust.",
-            "action": "Describe the company's advantage in one sentence."
+            "details": "Business quality is not found in a glossy presentation. It shows up in repeatable signs: the company earns money, keeps customers, has an edge over competitors, does not burn capital without a plan, and can survive weaker cycles. For beginners, an understandable business with stable economics is usually better than a complex story where success depends on one future breakthrough.",
+            "example": "A quality business may have a product people buy repeatedly, a strong brand, network effects, lower costs, or high switching costs. But each advantage needs evidence in the numbers: margins, revenue retention, cash flow, and competitor behavior.",
+            "action": "Describe the company's advantage in one sentence and find at least two numbers that support it.",
+            "warning": "If the advantage sounds like an ad slogan and does not appear in the financials, it may be a story rather than an edge."
           },
           "profile": {
             "title": "Read the company profile",
             "text": "Start with sector, geography, revenue sources, customers, and dependencies. If the business is unclear, the numbers are easy to misread.",
-            "action": "Write how the company makes money."
+            "details": "The company profile is the first filter. You should know what the company sells, where it operates, who the customers are, what demand depends on, and what regulatory or currency risks exist. Without that, even good numbers can mislead you: revenue may grow because of a one-off factor, margins may rise because of temporary cost cuts, and profit may improve because of accounting noise.",
+            "example": "A company may look like a device maker while a major part of profit comes from services. Another may be called fintech but depend heavily on interest rates and credit losses. The profile tells you which metrics actually matter.",
+            "action": "Write how the company makes money, who the customer is, and the three factors that most affect results.",
+            "warning": "Do not buy a business you cannot explain in plain language to someone outside the market."
           },
           "statements": {
             "title": "Review the statements",
             "text": "Revenue shows scale, profit shows efficiency, cash flow shows real money power, and the balance sheet shows resilience and debt load.",
-            "action": "Check 5 years of revenue, profit, and FCF."
+            "details": "Financial statements should be read as the story of the business. The income statement shows revenue, costs, and profitability. Cash flow shows whether profit turns into real money. The balance sheet shows debt, liquidity, and resilience. One number is rarely enough; the trend over several years and the connection between metrics matter.",
+            "example": "If revenue grows but net income falls, look for the reason: margins, costs, competition, or one-off charges. If profit exists but free cash flow is weak, the business may need heavy capital spending or have working-capital problems.",
+            "action": "Check 5 years of revenue, net income, free cash flow, debt, and margins.",
+            "warning": "Do not build a thesis from one quarter. A quarter can be noise rather than a new trend."
           },
           "valuation": {
             "title": "Do not ignore valuation",
             "text": "Even a great business can be a poor investment at too high a price. Look at P/E, P/S, margins, growth, and alternatives.",
-            "action": "Compare multiples with history and competitors."
+            "details": "Valuation asks how much you pay for quality and future growth. P/E compares price with profit, P/S compares price with revenue, P/B compares price with book value, and DCF forces you to write explicit assumptions about cash flow. No multiple works alone: a high valuation may be justified by strong growth, but dangerous if expectations are already too optimistic.",
+            "example": "A company with a P/E of 45 is not automatically bad if it grows quickly, has high margins, and a long runway. But if growth slows and margins are already near a peak, that P/E may mean most good news is already priced in.",
+            "action": "Compare multiples with the company's history, competitors, and your own future growth scenario.",
+            "warning": "A cheap-looking stock is not always a bargain. Sometimes a low P/E is a warning sign, not a market gift."
           },
           "entry": {
             "title": "Define an entry rule",
             "text": "DCA reduces one-bad-timing risk, buying dips requires discipline, and lump sum does not fit everyone. Write the rule before buying.",
-            "action": "Choose DCA, a limit price, or another clear scenario."
+            "details": "The entry point should not be an impulse. Different approaches exist: DCA spreads the buy over time, a limit price waits for the valuation you want, buying a dip requires predefined conditions, and lump sum can fit when the horizon is long and the money is not critical for life. The key is to know the rule before emotions start steering the action.",
+            "example": "Instead of buying everything today, you can decide: buy 25% now, 25% after earnings, 25% if the price reaches your valuation, and keep 25% for a better opportunity. This does not guarantee the lowest price, but it removes chaotic clicking.",
+            "action": "Choose DCA, a limit price, or another clear entry scenario, plus the condition under which you will not buy.",
+            "warning": "Do not average down automatically. Add only when the thesis is alive, not because the red number in the portfolio feels uncomfortable."
           }
         },
         "risks": {

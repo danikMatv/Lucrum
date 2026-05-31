@@ -11,6 +11,7 @@ import { LearnPage } from '../pages/LearnPage.tsx'
 import { LearnTopicPage } from '../pages/LearnTopicPage.tsx'
 import { PricingPage } from '../pages/PricingPage.tsx'
 import { StockPage } from '../pages/StockPage.tsx'
+import { StockMiniCoursePage } from '../pages/StockMiniCoursePage.tsx'
 import { ToolsPage } from '../pages/ToolsPage.tsx'
 import { LoginPage } from '../pages/auth/LoginPage.tsx'
 import { RegisterPage } from '../pages/auth/RegisterPage.tsx'
@@ -28,6 +29,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/learn" element={<LearnPage />} />
+        <Route path="/learn/stocks/course" element={<StockMiniCoursePage />} />
         <Route path="/learn/:topicId" element={<LearnTopicPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/tools" element={<ToolsPage />} />

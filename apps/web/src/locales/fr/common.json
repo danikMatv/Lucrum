@@ -778,9 +778,32 @@
     "miniCourse": {
       "kicker": "Mini-cours",
       "title": "12 étapes avant votre première action",
-      "description": "Un parcours original pour débuter : bases financières, profil de risque, analyse de l'entreprise, états financiers, valorisation et discipline d'entrée.",
+      "description": "Un parcours original complet pour débuter : bases financières, profil de risque, choix des actifs, analyse de l'entreprise, états financiers, valorisation et discipline d'entrée.",
+      "openCourse": "Ouvrir le mini-cours",
+      "backToStocks": "Retour aux actions",
+      "contents": "Leçons du cours",
+      "lessonLabel": "Leçon {{number}}",
+      "concept": "Idée clé",
+      "example": "Exemple",
+      "practice": "Pratique",
+      "watchOut": "Attention",
+      "previewOneTitle": "Pas seulement des tickers",
+      "previewOneText": "Le cours commence par les finances personnelles, car même une bonne action ne corrige pas un mauvais plan.",
+      "previewTwoTitle": "Plus d'exemples",
+      "previewTwoText": "Chaque leçon contient une situation pratique : comment réfléchir, quoi vérifier et où les débutants se trompent souvent.",
+      "previewThreeTitle": "Page dédiée",
+      "previewThreeText": "La section actions reste compacte, tandis que le contenu plus profond s'ouvre comme un parcours séparé.",
+      "statOneLabel": "Format",
+      "statOneValue": "12 leçons",
+      "statTwoLabel": "Focus",
+      "statTwoValue": "Pratique",
+      "statThreeLabel": "Niveau",
+      "statThreeValue": "Débutant",
       "ruleTitle": "Règle centrale",
-      "ruleText": "N'achetez pas une action seulement parce qu'elle est populaire ou qu'elle a baissé. Comprenez d'abord l'entreprise, le prix, le risque, l'horizon et le rôle de cette position dans votre portefeuille."
+      "ruleText": "N'achetez pas une action seulement parce qu'elle est populaire ou qu'elle a baissé. Comprenez d'abord l'entreprise, le prix, le risque, l'horizon et le rôle de cette position dans votre portefeuille.",
+      "finalTitle": "Dernière vérification avant l'achat",
+      "finalText": "Après le cours, vous devriez avoir une courte note d'investissement : pourquoi cette entreprise, comment elle gagne de l'argent, ce qui peut mal tourner, quelle valorisation vous acceptez, quel est votre horizon et ce qui vous ferait changer d'avis. Si vous ne pouvez pas l'écrire avec des mots simples, il est probablement trop tôt pour acheter.",
+      "analyzeTool": "Ouvrir l'analyse d'actions"
     },
     "notFound": {
       "kicker": "Sujet inconnu",
@@ -862,62 +885,98 @@
           "foundation": {
             "title": "Préparer la base financière",
             "text": "Avant les actions, il faut une réserve d'urgence, des dettes maîtrisées et une vision claire du cash-flow mensuel. Sinon le marché peut vous forcer à vendre au pire moment.",
-            "action": "Constituez une réserve de 3 à 6 mois de dépenses."
+            "details": "Les actions fluctuent. Même une entreprise solide peut perdre 20 à 40% à cause du marché, des taux, d'un résultat trimestriel ou de la peur des investisseurs. Sans réserve, un problème de vie ordinaire peut vous obliger à vendre pour obtenir du cash, et non parce que la thèse d'investissement a changé. La base financière n'est donc pas une formalité : elle protège contre les décisions forcées.",
+            "example": "Imaginez une personne qui investit 1000 dollars dans une action, puis perd une partie de son revenu ou doit remplacer son ordinateur deux mois plus tard. Sans réserve, elle peut vendre avec une perte alors que l'entreprise va toujours bien. Avec une réserve, elle peut séparer le problème personnel de la décision d'investissement.",
+            "action": "Constituez une réserve de 3 à 6 mois de dépenses, listez les dettes à taux élevé et calculez le montant que vous pouvez réellement investir chaque mois.",
+            "warning": "N'investissez pas l'argent qui peut être nécessaire bientôt pour le loyer, la santé, les études, les impôts ou d'autres paiements obligatoires."
           },
           "plan": {
             "title": "Écrire un plan personnel",
             "text": "Un plan d'investissement répond à trois questions : pourquoi l'argent est investi, quand il sera nécessaire et quelle baisse vous pouvez vraiment supporter.",
-            "action": "Notez votre objectif, votre horizon et votre versement régulier."
+            "details": "Sans plan, l'investisseur réagit au bruit : actualités, discussions, journées rouges et gains des autres. Un plan doit définir l'objectif, l'horizon, le rythme des versements, la taille maximale d'une action et les règles de vente. Il ne garantit pas le profit, mais il réduit le chaos. Un bon plan est assez court pour être relu en une minute quand le marché devient émotionnel.",
+            "example": "Un plan peut dire : j'investis sur 10 ans, j'ajoute 300 dollars par mois, une action ne dépasse pas 8% du portefeuille, j'achète seulement des entreprises rentables et compréhensibles, et je vends si la thèse se casse, pas seulement parce que le prix baisse.",
+            "action": "Notez votre objectif, votre horizon, votre versement régulier, la taille maximale d'une position et votre règle de vente.",
+            "warning": "Un plan qui change après chaque vidéo ou publication n'est pas un plan. C'est une réaction émotionnelle avec un meilleur nom."
           },
           "riskProfile": {
             "title": "Définir votre profil de risque",
             "text": "Le risque n'est pas seulement la baisse du prix. Il inclut aussi les chocs de revenu, la panique, la concentration, la devise, le secteur et les erreurs d'hypothèse.",
-            "action": "Fixez le poids maximal d'une seule action dans le portefeuille."
+            "details": "Le profil de risque ne mesure pas votre courage verbal. Il montre comment vous réagissez quand le portefeuille baisse vraiment. Pour les actions, pensez à la volatilité, la concentration, le risque de devise, la dépendance sectorielle et le confort psychologique. Les débutants surestiment souvent leur tolérance dans les bons marchés et découvrent leur vrai niveau pendant une baisse.",
+            "example": "Deux personnes peuvent avoir la même somme mais des profils différents. L'une a un revenu stable, une réserve et un horizon de 15 ans. L'autre a besoin d'un apport immobilier l'an prochain. La même baisse peut être supportable pour la première et dangereuse pour la seconde.",
+            "action": "Fixez des poids maximums pour une action, un secteur et l'ensemble des actifs risqués du portefeuille.",
+            "warning": "Si une baisse de 10% vous empêche de dormir, ne construisez pas un portefeuille comme si une baisse de 50% était facile."
           },
           "assetMap": {
             "title": "Comparer les classes d'actifs",
             "text": "Les actions donnent une part d'entreprise, les obligations ressemblent davantage à un prêt, les ETF offrent un panier et le cash donne de la flexibilité. Chaque outil a un rôle.",
-            "action": "Décidez quel rôle les actions jouent dans votre portefeuille."
+            "details": "Une seule action ne doit pas remplacer toute la boîte à outils de l'investisseur. Les actions peuvent apporter de la croissance, mais elles la paient par la volatilité. Les obligations peuvent stabiliser une partie du portefeuille. Les ETF offrent une diversification large. Le cash ou les instruments courts donnent de la flexibilité. Comprendre le rôle de chaque actif évite d'attendre de lui ce pour quoi il n'est pas fait.",
+            "example": "Si votre objectif est la croissance long terme, les actions ou les ETF peuvent former le coeur. Si l'objectif est dans 18 mois, comme un apport immobilier, une action volatile peut être le mauvais outil même si l'entreprise vous plaît.",
+            "action": "Décidez si les actions sont le coeur du portefeuille, une petite partie active ou une position d'apprentissage.",
+            "warning": "N'appelez pas un pari risqué un investissement seulement parce qu'il passe par une application de courtage."
           },
           "compound": {
             "title": "Comprendre les intérêts composés",
             "text": "Les rendements à long terme viennent du temps, du réinvestissement et de la régularité. Les grands résultats paraissent souvent modestes au début.",
-            "action": "Comparez 5, 10 et 20 ans dans le calculateur d'investissement."
+            "details": "Les intérêts composés ne sont pas de la magie, mais de la répétition. Les gains commencent à produire d'autres gains. La difficulté est que les premières années peuvent sembler lentes, donc les débutants abandonnent parfois une stratégie régulière pour chercher un bond rapide. Le temps, les versements réguliers, le réinvestissement des dividendes et le contrôle des frais comptent souvent plus qu'un achat génial.",
+            "example": "Quand vous investissez le même montant chaque mois, les premiers résultats dépendent plus des versements que du rendement. Plus tard, la base accumulée fait bouger le portefeuille plus fortement. C'est pourquoi l'horizon et la discipline comptent autant.",
+            "action": "Comparez 5, 10 et 20 ans dans le calculateur d'investissement avec différents versements et rendements attendus.",
+            "warning": "N'utilisez pas 30 à 50% de rendement annuel comme scénario de base. Ces hypothèses peuvent rendre une mauvaise idée très belle à l'écran."
           },
           "analysisTypes": {
             "title": "Séparer analyse fondamentale et technique",
             "text": "L'analyse fondamentale demande ce qu'est l'entreprise et ce qu'elle peut valoir. L'analyse technique regarde davantage le prix, la tendance et le comportement du marché.",
-            "action": "Expliquez l'entreprise avant de regarder le graphique."
+            "details": "L'analyse fondamentale commence par l'entreprise : ce qu'elle vend, à qui, avec quelle marge, comment elle croît, combien de dette elle porte et quel prix le marché demande. L'analyse technique peut aider pour le timing ou le sentiment, mais elle ne dit pas si l'entreprise est bonne. Pour un investisseur long terme, un graphique sans compréhension du business devient vite une devinette.",
+            "example": "Une action peut atteindre un nouveau sommet alors que les marges baissent et que la dette coûte cher. Une autre peut paraître faible après une baisse générale du marché alors que l'entreprise génère toujours du cash-flow et garde son avantage concurrentiel.",
+            "action": "Expliquez d'abord l'entreprise et ses sources de profit, puis regardez le graphique et le point d'entrée.",
+            "warning": "N'utilisez pas un signal technique comme excuse pour acheter une entreprise que vous ne comprenez pas."
           },
           "etfBridge": {
             "title": "Comparer l'action à un ETF",
             "text": "Si vous ne pouvez pas expliquer pourquoi une entreprise est meilleure qu'un ETF large, un fonds indiciel peut être le choix le plus simple et le plus honnête.",
-            "action": "Comparez l'entreprise à son ETF sectoriel ou au S&P 500."
+            "details": "Chaque action individuelle doit répondre à une question simple : pourquoi prendre le risque d'une seule entreprise quand on peut acheter un panier ? Un ETF ne fait pas de vous un investisseur paresseux. Il donne une alternative de base que votre idée doit battre. Si l'avantage attendu est flou et que le risque est plus élevé, un indice large peut être la meilleure décision.",
+            "example": "Si vous voulez acheter une seule entreprise technologique, comparez-la à un ETF technologique ou au S&P 500. La croissance est-elle plus rapide ? Les marges sont-elles meilleures ? La valorisation est-elle raisonnable ? Tout dépend-il d'un seul produit ? Si la réponse est vague, l'ETF peut être plus serein.",
+            "action": "Comparez l'entreprise à son ETF sectoriel ou au S&P 500 sur la croissance, les marges, la valorisation et les risques.",
+            "warning": "N'achetez pas une action seulement parce qu'elle semble plus intéressante qu'un ETF. Plus intéressant ne veut pas toujours dire meilleur."
           },
           "qualityCompany": {
             "title": "Chercher une entreprise de qualité",
             "text": "Une entreprise solide a un produit compréhensible, un avantage concurrentiel, des marges saines, une discipline du capital et une direction qui ne détruit pas la confiance.",
-            "action": "Décrivez l'avantage de l'entreprise en une phrase."
+            "details": "La qualité d'une entreprise ne se trouve pas dans une belle présentation. Elle apparaît dans des signes répétables : l'entreprise gagne de l'argent, garde ses clients, possède un avantage face aux concurrents, ne brûle pas du capital sans plan et peut survivre aux cycles faibles. Pour débuter, un business compréhensible et stable vaut souvent mieux qu'une histoire complexe dépendant d'une seule percée future.",
+            "example": "Une entreprise de qualité peut avoir un produit acheté régulièrement, une marque forte, un effet réseau, des coûts plus bas ou des coûts de changement élevés pour les clients. Mais chaque avantage doit être confirmé par les chiffres : marges, rétention du chiffre d'affaires, cash-flow et comportement des concurrents.",
+            "action": "Décrivez l'avantage de l'entreprise en une phrase et trouvez au moins deux chiffres qui le confirment.",
+            "warning": "Si l'avantage ressemble à un slogan publicitaire et n'apparaît pas dans les comptes, ce peut être une histoire plutôt qu'un vrai avantage."
           },
           "profile": {
             "title": "Lire le profil de l'entreprise",
             "text": "Commencez par le secteur, la géographie, les sources de chiffre d'affaires, les clients et les dépendances. Si l'activité est floue, les chiffres se lisent mal.",
-            "action": "Écrivez comment l'entreprise gagne de l'argent."
+            "details": "Le profil de l'entreprise est le premier filtre. Vous devez savoir ce qu'elle vend, où elle opère, qui sont les clients, de quoi dépend la demande et quels risques réglementaires ou de devise existent. Sans cela, même de bons chiffres peuvent tromper : le chiffre d'affaires peut monter grâce à un facteur ponctuel, les marges grâce à des coupes temporaires et le profit grâce à du bruit comptable.",
+            "example": "Une entreprise peut sembler fabriquer des appareils alors qu'une grande partie du profit vient des services. Une autre peut être appelée fintech mais dépendre fortement des taux et des pertes de crédit. Le profil indique quels indicateurs comptent vraiment.",
+            "action": "Écrivez comment l'entreprise gagne de l'argent, qui est le client et quels trois facteurs influencent le plus les résultats.",
+            "warning": "N'achetez pas une entreprise que vous ne pouvez pas expliquer simplement à quelqu'un hors du marché."
           },
           "statements": {
             "title": "Examiner les états financiers",
             "text": "Le chiffre d'affaires montre l'échelle, le profit montre l'efficacité, le cash-flow montre la vraie puissance financière et le bilan montre la résistance et la dette.",
-            "action": "Vérifiez 5 ans de chiffre d'affaires, de profit et de FCF."
+            "details": "Les états financiers se lisent comme l'histoire du business. Le compte de résultat montre le chiffre d'affaires, les coûts et la rentabilité. Le cash-flow montre si le profit devient de l'argent réel. Le bilan montre la dette, la liquidité et la résistance. Un seul chiffre suffit rarement : la tendance sur plusieurs années et le lien entre les indicateurs comptent.",
+            "example": "Si le chiffre d'affaires progresse mais que le résultat net baisse, cherchez la cause : marges, coûts, concurrence ou charges ponctuelles. Si le profit existe mais que le free cash-flow est faible, l'activité demande peut-être beaucoup d'investissements ou a un problème de besoin en fonds de roulement.",
+            "action": "Vérifiez 5 ans de chiffre d'affaires, résultat net, free cash-flow, dette et marges.",
+            "warning": "Ne construisez pas une thèse sur un seul trimestre. Un trimestre peut être du bruit, pas une nouvelle tendance."
           },
           "valuation": {
             "title": "Ne pas ignorer la valorisation",
             "text": "Même une excellente entreprise peut être un mauvais investissement si le prix est trop élevé. Regardez P/E, P/S, marges, croissance et alternatives.",
-            "action": "Comparez les multiples avec l'historique et les concurrents."
+            "details": "La valorisation demande combien vous payez pour la qualité et la croissance future. Le P/E compare le prix au profit, le P/S au chiffre d'affaires, le P/B à la valeur comptable, et le DCF oblige à écrire clairement les hypothèses de cash-flow. Aucun multiple ne fonctionne seul : une valorisation élevée peut être justifiée par une forte croissance, mais dangereuse si les attentes sont déjà trop optimistes.",
+            "example": "Une entreprise avec un P/E de 45 n'est pas forcément mauvaise si elle croît vite, a de fortes marges et un long potentiel. Mais si la croissance ralentit et que les marges sont déjà au sommet, ce P/E peut signifier que beaucoup de bonnes nouvelles sont déjà dans le prix.",
+            "action": "Comparez les multiples avec l'historique de l'entreprise, ses concurrents et votre propre scénario de croissance future.",
+            "warning": "Une action qui semble bon marché n'est pas toujours une affaire. Parfois un faible P/E est un signal d'alerte, pas un cadeau du marché."
           },
           "entry": {
             "title": "Définir une règle d'entrée",
             "text": "Le DCA réduit le risque d'un mauvais timing, acheter les baisses demande de la discipline et le lump sum ne convient pas à tout le monde. La règle doit être écrite avant l'achat.",
-            "action": "Choisissez le DCA, un prix limite ou un autre scénario clair."
+            "details": "Le point d'entrée ne doit pas être une impulsion. Plusieurs approches existent : le DCA étale l'achat dans le temps, un prix limite attend la valorisation voulue, l'achat après baisse exige des conditions définies à l'avance, et le lump sum peut convenir si l'horizon est long et que l'argent n'est pas vital. L'essentiel est de connaître la règle avant que les émotions décident.",
+            "example": "Au lieu de tout acheter aujourd'hui, vous pouvez décider : 25% maintenant, 25% après les résultats, 25% si le prix atteint votre valorisation, et 25% gardés pour une meilleure occasion. Cela ne garantit pas le plus bas prix, mais évite les clics chaotiques.",
+            "action": "Choisissez le DCA, un prix limite ou un autre scénario d'entrée clair, ainsi que la condition où vous n'achetez pas.",
+            "warning": "Ne renforcez pas automatiquement une position qui baisse. Ajoutez seulement si la thèse reste valide, pas parce que le rouge dans le portefeuille fait mal."
           }
         },
         "risks": {
