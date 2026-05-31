@@ -19,6 +19,8 @@ interface FmpProfileResult {
   price?: number
   beta?: number
   lastDiv?: number
+  dividendYield?: number
+  sharesOutstanding?: number
 }
 
 interface FmpKeyMetricsResult {
@@ -30,11 +32,27 @@ interface FmpKeyMetricsResult {
   freeCashFlowPerShareTTM?: number
 }
 
+interface FmpQuoteResult {
+  symbol?: string
+  price?: number
+  exchange?: string
+  fiftyTwoWeekHigh?: number
+  fiftyTwoWeekLow?: number
+  yearHigh?: number
+  yearLow?: number
+  timestamp?: number
+}
+
 interface FmpIncomeStatementResult {
   date?: string
   revenue?: number
   netIncome?: number
   eps?: number
+}
+
+interface FmpCashFlowStatementResult {
+  date?: string
+  freeCashFlow?: number
 }
 
 interface FmpHistoricalPriceResult {
@@ -97,6 +115,17 @@ const toMonthlyStockHistory = (rows: FmpHistoricalPriceResult[]): StockHistory =
   }
 }
 
+const finiteNumberOrNull = (value: number | null | undefined) =>
+  typeof value === 'number' && Number.isFinite(value) ? value : null
+
+const toIsoFromUnixTimestamp = (timestamp: number | undefined) => {
+  if (typeof timestamp !== 'number' || !Number.isFinite(timestamp)) {
+    return null
+  }
+
+  return new Date(timestamp > 1_000_000_000_000 ? timestamp : timestamp * 1000).toISOString()
+}
+
 const createCompany = (input: {
   ticker: string
   name: string
@@ -154,17 +183,19 @@ export const getFmpCompanyProfile = async (ticker: string, apiKey: string): Prom
 
 export const getFmpQuote = async (ticker: string, apiKey: string): Promise<StockQuote> => {
   const normalizedTicker = ticker.toUpperCase()
-  const results = await fetchFmp<FmpProfileResult[]>(`/v3/profile/${normalizedTicker}`, apiKey)
-  const profile = results.at(0)
-  if (typeof profile?.price !== 'number' || !Number.isFinite(profile.price)) {
+  const results = await fetchFmp<FmpQuoteResult[]>(`/v3/quote/${normalizedTicker}`, apiKey)
+  const quote = results.at(0)
+  if (typeof quote?.price !== 'number' || !Number.isFinite(quote.price)) {
     throw new Error('FMP returned no quote price')
   }
 
   return {
-    ticker: profile.symbol?.toUpperCase() ?? normalizedTicker,
-    price: profile.price,
+    ticker: quote.symbol?.toUpperCase() ?? normalizedTicker,
+    price: quote.price,
     currency: null,
-    marketTime: null,
+    marketTime: toIsoFromUnixTimestamp(quote.timestamp),
+    fiftyTwoWeekHigh: finiteNumberOrNull(quote.fiftyTwoWeekHigh ?? quote.yearHigh),
+    fiftyTwoWeekLow: finiteNumberOrNull(quote.fiftyTwoWeekLow ?? quote.yearLow),
   }
 }
 
@@ -173,30 +204,50 @@ export const getFmpFundamentals = async (
   ticker: string,
   apiKey: string,
 ): Promise<CompanyFundamentals> => {
-  const [metricsResults, incomeResults] = await Promise.all([
+  const [metricsResults, incomeResults, cashFlowResults, profileResults] = await Promise.all([
     fetchFmp<FmpKeyMetricsResult[]>(`/v3/key-metrics-ttm/${ticker.toUpperCase()}`, apiKey),
     fetchFmp<FmpIncomeStatementResult[]>(
-      `/v3/income-statement/${ticker.toUpperCase()}?limit=1`,
+      `/v3/income-statement/${ticker.toUpperCase()}?limit=5`,
+      apiKey,
+    ),
+    fetchFmp<FmpCashFlowStatementResult[]>(
+      `/v3/cash-flow-statement/${ticker.toUpperCase()}?limit=5`,
+      apiKey,
+    ),
+    fetchFmp<FmpProfileResult[]>(
+      `/v3/profile/${ticker.toUpperCase()}`,
       apiKey,
     ),
   ])
 
   const metrics = metricsResults.at(0)
   const income = incomeResults.at(0)
+  const cashFlow = cashFlowResults.at(0)
+  const profile = profileResults.at(0)
+  const annualFinancials = incomeResults
+    .filter((row) => row.date && (typeof row.revenue === 'number' || typeof row.netIncome === 'number'))
+    .slice(0, 5)
+    .map((row) => ({
+      year: String(row.date).slice(0, 4),
+      revenue: finiteNumberOrNull(row.revenue),
+      netIncome: finiteNumberOrNull(row.netIncome),
+    }))
 
   return {
     id: crypto.randomUUID(),
     companyId,
-    epsTtm: metrics?.netIncomePerShareTTM ?? income?.eps ?? null,
-    revenue: income?.revenue ?? null,
-    netIncome: income?.netIncome ?? null,
-    freeCashFlow: metrics?.freeCashFlowPerShareTTM ?? null,
-    peRatio: metrics?.peRatioTTM ?? null,
-    marketCap: metrics?.marketCapTTM ?? null,
-    dividendYield: metrics?.dividendYieldTTM ?? null,
-    debtToEquity: metrics?.debtToEquityTTM ?? null,
+    epsTtm: finiteNumberOrNull(metrics?.netIncomePerShareTTM ?? income?.eps),
+    revenue: finiteNumberOrNull(income?.revenue),
+    netIncome: finiteNumberOrNull(income?.netIncome),
+    freeCashFlow: finiteNumberOrNull(cashFlow?.freeCashFlow),
+    peRatio: finiteNumberOrNull(metrics?.peRatioTTM),
+    marketCap: finiteNumberOrNull(metrics?.marketCapTTM ?? profile?.mktCap),
+    dividendYield: finiteNumberOrNull(profile?.dividendYield ?? metrics?.dividendYieldTTM),
+    debtToEquity: finiteNumberOrNull(metrics?.debtToEquityTTM),
     recordedDate: income?.date ?? null,
     createdAt: new Date().toISOString(),
+    sharesOutstanding: finiteNumberOrNull(profile?.sharesOutstanding),
+    annualFinancials,
   }
 }
 

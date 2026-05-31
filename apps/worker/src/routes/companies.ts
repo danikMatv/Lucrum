@@ -69,20 +69,35 @@ const freshnessFor = (hasValue: boolean, fetchedAt: string | null) => {
   return isFresh(fetchedAt) ? ('fresh' as const) : ('stale' as const)
 }
 
+const hasCompanyDisplayFields = (company: Company | null) =>
+  Boolean(company?.exchange && company.sector)
+
+const hasSnapshotFundamentals = (fundamentals: CompanyFundamentals | null) =>
+  Boolean(
+    fundamentals &&
+      typeof fundamentals.peRatio === 'number' &&
+      typeof fundamentals.marketCap === 'number' &&
+      Array.isArray(fundamentals.annualFinancials) &&
+      fundamentals.annualFinancials.length > 1,
+  )
+
+const hasQuoteRange = (quote: StockQuote | null) =>
+  typeof quote?.fiftyTwoWeekHigh === 'number' && typeof quote.fiftyTwoWeekLow === 'number'
+
 const getQuote = async (c: Context, ticker: string) => {
   const normalizedTicker = normalizeTicker(ticker)
   const cacheKey = `quote:${normalizedTicker}`
   const cached = await getJsonCache<StockQuote>(c.env.KV, cacheKey)
-  if (cached) {
+  if (cached && hasQuoteRange(cached)) {
     return cached
   }
 
   let quote: StockQuote
   try {
-    quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
+    quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
   } catch {
     try {
-      quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
+      quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
     } catch {
       quote = await getStooqQuote(normalizedTicker)
     }
@@ -125,7 +140,7 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
   let companyFetchedAt = snapshot?.companyFetchedAt ?? null
   let fundamentalsFetchedAt = snapshot?.fundamentalsFetchedAt ?? null
 
-  if (!company || !isFresh(companyFetchedAt)) {
+  if (!company || !isFresh(companyFetchedAt) || !hasCompanyDisplayFields(company)) {
     try {
       const fmpCompany = await getFmpCompanyProfile(normalizedTicker, c.env.FMP_API_KEY)
       if (fmpCompany) {
@@ -164,7 +179,10 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
     fundamentalsFetchedAt = snapshot.fundamentalsFetchedAt ?? fundamentalsFetchedAt
   }
 
-  if (company && (!fundamentals || !isFresh(fundamentalsFetchedAt))) {
+  if (
+    company &&
+    (!fundamentals || !isFresh(fundamentalsFetchedAt) || !hasSnapshotFundamentals(fundamentals))
+  ) {
     try {
       const fmpFundamentals = await getFmpFundamentals(
         company.id,

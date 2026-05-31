@@ -14,7 +14,8 @@
     "backHome": "Accueil",
     "calculate": "Calculer",
     "analyze": "Analyser",
-    "logout": "Déconnexion"
+    "logout": "Déconnexion",
+    "dismiss": "Fermer"
   },
   "common": {
     "loading": "Chargement..."
@@ -173,6 +174,12 @@
         "updated": "Les champs live disponibles ont été chargés. Vérifiez les hypothèses avant de vous fier au résultat DCF.",
         "noData": "Les données live de ce ticker sont indisponibles pour le moment. Vous pouvez toujours modifier l'EPS et le prix de marché manuellement."
       },
+      "growthHint": {
+        "title": "Société de croissance détectée",
+        "body": "Les entreprises comme Amazon ou Tesla réinvestissent la plupart de leurs bénéfices, ce qui rend le BPA très faible. Les analystes utilisent généralement le flux de trésorerie disponible par action (FCF/action) pour une évaluation plus précise.",
+        "link": "En savoir plus sur l'évaluation FCF ->"
+      },
+      "epsTooltip": "Utilisez le BPA pour les entreprises stables. Pour les entreprises technologiques à forte croissance, utilisez plutôt le FCF par action.",
       "hero": {
         "fairPrice": "Juste valeur {{ticker}}",
         "safeBuy": "Prix d'achat prudent"
@@ -226,7 +233,8 @@
         "netIncome": "Résultat net",
         "fcf": "FCF",
         "debt": "Dette/Fonds propres",
-        "dividend": "Rendement du dividende"
+        "dividend": "Rendement du dividende",
+        "shares": "Actions en circulation"
       },
       "chart": {
         "title": "Chiffre d'affaires vs résultat net",
@@ -234,21 +242,25 @@
         "netIncome": "Résultat net"
       },
       "verdict": {
-        "strong": {
-          "title": "Fondamentaux attractifs",
-          "text": "Le profil montre une valorisation raisonnable, un endettement maîtrisé et une bonne génération de trésorerie."
+        "undervalued": {
+          "title": "Potentiellement sous-évaluée",
+          "text": "Le ratio P/E est inférieur à 15, ce qui peut signaler une valorisation moins chère si la qualité de l'entreprise reste solide."
         },
-        "balanced": {
-          "title": "Profil équilibré",
-          "text": "Le profil semble solide, mais la valorisation n'est pas clairement bon marché."
+        "fair": {
+          "title": "Valorisation équilibrée",
+          "text": "Le ratio P/E se situe entre 15 et 25, une fourchette courante pour les sociétés matures aux bénéfices réguliers."
         },
-        "expensive": {
-          "title": "Cher ou plus risqué",
-          "text": "Le profil suggère qu'une marge de sécurité plus élevée serait nécessaire."
+        "premium": {
+          "title": "Valorisation premium",
+          "text": "Le ratio P/E est supérieur à 25, donc la croissance future doit justifier le prix plus élevé."
+        },
+        "highGrowth": {
+          "title": "Prime de forte croissance",
+          "text": "Le ratio P/E est supérieur à 50, ce qui signifie souvent que les investisseurs paient une forte croissance future."
         },
         "unknown": {
           "title": "Données insuffisantes",
-          "text": "Lucrum a besoin de fondamentaux comme le P/E et dette/fonds propres avant d'afficher une évaluation."
+          "text": "Lucrum a besoin d'un ratio P/E valide avant d'afficher une évaluation."
         }
       },
       "notice": {

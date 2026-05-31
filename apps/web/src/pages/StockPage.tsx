@@ -48,33 +48,84 @@ const formatCurrency = (value: number | null | undefined) =>
 const formatCompactCurrency = (value: number | null | undefined) =>
   typeof value === 'number' && Number.isFinite(value) ? compactCurrency.format(value) : '—'
 
+const formatCompactNumber = (value: number | null | undefined) =>
+  typeof value === 'number' && Number.isFinite(value) ? number.format(value) : '—'
+
 const formatNumber = (value: number | null | undefined, digits = 1) =>
   typeof value === 'number' && Number.isFinite(value) ? value.toFixed(digits) : '—'
 
 const formatPercent = (value: number | null | undefined) =>
-  typeof value === 'number' && Number.isFinite(value) ? `${value.toFixed(2)}%` : '—'
+  typeof value === 'number' && Number.isFinite(value) && value > 0
+    ? `${(value * 100).toFixed(2)}%`
+    : '—'
+
+const formatMarketDate = (value: string | null | undefined, locale: string) => {
+  if (!value) {
+    return undefined
+  }
+
+  const date = new Date(value)
+  if (!Number.isFinite(date.getTime())) {
+    return undefined
+  }
+
+  return new Intl.DateTimeFormat(locale, { dateStyle: 'medium' }).format(date)
+}
 
 const getVerdict = (snapshot: CompanySnapshot) => {
   const peRatio = snapshot.fundamentals?.peRatio
-  const debtToEquity = snapshot.fundamentals?.debtToEquity
 
-  if (typeof peRatio !== 'number' || typeof debtToEquity !== 'number') {
+  if (typeof peRatio !== 'number') {
     return 'unknown' as const
   }
 
-  if (peRatio < 22 && debtToEquity < 1) {
-    return 'strong' as const
+  if (peRatio < 15) {
+    return 'undervalued' as const
   }
 
-  if (peRatio > 35 || debtToEquity > 2) {
-    return 'expensive' as const
+  if (peRatio <= 25) {
+    return 'fair' as const
   }
 
-  return 'balanced' as const
+  if (peRatio <= 50) {
+    return 'premium' as const
+  }
+
+  return 'highGrowth' as const
+}
+
+const getVerdictTone = (verdict: ReturnType<typeof getVerdict>) => {
+  if (verdict === 'undervalued') {
+    return 'text-success'
+  }
+
+  if (verdict === 'fair') {
+    return 'text-primary'
+  }
+
+  if (verdict === 'premium') {
+    return 'text-orange-400'
+  }
+
+  if (verdict === 'highGrowth') {
+    return 'text-danger'
+  }
+
+  return 'text-text-muted'
 }
 
 const getFinancialRows = (snapshot: CompanySnapshot): StockFinancialRow[] => {
   const fundamentals = snapshot.fundamentals
+  if (fundamentals?.annualFinancials?.length) {
+    return [...fundamentals.annualFinancials]
+      .sort((left, right) => left.year.localeCompare(right.year))
+      .map((row) => ({
+        year: row.year,
+        revenue: row.revenue,
+        netIncome: row.netIncome,
+      }))
+  }
+
   if (!fundamentals?.revenue && !fundamentals?.netIncome) {
     return []
   }
@@ -89,7 +140,7 @@ const getFinancialRows = (snapshot: CompanySnapshot): StockFinancialRow[] => {
 }
 
 export const StockPage = () => {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
   const [tickerInput, setTickerInput] = useState('AAPL')
   const [snapshot, setSnapshot] = useState<CompanySnapshot | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
@@ -115,13 +166,9 @@ export const StockPage = () => {
   }
 
   const verdict = snapshot ? getVerdict(snapshot) : 'unknown'
-  const verdictTone =
-    verdict === 'strong'
-      ? 'text-success'
-      : verdict === 'expensive'
-        ? 'text-danger'
-        : 'text-primary'
+  const verdictTone = getVerdictTone(verdict)
   const financialRows = snapshot ? getFinancialRows(snapshot) : []
+  const locale = i18n.resolvedLanguage ?? i18n.language
 
   const sidebar = (
     <>
@@ -189,17 +236,21 @@ export const StockPage = () => {
               <HeroMetric
                 label={t('tools.stock.price.current')}
                 value={formatCurrency(snapshot.quote?.price)}
-                helper={snapshot.fetchedAt.quote ?? t('tools.stock.unavailable')}
+                helper={formatMarketDate(snapshot.fetchedAt.quote, locale)}
               />
               <Panel>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
                     <p className="text-sm text-text-muted">{t('tools.stock.price.high')}</p>
-                    <p className="mt-2 text-2xl font-bold text-text-primary">—</p>
+                    <p className="mt-2 text-2xl font-bold text-text-primary">
+                      {formatCurrency(snapshot.quote?.fiftyTwoWeekHigh)}
+                    </p>
                   </div>
                   <div>
                     <p className="text-sm text-text-muted">{t('tools.stock.price.low')}</p>
-                    <p className="mt-2 text-2xl font-bold text-text-primary">—</p>
+                    <p className="mt-2 text-2xl font-bold text-text-primary">
+                      {formatCurrency(snapshot.quote?.fiftyTwoWeekLow)}
+                    </p>
                   </div>
                 </div>
               </Panel>
@@ -237,6 +288,10 @@ export const StockPage = () => {
               <StatCard
                 label={t('tools.stock.metrics.dividend')}
                 value={formatPercent(snapshot.fundamentals?.dividendYield)}
+              />
+              <StatCard
+                label={t('tools.stock.metrics.shares')}
+                value={formatCompactNumber(snapshot.fundamentals?.sharesOutstanding)}
               />
             </StatGrid>
 

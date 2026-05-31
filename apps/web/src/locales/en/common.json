@@ -14,7 +14,8 @@
     "backHome": "Back home",
     "calculate": "Calculate",
     "analyze": "Analyze",
-    "logout": "Log out"
+    "logout": "Log out",
+    "dismiss": "Dismiss"
   },
   "common": {
     "loading": "Loading..."
@@ -173,6 +174,12 @@
         "updated": "Live fields were loaded where available. Review the assumptions before relying on the DCF result.",
         "noData": "Live data is unavailable for this ticker right now. You can still edit EPS and market price manually."
       },
+      "growthHint": {
+        "title": "Growth company detected",
+        "body": "Companies like Amazon or Tesla reinvest most profits, making EPS very low. Analysts typically use Free Cash Flow per share (FCF/share) instead of EPS for more accurate valuation. You can find FCF/share on financial sites like Macrotrends or Simply Wall St.",
+        "link": "Learn more about FCF valuation ->"
+      },
+      "epsTooltip": "Use EPS for stable companies (banks, consumer goods). For high-growth tech companies, consider using FCF per share instead.",
       "hero": {
         "fairPrice": "{{ticker}} fair price",
         "safeBuy": "Safe buy price"
@@ -226,7 +233,8 @@
         "netIncome": "Net Income",
         "fcf": "FCF",
         "debt": "Debt/Equity",
-        "dividend": "Dividend Yield"
+        "dividend": "Dividend Yield",
+        "shares": "Shares Outstanding"
       },
       "chart": {
         "title": "Revenue vs Net Income",
@@ -234,21 +242,25 @@
         "netIncome": "Net Income"
       },
       "verdict": {
-        "strong": {
-          "title": "Attractive fundamentals",
-          "text": "The profile has a reasonable valuation, manageable leverage, and healthy cash generation."
+        "undervalued": {
+          "title": "Potentially undervalued",
+          "text": "The P/E ratio is below 15, which can signal a cheaper valuation if the business quality is intact."
         },
-        "balanced": {
-          "title": "Balanced profile",
-          "text": "The profile looks financially strong, but valuation is not obviously cheap."
+        "fair": {
+          "title": "Fairly valued",
+          "text": "The P/E ratio sits between 15 and 25, a common range for mature companies with steady earnings."
         },
-        "expensive": {
-          "title": "Expensive or higher risk",
-          "text": "The profile suggests investors should demand a larger margin of safety."
+        "premium": {
+          "title": "Premium valuation",
+          "text": "The P/E ratio is above 25, so future growth needs to justify the higher price."
+        },
+        "highGrowth": {
+          "title": "High growth premium",
+          "text": "The P/E ratio is above 50, which usually means investors are paying for very strong future growth."
         },
         "unknown": {
           "title": "Not enough data",
-          "text": "Lucrum needs fundamentals such as P/E and debt/equity before showing an assessment."
+          "text": "Lucrum needs a valid P/E ratio before showing a valuation assessment."
         }
       },
       "notice": {

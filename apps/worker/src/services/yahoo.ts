@@ -8,6 +8,8 @@ export interface StockQuote {
   price: number
   currency: string | null
   marketTime: string | null
+  fiftyTwoWeekHigh?: number | null
+  fiftyTwoWeekLow?: number | null
 }
 
 interface YahooChartResponse {
@@ -19,6 +21,8 @@ interface YahooChartResponse {
         previousClose?: number
         currency?: string
         regularMarketTime?: number
+        fiftyTwoWeekHigh?: number
+        fiftyTwoWeekLow?: number
       }
       timestamp?: number[]
       indicators?: {
@@ -89,5 +93,7 @@ export const getYahooQuote = async (baseUrl: string, ticker: string): Promise<St
     marketTime: meta?.regularMarketTime
       ? new Date(meta.regularMarketTime * 1000).toISOString()
       : null,
+    fiftyTwoWeekHigh: meta?.fiftyTwoWeekHigh ?? null,
+    fiftyTwoWeekLow: meta?.fiftyTwoWeekLow ?? null,
   }
 }

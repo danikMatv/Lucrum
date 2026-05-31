@@ -21,6 +21,35 @@ const percent = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 1,
 })
 
+const GROWTH_TICKERS = [
+  'AMZN',
+  'TSLA',
+  'NVDA',
+  'NFLX',
+  'UBER',
+  'LYFT',
+  'SNAP',
+  'PINS',
+  'RBLX',
+  'COIN',
+  'PLTR',
+  'SHOP',
+  'SQ',
+  'ROKU',
+  'DDOG',
+  'NET',
+  'CRWD',
+  'SNOW',
+  'ZM',
+  'TWLO',
+  'SPOT',
+] as const
+
+const growthTickerSet = new Set<string>(GROWTH_TICKERS)
+
+const isGrowthCompany = (ticker: string): boolean =>
+  growthTickerSet.has(normalizeCompanyQuery(ticker) ?? '')
+
 export const FairPricePage = () => {
   const { t } = useTranslation('common')
   const [ticker, setTicker] = useState('AAPL')
@@ -31,6 +60,8 @@ export const FairPricePage = () => {
   const [discountRate, setDiscountRate] = useState(10)
   const [marginOfSafety, setMarginOfSafety] = useState<MarginOfSafety>(30)
   const [lookupNotice, setLookupNotice] = useState('')
+  const [epsEditedManually, setEpsEditedManually] = useState(false)
+  const [growthHintDismissed, setGrowthHintDismissed] = useState(false)
 
   const fundamentalsMutation = useMutation({
     mutationFn: async (tickerValue: string) => {
@@ -56,6 +87,7 @@ export const FairPricePage = () => {
       setTicker(nextTicker)
       if (fundamentals?.epsTtm && fundamentals.epsTtm > 0) {
         setEps(Number(fundamentals.epsTtm.toFixed(2)))
+        setEpsEditedManually(false)
         updatedFields += 1
       }
 
@@ -93,10 +125,17 @@ export const FairPricePage = () => {
   )
 
   const isUndervalued = result.verdict === 'undervalued'
+  const shouldShowGrowthHint =
+    isGrowthCompany(ticker) && epsEditedManually && !growthHintDismissed
 
   const handleCalculate = () => {
     setLookupNotice('')
     fundamentalsMutation.mutate(ticker)
+  }
+
+  const handleEpsChange = (value: number) => {
+    setEps(value)
+    setEpsEditedManually(true)
   }
 
   const sidebar = (
@@ -108,7 +147,65 @@ export const FairPricePage = () => {
         onChange={setTicker}
         onSelect={(company) => setTicker(company.ticker)}
       />
-      <NumberInput id="fair-eps" label={t('tools.fairPrice.inputs.eps')} value={eps} min={0} step={0.1} onChange={setEps} />
+      <NumberInput
+        id="fair-eps"
+        label={t('tools.fairPrice.inputs.eps')}
+        value={eps}
+        min={0}
+        step={0.1}
+        onChange={handleEpsChange}
+        labelAccessory={
+          <span className="group relative inline-flex">
+            <button
+              type="button"
+              aria-label={t('tools.fairPrice.epsTooltip')}
+              title={t('tools.fairPrice.epsTooltip')}
+              className="grid h-5 w-5 place-items-center rounded-full border-[0.5px] border-primary text-xs font-bold text-primary transition hover:bg-primary-dim focus:bg-primary-dim focus:outline-none"
+            >
+              i
+            </button>
+            <span
+              role="tooltip"
+              className="pointer-events-none absolute left-1/2 top-7 z-20 hidden w-64 -translate-x-1/2 rounded-md border-[0.5px] border-border bg-surface p-3 text-xs font-normal leading-5 text-text-muted shadow-lg group-hover:block group-focus-within:block"
+            >
+              {t('tools.fairPrice.epsTooltip')}
+            </span>
+          </span>
+        }
+      />
+      {shouldShowGrowthHint ? (
+        <div className="rounded-md border-[0.5px] border-border border-l-4 border-l-primary bg-surface p-4">
+          <div className="flex items-start gap-3">
+            <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-[0.5px] border-primary text-xs font-bold text-primary">
+              i
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold text-primary">
+                {t('tools.fairPrice.growthHint.title')}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-text-muted">
+                {t('tools.fairPrice.growthHint.body')}
+              </p>
+              <a
+                href="https://www.macrotrends.net"
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 inline-flex text-sm font-semibold text-primary transition hover:opacity-80"
+              >
+                {t('tools.fairPrice.growthHint.link')}
+              </a>
+            </div>
+            <button
+              type="button"
+              aria-label={t('buttons.dismiss')}
+              onClick={() => setGrowthHintDismissed(true)}
+              className="grid h-7 w-7 shrink-0 place-items-center rounded-md text-sm font-bold text-text-muted transition hover:bg-surface-alt hover:text-text-primary focus:bg-surface-alt focus:text-text-primary focus:outline-none"
+            >
+              x
+            </button>
+          </div>
+        </div>
+      ) : null}
       <NumberInput id="fair-market-price" label={t('tools.fairPrice.inputs.marketPrice')} value={marketPrice} min={0} step={1} onChange={setMarketPrice} />
       <SliderInput id="fair-growth" label={t('tools.fairPrice.inputs.growth')} value={growthRate} min={0} max={40} step={0.5} suffix="%" onChange={setGrowthRate} />
       <SliderInput id="fair-terminal" label={t('tools.fairPrice.inputs.terminalGrowth')} value={terminalGrowth} min={0} max={6} step={0.25} suffix="%" onChange={setTerminalGrowth} />

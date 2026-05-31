@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { ChangeEvent } from 'react'
+import type { ChangeEvent, ReactNode } from 'react'
 
 interface NumberInputProps {
   id: string
@@ -11,6 +11,7 @@ interface NumberInputProps {
   max?: number
   step?: number
   suffix?: string
+  labelAccessory?: ReactNode
 }
 
 interface TextInputProps {
@@ -57,6 +58,7 @@ export const NumberInput = ({
   max,
   step = 1,
   suffix,
+  labelAccessory,
 }: NumberInputProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(Number(event.target.value))
@@ -64,7 +66,10 @@ export const NumberInput = ({
 
   return (
     <label htmlFor={id} className="grid gap-2">
-      <span className="text-sm font-medium text-text-muted">{label}</span>
+      <span className="flex items-center gap-2 text-sm font-medium text-text-muted">
+        <span>{label}</span>
+        {labelAccessory}
+      </span>
       <div className="flex items-center gap-2">
         <input
           id={id}

@@ -49,6 +49,14 @@ export interface CompanyFundamentals {
   debtToEquity: number | null
   recordedDate: string | null
   createdAt: string
+  sharesOutstanding?: number | null
+  annualFinancials?: CompanyAnnualFinancial[]
+}
+
+export interface CompanyAnnualFinancial {
+  year: string
+  revenue: number | null
+  netIncome: number | null
 }
 
 export interface StockHistory {
@@ -61,6 +69,8 @@ export interface StockQuote {
   price: number
   currency: string | null
   marketTime: string | null
+  fiftyTwoWeekHigh?: number | null
+  fiftyTwoWeekLow?: number | null
 }
 
 export interface CompanySnapshot {
