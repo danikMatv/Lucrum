@@ -1,0 +1,6 @@
+# JWT signing secret - generate with: openssl rand -base64 32
+JWT_SECRET=your-secret-here
+
+# Financial Modeling Prep API key
+# Get free key at: https://financialmodelingprep.com/developer/docs
+FMP_API_KEY=your-fmp-api-key-here

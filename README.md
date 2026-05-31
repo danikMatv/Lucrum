@@ -1,116 +1,152 @@
 # Lucrum
 
-Lucrum is an investment web platform for beginners. It combines educational
-content with practical tools such as FIRE, DCA, fair price / DCF, investment
-calculators, and stock analysis by ticker.
+> Investment web platform for beginners. Free calculators, stock analysis, and educational content.
 
-The product is designed for English-first usage with French localization.
+## Live
 
-## Stack
+- Frontend: https://lucrum.pages.dev
+- API: https://lucrum-worker.danior202.workers.dev
 
-- React + TypeScript + Vite for the web app
-- Cloudflare Workers + Hono for the API
-- Cloudflare D1 for relational data
-- Cloudflare KV for cache
-- pnpm workspaces for monorepo management
+## Tech Stack
 
-## Repository Structure
+- Frontend: React 19 + TypeScript + Vite + TailwindCSS + Recharts
+- Backend: Cloudflare Workers + Hono + TypeScript
+- Database: Cloudflare D1 (SQLite)
+- Cache: Cloudflare KV
+- Auth: JWT (httpOnly cookies)
+- i18n: EN / FR / UK
+- Hosting: Cloudflare Pages + Workers (free tier)
+
+## Project Structure
 
 ```text
-.
-├── apps/
-│   ├── web/              React frontend
-│   └── worker/           Cloudflare Worker API
-├── packages/
-│   └── shared/           Shared package placeholder
-├── AGENTS.md             Agent and project conventions
-├── CODESTYLE (1).md      Code style guide
-├── DECISIONS.md          Architecture decisions
-├── architecture (2).md   System architecture notes
-├── package.json
-└── pnpm-workspace.yaml
+Lucrum/
++-- apps/
+|   +-- web/                 - React frontend
+|   +-- worker/              - Cloudflare Workers backend
++-- packages/
+|   +-- shared/              - shared types and utilities
++-- architecture (2).md      - system architecture notes
++-- CODESTYLE (1).md         - code style guide
++-- DECISIONS.md             - architecture decisions
++-- AGENTS.md                - AI agent and project conventions
++-- package.json             - root package metadata
++-- pnpm-workspace.yaml      - pnpm workspace config
 ```
 
-## Getting Started
+## Prerequisites
 
-Install dependencies from the repository root:
+- Node.js 18+
+- pnpm 11+
+- Cloudflare account (free)
+- Financial Modeling Prep API key (free tier, 250 req/day)
+
+## Local Development
+
+### 1. Clone and install
 
 ```bash
+git clone https://github.com/danikMatv/Lucrum
+cd Lucrum
 pnpm install
 ```
 
-Start the frontend:
+### 2. Set up environment variables
 
 ```bash
-pnpm --filter web dev
+cp apps/web/.env.example apps/web/.env
+cp apps/worker/.dev.vars.example apps/worker/.dev.vars
+# Fill in your values
 ```
 
-The web app runs on `http://localhost:5173` by default.
-
-## Available Commands
-
-Frontend:
+### 3. Run database migrations (local)
 
 ```bash
-pnpm --filter web dev
+cd apps/worker
+pnpm db:migrate:local
+```
+
+### 4. Start dev servers
+
+Terminal 1 - backend:
+
+```bash
+cd apps/worker
+pnpm dev
+```
+
+Terminal 2 - frontend:
+
+```bash
+cd apps/web
+pnpm dev
+```
+
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8787
+
+## Build
+
+```bash
 pnpm --filter web build
-pnpm --filter web lint
-pnpm --filter web preview
+pnpm --filter worker build
 ```
 
-Worker package scripts are still being added. Until then, run Wrangler commands
-from `apps/worker` or add explicit scripts before relying on them in CI.
+## Deployment
 
-## Environment
-
-Frontend local environment file:
+### Backend (Cloudflare Workers)
 
 ```bash
-apps/web/.env
+cd apps/worker
+pnpm wrangler deploy
 ```
 
-```env
-VITE_API_BASE_URL=http://localhost:8787
+### Frontend (Cloudflare Pages)
+
+Automatic on push to `main` via GitHub integration.
+
+Configure in Cloudflare Pages:
+
+```text
+Build command: pnpm --filter web build
+Output dir: apps/web/dist
+Env var: VITE_API_BASE_URL = https://lucrum-worker.danior202.workers.dev
 ```
 
-Worker local environment file:
+### Database migrations (production)
 
 ```bash
-apps/worker/.dev.vars
+cd apps/worker
+pnpm db:migrate
 ```
 
-```env
-JWT_SECRET=
-FMP_API_KEY=
-YAHOO_FINANCE_BASE_URL=https://query1.finance.yahoo.com
+## User Roles
+
+```text
+USER       - default, basic access
+USER_PRO   - paid subscription (future)
+MODERATOR  - can add/edit learn resources
+ADMIN      - full access + admin panel
 ```
 
-Do not commit `.env`, `.dev.vars`, local Wrangler state, package manager stores,
-or `node_modules`.
-
-## Development Rules
-
-- Use `pnpm`, not `npm` or `yarn`.
-- Keep TypeScript strict and avoid `any`.
-- Use i18n keys for UI strings.
-- Keep API calls in service modules, not React components.
-- Use Tailwind classes instead of inline styles.
-- Validate Worker request and response data with Zod when API routes are added.
-- Follow the response shape `{ success: true, data }` or
-  `{ success: false, error }`.
-
-## Git Notes
-
-Generated folders are ignored at the repository root, including:
-
-- `node_modules/`
-- `.pnpm-store/`
-- `.wrangler/`
-- `.claude/`
-- `dist/`
-
-Before committing, check:
+To set a role manually:
 
 ```bash
-git status
+pnpm wrangler d1 execute DB --remote --command "UPDATE users SET role = 'ADMIN' WHERE email = 'your@email.com'"
 ```
+
+## Features
+
+- 5 financial calculators: Invest, FIRE, DCA, Fair Price/DCF, Stock Analysis
+- Investment academy (`/learn`): Bonds, Stocks, ETFs, Crypto, Venture, Risk basics
+- Useful links per topic (managed by moderators)
+- JWT auth with httpOnly cookies
+- 90-day D1 cache for company fundamentals
+- EN / FR / UK localization
+- Admin panel with usage stats
+
+## Contributing
+
+Follow `CODESTYLE (1).md` and `AGENTS.md` conventions.
+
+Use `pnpm`. Do not use `npm` or `yarn`.
