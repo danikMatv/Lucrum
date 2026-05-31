@@ -15,6 +15,7 @@ import {
 } from '../db/queries'
 import { getOptionalUser } from '../middleware/auth'
 import {
+  AlphaVantageRateLimitError,
   getAlphaVantageIncomeHistory,
   getAlphaVantageOverview,
   type AlphaVantageOverview,
@@ -90,6 +91,47 @@ const hasIncomeHistory = (incomeHistory: CompanyIncomeHistoryRow[]) => incomeHis
 const hasQuoteRange = (quote: StockQuote | null) =>
   typeof quote?.fiftyTwoWeekHigh === 'number' && typeof quote.fiftyTwoWeekLow === 'number'
 
+const hasSecret = (value: string | undefined) => typeof value === 'string' && value.trim() !== ''
+
+const providerErrorCode = (error: unknown) => {
+  if (error instanceof AlphaVantageRateLimitError) {
+    const message = error.message.toLowerCase()
+    if (message.includes('frequency') || message.includes('minute')) {
+      return 'frequency_limited'
+    }
+    if (message.includes('rate limit') || message.includes('25 requests')) {
+      return 'rate_limited'
+    }
+    if (message.includes('api key') || message.includes('apikey')) {
+      return 'api_key_rejected'
+    }
+
+    return 'provider_information'
+  }
+
+  if (!(error instanceof Error)) {
+    return 'unknown_error'
+  }
+
+  if (error.message === 'missing_api_key') {
+    return 'missing_key'
+  }
+
+  if (error.message.includes('request failed with')) {
+    return 'http_error'
+  }
+
+  if (error.message.includes('returned no')) {
+    return 'empty_response'
+  }
+
+  if (error.name === 'TypeError') {
+    return 'network_error'
+  }
+
+  return 'unknown_error'
+}
+
 const getQuote = async (c: Context, ticker: string) => {
   const normalizedTicker = normalizeTicker(ticker)
   const cacheKey = `quote:${normalizedTicker}`
@@ -138,8 +180,13 @@ const seedSnapshotFromLegacyTables = async (c: Context, ticker: string) => {
   })
 }
 
-const resolveCompanySnapshot = async (c: Context, ticker: string) => {
+const resolveCompanySnapshot = async (
+  c: Context,
+  ticker: string,
+  options: { debugProviders?: boolean } = {},
+) => {
   const normalizedTicker = normalizeTicker(ticker)
+  const providerDiagnostics: string[] = []
   let snapshot = await seedSnapshotFromLegacyTables(c, normalizedTicker)
   let company = snapshot?.company ?? null
   let fundamentals = snapshot?.fundamentals ?? null
@@ -148,13 +195,35 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
   let fundamentalsFetchedAt = snapshot?.fundamentalsFetchedAt ?? null
   let incomeFetchedAt = snapshot?.incomeFetchedAt ?? null
   let alphaOverview: AlphaVantageOverview | null = null
+  let alphaOverviewError: unknown = null
 
   const getOverview = async () => {
+    if (alphaOverviewError) {
+      throw alphaOverviewError
+    }
+
     if (!alphaOverview) {
-      alphaOverview = await getAlphaVantageOverview(normalizedTicker, c.env.ALPHA_VANTAGE_API_KEY)
+      if (!hasSecret(c.env.ALPHA_VANTAGE_API_KEY)) {
+        throw new Error('missing_api_key')
+      }
+      try {
+        alphaOverview = await getAlphaVantageOverview(
+          normalizedTicker,
+          c.env.ALPHA_VANTAGE_API_KEY,
+        )
+      } catch (error) {
+        alphaOverviewError = error
+        throw error
+      }
     }
 
     return alphaOverview
+  }
+
+  const noteProviderIssue = (provider: string, section: string, error: unknown) => {
+    if (options.debugProviders) {
+      providerDiagnostics.push(`${provider}.${section}.${providerErrorCode(error)}`)
+    }
   }
 
   const withCompanyIdentity = (nextCompany: Company) => ({
@@ -198,7 +267,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
         company,
         companyFetchedAt,
       })
-    } catch {
+    } catch (error) {
+      noteProviderIssue('alphaVantage', 'company', error)
       try {
         const fmpCompany = await getFmpCompanyProfile(normalizedTicker, c.env.FMP_API_KEY)
         if (fmpCompany) {
@@ -211,7 +281,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
             companyFetchedAt,
           })
         }
-      } catch {
+      } catch (error) {
+        noteProviderIssue('fmp', 'company', error)
         try {
           const secProfile = await getSecCompanyProfile(normalizedTicker)
           if (secProfile) {
@@ -224,7 +295,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
               companyFetchedAt,
             })
           }
-        } catch {
+        } catch (error) {
+          noteProviderIssue('sec', 'company', error)
           // Keep stale D1 data if providers are unavailable.
         }
       }
@@ -255,7 +327,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
           c.env.FMP_API_KEY,
         )
         alphaFundamentals = mergeFundamentals(alphaFundamentals, fmpSupplement)
-      } catch {
+      } catch (error) {
+        noteProviderIssue('fmp', 'fundamentalsSupplement', error)
         // Alpha Vantage remains primary; FMP only fills optional gaps.
       }
 
@@ -267,7 +340,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
         fundamentals,
         fundamentalsFetchedAt,
       })
-    } catch {
+    } catch (error) {
+      noteProviderIssue('alphaVantage', 'fundamentals', error)
       try {
         const fmpFundamentals = await getFmpFundamentals(
           company.id,
@@ -282,7 +356,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
           fundamentals,
           fundamentalsFetchedAt,
         })
-      } catch {
+      } catch (error) {
+        noteProviderIssue('fmp', 'fundamentals', error)
         try {
           const secProfile = await getSecCompanyProfile(normalizedTicker)
           if (secProfile) {
@@ -296,7 +371,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
               fundamentalsFetchedAt,
             })
           }
-        } catch {
+        } catch (error) {
+          noteProviderIssue('sec', 'fundamentals', error)
           // Keep stale D1 data if providers are unavailable.
         }
       }
@@ -305,6 +381,10 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
 
   if (!isFresh(incomeFetchedAt) || !hasIncomeHistory(incomeHistory)) {
     try {
+      if (alphaOverviewError) {
+        throw alphaOverviewError
+      }
+
       incomeHistory = await getAlphaVantageIncomeHistory(
         normalizedTicker,
         c.env.ALPHA_VANTAGE_API_KEY,
@@ -315,7 +395,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
         incomeHistory,
         incomeFetchedAt,
       })
-    } catch {
+    } catch (error) {
+      noteProviderIssue('alphaVantage', 'incomeHistory', error)
       try {
         incomeHistory = await getFmpIncomeHistory(normalizedTicker, c.env.FMP_API_KEY)
         incomeFetchedAt = nowIso()
@@ -324,7 +405,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
           incomeHistory,
           incomeFetchedAt,
         })
-      } catch {
+      } catch (error) {
+        noteProviderIssue('fmp', 'incomeHistory', error)
         // Keep stale D1 income history if providers are unavailable.
       }
     }
@@ -353,7 +435,8 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
   try {
     quote = await getQuote(c, normalizedTicker)
     quoteFetchedAt = quote.marketTime ?? nowIso()
-  } catch {
+  } catch (error) {
+    noteProviderIssue('quote', 'live', error)
     quote = null
   }
 
@@ -386,6 +469,7 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
     },
     freshness,
     missing,
+    ...(options.debugProviders ? { providerDiagnostics } : {}),
   }
 }
 
@@ -418,9 +502,10 @@ companies.get('/search', zValidator('query', searchSchema, validatorHook), async
 companies.get('/:ticker/snapshot', zValidator('param', tickerSchema, validatorHook), async (c) => {
   const { ticker } = c.req.valid('param')
   const normalizedTicker = normalizeTicker(ticker)
+  const debugProviders = c.req.query('debugProviders') === '1'
   c.executionCtx.waitUntil(logUsage(c, 'COMPANY_SNAPSHOT', normalizedTicker).catch(() => undefined))
 
-  const snapshot = await resolveCompanySnapshot(c, normalizedTicker)
+  const snapshot = await resolveCompanySnapshot(c, normalizedTicker, { debugProviders })
   if (
     !snapshot.company &&
     !snapshot.fundamentals &&
