@@ -125,8 +125,9 @@ const getVerdictTone = (verdict: ReturnType<typeof getVerdict>) => {
 }
 
 const getFinancialRows = (snapshot: CompanySnapshot): StockFinancialRow[] => {
-  if (snapshot.incomeHistory.length > 0) {
-    return [...snapshot.incomeHistory]
+  const incomeHistory = snapshot.incomeHistory ?? []
+  if (incomeHistory.length > 0) {
+    return [...incomeHistory]
       .sort((left, right) => left.year.localeCompare(right.year))
       .map((row) => ({
         year: row.year,
@@ -235,7 +236,7 @@ export const StockPage = () => {
                 {snapshot.company?.name ?? snapshot.ticker}
               </h2>
               <p className="mt-1 text-lg font-semibold text-text-muted">{snapshot.ticker}</p>
-              {snapshot.missing.length > 0 ? (
+              {(snapshot.missing?.length ?? 0) > 0 ? (
                 <p className="mt-4 text-sm leading-6 text-text-muted">
                   {t('tools.stock.notice.partial')}
                 </p>
