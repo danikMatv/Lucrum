@@ -24,6 +24,7 @@ import {
 import { CacheTtl, getJsonCache, putJsonCache } from '../services/cache'
 import {
   getFmpCompanyProfile,
+  getFmpEpsHistory,
   getFmpFundamentals,
   getFmpIncomeHistory,
   getFmpQuote,
@@ -445,7 +446,18 @@ const resolveCompanySnapshot = async (
       })
     } catch (error) {
       noteProviderIssue('alphaVantage', 'epsHistory', error)
-      // Keep stale D1 EPS history if Alpha Vantage is unavailable.
+      try {
+        epsHistory = await getFmpEpsHistory(normalizedTicker, c.env.FMP_API_KEY)
+        epsHistoryFetchedAt = nowIso()
+        snapshot = await upsertCompanySnapshot(c.env.DB, {
+          ticker: normalizedTicker,
+          epsHistory,
+          epsHistoryFetchedAt,
+        })
+      } catch (error) {
+        noteProviderIssue('fmp', 'epsHistory', error)
+        // Keep stale D1 EPS history if providers are unavailable.
+      }
     }
   }
 

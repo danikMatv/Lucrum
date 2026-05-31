@@ -1,4 +1,9 @@
-import type { Company, CompanyFundamentals, CompanyIncomeHistoryRow } from '../types'
+import type {
+  Company,
+  CompanyEpsHistoryRow,
+  CompanyFundamentals,
+  CompanyIncomeHistoryRow,
+} from '../types'
 import type { StockHistory, StockQuote } from './yahoo'
 
 interface FmpSearchResult {
@@ -22,15 +27,30 @@ interface FmpProfileResult {
   price?: number
   beta?: number
   lastDiv?: number
+  lastDividend?: number
   dividendYield?: number
   sharesOutstanding?: number
+  fullTimeEmployees?: string
+  country?: string
+  address?: string
+  city?: string
+  state?: string
+  zip?: string
 }
 
 interface FmpKeyMetricsResult {
   peRatioTTM?: number
   marketCapTTM?: number
+  priceToSalesRatioTTM?: number
+  priceToBookRatioTTM?: number
+  priceEarningsToGrowthRatioTTM?: number
+  pegRatioTTM?: number
   dividendYieldTTM?: number
   debtToEquityTTM?: number
+  currentRatioTTM?: number
+  quickRatioTTM?: number
+  returnOnEquityTTM?: number
+  returnOnAssetsTTM?: number
   netIncomePerShareTTM?: number
   freeCashFlowPerShareTTM?: number
 }
@@ -53,6 +73,10 @@ interface FmpQuoteResult {
 interface FmpIncomeStatementResult {
   date?: string
   revenue?: number
+  grossProfit?: number
+  operatingIncome?: number
+  operatingIncomeRatio?: number
+  netIncomeRatio?: number
   netIncome?: number
   eps?: number
 }
@@ -132,6 +156,41 @@ const toMonthlyStockHistory = (rows: FmpHistoricalPriceResult[]): StockHistory =
 
 const finiteNumberOrNull = (value: number | null | undefined) =>
   typeof value === 'number' && Number.isFinite(value) ? value : null
+
+const finiteIntegerFromStringOrNull = (value: string | null | undefined) => {
+  const parsed = Number.parseInt(value ?? '', 10)
+  return Number.isFinite(parsed) ? parsed : null
+}
+
+const compactAddress = (profile: FmpProfileResult | undefined) => {
+  const parts = [profile?.address, profile?.city, profile?.state, profile?.zip]
+    .map((part) => part?.trim())
+    .filter((part): part is string => Boolean(part))
+
+  return parts.length > 0 ? parts.join(', ') : null
+}
+
+const ratioToPercent = (value: number | null | undefined) => {
+  const finiteValue = finiteNumberOrNull(value)
+  return typeof finiteValue === 'number' ? finiteValue * 100 : null
+}
+
+const percentFromValues = (
+  numerator: number | null | undefined,
+  denominator: number | null | undefined,
+) => {
+  if (
+    typeof numerator !== 'number' ||
+    !Number.isFinite(numerator) ||
+    typeof denominator !== 'number' ||
+    !Number.isFinite(denominator) ||
+    denominator === 0
+  ) {
+    return null
+  }
+
+  return (numerator / denominator) * 100
+}
 
 const toIsoFromUnixTimestamp = (timestamp: number | undefined) => {
   if (typeof timestamp !== 'number' || !Number.isFinite(timestamp)) {
@@ -249,6 +308,30 @@ export const getFmpIncomeHistory = async (
   return rows
 }
 
+export const getFmpEpsHistory = async (
+  ticker: string,
+  apiKey: string,
+): Promise<CompanyEpsHistoryRow[]> => {
+  const results = await fetchFmpStable<FmpIncomeStatementResult[]>(
+    `/income-statement?symbol=${encodeURIComponent(ticker.toUpperCase())}&period=annual&limit=5`,
+    apiKey,
+  )
+  const rows = results
+    .filter((row) => row.date && typeof row.eps === 'number' && Number.isFinite(row.eps))
+    .slice(0, 5)
+    .map((row) => ({
+      year: String(row.date).slice(0, 4),
+      eps: finiteNumberOrNull(row.eps),
+    }))
+    .sort((left, right) => left.year.localeCompare(right.year))
+
+  if (rows.length === 0) {
+    throw new Error('FMP returned no EPS history')
+  }
+
+  return rows
+}
+
 export const getFmpFundamentals = async (
   companyId: string,
   ticker: string,
@@ -289,6 +372,21 @@ export const getFmpFundamentals = async (
     (typeof quote?.price === 'number' && typeof epsTtm === 'number' && epsTtm !== 0
       ? quote.price / epsTtm
       : null)
+  const lastDividend = finiteNumberOrNull(profile?.lastDividend ?? profile?.lastDiv)
+  const dividendYield =
+    finiteNumberOrNull(profile?.dividendYield ?? metrics?.dividendYieldTTM) ??
+    (typeof lastDividend === 'number' &&
+    typeof quote?.price === 'number' &&
+    Number.isFinite(quote.price) &&
+    quote.price > 0
+      ? lastDividend / quote.price
+      : null)
+  const grossProfit = finiteNumberOrNull(income?.grossProfit)
+  const operatingMargin =
+    ratioToPercent(income?.operatingIncomeRatio) ??
+    percentFromValues(income?.operatingIncome, income?.revenue)
+  const netMargin =
+    ratioToPercent(income?.netIncomeRatio) ?? percentFromValues(income?.netIncome, income?.revenue)
 
   return {
     id: crypto.randomUUID(),
@@ -301,7 +399,7 @@ export const getFmpFundamentals = async (
     marketCap: finiteNumberOrNull(
       metrics?.marketCapTTM ?? profile?.mktCap ?? profile?.marketCap ?? quote?.marketCap,
     ),
-    dividendYield: finiteNumberOrNull(profile?.dividendYield ?? metrics?.dividendYieldTTM),
+    dividendYield,
     debtToEquity: finiteNumberOrNull(metrics?.debtToEquityTTM),
     recordedDate: income?.date ?? null,
     createdAt: new Date().toISOString(),
@@ -309,6 +407,26 @@ export const getFmpFundamentals = async (
     fiftyTwoWeekLow: finiteNumberOrNull(quote?.fiftyTwoWeekLow ?? quote?.yearLow),
     sharesOutstanding: finiteNumberOrNull(profile?.sharesOutstanding),
     profitMargin: null,
+    priceToSales: finiteNumberOrNull(metrics?.priceToSalesRatioTTM),
+    priceToBook: finiteNumberOrNull(metrics?.priceToBookRatioTTM),
+    returnOnEquity: ratioToPercent(metrics?.returnOnEquityTTM),
+    returnOnAssets: ratioToPercent(metrics?.returnOnAssetsTTM),
+    grossProfit,
+    operatingMargin,
+    netMargin,
+    currentRatio: finiteNumberOrNull(metrics?.currentRatioTTM),
+    quickRatio: finiteNumberOrNull(metrics?.quickRatioTTM),
+    analystTargetPrice: null,
+    employees: finiteIntegerFromStringOrNull(profile?.fullTimeEmployees),
+    country: profile?.country ?? null,
+    address: compactAddress(profile),
+    fiscalYearEnd: null,
+    latestQuarter: null,
+    forwardPE: null,
+    pegRatio: finiteNumberOrNull(
+      metrics?.priceEarningsToGrowthRatioTTM ?? metrics?.pegRatioTTM,
+    ),
+    beta: finiteNumberOrNull(profile?.beta),
   }
 }
 
