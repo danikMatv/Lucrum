@@ -36,5 +36,7 @@ export const getStooqQuote = async (ticker: string): Promise<StockQuote> => {
     marketTime: date && time ? new Date(`${date}T${time}Z`).toISOString() : null,
     fiftyTwoWeekHigh: null,
     fiftyTwoWeekLow: null,
+    change: null,
+    changePercent: null,
   }
 }

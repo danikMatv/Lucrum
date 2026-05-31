@@ -14,17 +14,23 @@ import {
   upsertFundamentals,
 } from '../db/queries'
 import { getOptionalUser } from '../middleware/auth'
+import {
+  getAlphaVantageIncomeHistory,
+  getAlphaVantageOverview,
+  type AlphaVantageOverview,
+} from '../services/alphavantage'
 import { CacheTtl, getJsonCache, putJsonCache } from '../services/cache'
 import {
   getFmpCompanyProfile,
   getFmpFundamentals,
+  getFmpIncomeHistory,
   getFmpQuote,
   searchFmpCompanies,
 } from '../services/fmp'
 import { getStooqQuote } from '../services/stooq'
 import { getSecCompanyProfile, getSecFundamentals } from '../services/sec'
 import { getYahooQuote, type StockQuote } from '../services/yahoo'
-import type { AppEnv, Company, CompanyFundamentals } from '../types'
+import type { AppEnv, Company, CompanyFundamentals, CompanyIncomeHistoryRow } from '../types'
 import { createError, createSuccess } from '../utils/response'
 import { normalizeTicker } from '../utils/ticker'
 
@@ -76,10 +82,10 @@ const hasSnapshotFundamentals = (fundamentals: CompanyFundamentals | null) =>
   Boolean(
     fundamentals &&
       typeof fundamentals.peRatio === 'number' &&
-      typeof fundamentals.marketCap === 'number' &&
-      Array.isArray(fundamentals.annualFinancials) &&
-      fundamentals.annualFinancials.length > 1,
+      typeof fundamentals.marketCap === 'number',
   )
+
+const hasIncomeHistory = (incomeHistory: CompanyIncomeHistoryRow[]) => incomeHistory.length > 1
 
 const hasQuoteRange = (quote: StockQuote | null) =>
   typeof quote?.fiftyTwoWeekHigh === 'number' && typeof quote.fiftyTwoWeekLow === 'number'
@@ -94,10 +100,10 @@ const getQuote = async (c: Context, ticker: string) => {
 
   let quote: StockQuote
   try {
-    quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
+    quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
   } catch {
     try {
-      quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
+      quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
     } catch {
       quote = await getStooqQuote(normalizedTicker)
     }
@@ -137,29 +143,68 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
   let snapshot = await seedSnapshotFromLegacyTables(c, normalizedTicker)
   let company = snapshot?.company ?? null
   let fundamentals = snapshot?.fundamentals ?? null
+  let incomeHistory = snapshot?.incomeHistory ?? []
   let companyFetchedAt = snapshot?.companyFetchedAt ?? null
   let fundamentalsFetchedAt = snapshot?.fundamentalsFetchedAt ?? null
+  let incomeFetchedAt = snapshot?.incomeFetchedAt ?? null
+  let alphaOverview: AlphaVantageOverview | null = null
+
+  const getOverview = async () => {
+    if (!alphaOverview) {
+      alphaOverview = await getAlphaVantageOverview(normalizedTicker, c.env.ALPHA_VANTAGE_API_KEY)
+    }
+
+    return alphaOverview
+  }
+
+  const withCompanyIdentity = (nextCompany: Company) => ({
+    ...nextCompany,
+    id: company?.id ?? nextCompany.id,
+    createdAt: company?.createdAt ?? nextCompany.createdAt,
+  })
+
+  const withFundamentalsCompany = (nextFundamentals: CompanyFundamentals) => ({
+    ...nextFundamentals,
+    companyId: company?.id ?? nextFundamentals.companyId,
+  })
+
+  const mergeFundamentals = (
+    primary: CompanyFundamentals,
+    fallback: CompanyFundamentals | null,
+  ): CompanyFundamentals => {
+    if (!fallback) {
+      return primary
+    }
+
+    return {
+      ...primary,
+      freeCashFlow: primary.freeCashFlow ?? fallback.freeCashFlow,
+      debtToEquity: primary.debtToEquity ?? fallback.debtToEquity,
+      netIncome: primary.netIncome ?? fallback.netIncome,
+      fiftyTwoWeekHigh: primary.fiftyTwoWeekHigh ?? fallback.fiftyTwoWeekHigh,
+      fiftyTwoWeekLow: primary.fiftyTwoWeekLow ?? fallback.fiftyTwoWeekLow,
+    }
+  }
 
   if (!company || !isFresh(companyFetchedAt) || !hasCompanyDisplayFields(company)) {
     try {
-      const fmpCompany = await getFmpCompanyProfile(normalizedTicker, c.env.FMP_API_KEY)
-      if (fmpCompany) {
-        company = fmpCompany
-        companyFetchedAt = nowIso()
-        await upsertCompany(c.env.DB, fmpCompany)
-        snapshot = await upsertCompanySnapshot(c.env.DB, {
-          ticker: normalizedTicker,
-          company,
-          companyFetchedAt,
-        })
-      }
+      const overview = await getOverview()
+      const alphaCompany = withCompanyIdentity(overview.company)
+      company = alphaCompany
+      companyFetchedAt = nowIso()
+      await upsertCompany(c.env.DB, alphaCompany)
+      snapshot = await upsertCompanySnapshot(c.env.DB, {
+        ticker: normalizedTicker,
+        company,
+        companyFetchedAt,
+      })
     } catch {
       try {
-        const secProfile = await getSecCompanyProfile(normalizedTicker)
-        if (secProfile) {
-          company = secProfile.company
+        const fmpCompany = await getFmpCompanyProfile(normalizedTicker, c.env.FMP_API_KEY)
+        if (fmpCompany) {
+          company = withCompanyIdentity(fmpCompany)
           companyFetchedAt = nowIso()
-          await upsertCompany(c.env.DB, secProfile.company)
+          await upsertCompany(c.env.DB, company)
           snapshot = await upsertCompanySnapshot(c.env.DB, {
             ticker: normalizedTicker,
             company,
@@ -167,7 +212,21 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
           })
         }
       } catch {
-        // Keep stale D1 data if providers are unavailable.
+        try {
+          const secProfile = await getSecCompanyProfile(normalizedTicker)
+          if (secProfile) {
+            company = withCompanyIdentity(secProfile.company)
+            companyFetchedAt = nowIso()
+            await upsertCompany(c.env.DB, company)
+            snapshot = await upsertCompanySnapshot(c.env.DB, {
+              ticker: normalizedTicker,
+              company,
+              companyFetchedAt,
+            })
+          }
+        } catch {
+          // Keep stale D1 data if providers are unavailable.
+        }
       }
     }
   }
@@ -175,8 +234,10 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
   if (snapshot) {
     company = snapshot.company ?? company
     fundamentals = snapshot.fundamentals ?? fundamentals
+    incomeHistory = snapshot.incomeHistory.length > 0 ? snapshot.incomeHistory : incomeHistory
     companyFetchedAt = snapshot.companyFetchedAt ?? companyFetchedAt
     fundamentalsFetchedAt = snapshot.fundamentalsFetchedAt ?? fundamentalsFetchedAt
+    incomeFetchedAt = snapshot.incomeFetchedAt ?? incomeFetchedAt
   }
 
   if (
@@ -184,14 +245,23 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
     (!fundamentals || !isFresh(fundamentalsFetchedAt) || !hasSnapshotFundamentals(fundamentals))
   ) {
     try {
-      const fmpFundamentals = await getFmpFundamentals(
-        company.id,
-        normalizedTicker,
-        c.env.FMP_API_KEY,
-      )
-      fundamentals = fmpFundamentals
+      const overview = await getOverview()
+      let alphaFundamentals = withFundamentalsCompany(overview.fundamentals)
+
+      try {
+        const fmpSupplement = await getFmpFundamentals(
+          company.id,
+          normalizedTicker,
+          c.env.FMP_API_KEY,
+        )
+        alphaFundamentals = mergeFundamentals(alphaFundamentals, fmpSupplement)
+      } catch {
+        // Alpha Vantage remains primary; FMP only fills optional gaps.
+      }
+
+      fundamentals = alphaFundamentals
       fundamentalsFetchedAt = nowIso()
-      await upsertFundamentals(c.env.DB, fmpFundamentals)
+      await upsertFundamentals(c.env.DB, fundamentals)
       snapshot = await upsertCompanySnapshot(c.env.DB, {
         ticker: normalizedTicker,
         fundamentals,
@@ -199,38 +269,85 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
       })
     } catch {
       try {
-        const secProfile = await getSecCompanyProfile(normalizedTicker)
-        if (secProfile) {
-          const secFundamentals = await getSecFundamentals(company.id, secProfile.cik)
-          fundamentals = secFundamentals
-          fundamentalsFetchedAt = nowIso()
-          await upsertFundamentals(c.env.DB, secFundamentals)
-          snapshot = await upsertCompanySnapshot(c.env.DB, {
-            ticker: normalizedTicker,
-            fundamentals,
-            fundamentalsFetchedAt,
-          })
-        }
+        const fmpFundamentals = await getFmpFundamentals(
+          company.id,
+          normalizedTicker,
+          c.env.FMP_API_KEY,
+        )
+        fundamentals = withFundamentalsCompany(fmpFundamentals)
+        fundamentalsFetchedAt = nowIso()
+        await upsertFundamentals(c.env.DB, fundamentals)
+        snapshot = await upsertCompanySnapshot(c.env.DB, {
+          ticker: normalizedTicker,
+          fundamentals,
+          fundamentalsFetchedAt,
+        })
       } catch {
-        // Keep stale D1 data if providers are unavailable.
+        try {
+          const secProfile = await getSecCompanyProfile(normalizedTicker)
+          if (secProfile) {
+            const secFundamentals = await getSecFundamentals(company.id, secProfile.cik)
+            fundamentals = secFundamentals
+            fundamentalsFetchedAt = nowIso()
+            await upsertFundamentals(c.env.DB, secFundamentals)
+            snapshot = await upsertCompanySnapshot(c.env.DB, {
+              ticker: normalizedTicker,
+              fundamentals,
+              fundamentalsFetchedAt,
+            })
+          }
+        } catch {
+          // Keep stale D1 data if providers are unavailable.
+        }
+      }
+    }
+  }
+
+  if (!isFresh(incomeFetchedAt) || !hasIncomeHistory(incomeHistory)) {
+    try {
+      incomeHistory = await getAlphaVantageIncomeHistory(
+        normalizedTicker,
+        c.env.ALPHA_VANTAGE_API_KEY,
+      )
+      incomeFetchedAt = nowIso()
+      snapshot = await upsertCompanySnapshot(c.env.DB, {
+        ticker: normalizedTicker,
+        incomeHistory,
+        incomeFetchedAt,
+      })
+    } catch {
+      try {
+        incomeHistory = await getFmpIncomeHistory(normalizedTicker, c.env.FMP_API_KEY)
+        incomeFetchedAt = nowIso()
+        snapshot = await upsertCompanySnapshot(c.env.DB, {
+          ticker: normalizedTicker,
+          incomeHistory,
+          incomeFetchedAt,
+        })
+      } catch {
+        // Keep stale D1 income history if providers are unavailable.
       }
     }
   }
 
   let quote: StockQuote | null = null
   let quoteFetchedAt: string | null = null
-  if (company || fundamentals) {
+  if (company || fundamentals || incomeHistory.length > 0) {
     snapshot = await replaceCompanySnapshot(c.env.DB, {
       ticker: normalizedTicker,
       company,
       fundamentals,
+      incomeHistory,
       companyFetchedAt,
       fundamentalsFetchedAt,
+      incomeFetchedAt,
     })
     company = snapshot?.company ?? company
     fundamentals = snapshot?.fundamentals ?? fundamentals
+    incomeHistory = snapshot?.incomeHistory ?? incomeHistory
     companyFetchedAt = snapshot?.companyFetchedAt ?? companyFetchedAt
     fundamentalsFetchedAt = snapshot?.fundamentalsFetchedAt ?? fundamentalsFetchedAt
+    incomeFetchedAt = snapshot?.incomeFetchedAt ?? incomeFetchedAt
   }
 
   try {
@@ -243,22 +360,28 @@ const resolveCompanySnapshot = async (c: Context, ticker: string) => {
   const freshness = {
     company: freshnessFor(Boolean(company), companyFetchedAt),
     fundamentals: freshnessFor(Boolean(fundamentals), fundamentalsFetchedAt),
+    incomeHistory: freshnessFor(hasIncomeHistory(incomeHistory), incomeFetchedAt),
     quote: quote ? ('fresh' as const) : ('missing' as const),
   }
   const missing = [
-    ...(!company ? ['company' as const] : []),
-    ...(!fundamentals ? ['fundamentals' as const] : []),
-    ...(!quote ? ['quote' as const] : []),
+    ...(!company ? ['company'] : []),
+    ...(!fundamentals ? ['fundamentals'] : []),
+    ...(fundamentals && typeof fundamentals.peRatio !== 'number' ? ['peRatio'] : []),
+    ...(fundamentals && typeof fundamentals.marketCap !== 'number' ? ['marketCap'] : []),
+    ...(!hasIncomeHistory(incomeHistory) ? ['incomeHistory'] : []),
+    ...(!quote ? ['quote'] : []),
   ]
 
   return {
     ticker: normalizedTicker,
     company,
     fundamentals,
+    incomeHistory,
     quote,
     fetchedAt: {
       company: companyFetchedAt,
       fundamentals: fundamentalsFetchedAt,
+      incomeHistory: incomeFetchedAt,
       quote: quoteFetchedAt,
     },
     freshness,
@@ -298,7 +421,12 @@ companies.get('/:ticker/snapshot', zValidator('param', tickerSchema, validatorHo
   c.executionCtx.waitUntil(logUsage(c, 'COMPANY_SNAPSHOT', normalizedTicker).catch(() => undefined))
 
   const snapshot = await resolveCompanySnapshot(c, normalizedTicker)
-  if (!snapshot.company && !snapshot.fundamentals && !snapshot.quote) {
+  if (
+    !snapshot.company &&
+    !snapshot.fundamentals &&
+    snapshot.incomeHistory.length === 0 &&
+    !snapshot.quote
+  ) {
     return c.json(createError('COMPANY_DATA_NOT_FOUND', 'Company data not found'), 404)
   }
 

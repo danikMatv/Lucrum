@@ -4,3 +4,7 @@ JWT_SECRET=your-secret-here
 # Financial Modeling Prep API key
 # Get free key at: https://financialmodelingprep.com/developer/docs
 FMP_API_KEY=your-fmp-api-key-here
+
+# Alpha Vantage API key
+# Get free key at: https://www.alphavantage.co/support/#api-key
+ALPHA_VANTAGE_API_KEY=your-alpha-vantage-api-key-here

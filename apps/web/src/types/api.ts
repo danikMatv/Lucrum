@@ -49,11 +49,13 @@ export interface CompanyFundamentals {
   debtToEquity: number | null
   recordedDate: string | null
   createdAt: string
+  fiftyTwoWeekHigh?: number | null
+  fiftyTwoWeekLow?: number | null
   sharesOutstanding?: number | null
-  annualFinancials?: CompanyAnnualFinancial[]
+  profitMargin?: number | null
 }
 
-export interface CompanyAnnualFinancial {
+export interface CompanyIncomeHistoryRow {
   year: string
   revenue: number | null
   netIncome: number | null
@@ -71,24 +73,29 @@ export interface StockQuote {
   marketTime: string | null
   fiftyTwoWeekHigh?: number | null
   fiftyTwoWeekLow?: number | null
+  change?: number | null
+  changePercent?: number | null
 }
 
 export interface CompanySnapshot {
   ticker: string
   company: Company | null
   fundamentals: CompanyFundamentals | null
+  incomeHistory: CompanyIncomeHistoryRow[]
   quote: StockQuote | null
   fetchedAt: {
     company: string | null
     fundamentals: string | null
+    incomeHistory: string | null
     quote: string | null
   }
   freshness: {
     company: 'fresh' | 'stale' | 'missing'
     fundamentals: 'fresh' | 'stale' | 'missing'
+    incomeHistory: 'fresh' | 'stale' | 'missing'
     quote: 'fresh' | 'missing'
   }
-  missing: Array<'company' | 'fundamentals' | 'quote'>
+  missing: string[]
 }
 
 export interface DcaResult {

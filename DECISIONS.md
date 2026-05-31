@@ -187,3 +187,24 @@ Three-layer cache: KV (hot) → D1 (warm) → External API (cold).
 - Free FMP tier (250 req/day) not sufficient for real traffic without caching
 - Fundamental data changes quarterly — daily refresh is more than enough
 - KV reads are free and instant — aggressive TTLs are fine
+
+---
+
+## ADR-010: Alpha Vantage as Primary Fundamentals Source
+
+**Date:** May 2026
+**Status:** Accepted
+
+### Decision
+Use **Alpha Vantage** as the primary source for company fundamentals and 5-year income statements.
+
+### Reasoning
+- FMP free tier can return incomplete fundamentals and limited income statement data
+- Alpha Vantage provides complete overview metrics and annual income statements on the free tier
+- The 25 requests/day limit is mitigated by 90-day D1 snapshot caching
+
+### Fallbacks
+FMP remains as the fallback and supplementary provider for fields Alpha Vantage does not include, such as free cash flow and debt/equity.
+
+### Quotes
+Live quotes remain separate from 90-day fundamentals caching and continue to use short-lived KV caching with the existing quote providers.

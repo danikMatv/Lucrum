@@ -1,4 +1,4 @@
-import type { Company, CompanyFundamentals } from '../types'
+import type { Company, CompanyFundamentals, CompanyIncomeHistoryRow } from '../types'
 import type { StockHistory, StockQuote } from './yahoo'
 
 interface FmpSearchResult {
@@ -41,6 +41,8 @@ interface FmpQuoteResult {
   yearHigh?: number
   yearLow?: number
   timestamp?: number
+  change?: number
+  changesPercentage?: number
 }
 
 interface FmpIncomeStatementResult {
@@ -196,7 +198,36 @@ export const getFmpQuote = async (ticker: string, apiKey: string): Promise<Stock
     marketTime: toIsoFromUnixTimestamp(quote.timestamp),
     fiftyTwoWeekHigh: finiteNumberOrNull(quote.fiftyTwoWeekHigh ?? quote.yearHigh),
     fiftyTwoWeekLow: finiteNumberOrNull(quote.fiftyTwoWeekLow ?? quote.yearLow),
+    change: finiteNumberOrNull(quote.change),
+    changePercent: finiteNumberOrNull(quote.changesPercentage),
   }
+}
+
+const toIncomeHistoryRows = (rows: FmpIncomeStatementResult[]): CompanyIncomeHistoryRow[] =>
+  rows
+    .filter((row) => row.date && (typeof row.revenue === 'number' || typeof row.netIncome === 'number'))
+    .slice(0, 5)
+    .map((row) => ({
+      year: String(row.date).slice(0, 4),
+      revenue: finiteNumberOrNull(row.revenue),
+      netIncome: finiteNumberOrNull(row.netIncome),
+    }))
+    .sort((left, right) => left.year.localeCompare(right.year))
+
+export const getFmpIncomeHistory = async (
+  ticker: string,
+  apiKey: string,
+): Promise<CompanyIncomeHistoryRow[]> => {
+  const results = await fetchFmp<FmpIncomeStatementResult[]>(
+    `/v3/income-statement/${ticker.toUpperCase()}?limit=5`,
+    apiKey,
+  )
+  const rows = toIncomeHistoryRows(results)
+  if (rows.length === 0) {
+    throw new Error('FMP returned no income history')
+  }
+
+  return rows
 }
 
 export const getFmpFundamentals = async (
@@ -204,7 +235,7 @@ export const getFmpFundamentals = async (
   ticker: string,
   apiKey: string,
 ): Promise<CompanyFundamentals> => {
-  const [metricsResults, incomeResults, cashFlowResults, profileResults] = await Promise.all([
+  const [metricsResults, incomeResults, cashFlowResults, profileResults, quoteResults] = await Promise.all([
     fetchFmp<FmpKeyMetricsResult[]>(`/v3/key-metrics-ttm/${ticker.toUpperCase()}`, apiKey),
     fetchFmp<FmpIncomeStatementResult[]>(
       `/v3/income-statement/${ticker.toUpperCase()}?limit=5`,
@@ -218,20 +249,14 @@ export const getFmpFundamentals = async (
       `/v3/profile/${ticker.toUpperCase()}`,
       apiKey,
     ),
+    fetchFmp<FmpQuoteResult[]>(`/v3/quote/${ticker.toUpperCase()}`, apiKey),
   ])
 
   const metrics = metricsResults.at(0)
   const income = incomeResults.at(0)
   const cashFlow = cashFlowResults.at(0)
   const profile = profileResults.at(0)
-  const annualFinancials = incomeResults
-    .filter((row) => row.date && (typeof row.revenue === 'number' || typeof row.netIncome === 'number'))
-    .slice(0, 5)
-    .map((row) => ({
-      year: String(row.date).slice(0, 4),
-      revenue: finiteNumberOrNull(row.revenue),
-      netIncome: finiteNumberOrNull(row.netIncome),
-    }))
+  const quote = quoteResults.at(0)
 
   return {
     id: crypto.randomUUID(),
@@ -246,8 +271,10 @@ export const getFmpFundamentals = async (
     debtToEquity: finiteNumberOrNull(metrics?.debtToEquityTTM),
     recordedDate: income?.date ?? null,
     createdAt: new Date().toISOString(),
+    fiftyTwoWeekHigh: finiteNumberOrNull(quote?.fiftyTwoWeekHigh ?? quote?.yearHigh),
+    fiftyTwoWeekLow: finiteNumberOrNull(quote?.fiftyTwoWeekLow ?? quote?.yearLow),
     sharesOutstanding: finiteNumberOrNull(profile?.sharesOutstanding),
-    annualFinancials,
+    profitMargin: null,
   }
 }
 

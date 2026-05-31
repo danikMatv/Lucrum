@@ -24,13 +24,6 @@ const currency = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 2,
 })
 
-const compactCurrency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
-
 const number = new Intl.NumberFormat('en-US', {
   notation: 'compact',
   maximumFractionDigits: 1,
@@ -45,11 +38,28 @@ interface StockFinancialRow {
 const formatCurrency = (value: number | null | undefined) =>
   typeof value === 'number' && Number.isFinite(value) ? currency.format(value) : '—'
 
-const formatCompactCurrency = (value: number | null | undefined) =>
-  typeof value === 'number' && Number.isFinite(value) ? compactCurrency.format(value) : '—'
+const formatLargeValue = (value: number, prefix = '') => {
+  const absValue = Math.abs(value)
+  if (absValue >= 1e12) {
+    return `${prefix}${(value / 1e12).toFixed(1)}T`
+  }
+
+  if (absValue >= 1e9) {
+    return `${prefix}${(value / 1e9).toFixed(1)}B`
+  }
+
+  if (absValue >= 1e6) {
+    return `${prefix}${(value / 1e6).toFixed(1)}M`
+  }
+
+  return `${prefix}${number.format(value)}`
+}
+
+const formatLargeCurrency = (value: number | null | undefined) =>
+  typeof value === 'number' && Number.isFinite(value) ? formatLargeValue(value, '$') : '—'
 
 const formatCompactNumber = (value: number | null | undefined) =>
-  typeof value === 'number' && Number.isFinite(value) ? number.format(value) : '—'
+  typeof value === 'number' && Number.isFinite(value) ? formatLargeValue(value) : '—'
 
 const formatNumber = (value: number | null | undefined, digits = 1) =>
   typeof value === 'number' && Number.isFinite(value) ? value.toFixed(digits) : '—'
@@ -115,9 +125,8 @@ const getVerdictTone = (verdict: ReturnType<typeof getVerdict>) => {
 }
 
 const getFinancialRows = (snapshot: CompanySnapshot): StockFinancialRow[] => {
-  const fundamentals = snapshot.fundamentals
-  if (fundamentals?.annualFinancials?.length) {
-    return [...fundamentals.annualFinancials]
+  if (snapshot.incomeHistory.length > 0) {
+    return [...snapshot.incomeHistory]
       .sort((left, right) => left.year.localeCompare(right.year))
       .map((row) => ({
         year: row.year,
@@ -126,6 +135,7 @@ const getFinancialRows = (snapshot: CompanySnapshot): StockFinancialRow[] => {
       }))
   }
 
+  const fundamentals = snapshot.fundamentals
   if (!fundamentals?.revenue && !fundamentals?.netIncome) {
     return []
   }
@@ -243,13 +253,13 @@ export const StockPage = () => {
                   <div>
                     <p className="text-sm text-text-muted">{t('tools.stock.price.high')}</p>
                     <p className="mt-2 text-2xl font-bold text-text-primary">
-                      {formatCurrency(snapshot.quote?.fiftyTwoWeekHigh)}
+                      {formatCurrency(snapshot.fundamentals?.fiftyTwoWeekHigh)}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm text-text-muted">{t('tools.stock.price.low')}</p>
                     <p className="mt-2 text-2xl font-bold text-text-primary">
-                      {formatCurrency(snapshot.quote?.fiftyTwoWeekLow)}
+                      {formatCurrency(snapshot.fundamentals?.fiftyTwoWeekLow)}
                     </p>
                   </div>
                 </div>
@@ -267,19 +277,19 @@ export const StockPage = () => {
               />
               <StatCard
                 label={t('tools.stock.metrics.marketCap')}
-                value={formatCompactCurrency(snapshot.fundamentals?.marketCap)}
+                value={formatLargeCurrency(snapshot.fundamentals?.marketCap)}
               />
               <StatCard
                 label={t('tools.stock.metrics.revenue')}
-                value={formatCompactCurrency(snapshot.fundamentals?.revenue)}
+                value={formatLargeCurrency(snapshot.fundamentals?.revenue)}
               />
               <StatCard
                 label={t('tools.stock.metrics.netIncome')}
-                value={formatCompactCurrency(snapshot.fundamentals?.netIncome)}
+                value={formatLargeCurrency(snapshot.fundamentals?.netIncome)}
               />
               <StatCard
                 label={t('tools.stock.metrics.fcf')}
-                value={formatCompactCurrency(snapshot.fundamentals?.freeCashFlow)}
+                value={formatLargeCurrency(snapshot.fundamentals?.freeCashFlow)}
               />
               <StatCard
                 label={t('tools.stock.metrics.debt')}
@@ -306,7 +316,7 @@ export const StockPage = () => {
                       <CartesianGrid stroke="#1E1E1E" />
                       <XAxis dataKey="year" stroke="#666666" />
                       <YAxis stroke="#666666" tickFormatter={(value) => number.format(Number(value))} />
-                      <Tooltip formatter={(value) => compactCurrency.format(Number(value))} />
+                      <Tooltip formatter={(value) => formatLargeCurrency(Number(value))} />
                       <Bar dataKey="revenue" name={t('tools.stock.chart.revenue')} fill="#C9A84C" />
                       <Bar dataKey="netIncome" name={t('tools.stock.chart.netIncome')} fill="#4CAF50" />
                     </BarChart>

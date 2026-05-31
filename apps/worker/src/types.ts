@@ -12,6 +12,7 @@ export type Bindings = {
   KV: KVNamespace
   JWT_SECRET: string
   FMP_API_KEY: string
+  ALPHA_VANTAGE_API_KEY: string
   YAHOO_FINANCE_BASE_URL: string
   FRONTEND_ORIGIN: string
 }
@@ -56,11 +57,13 @@ export interface CompanyFundamentals {
   debtToEquity: number | null
   recordedDate: string | null
   createdAt: string
+  fiftyTwoWeekHigh?: number | null
+  fiftyTwoWeekLow?: number | null
   sharesOutstanding?: number | null
-  annualFinancials?: CompanyAnnualFinancial[]
+  profitMargin?: number | null
 }
 
-export interface CompanyAnnualFinancial {
+export interface CompanyIncomeHistoryRow {
   year: string
   revenue: number | null
   netIncome: number | null

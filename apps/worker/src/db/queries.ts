@@ -2,6 +2,7 @@ import type {
   AuthUser,
   Company,
   CompanyFundamentals,
+  CompanyIncomeHistoryRow,
   LearnResource,
   LearnResourceType,
   SavedCalculation,
@@ -52,8 +53,10 @@ interface CompanySnapshotRow {
   ticker: string
   company_json: string | null
   fundamentals_json: string | null
+  income_history_json: string | null
   company_fetched_at: string | null
   fundamentals_fetched_at: string | null
+  income_fetched_at: string | null
   created_at: string
   updated_at: string
 }
@@ -175,8 +178,10 @@ export interface CompanySnapshotRecord {
   ticker: string
   company: Company | null
   fundamentals: CompanyFundamentals | null
+  incomeHistory: CompanyIncomeHistoryRow[]
   companyFetchedAt: string | null
   fundamentalsFetchedAt: string | null
+  incomeFetchedAt: string | null
   createdAt: string
   updatedAt: string
 }
@@ -200,16 +205,30 @@ const isSnapshotFundamentals = (
   value: CompanyFundamentals | null,
 ): value is CompanyFundamentals => Boolean(value?.id && value.companyId && value.createdAt)
 
+const isSnapshotIncomeHistory = (
+  value: CompanyIncomeHistoryRow[] | null,
+): value is CompanyIncomeHistoryRow[] =>
+  Array.isArray(value) &&
+  value.every(
+    (row) =>
+      typeof row.year === 'string' &&
+      (typeof row.revenue === 'number' || row.revenue === null) &&
+      (typeof row.netIncome === 'number' || row.netIncome === null),
+  )
+
 const mapCompanySnapshot = (row: CompanySnapshotRow): CompanySnapshotRecord => {
   const company = parseSnapshotJson<Company>(row.company_json)
   const fundamentals = parseSnapshotJson<CompanyFundamentals>(row.fundamentals_json)
+  const incomeHistory = parseSnapshotJson<CompanyIncomeHistoryRow[]>(row.income_history_json)
 
   return {
     ticker: row.ticker,
     company: isSnapshotCompany(company) ? company : null,
     fundamentals: isSnapshotFundamentals(fundamentals) ? fundamentals : null,
+    incomeHistory: isSnapshotIncomeHistory(incomeHistory) ? incomeHistory : [],
     companyFetchedAt: row.company_fetched_at,
     fundamentalsFetchedAt: row.fundamentals_fetched_at,
+    incomeFetchedAt: row.income_fetched_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   }
@@ -338,8 +357,10 @@ export const upsertCompanySnapshot = async (
     ticker: string
     company?: Company | null
     fundamentals?: CompanyFundamentals | null
+    incomeHistory?: CompanyIncomeHistoryRow[] | null
     companyFetchedAt?: string | null
     fundamentalsFetchedAt?: string | null
+    incomeFetchedAt?: string | null
   },
 ) => {
   const normalizedTicker = input.ticker.toUpperCase()
@@ -347,9 +368,9 @@ export const upsertCompanySnapshot = async (
 
   await db
     .prepare(
-      'INSERT OR IGNORE INTO company_snapshots (ticker, company_json, fundamentals_json, company_fetched_at, fundamentals_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT OR IGNORE INTO company_snapshots (ticker, company_json, fundamentals_json, income_history_json, company_fetched_at, fundamentals_fetched_at, income_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
-    .bind(normalizedTicker, null, null, null, null, timestamp, timestamp)
+    .bind(normalizedTicker, null, null, null, null, null, null, timestamp, timestamp)
     .run()
 
   if (input.company) {
@@ -380,6 +401,20 @@ export const upsertCompanySnapshot = async (
       .run()
   }
 
+  if (input.incomeHistory) {
+    await db
+      .prepare(
+        'UPDATE company_snapshots SET income_history_json = ?, income_fetched_at = ?, updated_at = ? WHERE ticker = ?',
+      )
+      .bind(
+        JSON.stringify(input.incomeHistory),
+        input.incomeFetchedAt ?? timestamp,
+        timestamp,
+        normalizedTicker,
+      )
+      .run()
+  }
+
   return getCompanySnapshotByTicker(db, normalizedTicker)
 }
 
@@ -389,8 +424,10 @@ export const replaceCompanySnapshot = async (
     ticker: string
     company: Company | null
     fundamentals: CompanyFundamentals | null
+    incomeHistory: CompanyIncomeHistoryRow[]
     companyFetchedAt: string | null
     fundamentalsFetchedAt: string | null
+    incomeFetchedAt: string | null
   },
 ) => {
   const normalizedTicker = input.ticker.toUpperCase()
@@ -399,14 +436,16 @@ export const replaceCompanySnapshot = async (
 
   await db
     .prepare(
-      'INSERT OR REPLACE INTO company_snapshots (ticker, company_json, fundamentals_json, company_fetched_at, fundamentals_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      'INSERT OR REPLACE INTO company_snapshots (ticker, company_json, fundamentals_json, income_history_json, company_fetched_at, fundamentals_fetched_at, income_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
     .bind(
       normalizedTicker,
       input.company ? JSON.stringify(input.company) : null,
       input.fundamentals ? JSON.stringify(input.fundamentals) : null,
+      input.incomeHistory.length > 0 ? JSON.stringify(input.incomeHistory) : null,
       input.companyFetchedAt,
       input.fundamentalsFetchedAt,
+      input.incomeFetchedAt,
       existing?.createdAt ?? timestamp,
       timestamp,
     )
