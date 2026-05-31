@@ -53,12 +53,35 @@ export interface CompanyFundamentals {
   fiftyTwoWeekLow?: number | null
   sharesOutstanding?: number | null
   profitMargin?: number | null
+  priceToSales?: number | null
+  priceToBook?: number | null
+  returnOnEquity?: number | null
+  returnOnAssets?: number | null
+  grossProfit?: number | null
+  operatingMargin?: number | null
+  netMargin?: number | null
+  currentRatio?: number | null
+  quickRatio?: number | null
+  analystTargetPrice?: number | null
+  employees?: number | null
+  country?: string | null
+  address?: string | null
+  fiscalYearEnd?: string | null
+  latestQuarter?: string | null
+  forwardPE?: number | null
+  pegRatio?: number | null
+  beta?: number | null
 }
 
 export interface CompanyIncomeHistoryRow {
   year: string
   revenue: number | null
   netIncome: number | null
+}
+
+export interface CompanyEpsHistoryRow {
+  year: string
+  eps: number | null
 }
 
 export interface StockHistory {
@@ -82,17 +105,20 @@ export interface CompanySnapshot {
   company: Company | null
   fundamentals: CompanyFundamentals | null
   incomeHistory: CompanyIncomeHistoryRow[]
+  epsHistory: CompanyEpsHistoryRow[]
   quote: StockQuote | null
   fetchedAt: {
     company: string | null
     fundamentals: string | null
     incomeHistory: string | null
+    epsHistory: string | null
     quote: string | null
   }
   freshness: {
     company: 'fresh' | 'stale' | 'missing'
     fundamentals: 'fresh' | 'stale' | 'missing'
     incomeHistory: 'fresh' | 'stale' | 'missing'
+    epsHistory: 'fresh' | 'stale' | 'missing'
     quote: 'fresh' | 'missing'
   }
   missing: string[]

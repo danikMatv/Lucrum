@@ -1,6 +1,7 @@
 import type {
   AuthUser,
   Company,
+  CompanyEpsHistoryRow,
   CompanyFundamentals,
   CompanyIncomeHistoryRow,
   LearnResource,
@@ -54,9 +55,11 @@ interface CompanySnapshotRow {
   company_json: string | null
   fundamentals_json: string | null
   income_history_json: string | null
+  eps_history_json: string | null
   company_fetched_at: string | null
   fundamentals_fetched_at: string | null
   income_fetched_at: string | null
+  eps_history_fetched_at: string | null
   created_at: string
   updated_at: string
 }
@@ -179,9 +182,11 @@ export interface CompanySnapshotRecord {
   company: Company | null
   fundamentals: CompanyFundamentals | null
   incomeHistory: CompanyIncomeHistoryRow[]
+  epsHistory: CompanyEpsHistoryRow[]
   companyFetchedAt: string | null
   fundamentalsFetchedAt: string | null
   incomeFetchedAt: string | null
+  epsHistoryFetchedAt: string | null
   createdAt: string
   updatedAt: string
 }
@@ -216,19 +221,31 @@ const isSnapshotIncomeHistory = (
       (typeof row.netIncome === 'number' || row.netIncome === null),
   )
 
+const isSnapshotEpsHistory = (
+  value: CompanyEpsHistoryRow[] | null,
+): value is CompanyEpsHistoryRow[] =>
+  Array.isArray(value) &&
+  value.every(
+    (row) =>
+      typeof row.year === 'string' && (typeof row.eps === 'number' || row.eps === null),
+  )
+
 const mapCompanySnapshot = (row: CompanySnapshotRow): CompanySnapshotRecord => {
   const company = parseSnapshotJson<Company>(row.company_json)
   const fundamentals = parseSnapshotJson<CompanyFundamentals>(row.fundamentals_json)
   const incomeHistory = parseSnapshotJson<CompanyIncomeHistoryRow[]>(row.income_history_json)
+  const epsHistory = parseSnapshotJson<CompanyEpsHistoryRow[]>(row.eps_history_json)
 
   return {
     ticker: row.ticker,
     company: isSnapshotCompany(company) ? company : null,
     fundamentals: isSnapshotFundamentals(fundamentals) ? fundamentals : null,
     incomeHistory: isSnapshotIncomeHistory(incomeHistory) ? incomeHistory : [],
+    epsHistory: isSnapshotEpsHistory(epsHistory) ? epsHistory : [],
     companyFetchedAt: row.company_fetched_at,
     fundamentalsFetchedAt: row.fundamentals_fetched_at,
     incomeFetchedAt: row.income_fetched_at,
+    epsHistoryFetchedAt: row.eps_history_fetched_at,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   }
@@ -358,9 +375,11 @@ export const upsertCompanySnapshot = async (
     company?: Company | null
     fundamentals?: CompanyFundamentals | null
     incomeHistory?: CompanyIncomeHistoryRow[] | null
+    epsHistory?: CompanyEpsHistoryRow[] | null
     companyFetchedAt?: string | null
     fundamentalsFetchedAt?: string | null
     incomeFetchedAt?: string | null
+    epsHistoryFetchedAt?: string | null
   },
 ) => {
   const normalizedTicker = input.ticker.toUpperCase()
@@ -368,9 +387,9 @@ export const upsertCompanySnapshot = async (
 
   await db
     .prepare(
-      'INSERT OR IGNORE INTO company_snapshots (ticker, company_json, fundamentals_json, income_history_json, company_fetched_at, fundamentals_fetched_at, income_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT OR IGNORE INTO company_snapshots (ticker, company_json, fundamentals_json, income_history_json, eps_history_json, company_fetched_at, fundamentals_fetched_at, income_fetched_at, eps_history_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
-    .bind(normalizedTicker, null, null, null, null, null, null, timestamp, timestamp)
+    .bind(normalizedTicker, null, null, null, null, null, null, null, null, timestamp, timestamp)
     .run()
 
   if (input.company) {
@@ -415,6 +434,20 @@ export const upsertCompanySnapshot = async (
       .run()
   }
 
+  if (input.epsHistory) {
+    await db
+      .prepare(
+        'UPDATE company_snapshots SET eps_history_json = ?, eps_history_fetched_at = ?, updated_at = ? WHERE ticker = ?',
+      )
+      .bind(
+        JSON.stringify(input.epsHistory),
+        input.epsHistoryFetchedAt ?? timestamp,
+        timestamp,
+        normalizedTicker,
+      )
+      .run()
+  }
+
   return getCompanySnapshotByTicker(db, normalizedTicker)
 }
 
@@ -425,9 +458,11 @@ export const replaceCompanySnapshot = async (
     company: Company | null
     fundamentals: CompanyFundamentals | null
     incomeHistory: CompanyIncomeHistoryRow[]
+    epsHistory: CompanyEpsHistoryRow[]
     companyFetchedAt: string | null
     fundamentalsFetchedAt: string | null
     incomeFetchedAt: string | null
+    epsHistoryFetchedAt: string | null
   },
 ) => {
   const normalizedTicker = input.ticker.toUpperCase()
@@ -436,16 +471,18 @@ export const replaceCompanySnapshot = async (
 
   await db
     .prepare(
-      'INSERT OR REPLACE INTO company_snapshots (ticker, company_json, fundamentals_json, income_history_json, company_fetched_at, fundamentals_fetched_at, income_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT OR REPLACE INTO company_snapshots (ticker, company_json, fundamentals_json, income_history_json, eps_history_json, company_fetched_at, fundamentals_fetched_at, income_fetched_at, eps_history_fetched_at, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
     .bind(
       normalizedTicker,
       input.company ? JSON.stringify(input.company) : null,
       input.fundamentals ? JSON.stringify(input.fundamentals) : null,
       input.incomeHistory.length > 0 ? JSON.stringify(input.incomeHistory) : null,
+      input.epsHistory.length > 0 ? JSON.stringify(input.epsHistory) : null,
       input.companyFetchedAt,
       input.fundamentalsFetchedAt,
       input.incomeFetchedAt,
+      input.epsHistoryFetchedAt,
       existing?.createdAt ?? timestamp,
       timestamp,
     )

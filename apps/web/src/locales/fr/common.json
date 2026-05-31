@@ -217,6 +217,14 @@
       "title": "Analyse d'action",
       "description": "Consultez les fondamentaux d'une société et un aperçu simple de valorisation.",
       "unavailable": "Indisponible",
+      "sections": {
+        "valuationRatios": "Ratios de valorisation",
+        "profitability": "Rentabilité",
+        "financialHealth": "Santé financière",
+        "charts": "Graphiques",
+        "insights": "Points clés",
+        "about": "À propos de l'entreprise"
+      },
       "inputs": {
         "ticker": "Ticker / nom de société"
       },
@@ -234,14 +242,79 @@
         "fcf": "FCF",
         "debt": "Dette/Fonds propres",
         "dividend": "Rendement du dividende",
-        "shares": "Actions en circulation"
+        "shares": "Actions en circulation",
+        "priceToSales": "Ratio P/S",
+        "priceToBook": "Ratio P/B",
+        "pegRatio": "Ratio PEG",
+        "beta": "Bêta",
+        "grossMargin": "Marge brute",
+        "operatingMargin": "Marge opérationnelle",
+        "netMargin": "Marge nette",
+        "roe": "ROE",
+        "returnOnAssets": "ROA",
+        "currentRatio": "Ratio courant",
+        "quickRatio": "Ratio rapide",
+        "employees": "Employés",
+        "employeeUnit": "employés",
+        "analystTarget": "Objectif analystes",
+        "forwardPE": "P/E prévisionnel",
+        "fiscalYearEnd": "Clôture fiscale",
+        "latestQuarter": "Dernier trimestre",
+        "country": "Pays",
+        "address": "Adresse",
+        "industry": "Industrie",
+        "sector": "Secteur",
+        "grossProfit": "Marge brute en valeur"
       },
       "chart": {
         "title": "Chiffre d'affaires vs résultat net",
         "revenue": "Chiffre d'affaires",
         "netIncome": "Résultat net"
       },
+      "charts": {
+        "financials": "Chiffre d'affaires & résultat net",
+        "epsHistory": "Historique EPS",
+        "revenueGrowth": "Croissance du chiffre d'affaires",
+        "cagr": "TCAC"
+      },
+      "table": {
+        "year": "Année",
+        "revenue": "Chiffre d'affaires",
+        "yoyGrowth": "Croissance annuelle"
+      },
+      "insights": {
+        "strengths": "Forces",
+        "weaknesses": "Faiblesses",
+        "neutral": "Neutre",
+        "none": "Aucun signal clair avec les données disponibles."
+      },
+      "insightItems": {
+        "lowPe": "Un P/E faible suggère une sous-évaluation potentielle",
+        "strongRoe": "Rentabilité des fonds propres élevée (ROE {{value}}%)",
+        "highNetMargin": "Forte rentabilité nette ({{value}}%)",
+        "strongLiquidity": "Position de liquidité solide",
+        "revenueGrowth": "Croissance régulière du chiffre d'affaires",
+        "analystUpside": "Objectif analystes ${{value}} supérieur au prix actuel",
+        "positiveFcf": "Flux de trésorerie disponible positif",
+        "dividendPayer": "Verse des dividendes ({{value}}%)",
+        "highPe": "P/E très élevé — une forte croissance est déjà intégrée",
+        "negativeRoe": "Rentabilité des fonds propres négative",
+        "unprofitable": "L'entreprise est actuellement déficitaire",
+        "liquidityRisk": "Risque de liquidité — ratio courant inférieur à 1",
+        "negativeFcf": "Flux de trésorerie disponible négatif",
+        "revenueDecline": "Chiffre d'affaires en baisse",
+        "highBeta": "Volatilité élevée (Bêta {{value}})",
+        "noDividend": "Ne verse pas de dividendes",
+        "marketBeta": "Volatilité proche du marché"
+      },
+      "about": {
+        "description": "Description",
+        "showMore": "Voir plus",
+        "showLess": "Voir moins"
+      },
       "verdict": {
+        "upside": "hausse potentielle",
+        "downside": "baisse potentielle",
         "undervalued": {
           "title": "Potentiellement sous-évaluée",
           "text": "Le ratio P/E est inférieur à 15, ce qui peut signaler une valorisation moins chère si la qualité de l'entreprise reste solide."
@@ -271,7 +344,8 @@
         "readyTitle": "Prêt à analyser",
         "readyText": "Entrez un ticker ou un nom de société et Lucrum chargera les données de marché disponibles.",
         "partial": "Certains champs de l'entreprise sont indisponibles pour le moment, donc seules les données vérifiées sont affichées.",
-        "noFinancials": "Le chiffre d'affaires et le résultat net sont indisponibles pour ce ticker."
+        "noFinancials": "Le chiffre d'affaires et le résultat net sont indisponibles pour ce ticker.",
+        "noEpsHistory": "L'historique EPS est indisponible pour ce ticker."
       }
     }
   },

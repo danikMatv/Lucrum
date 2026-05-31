@@ -217,6 +217,14 @@
       "title": "Stock Analysis",
       "description": "Review company fundamentals and a simple valuation snapshot.",
       "unavailable": "Unavailable",
+      "sections": {
+        "valuationRatios": "Valuation ratios",
+        "profitability": "Profitability",
+        "financialHealth": "Financial health",
+        "charts": "Charts",
+        "insights": "Key insights",
+        "about": "About the company"
+      },
       "inputs": {
         "ticker": "Ticker / company name"
       },
@@ -234,14 +242,79 @@
         "fcf": "FCF",
         "debt": "Debt/Equity",
         "dividend": "Dividend Yield",
-        "shares": "Shares Outstanding"
+        "shares": "Shares Outstanding",
+        "priceToSales": "P/S ratio",
+        "priceToBook": "P/B ratio",
+        "pegRatio": "PEG ratio",
+        "beta": "Beta",
+        "grossMargin": "Gross Margin",
+        "operatingMargin": "Operating Margin",
+        "netMargin": "Net Margin",
+        "roe": "ROE",
+        "returnOnAssets": "ROA",
+        "currentRatio": "Current Ratio",
+        "quickRatio": "Quick Ratio",
+        "employees": "Employees",
+        "employeeUnit": "employees",
+        "analystTarget": "Analyst Target",
+        "forwardPE": "Forward P/E",
+        "fiscalYearEnd": "Fiscal Year End",
+        "latestQuarter": "Latest Quarter",
+        "country": "Country",
+        "address": "Address",
+        "industry": "Industry",
+        "sector": "Sector",
+        "grossProfit": "Gross Profit"
       },
       "chart": {
         "title": "Revenue vs Net Income",
         "revenue": "Revenue",
         "netIncome": "Net Income"
       },
+      "charts": {
+        "financials": "Revenue & Net Income",
+        "epsHistory": "EPS History",
+        "revenueGrowth": "Revenue growth",
+        "cagr": "CAGR"
+      },
+      "table": {
+        "year": "Year",
+        "revenue": "Revenue",
+        "yoyGrowth": "YoY Growth"
+      },
+      "insights": {
+        "strengths": "Strengths",
+        "weaknesses": "Weaknesses",
+        "neutral": "Neutral",
+        "none": "No clear signals from available data."
+      },
+      "insightItems": {
+        "lowPe": "Low P/E suggests potential undervaluation",
+        "strongRoe": "Strong return on equity (ROE {{value}}%)",
+        "highNetMargin": "High net profitability ({{value}}%)",
+        "strongLiquidity": "Strong liquidity position",
+        "revenueGrowth": "Consistent revenue growth",
+        "analystUpside": "Analyst target ${{value}} above current price",
+        "positiveFcf": "Positive free cash flow",
+        "dividendPayer": "Pays dividends ({{value}}%)",
+        "highPe": "Very high P/E — significant growth priced in",
+        "negativeRoe": "Negative return on equity",
+        "unprofitable": "Company currently unprofitable",
+        "liquidityRisk": "Liquidity risk — current ratio below 1",
+        "negativeFcf": "Negative free cash flow",
+        "revenueDecline": "Revenue declining",
+        "highBeta": "High volatility (Beta {{value}})",
+        "noDividend": "Does not pay dividends",
+        "marketBeta": "Market-correlated volatility"
+      },
+      "about": {
+        "description": "Description",
+        "showMore": "Show more",
+        "showLess": "Show less"
+      },
       "verdict": {
+        "upside": "upside",
+        "downside": "downside",
         "undervalued": {
           "title": "Potentially undervalued",
           "text": "The P/E ratio is below 15, which can signal a cheaper valuation if the business quality is intact."
@@ -271,7 +344,8 @@
         "readyTitle": "Ready to analyze",
         "readyText": "Enter a ticker or company name and Lucrum will load the available market data.",
         "partial": "Some company fields are unavailable right now, so only verified data is shown.",
-        "noFinancials": "Revenue and net income are unavailable for this ticker."
+        "noFinancials": "Revenue and net income are unavailable for this ticker.",
+        "noEpsHistory": "EPS history is unavailable for this ticker."
       }
     }
   },

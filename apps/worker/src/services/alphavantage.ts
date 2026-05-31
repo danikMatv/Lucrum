@@ -1,4 +1,9 @@
-import type { Company, CompanyFundamentals, CompanyIncomeHistoryRow } from '../types'
+import type {
+  Company,
+  CompanyEpsHistoryRow,
+  CompanyFundamentals,
+  CompanyIncomeHistoryRow,
+} from '../types'
 
 interface AlphaVantageOverviewResponse {
   Symbol?: string
@@ -16,6 +21,23 @@ interface AlphaVantageOverviewResponse {
   SharesOutstanding?: string
   RevenueTTM?: string
   ProfitMargin?: string
+  PriceToSalesRatioTTM?: string
+  PriceToBookRatio?: string
+  ReturnOnEquityTTM?: string
+  ReturnOnAssetsTTM?: string
+  GrossProfitTTM?: string
+  OperatingMarginTTM?: string
+  CurrentRatio?: string
+  QuickRatio?: string
+  AnalystTargetPrice?: string
+  FullTimeEmployees?: string
+  Country?: string
+  Address?: string
+  FiscalYearEnd?: string
+  LatestQuarter?: string
+  ForwardPE?: string
+  PEGRatio?: string
+  Beta?: string
   Note?: string
   Information?: string
 }
@@ -26,6 +48,16 @@ interface AlphaVantageIncomeStatementResponse {
     fiscalDateEnding?: string
     totalRevenue?: string
     netIncome?: string
+  }>
+  Note?: string
+  Information?: string
+}
+
+interface AlphaVantageEarningsResponse {
+  symbol?: string
+  annualEarnings?: Array<{
+    fiscalDateEnding?: string
+    reportedEPS?: string
   }>
   Note?: string
   Information?: string
@@ -101,6 +133,11 @@ const parseInteger = (value: string | undefined) => {
   return Number.isFinite(parsed) ? parsed : null
 }
 
+const percentNumber = (value: string | undefined) => {
+  const parsed = parseNumber(value)
+  return typeof parsed === 'number' ? parsed * 100 : null
+}
+
 const createCompany = (input: {
   ticker: string
   name: string
@@ -167,6 +204,24 @@ export const getAlphaVantageOverview = async (
       fiftyTwoWeekLow: parseNumber(data['52WeekLow']),
       sharesOutstanding: parseInteger(data.SharesOutstanding),
       profitMargin: parseNumber(data.ProfitMargin),
+      priceToSales: parseNumber(data.PriceToSalesRatioTTM),
+      priceToBook: parseNumber(data.PriceToBookRatio),
+      returnOnEquity: percentNumber(data.ReturnOnEquityTTM),
+      returnOnAssets: percentNumber(data.ReturnOnAssetsTTM),
+      grossProfit: parseInteger(data.GrossProfitTTM),
+      operatingMargin: percentNumber(data.OperatingMarginTTM),
+      netMargin: percentNumber(data.ProfitMargin),
+      currentRatio: parseNumber(data.CurrentRatio),
+      quickRatio: parseNumber(data.QuickRatio),
+      analystTargetPrice: parseNumber(data.AnalystTargetPrice),
+      employees: parseInteger(data.FullTimeEmployees),
+      country: normalizeNullableString(data.Country),
+      address: normalizeNullableString(data.Address),
+      fiscalYearEnd: normalizeNullableString(data.FiscalYearEnd),
+      latestQuarter: normalizeNullableString(data.LatestQuarter),
+      forwardPE: parseNumber(data.ForwardPE),
+      pegRatio: parseNumber(data.PEGRatio),
+      beta: parseNumber(data.Beta),
     },
   }
 }
@@ -194,6 +249,33 @@ export const getAlphaVantageIncomeHistory = async (
 
   if (rows.length === 0) {
     throw new Error('Alpha Vantage returned no income history')
+  }
+
+  return rows
+}
+
+export const getAlphaVantageEarnings = async (
+  ticker: string,
+  apiKey: string,
+): Promise<CompanyEpsHistoryRow[]> => {
+  const normalizedTicker = ticker.toUpperCase()
+  const data = await fetchAlphaVantage<AlphaVantageEarningsResponse>(
+    { function: 'EARNINGS', symbol: normalizedTicker },
+    apiKey,
+  )
+  assertNotRateLimited(data)
+
+  const rows = (data.annualEarnings ?? [])
+    .slice(0, 5)
+    .map((report) => ({
+      year: String(report.fiscalDateEnding ?? '').slice(0, 4),
+      eps: parseNumber(report.reportedEPS),
+    }))
+    .filter((row) => row.year && row.eps !== null)
+    .sort((left, right) => left.year.localeCompare(right.year))
+
+  if (rows.length === 0) {
+    throw new Error('Alpha Vantage returned no EPS history')
   }
 
   return rows

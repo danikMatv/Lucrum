@@ -16,6 +16,7 @@ import {
 import { getOptionalUser } from '../middleware/auth'
 import {
   AlphaVantageRateLimitError,
+  getAlphaVantageEarnings,
   getAlphaVantageIncomeHistory,
   getAlphaVantageOverview,
   type AlphaVantageOverview,
@@ -31,7 +32,13 @@ import {
 import { getStooqQuote } from '../services/stooq'
 import { getSecCompanyProfile, getSecFundamentals } from '../services/sec'
 import { getYahooQuote, type StockQuote } from '../services/yahoo'
-import type { AppEnv, Company, CompanyFundamentals, CompanyIncomeHistoryRow } from '../types'
+import type {
+  AppEnv,
+  Company,
+  CompanyEpsHistoryRow,
+  CompanyFundamentals,
+  CompanyIncomeHistoryRow,
+} from '../types'
 import { createError, createSuccess } from '../utils/response'
 import { normalizeTicker } from '../utils/ticker'
 
@@ -83,10 +90,16 @@ const hasSnapshotFundamentals = (fundamentals: CompanyFundamentals | null) =>
   Boolean(
     fundamentals &&
       typeof fundamentals.peRatio === 'number' &&
-      typeof fundamentals.marketCap === 'number',
+      typeof fundamentals.marketCap === 'number' &&
+      (typeof fundamentals.priceToSales === 'number' ||
+        typeof fundamentals.forwardPE === 'number' ||
+        typeof fundamentals.netMargin === 'number' ||
+        typeof fundamentals.beta === 'number'),
   )
 
 const hasIncomeHistory = (incomeHistory: CompanyIncomeHistoryRow[]) => incomeHistory.length > 1
+
+const hasEpsHistory = (epsHistory: CompanyEpsHistoryRow[]) => epsHistory.length > 1
 
 const hasQuoteRange = (quote: StockQuote | null) =>
   typeof quote?.fiftyTwoWeekHigh === 'number' && typeof quote.fiftyTwoWeekLow === 'number'
@@ -192,9 +205,11 @@ const resolveCompanySnapshot = async (
   let company = snapshot?.company ?? null
   let fundamentals = snapshot?.fundamentals ?? null
   let incomeHistory = snapshot?.incomeHistory ?? []
+  let epsHistory = snapshot?.epsHistory ?? []
   let companyFetchedAt = snapshot?.companyFetchedAt ?? null
   let fundamentalsFetchedAt = snapshot?.fundamentalsFetchedAt ?? null
   let incomeFetchedAt = snapshot?.incomeFetchedAt ?? null
+  let epsHistoryFetchedAt = snapshot?.epsHistoryFetchedAt ?? null
   let alphaOverview: AlphaVantageOverview | null = null
   let alphaOverviewError: unknown = null
 
@@ -308,9 +323,11 @@ const resolveCompanySnapshot = async (
     company = snapshot.company ?? company
     fundamentals = snapshot.fundamentals ?? fundamentals
     incomeHistory = snapshot.incomeHistory.length > 0 ? snapshot.incomeHistory : incomeHistory
+    epsHistory = snapshot.epsHistory.length > 0 ? snapshot.epsHistory : epsHistory
     companyFetchedAt = snapshot.companyFetchedAt ?? companyFetchedAt
     fundamentalsFetchedAt = snapshot.fundamentalsFetchedAt ?? fundamentalsFetchedAt
     incomeFetchedAt = snapshot.incomeFetchedAt ?? incomeFetchedAt
+    epsHistoryFetchedAt = snapshot.epsHistoryFetchedAt ?? epsHistoryFetchedAt
   }
 
   if (
@@ -413,24 +430,47 @@ const resolveCompanySnapshot = async (
     }
   }
 
+  if (!isFresh(epsHistoryFetchedAt) || !hasEpsHistory(epsHistory)) {
+    try {
+      if (!hasSecret(c.env.ALPHA_VANTAGE_API_KEY)) {
+        throw new Error('missing_api_key')
+      }
+
+      epsHistory = await getAlphaVantageEarnings(normalizedTicker, c.env.ALPHA_VANTAGE_API_KEY)
+      epsHistoryFetchedAt = nowIso()
+      snapshot = await upsertCompanySnapshot(c.env.DB, {
+        ticker: normalizedTicker,
+        epsHistory,
+        epsHistoryFetchedAt,
+      })
+    } catch (error) {
+      noteProviderIssue('alphaVantage', 'epsHistory', error)
+      // Keep stale D1 EPS history if Alpha Vantage is unavailable.
+    }
+  }
+
   let quote: StockQuote | null = null
   let quoteFetchedAt: string | null = null
-  if (company || fundamentals || incomeHistory.length > 0) {
+  if (company || fundamentals || incomeHistory.length > 0 || epsHistory.length > 0) {
     snapshot = await replaceCompanySnapshot(c.env.DB, {
       ticker: normalizedTicker,
       company,
       fundamentals,
       incomeHistory,
+      epsHistory,
       companyFetchedAt,
       fundamentalsFetchedAt,
       incomeFetchedAt,
+      epsHistoryFetchedAt,
     })
     company = snapshot?.company ?? company
     fundamentals = snapshot?.fundamentals ?? fundamentals
     incomeHistory = snapshot?.incomeHistory ?? incomeHistory
+    epsHistory = snapshot?.epsHistory ?? epsHistory
     companyFetchedAt = snapshot?.companyFetchedAt ?? companyFetchedAt
     fundamentalsFetchedAt = snapshot?.fundamentalsFetchedAt ?? fundamentalsFetchedAt
     incomeFetchedAt = snapshot?.incomeFetchedAt ?? incomeFetchedAt
+    epsHistoryFetchedAt = snapshot?.epsHistoryFetchedAt ?? epsHistoryFetchedAt
   }
 
   try {
@@ -445,6 +485,7 @@ const resolveCompanySnapshot = async (
     company: freshnessFor(Boolean(company), companyFetchedAt),
     fundamentals: freshnessFor(Boolean(fundamentals), fundamentalsFetchedAt),
     incomeHistory: freshnessFor(hasIncomeHistory(incomeHistory), incomeFetchedAt),
+    epsHistory: freshnessFor(hasEpsHistory(epsHistory), epsHistoryFetchedAt),
     quote: quote ? ('fresh' as const) : ('missing' as const),
   }
   const missing = [
@@ -453,6 +494,7 @@ const resolveCompanySnapshot = async (
     ...(fundamentals && typeof fundamentals.peRatio !== 'number' ? ['peRatio'] : []),
     ...(fundamentals && typeof fundamentals.marketCap !== 'number' ? ['marketCap'] : []),
     ...(!hasIncomeHistory(incomeHistory) ? ['incomeHistory'] : []),
+    ...(!hasEpsHistory(epsHistory) ? ['epsHistory'] : []),
     ...(!quote ? ['quote'] : []),
   ]
 
@@ -461,11 +503,13 @@ const resolveCompanySnapshot = async (
     company,
     fundamentals,
     incomeHistory,
+    epsHistory,
     quote,
     fetchedAt: {
       company: companyFetchedAt,
       fundamentals: fundamentalsFetchedAt,
       incomeHistory: incomeFetchedAt,
+      epsHistory: epsHistoryFetchedAt,
       quote: quoteFetchedAt,
     },
     freshness,
@@ -511,6 +555,7 @@ companies.get('/:ticker/snapshot', zValidator('param', tickerSchema, validatorHo
     !snapshot.company &&
     !snapshot.fundamentals &&
     snapshot.incomeHistory.length === 0 &&
+    snapshot.epsHistory.length === 0 &&
     !snapshot.quote
   ) {
     return c.json(createError('COMPANY_DATA_NOT_FOUND', 'Company data not found'), 404)

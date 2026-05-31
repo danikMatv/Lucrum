@@ -42,9 +42,11 @@ CREATE TABLE IF NOT EXISTS company_snapshots (
   company_json TEXT,
   fundamentals_json TEXT,
   income_history_json TEXT,
+  eps_history_json TEXT,
   company_fetched_at TEXT,
   fundamentals_fetched_at TEXT,
   income_fetched_at TEXT,
+  eps_history_fetched_at TEXT,
   created_at TEXT,
   updated_at TEXT
 );
