@@ -141,25 +141,37 @@ export const LearnTopicPage = () => {
                 </p>
               </div>
 
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="grid gap-3">
                 {stockMiniCourseLessons.map((lesson, index) => (
-                  <article
+                  <details
                     key={lesson}
-                    className="rounded-lg border-[0.5px] border-border bg-surface p-5"
+                    className="group rounded-lg border-[0.5px] border-border bg-surface"
                   >
-                    <p className="text-sm font-semibold uppercase text-primary">
-                      {String(index + 1).padStart(2, '0')}
-                    </p>
-                    <h3 className="mt-3 text-xl font-bold text-text-primary">
-                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.title`)}
-                    </h3>
-                    <p className="mt-3 text-sm leading-6 text-text-muted">
-                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.text`)}
-                    </p>
-                    <p className="mt-4 text-sm font-semibold text-primary">
-                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.action`)}
-                    </p>
-                  </article>
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 marker:hidden">
+                      <span className="grid gap-1">
+                        <span className="text-sm font-semibold uppercase text-primary">
+                          {String(index + 1).padStart(2, '0')}
+                        </span>
+                        <span className="text-xl font-bold text-text-primary">
+                          {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.title`)}
+                        </span>
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        className="grid h-8 w-8 shrink-0 place-items-center rounded-md border-[0.5px] border-border text-lg font-bold text-primary transition group-open:rotate-45 group-hover:border-border-hover"
+                      >
+                        +
+                      </span>
+                    </summary>
+                    <div className="border-t-[0.5px] border-border px-5 pb-5 pt-4">
+                      <p className="text-sm leading-6 text-text-muted">
+                        {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.text`)}
+                      </p>
+                      <p className="mt-4 text-sm font-semibold text-primary">
+                        {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.action`)}
+                      </p>
+                    </div>
+                  </details>
                 ))}
               </div>
 
