@@ -5,16 +5,19 @@ interface FmpSearchResult {
   symbol?: string
   name?: string
   exchangeShortName?: string
+  exchange?: string
 }
 
 interface FmpProfileResult {
   symbol?: string
   companyName?: string
   exchangeShortName?: string
+  exchange?: string
   sector?: string
   industry?: string
   description?: string
   mktCap?: number
+  marketCap?: number
   volAvg?: number
   price?: number
   beta?: number
@@ -41,8 +44,10 @@ interface FmpQuoteResult {
   yearHigh?: number
   yearLow?: number
   timestamp?: number
+  marketCap?: number
   change?: number
   changesPercentage?: number
+  changePercentage?: number
 }
 
 interface FmpIncomeStatementResult {
@@ -86,6 +91,14 @@ const fetchFmpStable = async <T>(path: string, apiKey: string): Promise<T> => {
     throw new Error(`FMP stable request failed with ${response.status}`)
   }
   return (await response.json()) as T
+}
+
+const asArray = <T>(value: T[] | T | null | undefined): T[] => {
+  if (Array.isArray(value)) {
+    return value
+  }
+
+  return value ? [value] : []
 }
 
 const isHistoricalPriceArray = (value: unknown): value is FmpHistoricalPriceResult[] =>
@@ -151,8 +164,8 @@ const createCompany = (input: {
 }
 
 export const searchFmpCompanies = async (query: string, apiKey: string): Promise<Company[]> => {
-  const results = await fetchFmp<FmpSearchResult[]>(
-    `/v3/search?query=${encodeURIComponent(query)}&limit=10`,
+  const results = await fetchFmpStable<FmpSearchResult[]>(
+    `/search-symbol?query=${encodeURIComponent(query)}&limit=10`,
     apiKey,
   )
   return results
@@ -161,13 +174,16 @@ export const searchFmpCompanies = async (query: string, apiKey: string): Promise
       createCompany({
         ticker: result.symbol ?? '',
         name: result.name ?? '',
-        exchange: result.exchangeShortName ?? null,
+        exchange: result.exchangeShortName ?? result.exchange ?? null,
       }),
     )
 }
 
 export const getFmpCompanyProfile = async (ticker: string, apiKey: string): Promise<Company | null> => {
-  const results = await fetchFmp<FmpProfileResult[]>(`/v3/profile/${ticker.toUpperCase()}`, apiKey)
+  const results = await fetchFmpStable<FmpProfileResult[]>(
+    `/profile?symbol=${encodeURIComponent(ticker.toUpperCase())}`,
+    apiKey,
+  )
   const profile = results.at(0)
   if (!profile?.symbol || !profile.companyName) {
     return null
@@ -176,7 +192,7 @@ export const getFmpCompanyProfile = async (ticker: string, apiKey: string): Prom
   return createCompany({
     ticker: profile.symbol,
     name: profile.companyName,
-    exchange: profile.exchangeShortName ?? null,
+    exchange: profile.exchangeShortName ?? profile.exchange ?? null,
     sector: profile.sector ?? null,
     industry: profile.industry ?? null,
     description: profile.description ?? null,
@@ -185,7 +201,10 @@ export const getFmpCompanyProfile = async (ticker: string, apiKey: string): Prom
 
 export const getFmpQuote = async (ticker: string, apiKey: string): Promise<StockQuote> => {
   const normalizedTicker = ticker.toUpperCase()
-  const results = await fetchFmp<FmpQuoteResult[]>(`/v3/quote/${normalizedTicker}`, apiKey)
+  const results = await fetchFmpStable<FmpQuoteResult[]>(
+    `/quote?symbol=${encodeURIComponent(normalizedTicker)}`,
+    apiKey,
+  )
   const quote = results.at(0)
   if (typeof quote?.price !== 'number' || !Number.isFinite(quote.price)) {
     throw new Error('FMP returned no quote price')
@@ -199,7 +218,7 @@ export const getFmpQuote = async (ticker: string, apiKey: string): Promise<Stock
     fiftyTwoWeekHigh: finiteNumberOrNull(quote.fiftyTwoWeekHigh ?? quote.yearHigh),
     fiftyTwoWeekLow: finiteNumberOrNull(quote.fiftyTwoWeekLow ?? quote.yearLow),
     change: finiteNumberOrNull(quote.change),
-    changePercent: finiteNumberOrNull(quote.changesPercentage),
+    changePercent: finiteNumberOrNull(quote.changesPercentage ?? quote.changePercentage),
   }
 }
 
@@ -218,8 +237,8 @@ export const getFmpIncomeHistory = async (
   ticker: string,
   apiKey: string,
 ): Promise<CompanyIncomeHistoryRow[]> => {
-  const results = await fetchFmp<FmpIncomeStatementResult[]>(
-    `/v3/income-statement/${ticker.toUpperCase()}?limit=5`,
+  const results = await fetchFmpStable<FmpIncomeStatementResult[]>(
+    `/income-statement?symbol=${encodeURIComponent(ticker.toUpperCase())}&period=annual&limit=5`,
     apiKey,
   )
   const rows = toIncomeHistoryRows(results)
@@ -235,38 +254,53 @@ export const getFmpFundamentals = async (
   ticker: string,
   apiKey: string,
 ): Promise<CompanyFundamentals> => {
-  const [metricsResults, incomeResults, cashFlowResults, profileResults, quoteResults] = await Promise.all([
-    fetchFmp<FmpKeyMetricsResult[]>(`/v3/key-metrics-ttm/${ticker.toUpperCase()}`, apiKey),
-    fetchFmp<FmpIncomeStatementResult[]>(
-      `/v3/income-statement/${ticker.toUpperCase()}?limit=5`,
+  const normalizedTicker = ticker.toUpperCase()
+  const [metricsResponse, incomeResults, cashFlowResults, profileResults, quoteResults] = await Promise.all([
+    fetchFmpStable<FmpKeyMetricsResult[] | FmpKeyMetricsResult>(
+      `/key-metrics-ttm?symbol=${encodeURIComponent(normalizedTicker)}`,
       apiKey,
     ),
-    fetchFmp<FmpCashFlowStatementResult[]>(
-      `/v3/cash-flow-statement/${ticker.toUpperCase()}?limit=5`,
+    fetchFmpStable<FmpIncomeStatementResult[]>(
+      `/income-statement?symbol=${encodeURIComponent(normalizedTicker)}&period=annual&limit=5`,
       apiKey,
     ),
-    fetchFmp<FmpProfileResult[]>(
-      `/v3/profile/${ticker.toUpperCase()}`,
+    fetchFmpStable<FmpCashFlowStatementResult[]>(
+      `/cash-flow-statement?symbol=${encodeURIComponent(normalizedTicker)}&period=annual&limit=5`,
       apiKey,
     ),
-    fetchFmp<FmpQuoteResult[]>(`/v3/quote/${ticker.toUpperCase()}`, apiKey),
+    fetchFmpStable<FmpProfileResult[]>(
+      `/profile?symbol=${encodeURIComponent(normalizedTicker)}`,
+      apiKey,
+    ),
+    fetchFmpStable<FmpQuoteResult[]>(
+      `/quote?symbol=${encodeURIComponent(normalizedTicker)}`,
+      apiKey,
+    ),
   ])
 
-  const metrics = metricsResults.at(0)
+  const metrics = asArray(metricsResponse).at(0)
   const income = incomeResults.at(0)
   const cashFlow = cashFlowResults.at(0)
   const profile = profileResults.at(0)
   const quote = quoteResults.at(0)
+  const epsTtm = finiteNumberOrNull(metrics?.netIncomePerShareTTM ?? income?.eps)
+  const peRatio =
+    finiteNumberOrNull(metrics?.peRatioTTM) ??
+    (typeof quote?.price === 'number' && typeof epsTtm === 'number' && epsTtm !== 0
+      ? quote.price / epsTtm
+      : null)
 
   return {
     id: crypto.randomUUID(),
     companyId,
-    epsTtm: finiteNumberOrNull(metrics?.netIncomePerShareTTM ?? income?.eps),
+    epsTtm,
     revenue: finiteNumberOrNull(income?.revenue),
     netIncome: finiteNumberOrNull(income?.netIncome),
     freeCashFlow: finiteNumberOrNull(cashFlow?.freeCashFlow),
-    peRatio: finiteNumberOrNull(metrics?.peRatioTTM),
-    marketCap: finiteNumberOrNull(metrics?.marketCapTTM ?? profile?.mktCap),
+    peRatio,
+    marketCap: finiteNumberOrNull(
+      metrics?.marketCapTTM ?? profile?.mktCap ?? profile?.marketCap ?? quote?.marketCap,
+    ),
     dividendYield: finiteNumberOrNull(profile?.dividendYield ?? metrics?.dividendYieldTTM),
     debtToEquity: finiteNumberOrNull(metrics?.debtToEquityTTM),
     recordedDate: income?.date ?? null,

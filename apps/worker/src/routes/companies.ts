@@ -118,7 +118,8 @@ const providerErrorCode = (error: unknown) => {
   }
 
   if (error.message.includes('request failed with')) {
-    return 'http_error'
+    const status = error.message.match(/with (\d{3})/)?.[1]
+    return status ? `http_${status}` : 'http_error'
   }
 
   if (error.message.includes('returned no')) {
