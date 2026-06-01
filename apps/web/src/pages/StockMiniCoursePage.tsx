@@ -24,7 +24,7 @@ export const StockMiniCoursePage = () => {
         </nav>
       </header>
 
-      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:grid-cols-[280px_1fr] lg:px-8">
+      <section className="mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[280px_minmax(0,1fr)] lg:px-8">
         <aside className="h-fit rounded-lg border-[0.5px] border-border bg-surface p-5 lg:sticky lg:top-6">
           <p className="text-sm font-semibold uppercase text-primary">
             {t('learnAcademy.miniCourse.contents')}
@@ -46,7 +46,7 @@ export const StockMiniCoursePage = () => {
         </aside>
 
         <article className="grid min-w-0 gap-8">
-          <section className="rounded-lg border-[0.5px] border-border bg-surface p-6">
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-7 md:p-8">
             <p className="text-sm font-semibold uppercase text-primary">
               {t('learnAcademy.miniCourse.kicker')}
             </p>
@@ -85,7 +85,7 @@ export const StockMiniCoursePage = () => {
             </div>
           </section>
 
-          <section className="grid gap-4">
+          <section className="grid gap-5">
             {stockMiniCourseLessons.map((lesson, index) => (
               <details
                 key={lesson}
@@ -93,7 +93,7 @@ export const StockMiniCoursePage = () => {
                 className="group scroll-mt-6 rounded-lg border-[0.5px] border-border bg-surface"
                 open={index === 0}
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 p-5 marker:hidden">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-5 p-6 marker:hidden md:p-7">
                   <span className="grid gap-2">
                     <span className="text-sm font-semibold uppercase text-primary">
                       {t('learnAcademy.miniCourse.lessonLabel', {
@@ -103,7 +103,7 @@ export const StockMiniCoursePage = () => {
                     <span className="text-2xl font-bold text-text-primary">
                       {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.title`)}
                     </span>
-                    <span className="max-w-3xl text-sm leading-6 text-text-muted">
+                    <span className="max-w-4xl text-base leading-7 text-text-muted">
                       {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.text`)}
                     </span>
                   </span>
@@ -115,27 +115,38 @@ export const StockMiniCoursePage = () => {
                   </span>
                 </summary>
 
-                <div className="grid gap-5 border-t-[0.5px] border-border px-5 pb-5 pt-5">
-                  <div>
-                    <h2 className="text-sm font-semibold uppercase text-primary">
-                      {t('learnAcademy.miniCourse.concept')}
-                    </h2>
-                    <p className="mt-3 text-sm leading-7 text-text-muted">
-                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.details`)}
-                    </p>
+                <div className="grid gap-6 border-t-[0.5px] border-border p-6 md:p-7 xl:grid-cols-[minmax(0,1fr)_320px]">
+                  <div className="grid gap-6">
+                    <div>
+                      <h2 className="text-sm font-semibold uppercase text-primary">
+                        {t('learnAcademy.miniCourse.concept')}
+                      </h2>
+                      <p className="mt-3 text-base leading-8 text-text-muted">
+                        {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.details`)}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-5">
+                      <h2 className="text-sm font-semibold uppercase text-primary">
+                        {t('learnAcademy.miniCourse.example')}
+                      </h2>
+                      <p className="mt-3 text-base leading-8 text-text-muted">
+                        {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.example`)}
+                      </p>
+                    </div>
+
+                    <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-5">
+                      <h2 className="text-sm font-semibold uppercase text-primary">
+                        {t('learnAcademy.miniCourse.miniCase')}
+                      </h2>
+                      <p className="mt-3 text-base leading-8 text-text-muted">
+                        {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.caseStudy`)}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-4">
-                    <h2 className="text-sm font-semibold uppercase text-primary">
-                      {t('learnAcademy.miniCourse.example')}
-                    </h2>
-                    <p className="mt-3 text-sm leading-7 text-text-muted">
-                      {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.example`)}
-                    </p>
-                  </div>
-
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <div className="rounded-lg border-[0.5px] border-primary/40 bg-primary-dim p-4">
+                  <aside className="grid h-fit gap-4">
+                    <div className="rounded-lg border-[0.5px] border-primary/40 bg-primary-dim p-5">
                       <h2 className="text-sm font-semibold uppercase text-primary">
                         {t('learnAcademy.miniCourse.practice')}
                       </h2>
@@ -144,7 +155,20 @@ export const StockMiniCoursePage = () => {
                       </p>
                     </div>
 
-                    <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-4">
+                    <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-5">
+                      <h2 className="text-sm font-semibold uppercase text-primary">
+                        {t('learnAcademy.miniCourse.checklist')}
+                      </h2>
+                      <ul className="mt-4 grid gap-3">
+                        {(['checkOne', 'checkTwo', 'checkThree'] as const).map((item) => (
+                          <li key={item} className="text-sm leading-6 text-text-muted">
+                            {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.${item}`)}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="rounded-lg border-[0.5px] border-border bg-background/40 p-5">
                       <h2 className="text-sm font-semibold uppercase text-primary">
                         {t('learnAcademy.miniCourse.watchOut')}
                       </h2>
@@ -152,7 +176,7 @@ export const StockMiniCoursePage = () => {
                         {t(`learnAcademy.topics.stocks.miniCourse.${lesson}.warning`)}
                       </p>
                     </div>
-                  </div>
+                  </aside>
                 </div>
               </details>
             ))}

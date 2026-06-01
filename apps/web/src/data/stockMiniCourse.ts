@@ -1,6 +1,7 @@
 export const stockMiniCourseLessons = [
   'foundation',
   'plan',
+  'truthsMyths',
   'riskProfile',
   'assetMap',
   'compound',
@@ -9,8 +10,12 @@ export const stockMiniCourseLessons = [
   'qualityCompany',
   'profile',
   'statements',
+  'balanceSheet',
+  'cashFlow',
+  'profitability',
   'valuation',
   'entry',
+  'technicalIndicators',
 ] as const
 
 export type StockMiniCourseLesson = (typeof stockMiniCourseLessons)[number]
