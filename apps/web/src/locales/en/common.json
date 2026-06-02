@@ -1364,6 +1364,57 @@
       "unknownCompany": "Company name unavailable"
     }
   },
+  "admin": {
+    "kicker": "Admin panel",
+    "title": "User metrics",
+    "description": "A compact view of Lucrum users, roles, activity, and tool usage signals.",
+    "dashboardLink": "Dashboard",
+    "empty": "No data yet.",
+    "metrics": {
+      "totalUsers": "Total users",
+      "new7": "New in 7 days",
+      "new30": "New in 30 days",
+      "activeShare": "Active users",
+      "activeInactive": "{{active}} active · {{inactive}} inactive"
+    },
+    "charts": {
+      "growth": "New users",
+      "last30": "Last 30 days",
+      "roles": "Users by role"
+    },
+    "activity": {
+      "tools": "Popular tools",
+      "tickers": "Popular tickers"
+    },
+    "users": {
+      "title": "Latest users",
+      "latest": "Latest 20",
+      "user": "User",
+      "role": "Role",
+      "status": "Status",
+      "created": "Created",
+      "actions": "Actions",
+      "active": "Active",
+      "inactive": "Inactive",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "noName": "No name",
+      "empty": "No users yet."
+    },
+    "roles": {
+      "USER": "User",
+      "USER_PRO": "Pro user",
+      "MODERATOR": "Moderator",
+      "ADMIN": "Admin"
+    },
+    "toolTypes": {
+      "COMPANY_SEARCH": "Company search",
+      "COMPANY_SNAPSHOT": "Company analysis",
+      "STOCK_HISTORY": "Stock history",
+      "QUOTE": "Quote",
+      "DCA": "DCA"
+    }
+  },
   "pages": {
     "placeholder": {
       "kicker": "Lucrum workspace"

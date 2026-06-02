@@ -24,6 +24,44 @@ export interface User {
   role: UserRole
 }
 
+export interface AdminUser extends User {
+  isActive: boolean
+  createdAt: string
+}
+
+export interface CountByDate {
+  date: string
+  count: number
+}
+
+export interface CountByRole {
+  role: UserRole
+  count: number
+}
+
+export interface ActiveStateStats {
+  active: number
+  inactive: number
+}
+
+export interface AdminUserStats {
+  total: number
+  newUsersLast7Days: CountByDate[]
+  newUsersLast30Days: CountByDate[]
+  breakdownByRole: CountByRole[]
+  activeVsInactive: ActiveStateStats
+}
+
+export interface AdminToolStats {
+  toolType: string
+  count: number
+}
+
+export interface AdminTickerStats {
+  ticker: string
+  count: number
+}
+
 export interface Company {
   id: string
   ticker: string

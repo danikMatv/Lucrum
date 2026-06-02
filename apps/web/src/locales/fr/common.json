@@ -1364,6 +1364,57 @@
       "unknownCompany": "Nom de société indisponible"
     }
   },
+  "admin": {
+    "kicker": "Panneau admin",
+    "title": "Métriques utilisateurs",
+    "description": "Une vue compacte des utilisateurs Lucrum, des rôles, de l'activité et des signaux d'utilisation des outils.",
+    "dashboardLink": "Tableau de bord",
+    "empty": "Aucune donnée pour le moment.",
+    "metrics": {
+      "totalUsers": "Utilisateurs totaux",
+      "new7": "Nouveaux en 7 jours",
+      "new30": "Nouveaux en 30 jours",
+      "activeShare": "Utilisateurs actifs",
+      "activeInactive": "{{active}} actifs · {{inactive}} inactifs"
+    },
+    "charts": {
+      "growth": "Nouveaux utilisateurs",
+      "last30": "30 derniers jours",
+      "roles": "Utilisateurs par rôle"
+    },
+    "activity": {
+      "tools": "Outils populaires",
+      "tickers": "Tickers populaires"
+    },
+    "users": {
+      "title": "Derniers utilisateurs",
+      "latest": "20 derniers",
+      "user": "Utilisateur",
+      "role": "Rôle",
+      "status": "Statut",
+      "created": "Créé",
+      "actions": "Actions",
+      "active": "Actif",
+      "inactive": "Inactif",
+      "activate": "Activer",
+      "deactivate": "Désactiver",
+      "noName": "Sans nom",
+      "empty": "Aucun utilisateur pour le moment."
+    },
+    "roles": {
+      "USER": "Utilisateur",
+      "USER_PRO": "Utilisateur Pro",
+      "MODERATOR": "Modérateur",
+      "ADMIN": "Admin"
+    },
+    "toolTypes": {
+      "COMPANY_SEARCH": "Recherche de société",
+      "COMPANY_SNAPSHOT": "Analyse de société",
+      "STOCK_HISTORY": "Historique d'action",
+      "QUOTE": "Cotation",
+      "DCA": "DCA"
+    }
+  },
   "pages": {
     "placeholder": {
       "kicker": "Espace Lucrum"

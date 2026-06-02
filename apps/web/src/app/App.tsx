@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ProtectedRoute } from '../components/ProtectedRoute.tsx'
+import { AdminPage } from '../pages/AdminPage.tsx'
 import { DcaPage } from '../pages/DcaPage.tsx'
 import { DashboardPage } from '../pages/DashboardPage.tsx'
 import { FairPricePage } from '../pages/FairPricePage.tsx'
@@ -52,7 +53,7 @@ export const App = () => {
           path="/admin"
           element={
             <ProtectedRoute requireAdmin>
-              <DashboardPage />
+              <AdminPage />
             </ProtectedRoute>
           }
         />
