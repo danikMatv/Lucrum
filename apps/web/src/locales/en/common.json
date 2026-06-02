@@ -1345,6 +1345,7 @@
     "kicker": "Protected workspace",
     "title": "Welcome back, {{firstName}}",
     "fallbackName": "investor",
+    "adminPanel": "Admin panel",
     "stats": {
       "portfolio": "Portfolio Value",
       "calculations": "Saved Calculations",

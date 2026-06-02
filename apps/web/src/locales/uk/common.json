@@ -1345,6 +1345,7 @@
     "kicker": "Захищений кабінет",
     "title": "З поверненням, {{firstName}}",
     "fallbackName": "інвесторе",
+    "adminPanel": "Адмін панель",
     "stats": {
       "portfolio": "Вартість портфеля",
       "calculations": "Збережені розрахунки",

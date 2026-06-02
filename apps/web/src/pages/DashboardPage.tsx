@@ -10,7 +10,7 @@ import {
 import { dashboardService } from '../services/dashboardService.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
 import { parseApiError } from '../utils/errorHandler.ts'
-import type { SavedCalculation } from '../types/api.ts'
+import { UserRole, type SavedCalculation } from '../types/api.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -119,13 +119,23 @@ export const DashboardPage = () => {
           >
             {t('brand.name')}
           </Link>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
-          >
-            {t('buttons.logout')}
-          </button>
+          <div className="flex flex-wrap justify-end gap-3">
+            {user?.role === UserRole.ADMIN ? (
+              <Link
+                to="/admin"
+                className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-background transition hover:bg-primary-hover"
+              >
+                {t('dashboard.adminPanel')}
+              </Link>
+            ) : null}
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
+            >
+              {t('buttons.logout')}
+            </button>
+          </div>
         </nav>
       </header>
 

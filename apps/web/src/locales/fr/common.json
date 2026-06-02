@@ -1345,6 +1345,7 @@
     "kicker": "Espace protégé",
     "title": "Bon retour, {{firstName}}",
     "fallbackName": "investisseur",
+    "adminPanel": "Panneau admin",
     "stats": {
       "portfolio": "Valeur du portefeuille",
       "calculations": "Calculs enregistrés",
