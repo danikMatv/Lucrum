@@ -414,6 +414,16 @@ const resolveCompanySnapshot = async (
     }
   }
 
+  const getOptionalFinnhubProfile = async (section: string) => {
+    try {
+      return await getFinnhubProfile()
+    } catch (error) {
+      noteProviderIssue('finnhub', section, error)
+      traceProviderError(`finnhub.${section}.error`, 'finnhub', error)
+      return null
+    }
+  }
+
   const withCompanyIdentity = (nextCompany: Company) => ({
     ...nextCompany,
     id: company?.id ?? nextCompany.id,
@@ -559,7 +569,10 @@ const resolveCompanySnapshot = async (
 
   if (options.debugProviders && company && !shouldRefreshFundamentals) {
     try {
-      const profile = await getFinnhubProfile()
+      if (!hasSecret(c.env.FINNHUB_API_KEY)) {
+        throw new Error('missing_api_key')
+      }
+      const profile = await getOptionalFinnhubProfile('profileDebugSupplement')
       const debugOnlyFundamentals = withFundamentalsCompany(
         await getFinnhubBasicFinancials(
           company.id,
@@ -582,7 +595,10 @@ const resolveCompanySnapshot = async (
 
   if (company && shouldRefreshFundamentals) {
     try {
-      const profile = await getFinnhubProfile()
+      if (!hasSecret(c.env.FINNHUB_API_KEY)) {
+        throw new Error('missing_api_key')
+      }
+      const profile = await getOptionalFinnhubProfile('profileSupplement')
       let finnhubFundamentals = withFundamentalsCompany(
         await getFinnhubBasicFinancials(
           company.id,
