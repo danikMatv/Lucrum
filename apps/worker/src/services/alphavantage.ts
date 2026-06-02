@@ -14,6 +14,7 @@ interface AlphaVantageOverviewResponse {
   Description?: string
   PERatio?: string
   MarketCapitalization?: string
+  DilutedEPSTTM?: string
   EPS?: string
   DividendYield?: string
   '52WeekHigh'?: string
@@ -138,6 +139,9 @@ const percentNumber = (value: string | undefined) => {
   return typeof parsed === 'number' ? parsed * 100 : null
 }
 
+const resolveEpsTtm = (data: AlphaVantageOverviewResponse) =>
+  parseNumber(data.DilutedEPSTTM) ?? parseNumber(data.EPS)
+
 const createCompany = (input: {
   ticker: string
   name: string
@@ -190,7 +194,7 @@ export const getAlphaVantageOverview = async (
     fundamentals: {
       id: crypto.randomUUID(),
       companyId: company.id,
-      epsTtm: parseNumber(data.EPS),
+      epsTtm: resolveEpsTtm(data),
       revenue: parseInteger(data.RevenueTTM),
       netIncome: null,
       freeCashFlow: null,
