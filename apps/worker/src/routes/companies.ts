@@ -97,11 +97,17 @@ const freshnessFor = (hasValue: boolean, fetchedAt: string | null) => {
 const hasCompanyDisplayFields = (company: Company | null) =>
   Boolean(company?.exchange && company.sector)
 
-const hasSnapshotFundamentals = (fundamentals: CompanyFundamentals | null) =>
+type FundamentalsSourceProvider = NonNullable<CompanyFundamentals['sourceProvider']>
+
+const hasSnapshotFundamentals = (
+  fundamentals: CompanyFundamentals | null,
+  options: { requireFinnhubSource?: boolean } = {},
+) =>
   Boolean(
     fundamentals &&
       typeof fundamentals.peRatio === 'number' &&
       typeof fundamentals.marketCap === 'number' &&
+      (!options.requireFinnhubSource || fundamentals.sourceProvider === 'finnhub') &&
       (typeof fundamentals.priceToSales === 'number' ||
         typeof fundamentals.forwardPE === 'number' ||
         typeof fundamentals.netMargin === 'number' ||
@@ -136,6 +142,7 @@ interface EpsTtmDebugEntry {
   isFresh?: boolean
   willRefresh?: boolean
   finnhubKeyPresent?: boolean
+  sourceProvider?: CompanyFundamentals['sourceProvider']
 }
 
 interface ProviderErrorDebugEntry {
@@ -317,6 +324,7 @@ const resolveCompanySnapshot = async (
   let finnhubProfileError: unknown = null
   let alphaOverview: AlphaVantageOverview | null = null
   let alphaOverviewError: unknown = null
+  const requireFinnhubFundamentalsSource = hasSecret(c.env.FINNHUB_API_KEY)
 
   const traceEps = (entry: EpsTtmDebugEntry) => {
     if (options.debugProviders) {
@@ -353,8 +361,11 @@ const resolveCompanySnapshot = async (
     stage: 'snapshot.seed',
     source: seededSnapshot.source,
     epsTtm: fundamentals?.epsTtm ?? null,
+    sourceProvider: fundamentals?.sourceProvider ?? null,
     fundamentalsFetchedAt,
-    hasSnapshotFundamentals: hasSnapshotFundamentals(fundamentals),
+    hasSnapshotFundamentals: hasSnapshotFundamentals(fundamentals, {
+      requireFinnhubSource: requireFinnhubFundamentalsSource,
+    }),
     isFresh: isFresh(fundamentalsFetchedAt),
   })
 
@@ -440,6 +451,14 @@ const resolveCompanySnapshot = async (
   const withFundamentalsCompany = (nextFundamentals: CompanyFundamentals) => ({
     ...nextFundamentals,
     companyId: company?.id ?? nextFundamentals.companyId,
+  })
+
+  const withFundamentalsSource = (
+    nextFundamentals: CompanyFundamentals,
+    sourceProvider: FundamentalsSourceProvider,
+  ): CompanyFundamentals => ({
+    ...nextFundamentals,
+    sourceProvider,
   })
 
   const mergeFundamentals = (
@@ -563,13 +582,20 @@ const resolveCompanySnapshot = async (
 
   const shouldRefreshFundamentals = Boolean(
     company &&
-      (!fundamentals || !isFresh(fundamentalsFetchedAt) || !hasSnapshotFundamentals(fundamentals)),
+      (!fundamentals ||
+        !isFresh(fundamentalsFetchedAt) ||
+        !hasSnapshotFundamentals(fundamentals, {
+          requireFinnhubSource: requireFinnhubFundamentalsSource,
+        })),
   )
   traceEps({
     stage: 'fundamentals.refreshDecision',
     epsTtm: fundamentals?.epsTtm ?? null,
+    sourceProvider: fundamentals?.sourceProvider ?? null,
     fundamentalsFetchedAt,
-    hasSnapshotFundamentals: hasSnapshotFundamentals(fundamentals),
+    hasSnapshotFundamentals: hasSnapshotFundamentals(fundamentals, {
+      requireFinnhubSource: requireFinnhubFundamentalsSource,
+    }),
     isFresh: isFresh(fundamentalsFetchedAt),
     willRefresh: shouldRefreshFundamentals,
   })
@@ -606,19 +632,23 @@ const resolveCompanySnapshot = async (
         throw new Error('missing_api_key')
       }
       const profile = await getOptionalFinnhubProfile('profileSupplement')
-      let finnhubFundamentals = withFundamentalsCompany(
-        await getFinnhubBasicFinancials(
-          company.id,
-          normalizedTicker,
-          c.env.FINNHUB_API_KEY,
-          profile,
-          traceFinnhubBasicDebug,
+      let finnhubFundamentals = withFundamentalsSource(
+        withFundamentalsCompany(
+          await getFinnhubBasicFinancials(
+            company.id,
+            normalizedTicker,
+            c.env.FINNHUB_API_KEY,
+            profile,
+            traceFinnhubBasicDebug,
+          ),
         ),
+        'finnhub',
       )
       traceEps({
         stage: 'finnhub.basic.afterReturn',
         provider: 'finnhub',
         epsTtm: finnhubFundamentals.epsTtm,
+        sourceProvider: finnhubFundamentals.sourceProvider,
       })
 
       try {
@@ -632,6 +662,7 @@ const resolveCompanySnapshot = async (
           stage: 'finnhub.afterFmpSupplement',
           provider: 'finnhub',
           epsTtm: finnhubFundamentals.epsTtm,
+          sourceProvider: finnhubFundamentals.sourceProvider,
           fmpSupplementEpsTtm: fmpSupplement.epsTtm,
         })
       } catch (error) {
@@ -645,6 +676,7 @@ const resolveCompanySnapshot = async (
         stage: 'finnhub.beforeSnapshotUpsert',
         provider: 'finnhub',
         epsTtm: fundamentals.epsTtm,
+        sourceProvider: fundamentals.sourceProvider,
         fundamentalsFetchedAt,
       })
       await upsertFundamentals(c.env.DB, fundamentals)
@@ -657,6 +689,7 @@ const resolveCompanySnapshot = async (
         stage: 'finnhub.afterSnapshotUpsert',
         provider: 'finnhub',
         epsTtm: snapshot?.fundamentals?.epsTtm ?? null,
+        sourceProvider: snapshot?.fundamentals?.sourceProvider ?? null,
         fundamentalsFetchedAt: snapshot?.fundamentalsFetchedAt ?? null,
       })
     } catch (error) {
@@ -664,11 +697,15 @@ const resolveCompanySnapshot = async (
       traceProviderError('finnhub.fundamentals.error', 'finnhub', error)
       try {
         const overview = await getOverview()
-        let alphaFundamentals = withFundamentalsCompany(overview.fundamentals)
+        let alphaFundamentals = withFundamentalsSource(
+          withFundamentalsCompany(overview.fundamentals),
+          'alphaVantage',
+        )
         traceEps({
           stage: 'alphaVantage.afterOverview',
           provider: 'alphaVantage',
           epsTtm: alphaFundamentals.epsTtm,
+          sourceProvider: alphaFundamentals.sourceProvider,
         })
 
         try {
@@ -684,6 +721,7 @@ const resolveCompanySnapshot = async (
             stage: 'alphaVantage.afterEpsTtm',
             provider: 'alphaVantage',
             epsTtm: alphaFundamentals.epsTtm,
+            sourceProvider: alphaFundamentals.sourceProvider,
             alphaEpsTtm: epsTtm,
           })
         } catch (error) {
@@ -702,6 +740,7 @@ const resolveCompanySnapshot = async (
             stage: 'alphaVantage.afterFmpSupplement',
             provider: 'alphaVantage',
             epsTtm: alphaFundamentals.epsTtm,
+            sourceProvider: alphaFundamentals.sourceProvider,
             fmpSupplementEpsTtm: fmpSupplement.epsTtm,
           })
         } catch (error) {
@@ -715,6 +754,7 @@ const resolveCompanySnapshot = async (
           stage: 'alphaVantage.beforeSnapshotUpsert',
           provider: 'alphaVantage',
           epsTtm: fundamentals.epsTtm,
+          sourceProvider: fundamentals.sourceProvider,
           fundamentalsFetchedAt,
         })
         await upsertFundamentals(c.env.DB, fundamentals)
@@ -727,6 +767,7 @@ const resolveCompanySnapshot = async (
           stage: 'alphaVantage.afterSnapshotUpsert',
           provider: 'alphaVantage',
           epsTtm: snapshot?.fundamentals?.epsTtm ?? null,
+          sourceProvider: snapshot?.fundamentals?.sourceProvider ?? null,
           fundamentalsFetchedAt: snapshot?.fundamentalsFetchedAt ?? null,
         })
       } catch (error) {
@@ -737,12 +778,13 @@ const resolveCompanySnapshot = async (
             normalizedTicker,
             c.env.FMP_API_KEY,
           )
-          fundamentals = withFundamentalsCompany(fmpFundamentals)
+          fundamentals = withFundamentalsSource(withFundamentalsCompany(fmpFundamentals), 'fmp')
           fundamentalsFetchedAt = nowIso()
           traceEps({
             stage: 'fmp.beforeSnapshotUpsert',
             provider: 'fmp',
             epsTtm: fundamentals.epsTtm,
+            sourceProvider: fundamentals.sourceProvider,
             fundamentalsFetchedAt,
           })
           await upsertFundamentals(c.env.DB, fundamentals)
@@ -755,6 +797,7 @@ const resolveCompanySnapshot = async (
             stage: 'fmp.afterSnapshotUpsert',
             provider: 'fmp',
             epsTtm: snapshot?.fundamentals?.epsTtm ?? null,
+            sourceProvider: snapshot?.fundamentals?.sourceProvider ?? null,
             fundamentalsFetchedAt: snapshot?.fundamentalsFetchedAt ?? null,
           })
         } catch (error) {
@@ -763,12 +806,13 @@ const resolveCompanySnapshot = async (
             const secProfile = await getSecCompanyProfile(normalizedTicker)
             if (secProfile) {
               const secFundamentals = await getSecFundamentals(company.id, secProfile.cik)
-              fundamentals = secFundamentals
+              fundamentals = withFundamentalsSource(secFundamentals, 'sec')
               fundamentalsFetchedAt = nowIso()
               traceEps({
                 stage: 'sec.beforeSnapshotUpsert',
                 provider: 'sec',
                 epsTtm: fundamentals.epsTtm,
+                sourceProvider: fundamentals.sourceProvider,
                 fundamentalsFetchedAt,
               })
               await upsertFundamentals(c.env.DB, secFundamentals)
@@ -781,6 +825,7 @@ const resolveCompanySnapshot = async (
                 stage: 'sec.afterSnapshotUpsert',
                 provider: 'sec',
                 epsTtm: snapshot?.fundamentals?.epsTtm ?? null,
+                sourceProvider: snapshot?.fundamentals?.sourceProvider ?? null,
                 fundamentalsFetchedAt: snapshot?.fundamentalsFetchedAt ?? null,
               })
             }
@@ -861,6 +906,7 @@ const resolveCompanySnapshot = async (
     traceEps({
       stage: 'snapshot.replace.beforeSave',
       epsTtm: fundamentals?.epsTtm ?? null,
+      sourceProvider: fundamentals?.sourceProvider ?? null,
       fundamentalsFetchedAt,
     })
     snapshot = await replaceCompanySnapshot(c.env.DB, {
@@ -885,6 +931,7 @@ const resolveCompanySnapshot = async (
     traceEps({
       stage: 'snapshot.replace.afterRead',
       epsTtm: fundamentals?.epsTtm ?? null,
+      sourceProvider: fundamentals?.sourceProvider ?? null,
       fundamentalsFetchedAt,
     })
   }

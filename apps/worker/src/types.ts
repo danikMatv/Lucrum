@@ -84,6 +84,7 @@ export interface CompanyFundamentals {
   pegRatio?: number | null
   beta?: number | null
   revenuePerShare?: number | null
+  sourceProvider?: 'finnhub' | 'alphaVantage' | 'fmp' | 'sec' | null
 }
 
 export interface CompanyIncomeHistoryRow {
