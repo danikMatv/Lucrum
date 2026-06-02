@@ -153,8 +153,8 @@
       }
     },
     "fairPrice": {
-      "title": "Juste valeur / DCF",
-      "description": "Estimez une juste valeur avec EPS, croissance, taux d'actualisation et marge de sécurité.",
+      "title": "Juste valeur",
+      "description": "Estimez une société avec un DCF EPS, un scénario P/E ou P/S et une marge de sécurité.",
       "inputs": {
         "ticker": "Société / ticker",
         "mode": "Modèle de valorisation",
@@ -180,7 +180,7 @@
       },
       "lookup": {
         "title": "Données du ticker",
-        "updated": "Les champs live disponibles ont été chargés. Vérifiez les hypothèses avant de vous fier au résultat DCF.",
+        "updated": "Les champs live disponibles ont été chargés. Vérifiez le modèle et les hypothèses avant de vous fier au résultat.",
         "noData": "Les données live de ce ticker sont indisponibles pour le moment. Vous pouvez toujours modifier l'EPS et le prix de marché manuellement."
       },
       "growthHint": {

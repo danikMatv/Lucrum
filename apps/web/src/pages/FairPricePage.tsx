@@ -78,6 +78,10 @@ type ValuationFit = 'standard' | 'financial' | 'growth' | 'lowEps'
 const hasFinancialTerms = (value: string | null | undefined) =>
   /bank|financial|fintech|credit|lending|loan|capital|insurance|broker|payment/i.test(value ?? '')
 
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max)
+
+const roundToStep = (value: number, step: number) => Math.round(value / step) * step
+
 const getRevenuePerShare = (fundamentals: {
   revenuePerShare?: number | null
   revenue?: number | null
@@ -124,6 +128,25 @@ const inferValuationFit = (input: {
   }
 
   return 'standard'
+}
+
+const getAutoTargetPs = (input: {
+  fit: ValuationFit
+  marketPrice: number
+  revenuePerShare: number
+}) => {
+  const currentPs =
+    input.revenuePerShare > 0 && input.marketPrice > 0
+      ? input.marketPrice / input.revenuePerShare
+      : 0
+  const fallback = input.fit === 'financial' ? 3 : input.fit === 'growth' ? 6 : 4
+  const target = currentPs > 0 ? currentPs * (input.fit === 'financial' ? 0.75 : 0.85) : fallback
+  return roundToStep(clamp(target, 1, input.fit === 'growth' ? 14 : 10), 0.25)
+}
+
+const getAutoTargetPe = (input: { marketPrice: number; eps: number }) => {
+  const currentPe = input.eps > 0 && input.marketPrice > 0 ? input.marketPrice / input.eps : 25
+  return Math.round(clamp(currentPe * 0.85, 8, 60))
 }
 
 export const FairPricePage = () => {
@@ -202,7 +225,19 @@ export const FairPricePage = () => {
       })
       setValuationFit(nextFit)
       if (nextFit !== 'standard') {
-        setValuationMode(nextRevenuePerShare > 0 ? 'ps' : 'pe')
+        if (nextRevenuePerShare > 0) {
+          setTargetPs(
+            getAutoTargetPs({
+              fit: nextFit,
+              marketPrice: nextMarketPrice,
+              revenuePerShare: nextRevenuePerShare,
+            }),
+          )
+          setValuationMode('ps')
+        } else {
+          setTargetPe(getAutoTargetPe({ marketPrice: nextMarketPrice, eps: nextEps }))
+          setValuationMode('pe')
+        }
       }
 
       setLookupNotice(
@@ -257,7 +292,7 @@ export const FairPricePage = () => {
 
   const isUndervalued = activeResult.verdict === 'undervalued'
   const shouldShowGrowthHint =
-    isGrowthCompany(ticker) && epsEditedManually && !growthHintDismissed
+    valuationMode !== 'ps' && isGrowthCompany(ticker) && epsEditedManually && !growthHintDismissed
   const shouldShowModelWarning = valuationFit !== 'standard'
 
   const handleCalculate = () => {
@@ -289,32 +324,34 @@ export const FairPricePage = () => {
           { value: 'ps', label: t('tools.fairPrice.modes.ps') },
         ]}
       />
-      <NumberInput
-        id="fair-eps"
-        label={t('tools.fairPrice.inputs.eps')}
-        value={eps}
-        min={0}
-        step={0.1}
-        onChange={handleEpsChange}
-        labelAccessory={
-          <span className="group relative inline-flex">
-            <button
-              type="button"
-              aria-label={t('tools.fairPrice.epsTooltip')}
-              title={t('tools.fairPrice.epsTooltip')}
-              className="grid h-5 w-5 place-items-center rounded-full border-[0.5px] border-primary text-xs font-bold text-primary transition hover:bg-primary-dim focus:bg-primary-dim focus:outline-none"
-            >
-              i
-            </button>
-            <span
-              role="tooltip"
-              className="pointer-events-none absolute left-1/2 top-7 z-20 hidden w-64 -translate-x-1/2 rounded-md border-[0.5px] border-border bg-surface p-3 text-xs font-normal leading-5 text-text-muted shadow-lg group-hover:block group-focus-within:block"
-            >
-              {t('tools.fairPrice.epsTooltip')}
+      {valuationMode !== 'ps' ? (
+        <NumberInput
+          id="fair-eps"
+          label={t('tools.fairPrice.inputs.eps')}
+          value={eps}
+          min={0}
+          step={0.1}
+          onChange={handleEpsChange}
+          labelAccessory={
+            <span className="group relative inline-flex">
+              <button
+                type="button"
+                aria-label={t('tools.fairPrice.epsTooltip')}
+                title={t('tools.fairPrice.epsTooltip')}
+                className="grid h-5 w-5 place-items-center rounded-full border-[0.5px] border-primary text-xs font-bold text-primary transition hover:bg-primary-dim focus:bg-primary-dim focus:outline-none"
+              >
+                i
+              </button>
+              <span
+                role="tooltip"
+                className="pointer-events-none absolute left-1/2 top-7 z-20 hidden w-64 -translate-x-1/2 rounded-md border-[0.5px] border-border bg-surface p-3 text-xs font-normal leading-5 text-text-muted shadow-lg group-hover:block group-focus-within:block"
+              >
+                {t('tools.fairPrice.epsTooltip')}
+              </span>
             </span>
-          </span>
-        }
-      />
+          }
+        />
+      ) : null}
       {shouldShowGrowthHint ? (
         <div className="rounded-md border-[0.5px] border-border border-l-4 border-l-primary bg-surface p-4">
           <div className="flex items-start gap-3">

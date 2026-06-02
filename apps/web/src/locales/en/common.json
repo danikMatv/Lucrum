@@ -153,8 +153,8 @@
       }
     },
     "fairPrice": {
-      "title": "Fair Price / DCF",
-      "description": "Estimate a fair value from EPS growth, terminal growth, discount rate, and margin of safety.",
+      "title": "Fair Price",
+      "description": "Estimate a company through EPS DCF, P/E, or P/S scenarios with a margin of safety.",
       "inputs": {
         "ticker": "Company / ticker",
         "mode": "Valuation model",
@@ -180,7 +180,7 @@
       },
       "lookup": {
         "title": "Ticker data",
-        "updated": "Live fields were loaded where available. Review the assumptions before relying on the DCF result.",
+        "updated": "Live fields were loaded where available. Review the model and assumptions before relying on the result.",
         "noData": "Live data is unavailable for this ticker right now. You can still edit EPS and market price manually."
       },
       "growthHint": {
