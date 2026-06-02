@@ -14,10 +14,10 @@ interface FinnhubCompanyProfileResponse {
   weburl?: string | null
 }
 
-type FinnhubMetricValue = number | string | null | undefined
+type FinnhubMetricValue = unknown
 
 interface FinnhubBasicFinancialsResponse {
-  metric?: Record<string, FinnhubMetricValue>
+  metric?: Record<string, FinnhubMetricValue> | null
   metricType?: string
   symbol?: string
 }
@@ -61,10 +61,43 @@ export class FinnhubRateLimitError extends Error {
   }
 }
 
+export class FinnhubBasicFinancialsError extends Error {
+  readonly phase: 'request' | 'mapping'
+  readonly originalName: string
+  readonly originalMessage: string
+  readonly originalStack: string | null
+
+  constructor(ticker: string, phase: 'request' | 'mapping', error: unknown) {
+    const detail = describeUnknownError(error)
+    super(`Finnhub basic financials ${phase} failed for ${ticker}: ${detail.message}`)
+    this.name = 'FinnhubBasicFinancialsError'
+    this.phase = phase
+    this.originalName = detail.name
+    this.originalMessage = detail.message
+    this.originalStack = detail.stack
+  }
+}
+
 const finnhubBaseUrl = 'https://finnhub.io/api/v1'
 const million = 1_000_000
 
 const nowIso = () => new Date().toISOString()
+
+const describeUnknownError = (error: unknown) => {
+  if (error instanceof Error) {
+    return {
+      name: error.name,
+      message: error.message,
+      stack: error.stack ?? null,
+    }
+  }
+
+  return {
+    name: typeof error,
+    message: String(error),
+    stack: null,
+  }
+}
 
 const fetchFinnhub = async <T>(
   path: string,
@@ -120,7 +153,13 @@ const firstFiniteNumber = (...values: FinnhubMetricValue[]) => {
   return null
 }
 
-const debugValue = (value: FinnhubMetricValue) => value ?? null
+const debugValue = (value: FinnhubMetricValue) =>
+  typeof value === 'number' || typeof value === 'string' ? value : null
+
+const asMetricRecord = (value: unknown): Record<string, FinnhubMetricValue> =>
+  typeof value === 'object' && value !== null && !Array.isArray(value)
+    ? (value as Record<string, FinnhubMetricValue>)
+    : {}
 
 const millionsToAbsolute = (value: FinnhubMetricValue) => {
   const parsed = finiteNumberOrNull(value)
@@ -205,58 +244,71 @@ export const getFinnhubBasicFinancials = async (
   onDebug?: (debug: FinnhubBasicFinancialsDebug) => void,
 ): Promise<CompanyFundamentals> => {
   const normalizedTicker = ticker.toUpperCase()
-  const data = await fetchFinnhub<FinnhubBasicFinancialsResponse>(
-    '/stock/metric',
-    { symbol: normalizedTicker, metric: 'all' },
-    apiKey,
-  )
-  const metric = data.metric ?? {}
-  const netMargin = finiteNumberOrNull(metric.netProfitMarginTTM)
-  const epsTtm = firstFiniteNumber(metric.epsTTM, metric.epsBasicExclExtraItemsTTM)
-  const timestamp = nowIso()
-  onDebug?.({
-    rawMetricEpsTTM: debugValue(metric.epsTTM),
-    rawMetricEpsBasicExclExtraItemsTTM: debugValue(metric.epsBasicExclExtraItemsTTM),
-    mappedEpsTtm: epsTtm,
-  })
+  let data: FinnhubBasicFinancialsResponse | null
+  try {
+    data = await fetchFinnhub<FinnhubBasicFinancialsResponse | null>(
+      '/stock/metric',
+      { symbol: normalizedTicker, metric: 'all' },
+      apiKey,
+    )
+  } catch (error) {
+    if (error instanceof FinnhubRateLimitError) {
+      throw error
+    }
+    throw new FinnhubBasicFinancialsError(normalizedTicker, 'request', error)
+  }
 
-  return {
-    id: crypto.randomUUID(),
-    companyId,
-    epsTtm,
-    revenue: null,
-    netIncome: null,
-    freeCashFlow: null,
-    peRatio: firstFiniteNumber(metric.peTTM, metric.peBasicExclExtraTTM),
-    marketCap: profile?.marketCap ?? null,
-    dividendYield: percentToRatio(metric.dividendYieldIndicatedAnnual),
-    debtToEquity: finiteNumberOrNull(metric['totalDebt/totalEquityQuarterly']),
-    recordedDate: null,
-    createdAt: timestamp,
-    fiftyTwoWeekHigh: finiteNumberOrNull(metric['52WeekHigh']),
-    fiftyTwoWeekLow: finiteNumberOrNull(metric['52WeekLow']),
-    sharesOutstanding: profile?.sharesOutstanding ?? null,
-    profitMargin: netMargin === null ? null : netMargin / 100,
-    priceToSales: finiteNumberOrNull(metric.psTTM),
-    priceToBook: firstFiniteNumber(metric.pbQuarterly, metric.pbAnnual),
-    returnOnEquity: finiteNumberOrNull(metric.roeTTM),
-    returnOnAssets: finiteNumberOrNull(metric.roaTTM),
-    grossProfit: null,
-    grossMargin: finiteNumberOrNull(metric.grossMarginTTM),
-    operatingMargin: finiteNumberOrNull(metric.operatingMarginTTM),
-    netMargin,
-    currentRatio: finiteNumberOrNull(metric.currentRatioQuarterly),
-    quickRatio: finiteNumberOrNull(metric.quickRatioQuarterly),
-    analystTargetPrice: null,
-    employees: null,
-    country: profile?.country ?? null,
-    address: null,
-    fiscalYearEnd: null,
-    latestQuarter: null,
-    forwardPE: null,
-    pegRatio: null,
-    beta: finiteNumberOrNull(metric.beta),
-    revenuePerShare: finiteNumberOrNull(metric.revenuePerShareTTM),
+  try {
+    const metric = asMetricRecord(data?.metric)
+    const netMargin = finiteNumberOrNull(metric.netProfitMarginTTM)
+    const epsTtm = firstFiniteNumber(metric.epsTTM, metric.epsBasicExclExtraItemsTTM)
+    const timestamp = nowIso()
+    onDebug?.({
+      rawMetricEpsTTM: debugValue(metric.epsTTM),
+      rawMetricEpsBasicExclExtraItemsTTM: debugValue(metric.epsBasicExclExtraItemsTTM),
+      mappedEpsTtm: epsTtm,
+    })
+
+    return {
+      id: crypto.randomUUID(),
+      companyId,
+      epsTtm,
+      revenue: null,
+      netIncome: null,
+      freeCashFlow: null,
+      peRatio: firstFiniteNumber(metric.peTTM, metric.peBasicExclExtraTTM),
+      marketCap: profile?.marketCap ?? null,
+      dividendYield: percentToRatio(metric.dividendYieldIndicatedAnnual),
+      debtToEquity: finiteNumberOrNull(metric['totalDebt/totalEquityQuarterly']),
+      recordedDate: null,
+      createdAt: timestamp,
+      fiftyTwoWeekHigh: finiteNumberOrNull(metric['52WeekHigh']),
+      fiftyTwoWeekLow: finiteNumberOrNull(metric['52WeekLow']),
+      sharesOutstanding: profile?.sharesOutstanding ?? null,
+      profitMargin: netMargin === null ? null : netMargin / 100,
+      priceToSales: finiteNumberOrNull(metric.psTTM),
+      priceToBook: firstFiniteNumber(metric.pbQuarterly, metric.pbAnnual),
+      returnOnEquity: finiteNumberOrNull(metric.roeTTM),
+      returnOnAssets: finiteNumberOrNull(metric.roaTTM),
+      grossProfit: null,
+      grossMargin: finiteNumberOrNull(metric.grossMarginTTM),
+      operatingMargin: finiteNumberOrNull(metric.operatingMarginTTM),
+      netMargin,
+      currentRatio: finiteNumberOrNull(metric.currentRatioQuarterly),
+      quickRatio: finiteNumberOrNull(metric.quickRatioQuarterly),
+      analystTargetPrice: null,
+      employees: null,
+      country: profile?.country ?? null,
+      address: null,
+      fiscalYearEnd: null,
+      latestQuarter: null,
+      forwardPE: null,
+      pegRatio: null,
+      beta: finiteNumberOrNull(metric.beta),
+      revenuePerShare: finiteNumberOrNull(metric.revenuePerShareTTM),
+    }
+  } catch (error) {
+    throw new FinnhubBasicFinancialsError(normalizedTicker, 'mapping', error)
   }
 }
 

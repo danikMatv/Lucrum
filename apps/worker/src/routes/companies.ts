@@ -32,6 +32,7 @@ import {
   searchFmpCompanies,
 } from '../services/fmp'
 import {
+  FinnhubBasicFinancialsError,
   FinnhubRateLimitError,
   getFinnhubBasicFinancials,
   getFinnhubCompanyProfile,
@@ -121,6 +122,9 @@ interface EpsTtmDebugEntry {
   source?: string
   provider?: string
   error?: string
+  errorName?: string
+  errorMessage?: string
+  errorStack?: string | null
   epsTtm?: number | null
   rawMetricEpsTTM?: number | string | null
   rawMetricEpsBasicExclExtraItemsTTM?: number | string | null
@@ -134,9 +138,49 @@ interface EpsTtmDebugEntry {
   finnhubKeyPresent?: boolean
 }
 
+interface ProviderErrorDebugEntry {
+  provider: string
+  section: string
+  code: string
+  name: string
+  message: string
+  stack: string | null
+}
+
+const truncateDebugText = (value: string, maxLength = 900) =>
+  value.length > maxLength ? `${value.slice(0, maxLength)}...` : value
+
+const describeProviderError = (error: unknown) => {
+  if (error instanceof FinnhubBasicFinancialsError) {
+    return {
+      name: `${error.name}:${error.phase}`,
+      message: `${error.message}; original=${error.originalName}: ${error.originalMessage}`,
+      stack: error.originalStack ?? error.stack ?? null,
+    }
+  }
+
+  if (error instanceof Error) {
+    return {
+      name: error.name,
+      message: error.message,
+      stack: error.stack ?? null,
+    }
+  }
+
+  return {
+    name: typeof error,
+    message: String(error),
+    stack: null,
+  }
+}
+
 const providerErrorCode = (error: unknown) => {
   if (error instanceof FinnhubRateLimitError) {
     return 'rate_limited'
+  }
+
+  if (error instanceof FinnhubBasicFinancialsError) {
+    return `basic_financials_${error.phase}_error`
   }
 
   if (error instanceof AlphaVantageRateLimitError) {
@@ -250,6 +294,7 @@ const resolveCompanySnapshot = async (
 ) => {
   const normalizedTicker = normalizeTicker(ticker)
   const providerDiagnostics: string[] = []
+  const providerErrorDetails: ProviderErrorDebugEntry[] = []
   const seededSnapshot = await seedSnapshotFromLegacyTables(c, normalizedTicker)
   const epsTtmDebug: EpsTtmDebugEntry[] = []
   let snapshot = seededSnapshot.snapshot
@@ -278,6 +323,18 @@ const resolveCompanySnapshot = async (
       rawMetricEpsTTM: debug.rawMetricEpsTTM,
       rawMetricEpsBasicExclExtraItemsTTM: debug.rawMetricEpsBasicExclExtraItemsTTM,
       mappedEpsTtm: debug.mappedEpsTtm,
+    })
+  }
+
+  const traceProviderError = (stage: string, provider: string, error: unknown) => {
+    const detail = describeProviderError(error)
+    traceEps({
+      stage,
+      provider,
+      error: providerErrorCode(error),
+      errorName: detail.name,
+      errorMessage: detail.message,
+      errorStack: detail.stack ? truncateDebugText(detail.stack) : null,
     })
   }
 
@@ -342,7 +399,18 @@ const resolveCompanySnapshot = async (
 
   const noteProviderIssue = (provider: string, section: string, error: unknown) => {
     if (options.debugProviders) {
-      providerDiagnostics.push(`${provider}.${section}.${providerErrorCode(error)}`)
+      const code = providerErrorCode(error)
+      const detail = describeProviderError(error)
+      const message = truncateDebugText(detail.message.replace(/\s+/g, ' '))
+      providerDiagnostics.push(`${provider}.${section}.${code}:${detail.name}:${message}`)
+      providerErrorDetails.push({
+        provider,
+        section,
+        code,
+        name: detail.name,
+        message: detail.message,
+        stack: detail.stack ? truncateDebugText(detail.stack) : null,
+      })
     }
   }
 
@@ -508,11 +576,7 @@ const resolveCompanySnapshot = async (
       })
     } catch (error) {
       noteProviderIssue('finnhub', 'fundamentalsDebug', error)
-      traceEps({
-        stage: 'finnhub.basic.debugOnly.error',
-        provider: 'finnhub',
-        error: providerErrorCode(error),
-      })
+      traceProviderError('finnhub.basic.debugOnly.error', 'finnhub', error)
     }
   }
 
@@ -574,6 +638,7 @@ const resolveCompanySnapshot = async (
       })
     } catch (error) {
       noteProviderIssue('finnhub', 'fundamentals', error)
+      traceProviderError('finnhub.fundamentals.error', 'finnhub', error)
       try {
         const overview = await getOverview()
         let alphaFundamentals = withFundamentalsCompany(overview.fundamentals)
@@ -842,7 +907,7 @@ const resolveCompanySnapshot = async (
     },
     freshness,
     missing,
-    ...(options.debugProviders ? { providerDiagnostics, epsTtmDebug } : {}),
+    ...(options.debugProviders ? { providerDiagnostics, providerErrorDetails, epsTtmDebug } : {}),
   }
 }
 
