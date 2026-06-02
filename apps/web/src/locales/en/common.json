@@ -157,12 +157,21 @@
       "description": "Estimate a fair value from EPS growth, terminal growth, discount rate, and margin of safety.",
       "inputs": {
         "ticker": "Company / ticker",
+        "mode": "Valuation model",
         "eps": "EPS (TTM)",
         "marketPrice": "Current market price",
         "growth": "Growth rate, years 1-5",
         "terminalGrowth": "Terminal growth rate",
         "discount": "Discount rate",
-        "margin": "Margin of safety"
+        "margin": "Margin of safety",
+        "targetPe": "Target P/E",
+        "targetPs": "Target P/S",
+        "revenuePerShare": "Revenue per share"
+      },
+      "modes": {
+        "dcf": "EPS DCF",
+        "pe": "P/E scenario",
+        "ps": "P/S scenario"
       },
       "margin": {
         "conservative": "20% Conservative",
@@ -180,6 +189,27 @@
         "link": "Learn more about FCF valuation ->"
       },
       "epsTooltip": "Use EPS for stable companies (banks, consumer goods). For high-growth tech companies, consider using FCF per share instead.",
+      "modelFit": {
+        "financial": {
+          "title": "Bank or fintech profile detected",
+          "text": "A pure EPS DCF can be too blunt for banks, lenders and fintechs. Revenue growth, loan quality, deposits, ROE and operating leverage can matter more than today’s EPS, so Lucrum switches to a multiple scenario when enough data is available."
+        },
+        "growth": {
+          "title": "Growth profile detected",
+          "text": "Current EPS can understate companies that reinvest heavily. Treat the DCF as a conservative stress test and compare it with a P/E or P/S scenario."
+        },
+        "lowEps": {
+          "title": "Low EPS signal",
+          "text": "When EPS is small relative to price, an EPS DCF can look harsh even if the market is pricing future margin expansion. Use a multiple scenario to separate business growth from today’s profit base."
+        }
+      },
+      "modeInfo": {
+        "title": "{{mode}} active",
+        "autoAdjusted": "Auto-selected",
+        "dcf": "Best for profitable, stable businesses where EPS already reflects the business engine. It is intentionally conservative for early growth stories.",
+        "pe": "Useful when you believe the company will deserve a specific earnings multiple. Fair price = EPS × target P/E.",
+        "ps": "Useful for growth, fintech and low-margin companies where revenue scale matters before mature earnings. Fair price = revenue per share × target P/S."
+      },
       "hero": {
         "fairPrice": "{{ticker}} fair price",
         "safeBuy": "Safe buy price"
@@ -188,7 +218,11 @@
         "marketPrice": "Market price",
         "upside": "Upside / downside",
         "forecastPv": "PV, years 1-5",
-        "terminalPv": "Terminal PV"
+        "terminalPv": "Terminal PV",
+        "currentPe": "Current P/E",
+        "targetPe": "Target P/E",
+        "currentPs": "Current P/S",
+        "targetPs": "Target P/S"
       },
       "verdict": {
         "undervalued": "Undervalued",
@@ -204,13 +238,30 @@
         "terminal": "Terminal value",
         "yearFive": "Year 5"
       },
+      "scenario": {
+        "title": "Scenario breakdown",
+        "metric": "Metric",
+        "current": "Current",
+        "target": "Target",
+        "implied": "Implied price",
+        "peMetric": "P/E multiple",
+        "psMetric": "P/S multiple",
+        "epsBase": "EPS base",
+        "revenueBase": "Revenue/share base"
+      },
       "formula": {
         "title": "Formula",
-        "text": "Sum PV (years 1-5) + Terminal PV = Fair Price."
+        "text": "Sum PV (years 1-5) + Terminal PV = Fair Price.",
+        "dcf": "Sum PV (years 1-5) + Terminal PV = Fair Price.",
+        "pe": "EPS (TTM) × target P/E = Fair Price. Safety-adjusted buy price then subtracts the margin of safety.",
+        "ps": "Revenue per share × target P/S = Fair Price. Safety-adjusted buy price then subtracts the margin of safety."
       },
       "how": {
         "title": "How it works",
-        "text": "Think of a company like an apple tree. EPS is the apples it produces today, growth estimates more apples in the next five years, and the discount rate asks what those future apples are worth in today's money."
+        "text": "Think of a company like an apple tree. EPS is the apples it produces today, growth estimates more apples in the next five years, and the discount rate asks what those future apples are worth in today's money.",
+        "dcf": "Think of a company like an apple tree. EPS is the apples it produces today, growth estimates more apples in the next five years, and the discount rate asks what those future apples are worth in today's money.",
+        "pe": "Choose the earnings multiple you think the market could reasonably pay. This is simpler than DCF and makes the assumption visible: the result depends on both EPS quality and the target P/E.",
+        "ps": "Choose the sales multiple you think the business could deserve. This can fit companies where revenue scale is clear but profits are still ramping, but it must be checked against margins and cash flow."
       }
     },
     "stock": {

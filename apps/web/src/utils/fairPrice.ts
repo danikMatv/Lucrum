@@ -1,4 +1,5 @@
 export type MarginOfSafety = 20 | 30 | 40
+export type ValuationMode = 'dcf' | 'pe' | 'ps'
 
 export interface FairPriceInput {
   epsTtm: number
@@ -25,6 +26,21 @@ export interface FairPriceResult {
   safeBuyPrice: number
   verdict: 'undervalued' | 'overvalued'
   upsidePercent: number
+}
+
+export interface MultipleScenarioInput {
+  marketPrice: number
+  baseMetricPerShare: number
+  targetMultiple: number
+  marginOfSafetyPercent: MarginOfSafety
+}
+
+export interface MultipleScenarioResult {
+  fairPrice: number
+  safeBuyPrice: number
+  currentMultiple: number
+  upsidePercent: number
+  verdict: 'undervalued' | 'overvalued'
 }
 
 export const calculateFairPrice = (input: FairPriceInput): FairPriceResult => {
@@ -65,5 +81,24 @@ export const calculateFairPrice = (input: FairPriceInput): FairPriceResult => {
     safeBuyPrice,
     verdict: input.marketPrice <= safeBuyPrice ? 'undervalued' : 'overvalued',
     upsidePercent,
+  }
+}
+
+export const calculateMultipleScenario = (
+  input: MultipleScenarioInput,
+): MultipleScenarioResult => {
+  const fairPrice = input.baseMetricPerShare * input.targetMultiple
+  const safeBuyPrice = fairPrice * (1 - input.marginOfSafetyPercent / 100)
+  const currentMultiple =
+    input.baseMetricPerShare > 0 ? input.marketPrice / input.baseMetricPerShare : 0
+  const upsidePercent =
+    input.marketPrice > 0 ? ((fairPrice - input.marketPrice) / input.marketPrice) * 100 : 0
+
+  return {
+    fairPrice,
+    safeBuyPrice,
+    currentMultiple,
+    upsidePercent,
+    verdict: input.marketPrice <= safeBuyPrice ? 'undervalued' : 'overvalued',
   }
 }

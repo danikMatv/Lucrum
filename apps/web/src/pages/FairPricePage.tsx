@@ -5,7 +5,12 @@ import { NumberInput, SegmentedControl, SliderInput } from '../components/calcul
 import { CompanySearchInput } from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
-import { calculateFairPrice, type MarginOfSafety } from '../utils/fairPrice.ts'
+import {
+  calculateFairPrice,
+  calculateMultipleScenario,
+  type MarginOfSafety,
+  type ValuationMode,
+} from '../utils/fairPrice.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import { companiesService } from '../services/companiesService.ts'
 import { toolsService } from '../services/toolsService.ts'
@@ -45,10 +50,81 @@ const GROWTH_TICKERS = [
   'SPOT',
 ] as const
 
+const FINANCIAL_TICKERS = [
+  'SOFI',
+  'NU',
+  'HOOD',
+  'AFRM',
+  'UPST',
+  'PYPL',
+  'SQ',
+  'ALLY',
+  'COF',
+  'JPM',
+  'BAC',
+  'WFC',
+  'GS',
+  'MS',
+] as const
+
 const growthTickerSet = new Set<string>(GROWTH_TICKERS)
+const financialTickerSet = new Set<string>(FINANCIAL_TICKERS)
 
 const isGrowthCompany = (ticker: string): boolean =>
   growthTickerSet.has(normalizeCompanyQuery(ticker) ?? '')
+
+type ValuationFit = 'standard' | 'financial' | 'growth' | 'lowEps'
+
+const hasFinancialTerms = (value: string | null | undefined) =>
+  /bank|financial|fintech|credit|lending|loan|capital|insurance|broker|payment/i.test(value ?? '')
+
+const getRevenuePerShare = (fundamentals: {
+  revenuePerShare?: number | null
+  revenue?: number | null
+  sharesOutstanding?: number | null
+} | null) => {
+  if (typeof fundamentals?.revenuePerShare === 'number' && fundamentals.revenuePerShare > 0) {
+    return fundamentals.revenuePerShare
+  }
+
+  if (
+    typeof fundamentals?.revenue === 'number' &&
+    fundamentals.revenue > 0 &&
+    typeof fundamentals.sharesOutstanding === 'number' &&
+    fundamentals.sharesOutstanding > 0
+  ) {
+    return fundamentals.revenue / fundamentals.sharesOutstanding
+  }
+
+  return 0
+}
+
+const inferValuationFit = (input: {
+  ticker: string
+  sector?: string | null
+  industry?: string | null
+  eps: number
+  marketPrice: number
+}): ValuationFit => {
+  const normalizedTicker = normalizeCompanyQuery(input.ticker) ?? ''
+  if (
+    financialTickerSet.has(normalizedTicker) ||
+    hasFinancialTerms(input.sector) ||
+    hasFinancialTerms(input.industry)
+  ) {
+    return 'financial'
+  }
+
+  if (isGrowthCompany(input.ticker)) {
+    return 'growth'
+  }
+
+  if (input.eps <= 0 || (input.marketPrice > 0 && input.eps / input.marketPrice < 0.03)) {
+    return 'lowEps'
+  }
+
+  return 'standard'
+}
 
 export const FairPricePage = () => {
   const { t } = useTranslation('common')
@@ -59,6 +135,11 @@ export const FairPricePage = () => {
   const [terminalGrowth, setTerminalGrowth] = useState(3)
   const [discountRate, setDiscountRate] = useState(10)
   const [marginOfSafety, setMarginOfSafety] = useState<MarginOfSafety>(30)
+  const [valuationMode, setValuationMode] = useState<ValuationMode>('dcf')
+  const [targetPe, setTargetPe] = useState(25)
+  const [targetPs, setTargetPs] = useState(4)
+  const [revenuePerShare, setRevenuePerShare] = useState(0)
+  const [valuationFit, setValuationFit] = useState<ValuationFit>('standard')
   const [lookupNotice, setLookupNotice] = useState('')
   const [epsEditedManually, setEpsEditedManually] = useState(false)
   const [growthHintDismissed, setGrowthHintDismissed] = useState(false)
@@ -74,29 +155,54 @@ export const FairPricePage = () => {
       const fundamentals =
         fundamentalsResult.status === 'fulfilled' ? fundamentalsResult.value : null
       const quote = quoteResult.status === 'fulfilled' ? quoteResult.value : null
+      const company = companyResult.status === 'fulfilled' ? companyResult.value : null
 
       return {
-        ticker: companyResult.status === 'fulfilled' ? companyResult.value.ticker : normalizedTicker,
+        ticker: company?.ticker ?? normalizedTicker,
+        company,
         fundamentals,
         quote,
       }
     },
-    onSuccess: ({ ticker: nextTicker, fundamentals, quote }) => {
+    onSuccess: ({ ticker: nextTicker, company, fundamentals, quote }) => {
       let updatedFields = 0
+      let nextEps = eps
+      let nextMarketPrice = marketPrice
 
       setTicker(nextTicker)
       if (fundamentals?.epsTtm && fundamentals.epsTtm > 0) {
-        setEps(Number(fundamentals.epsTtm.toFixed(2)))
+        nextEps = Number(fundamentals.epsTtm.toFixed(2))
+        setEps(nextEps)
         setEpsEditedManually(false)
         updatedFields += 1
       }
 
       if (quote?.price && quote.price > 0) {
-        setMarketPrice(Number(quote.price.toFixed(2)))
+        nextMarketPrice = Number(quote.price.toFixed(2))
+        setMarketPrice(nextMarketPrice)
         updatedFields += 1
       } else if (fundamentals?.peRatio && fundamentals.peRatio > 0 && fundamentals.epsTtm && fundamentals.epsTtm > 0) {
-        setMarketPrice(Number((fundamentals.peRatio * fundamentals.epsTtm).toFixed(2)))
+        nextMarketPrice = Number((fundamentals.peRatio * fundamentals.epsTtm).toFixed(2))
+        setMarketPrice(nextMarketPrice)
         updatedFields += 1
+      }
+
+      const nextRevenuePerShare = getRevenuePerShare(fundamentals)
+      if (nextRevenuePerShare > 0) {
+        setRevenuePerShare(Number(nextRevenuePerShare.toFixed(2)))
+        updatedFields += 1
+      }
+
+      const nextFit = inferValuationFit({
+        ticker: nextTicker,
+        sector: company?.sector,
+        industry: company?.industry,
+        eps: nextEps,
+        marketPrice: nextMarketPrice,
+      })
+      setValuationFit(nextFit)
+      if (nextFit !== 'standard') {
+        setValuationMode(nextRevenuePerShare > 0 ? 'ps' : 'pe')
       }
 
       setLookupNotice(
@@ -124,9 +230,35 @@ export const FairPricePage = () => {
     [discountRate, eps, growthRate, marginOfSafety, marketPrice, terminalGrowth],
   )
 
-  const isUndervalued = result.verdict === 'undervalued'
+  const peResult = useMemo(
+    () =>
+      calculateMultipleScenario({
+        baseMetricPerShare: eps,
+        marketPrice,
+        targetMultiple: targetPe,
+        marginOfSafetyPercent: marginOfSafety,
+      }),
+    [eps, marginOfSafety, marketPrice, targetPe],
+  )
+
+  const psResult = useMemo(
+    () =>
+      calculateMultipleScenario({
+        baseMetricPerShare: revenuePerShare,
+        marketPrice,
+        targetMultiple: targetPs,
+        marginOfSafetyPercent: marginOfSafety,
+      }),
+    [marginOfSafety, marketPrice, revenuePerShare, targetPs],
+  )
+
+  const activeResult =
+    valuationMode === 'pe' ? peResult : valuationMode === 'ps' ? psResult : result
+
+  const isUndervalued = activeResult.verdict === 'undervalued'
   const shouldShowGrowthHint =
     isGrowthCompany(ticker) && epsEditedManually && !growthHintDismissed
+  const shouldShowModelWarning = valuationFit !== 'standard'
 
   const handleCalculate = () => {
     setLookupNotice('')
@@ -146,6 +278,16 @@ export const FairPricePage = () => {
         value={ticker}
         onChange={setTicker}
         onSelect={(company) => setTicker(company.ticker)}
+      />
+      <SegmentedControl
+        label={t('tools.fairPrice.inputs.mode')}
+        value={valuationMode}
+        onChange={setValuationMode}
+        options={[
+          { value: 'dcf', label: t('tools.fairPrice.modes.dcf') },
+          { value: 'pe', label: t('tools.fairPrice.modes.pe') },
+          { value: 'ps', label: t('tools.fairPrice.modes.ps') },
+        ]}
       />
       <NumberInput
         id="fair-eps"
@@ -207,9 +349,22 @@ export const FairPricePage = () => {
         </div>
       ) : null}
       <NumberInput id="fair-market-price" label={t('tools.fairPrice.inputs.marketPrice')} value={marketPrice} min={0} step={1} onChange={setMarketPrice} />
-      <SliderInput id="fair-growth" label={t('tools.fairPrice.inputs.growth')} value={growthRate} min={0} max={40} step={0.5} suffix="%" onChange={setGrowthRate} />
-      <SliderInput id="fair-terminal" label={t('tools.fairPrice.inputs.terminalGrowth')} value={terminalGrowth} min={0} max={6} step={0.25} suffix="%" onChange={setTerminalGrowth} />
-      <SliderInput id="fair-discount" label={t('tools.fairPrice.inputs.discount')} value={discountRate} min={5} max={20} step={0.5} suffix="%" onChange={setDiscountRate} />
+      {valuationMode === 'dcf' ? (
+        <>
+          <SliderInput id="fair-growth" label={t('tools.fairPrice.inputs.growth')} value={growthRate} min={0} max={40} step={0.5} suffix="%" onChange={setGrowthRate} />
+          <SliderInput id="fair-terminal" label={t('tools.fairPrice.inputs.terminalGrowth')} value={terminalGrowth} min={0} max={6} step={0.25} suffix="%" onChange={setTerminalGrowth} />
+          <SliderInput id="fair-discount" label={t('tools.fairPrice.inputs.discount')} value={discountRate} min={5} max={20} step={0.5} suffix="%" onChange={setDiscountRate} />
+        </>
+      ) : null}
+      {valuationMode === 'pe' ? (
+        <SliderInput id="fair-target-pe" label={t('tools.fairPrice.inputs.targetPe')} value={targetPe} min={5} max={80} step={1} onChange={setTargetPe} />
+      ) : null}
+      {valuationMode === 'ps' ? (
+        <>
+          <NumberInput id="fair-revenue-share" label={t('tools.fairPrice.inputs.revenuePerShare')} value={revenuePerShare} min={0} step={0.1} onChange={setRevenuePerShare} />
+          <SliderInput id="fair-target-ps" label={t('tools.fairPrice.inputs.targetPs')} value={targetPs} min={0.5} max={20} step={0.25} onChange={setTargetPs} />
+        </>
+      ) : null}
       <SegmentedControl
         label={t('tools.fairPrice.inputs.margin')}
         value={marginOfSafety}
@@ -243,16 +398,61 @@ export const FairPricePage = () => {
           </Panel>
         ) : null}
 
+        {shouldShowModelWarning ? (
+          <Panel className="border-l-4 border-l-primary">
+            <p className="text-sm font-semibold uppercase text-primary">
+              {t(`tools.fairPrice.modelFit.${valuationFit}.title`)}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">
+              {t(`tools.fairPrice.modelFit.${valuationFit}.text`)}
+            </p>
+          </Panel>
+        ) : null}
+
+        <Panel>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-sm font-semibold uppercase text-primary">
+              {t('tools.fairPrice.modeInfo.title', {
+                mode: t(`tools.fairPrice.modes.${valuationMode}`),
+              })}
+            </p>
+            {shouldShowModelWarning ? (
+              <span className="rounded-md border-[0.5px] border-primary bg-primary-dim px-3 py-1 text-xs font-semibold text-primary">
+                {t('tools.fairPrice.modeInfo.autoAdjusted')}
+              </span>
+            ) : null}
+          </div>
+          <p className="mt-3 text-sm leading-6 text-text-muted">
+            {t(`tools.fairPrice.modeInfo.${valuationMode}`)}
+          </p>
+        </Panel>
+
         <div className="grid gap-4 lg:grid-cols-2">
-          <HeroMetric label={t('tools.fairPrice.hero.fairPrice', { ticker: normalizeCompanyQuery(ticker) })} value={currency.format(result.fairPrice)} />
-          <HeroMetric label={t('tools.fairPrice.hero.safeBuy')} value={currency.format(result.safeBuyPrice)} tone="success" />
+          <HeroMetric label={t('tools.fairPrice.hero.fairPrice', { ticker: normalizeCompanyQuery(ticker) })} value={currency.format(activeResult.fairPrice)} />
+          <HeroMetric label={t('tools.fairPrice.hero.safeBuy')} value={currency.format(activeResult.safeBuyPrice)} tone="success" />
         </div>
 
         <StatGrid>
           <StatCard label={t('tools.fairPrice.stats.marketPrice')} value={currency.format(marketPrice)} />
-          <StatCard label={t('tools.fairPrice.stats.upside')} value={`${percent.format(result.upsidePercent)}%`} tone={isUndervalued ? 'success' : 'danger'} />
-          <StatCard label={t('tools.fairPrice.stats.forecastPv')} value={currency.format(result.forecastPresentValue)} />
-          <StatCard label={t('tools.fairPrice.stats.terminalPv')} value={currency.format(result.terminalPresentValue)} tone="primary" />
+          <StatCard label={t('tools.fairPrice.stats.upside')} value={`${percent.format(activeResult.upsidePercent)}%`} tone={isUndervalued ? 'success' : 'danger'} />
+          {valuationMode === 'dcf' ? (
+            <>
+              <StatCard label={t('tools.fairPrice.stats.forecastPv')} value={currency.format(result.forecastPresentValue)} />
+              <StatCard label={t('tools.fairPrice.stats.terminalPv')} value={currency.format(result.terminalPresentValue)} tone="primary" />
+            </>
+          ) : null}
+          {valuationMode === 'pe' ? (
+            <>
+              <StatCard label={t('tools.fairPrice.stats.currentPe')} value={peResult.currentMultiple.toFixed(1)} />
+              <StatCard label={t('tools.fairPrice.stats.targetPe')} value={targetPe.toFixed(0)} tone="primary" />
+            </>
+          ) : null}
+          {valuationMode === 'ps' ? (
+            <>
+              <StatCard label={t('tools.fairPrice.stats.currentPs')} value={psResult.currentMultiple.toFixed(1)} />
+              <StatCard label={t('tools.fairPrice.stats.targetPs')} value={targetPs.toFixed(2)} tone="primary" />
+            </>
+          ) : null}
         </StatGrid>
 
         <Panel className={isUndervalued ? 'bg-primary-dim' : ''}>
@@ -264,7 +464,8 @@ export const FairPricePage = () => {
           </p>
         </Panel>
 
-        <Panel className="overflow-x-auto">
+        {valuationMode === 'dcf' ? (
+          <Panel className="overflow-x-auto">
           <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.fairPrice.table.title')}</h2>
           <table className="w-full min-w-[720px] text-left text-sm">
             <thead className="text-text-subtle">
@@ -292,16 +493,63 @@ export const FairPricePage = () => {
               </tr>
             </tbody>
           </table>
-        </Panel>
+          </Panel>
+        ) : (
+          <Panel className="overflow-x-auto">
+            <h2 className="mb-4 text-lg font-bold text-text-primary">
+              {t('tools.fairPrice.scenario.title')}
+            </h2>
+            <table className="w-full min-w-[640px] text-left text-sm">
+              <thead className="text-text-subtle">
+                <tr className="border-b-[0.5px] border-border">
+                  <th className="py-3">{t('tools.fairPrice.scenario.metric')}</th>
+                  <th>{t('tools.fairPrice.scenario.current')}</th>
+                  <th>{t('tools.fairPrice.scenario.target')}</th>
+                  <th>{t('tools.fairPrice.scenario.implied')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b-[0.5px] border-border text-text-muted">
+                  <td className="py-3 text-text-primary">
+                    {valuationMode === 'pe'
+                      ? t('tools.fairPrice.scenario.peMetric')
+                      : t('tools.fairPrice.scenario.psMetric')}
+                  </td>
+                  <td>
+                    {valuationMode === 'pe'
+                      ? peResult.currentMultiple.toFixed(1)
+                      : psResult.currentMultiple.toFixed(1)}
+                  </td>
+                  <td>{valuationMode === 'pe' ? targetPe.toFixed(0) : targetPs.toFixed(2)}</td>
+                  <td className="text-primary">{currency.format(activeResult.fairPrice)}</td>
+                </tr>
+                <tr className="text-text-muted">
+                  <td className="py-3 text-text-primary">
+                    {valuationMode === 'pe'
+                      ? t('tools.fairPrice.scenario.epsBase')
+                      : t('tools.fairPrice.scenario.revenueBase')}
+                  </td>
+                  <td>{valuationMode === 'pe' ? currency.format(eps) : currency.format(revenuePerShare)}</td>
+                  <td>{t('tools.fairPrice.hero.safeBuy')}</td>
+                  <td className="text-success">{currency.format(activeResult.safeBuyPrice)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </Panel>
+        )}
 
         <Panel>
           <h2 className="text-lg font-bold text-text-primary">{t('tools.fairPrice.formula.title')}</h2>
-          <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.fairPrice.formula.text')}</p>
+          <p className="mt-3 text-sm leading-6 text-text-muted">
+            {t(`tools.fairPrice.formula.${valuationMode}`)}
+          </p>
         </Panel>
 
         <Panel>
           <h2 className="text-lg font-bold text-text-primary">{t('tools.fairPrice.how.title')}</h2>
-          <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.fairPrice.how.text')}</p>
+          <p className="mt-3 text-sm leading-6 text-text-muted">
+            {t(`tools.fairPrice.how.${valuationMode}`)}
+          </p>
         </Panel>
       </div>
     </SidebarLayout>

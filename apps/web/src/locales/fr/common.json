@@ -157,12 +157,21 @@
       "description": "Estimez une juste valeur avec EPS, croissance, taux d'actualisation et marge de sécurité.",
       "inputs": {
         "ticker": "Société / ticker",
+        "mode": "Modèle de valorisation",
         "eps": "EPS (TTM)",
         "marketPrice": "Prix de marché actuel",
         "growth": "Croissance années 1-5",
         "terminalGrowth": "Croissance terminale",
         "discount": "Taux d'actualisation",
-        "margin": "Marge de sécurité"
+        "margin": "Marge de sécurité",
+        "targetPe": "P/E cible",
+        "targetPs": "P/S cible",
+        "revenuePerShare": "Chiffre d'affaires par action"
+      },
+      "modes": {
+        "dcf": "DCF EPS",
+        "pe": "Scénario P/E",
+        "ps": "Scénario P/S"
       },
       "margin": {
         "conservative": "20 % Prudent",
@@ -180,6 +189,27 @@
         "link": "En savoir plus sur l'évaluation FCF ->"
       },
       "epsTooltip": "Utilisez le BPA pour les entreprises stables. Pour les entreprises technologiques à forte croissance, utilisez plutôt le FCF par action.",
+      "modelFit": {
+        "financial": {
+          "title": "Profil banque ou fintech détecté",
+          "text": "Un DCF basé seulement sur l'EPS peut être trop brut pour les banques, prêteurs et fintechs. La croissance du chiffre d'affaires, la qualité du crédit, les dépôts, le ROE et le levier opérationnel peuvent compter davantage que l'EPS actuel."
+        },
+        "growth": {
+          "title": "Profil de croissance détecté",
+          "text": "L'EPS actuel peut sous-estimer les sociétés qui réinvestissent beaucoup. Traitez le DCF comme un test prudent et comparez-le avec un scénario P/E ou P/S."
+        },
+        "lowEps": {
+          "title": "Signal EPS faible",
+          "text": "Quand l'EPS est faible par rapport au prix, un DCF EPS peut paraître très dur même si le marché anticipe une amélioration des marges. Utilisez un scénario de multiple pour séparer la croissance du business du profit actuel."
+        }
+      },
+      "modeInfo": {
+        "title": "{{mode}} actif",
+        "autoAdjusted": "Sélection automatique",
+        "dcf": "Convient surtout aux entreprises rentables et stables où l'EPS reflète déjà le moteur économique. Il reste volontairement prudent pour les histoires de croissance.",
+        "pe": "Utile si vous pensez que l'entreprise mérite un multiple de bénéfice donné. Juste valeur = EPS × P/E cible.",
+        "ps": "Utile pour les sociétés de croissance, fintechs ou faibles marges où l'échelle du chiffre d'affaires compte avant les bénéfices matures. Juste valeur = chiffre d'affaires par action × P/S cible."
+      },
       "hero": {
         "fairPrice": "Juste valeur {{ticker}}",
         "safeBuy": "Prix d'achat prudent"
@@ -188,7 +218,11 @@
         "marketPrice": "Prix de marché",
         "upside": "Potentiel / baisse",
         "forecastPv": "VA années 1-5",
-        "terminalPv": "VA terminale"
+        "terminalPv": "VA terminale",
+        "currentPe": "P/E actuel",
+        "targetPe": "P/E cible",
+        "currentPs": "P/S actuel",
+        "targetPs": "P/S cible"
       },
       "verdict": {
         "undervalued": "Sous-évaluée",
@@ -204,13 +238,30 @@
         "terminal": "Valeur terminale",
         "yearFive": "Année 5"
       },
+      "scenario": {
+        "title": "Détail du scénario",
+        "metric": "Indicateur",
+        "current": "Actuel",
+        "target": "Cible",
+        "implied": "Prix implicite",
+        "peMetric": "Multiple P/E",
+        "psMetric": "Multiple P/S",
+        "epsBase": "Base EPS",
+        "revenueBase": "Base chiffre d'affaires/action"
+      },
       "formula": {
         "title": "Formule",
-        "text": "Somme des VA (années 1-5) + VA terminale = juste valeur."
+        "text": "Somme des VA (années 1-5) + VA terminale = juste valeur.",
+        "dcf": "Somme des VA (années 1-5) + VA terminale = juste valeur.",
+        "pe": "EPS (TTM) × P/E cible = juste valeur. Le prix d'achat prudent retire ensuite la marge de sécurité.",
+        "ps": "Chiffre d'affaires par action × P/S cible = juste valeur. Le prix d'achat prudent retire ensuite la marge de sécurité."
       },
       "how": {
         "title": "Comment ça marche",
-        "text": "Imaginez une entreprise comme un pommier. L'EPS représente les pommes produites aujourd'hui, la croissance estime les pommes des cinq prochaines années, et le taux d'actualisation demande ce que ces pommes futures valent aujourd'hui."
+        "text": "Imaginez une entreprise comme un pommier. L'EPS représente les pommes produites aujourd'hui, la croissance estime les pommes des cinq prochaines années, et le taux d'actualisation demande ce que ces pommes futures valent aujourd'hui.",
+        "dcf": "Imaginez une entreprise comme un pommier. L'EPS représente les pommes produites aujourd'hui, la croissance estime les pommes des cinq prochaines années, et le taux d'actualisation demande ce que ces pommes futures valent aujourd'hui.",
+        "pe": "Choisissez le multiple de bénéfice que le marché pourrait raisonnablement payer. C'est plus simple qu'un DCF et rend l'hypothèse visible : le résultat dépend de la qualité de l'EPS et du P/E cible.",
+        "ps": "Choisissez le multiple de ventes que l'entreprise pourrait mériter. Cela peut convenir quand l'échelle du chiffre d'affaires est claire mais que les profits montent encore, à vérifier avec les marges et le cash-flow."
       }
     },
     "stock": {
