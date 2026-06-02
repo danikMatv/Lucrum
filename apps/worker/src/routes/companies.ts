@@ -147,8 +147,15 @@ interface ProviderErrorDebugEntry {
   stack: string | null
 }
 
-const truncateDebugText = (value: string, maxLength = 900) =>
-  value.length > maxLength ? `${value.slice(0, maxLength)}...` : value
+const sanitizeDebugText = (value: string) =>
+  value
+    .replace(/API key as [A-Za-z0-9_-]+/gi, 'API key as [redacted]')
+    .replace(/([?&](?:apikey|token)=)[^&\s]+/gi, '$1[redacted]')
+
+const truncateDebugText = (value: string, maxLength = 900) => {
+  const sanitized = sanitizeDebugText(value)
+  return sanitized.length > maxLength ? `${sanitized.slice(0, maxLength)}...` : sanitized
+}
 
 const describeProviderError = (error: unknown) => {
   if (error instanceof FinnhubBasicFinancialsError) {
@@ -333,7 +340,7 @@ const resolveCompanySnapshot = async (
       provider,
       error: providerErrorCode(error),
       errorName: detail.name,
-      errorMessage: detail.message,
+      errorMessage: sanitizeDebugText(detail.message),
       errorStack: detail.stack ? truncateDebugText(detail.stack) : null,
     })
   }
@@ -408,7 +415,7 @@ const resolveCompanySnapshot = async (
         section,
         code,
         name: detail.name,
-        message: detail.message,
+        message: sanitizeDebugText(detail.message),
         stack: detail.stack ? truncateDebugText(detail.stack) : null,
       })
     }

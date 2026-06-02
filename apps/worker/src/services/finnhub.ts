@@ -78,7 +78,7 @@ export class FinnhubBasicFinancialsError extends Error {
   }
 }
 
-const finnhubBaseUrl = 'https://finnhub.io/api/v1'
+const finnhubBaseUrl = 'https://finnhub.io/api/v1/'
 const million = 1_000_000
 
 const nowIso = () => new Date().toISOString()
@@ -104,7 +104,7 @@ const fetchFinnhub = async <T>(
   params: Record<string, string>,
   apiKey: string,
 ): Promise<T> => {
-  const url = new URL(path, finnhubBaseUrl)
+  const url = new URL(path.replace(/^\/+/, ''), finnhubBaseUrl)
   Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value))
   url.searchParams.set('token', apiKey)
 

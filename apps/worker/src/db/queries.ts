@@ -399,7 +399,7 @@ export const upsertCompanySnapshot = async (
       )
       .bind(
         JSON.stringify(input.company),
-        input.companyFetchedAt ?? timestamp,
+        input.companyFetchedAt !== undefined ? input.companyFetchedAt : timestamp,
         timestamp,
         normalizedTicker,
       )
@@ -413,7 +413,7 @@ export const upsertCompanySnapshot = async (
       )
       .bind(
         JSON.stringify(input.fundamentals),
-        input.fundamentalsFetchedAt ?? timestamp,
+        input.fundamentalsFetchedAt !== undefined ? input.fundamentalsFetchedAt : timestamp,
         timestamp,
         normalizedTicker,
       )
@@ -427,7 +427,7 @@ export const upsertCompanySnapshot = async (
       )
       .bind(
         JSON.stringify(input.incomeHistory),
-        input.incomeFetchedAt ?? timestamp,
+        input.incomeFetchedAt !== undefined ? input.incomeFetchedAt : timestamp,
         timestamp,
         normalizedTicker,
       )
@@ -441,7 +441,7 @@ export const upsertCompanySnapshot = async (
       )
       .bind(
         JSON.stringify(input.epsHistory),
-        input.epsHistoryFetchedAt ?? timestamp,
+        input.epsHistoryFetchedAt !== undefined ? input.epsHistoryFetchedAt : timestamp,
         timestamp,
         normalizedTicker,
       )
