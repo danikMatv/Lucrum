@@ -17,6 +17,7 @@ import { getOptionalUser } from '../middleware/auth'
 import {
   AlphaVantageRateLimitError,
   getAlphaVantageEarnings,
+  getAlphaVantageEpsTTM,
   getAlphaVantageIncomeHistory,
   getAlphaVantageOverview,
   type AlphaVantageOverview,
@@ -338,6 +339,20 @@ const resolveCompanySnapshot = async (
     try {
       const overview = await getOverview()
       let alphaFundamentals = withFundamentalsCompany(overview.fundamentals)
+
+      try {
+        const epsTtm = await getAlphaVantageEpsTTM(
+          normalizedTicker,
+          c.env.ALPHA_VANTAGE_API_KEY,
+        )
+        alphaFundamentals = {
+          ...alphaFundamentals,
+          epsTtm: epsTtm ?? alphaFundamentals.epsTtm,
+        }
+      } catch (error) {
+        noteProviderIssue('alphaVantage', 'epsTtm', error)
+        // Keep OVERVIEW EPS fallback if quarterly EARNINGS is unavailable.
+      }
 
       try {
         const fmpSupplement = await getFmpFundamentals(

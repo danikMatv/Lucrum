@@ -60,6 +60,11 @@ interface AlphaVantageEarningsResponse {
     fiscalDateEnding?: string
     reportedEPS?: string
   }>
+  quarterlyEarnings?: Array<{
+    fiscalDateEnding?: string
+    reportedDate?: string
+    reportedEPS?: string
+  }>
   Note?: string
   Information?: string
 }
@@ -141,6 +146,21 @@ const percentNumber = (value: string | undefined) => {
 
 const resolveEpsTtm = (data: AlphaVantageOverviewResponse) =>
   parseNumber(data.DilutedEPSTTM) ?? parseNumber(data.EPS)
+
+const sumQuarterlyEpsTtm = (
+  quarterlyEarnings: AlphaVantageEarningsResponse['quarterlyEarnings'],
+) => {
+  const values = (quarterlyEarnings ?? [])
+    .slice(0, 4)
+    .map((report) => parseNumber(report.reportedEPS))
+    .filter((value): value is number => value !== null)
+
+  if (values.length < 2) {
+    return null
+  }
+
+  return values.reduce((sum, value) => sum + value, 0)
+}
 
 const createCompany = (input: {
   ticker: string
@@ -283,4 +303,18 @@ export const getAlphaVantageEarnings = async (
   }
 
   return rows
+}
+
+export const getAlphaVantageEpsTTM = async (
+  ticker: string,
+  apiKey: string,
+): Promise<number | null> => {
+  const normalizedTicker = ticker.toUpperCase()
+  const data = await fetchAlphaVantage<AlphaVantageEarningsResponse>(
+    { function: 'EARNINGS', symbol: normalizedTicker },
+    apiKey,
+  )
+  assertNotRateLimited(data)
+
+  return sumQuarterlyEpsTtm(data.quarterlyEarnings)
 }
