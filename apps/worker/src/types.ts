@@ -13,6 +13,7 @@ export type Bindings = {
   JWT_SECRET: string
   FMP_API_KEY: string
   ALPHA_VANTAGE_API_KEY: string
+  FINNHUB_API_KEY: string
   YAHOO_FINANCE_BASE_URL: string
   FRONTEND_ORIGIN: string
 }
@@ -42,6 +43,8 @@ export interface Company {
   description: string | null
   lastSyncedAt: string | null
   createdAt: string
+  website?: string | null
+  ipoDate?: string | null
 }
 
 export interface CompanyFundamentals {
@@ -66,6 +69,7 @@ export interface CompanyFundamentals {
   returnOnEquity?: number | null
   returnOnAssets?: number | null
   grossProfit?: number | null
+  grossMargin?: number | null
   operatingMargin?: number | null
   netMargin?: number | null
   currentRatio?: number | null
@@ -79,6 +83,7 @@ export interface CompanyFundamentals {
   forwardPE?: number | null
   pegRatio?: number | null
   beta?: number | null
+  revenuePerShare?: number | null
 }
 
 export interface CompanyIncomeHistoryRow {

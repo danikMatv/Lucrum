@@ -72,6 +72,8 @@ export interface Company {
   description: string | null
   lastSyncedAt: string | null
   createdAt: string
+  website?: string | null
+  ipoDate?: string | null
 }
 
 export interface CompanyFundamentals {
@@ -96,6 +98,7 @@ export interface CompanyFundamentals {
   returnOnEquity?: number | null
   returnOnAssets?: number | null
   grossProfit?: number | null
+  grossMargin?: number | null
   operatingMargin?: number | null
   netMargin?: number | null
   currentRatio?: number | null
@@ -109,6 +112,7 @@ export interface CompanyFundamentals {
   forwardPE?: number | null
   pegRatio?: number | null
   beta?: number | null
+  revenuePerShare?: number | null
 }
 
 export interface CompanyIncomeHistoryRow {
@@ -136,6 +140,9 @@ export interface StockQuote {
   fiftyTwoWeekLow?: number | null
   change?: number | null
   changePercent?: number | null
+  dayHigh?: number | null
+  dayLow?: number | null
+  previousClose?: number | null
 }
 
 export interface CompanySnapshot {

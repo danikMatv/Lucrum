@@ -6,6 +6,7 @@ import { logToolUsage } from '../db/queries'
 import { getOptionalUser } from '../middleware/auth'
 import { CacheTtl, getJsonCache, putJsonCache } from '../services/cache'
 import { getFmpHistoricalPrices, getFmpQuote } from '../services/fmp'
+import { getFinnhubQuote } from '../services/finnhub'
 import { getStooqQuote } from '../services/stooq'
 import { getYahooHistory, getYahooQuote, type StockHistory, type StockQuote } from '../services/yahoo'
 import type { AppEnv } from '../types'
@@ -40,6 +41,8 @@ const logUsage = async (c: Context, toolType: string, ticker: string | null) => 
   const user = await getOptionalUser(c)
   await logToolUsage(c.env.DB, { userId: user?.id ?? null, toolType, ticker })
 }
+
+const hasSecret = (value: string | undefined) => typeof value === 'string' && value.trim() !== ''
 
 const periodToFromDate = (period: string) => {
   const match = /^(\d+)([ym])$/.exec(period)
@@ -93,12 +96,19 @@ const getQuote = async (c: Context, ticker: string) => {
 
   let quote: StockQuote
   try {
-    quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
+    if (!hasSecret(c.env.FINNHUB_API_KEY)) {
+      throw new Error('missing_api_key')
+    }
+    quote = await getFinnhubQuote(normalizedTicker, c.env.FINNHUB_API_KEY)
   } catch {
     try {
-      quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
+      quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
     } catch {
-      quote = await getStooqQuote(normalizedTicker)
+      try {
+        quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
+      } catch {
+        quote = await getStooqQuote(normalizedTicker)
+      }
     }
   }
 

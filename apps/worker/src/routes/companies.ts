@@ -31,6 +31,13 @@ import {
   getFmpQuote,
   searchFmpCompanies,
 } from '../services/fmp'
+import {
+  FinnhubRateLimitError,
+  getFinnhubBasicFinancials,
+  getFinnhubCompanyProfile,
+  getFinnhubQuote,
+  type FinnhubCompanyProfile,
+} from '../services/finnhub'
 import { getStooqQuote } from '../services/stooq'
 import { getSecCompanyProfile, getSecFundamentals } from '../services/sec'
 import { getYahooQuote, type StockQuote } from '../services/yahoo'
@@ -103,12 +110,16 @@ const hasIncomeHistory = (incomeHistory: CompanyIncomeHistoryRow[]) => incomeHis
 
 const hasEpsHistory = (epsHistory: CompanyEpsHistoryRow[]) => epsHistory.length > 1
 
-const hasQuoteRange = (quote: StockQuote | null) =>
-  typeof quote?.fiftyTwoWeekHigh === 'number' && typeof quote.fiftyTwoWeekLow === 'number'
+const hasQuotePrice = (quote: StockQuote | null) =>
+  typeof quote?.price === 'number' && Number.isFinite(quote.price)
 
 const hasSecret = (value: string | undefined) => typeof value === 'string' && value.trim() !== ''
 
 const providerErrorCode = (error: unknown) => {
+  if (error instanceof FinnhubRateLimitError) {
+    return 'rate_limited'
+  }
+
   if (error instanceof AlphaVantageRateLimitError) {
     const message = error.message.toLowerCase()
     if (message.includes('frequency') || message.includes('minute')) {
@@ -148,22 +159,36 @@ const providerErrorCode = (error: unknown) => {
   return 'unknown_error'
 }
 
-const getQuote = async (c: Context, ticker: string) => {
+const getQuote = async (
+  c: Context,
+  ticker: string,
+  noteProviderIssue?: (provider: string, section: string, error: unknown) => void,
+) => {
   const normalizedTicker = normalizeTicker(ticker)
   const cacheKey = `quote:${normalizedTicker}`
   const cached = await getJsonCache<StockQuote>(c.env.KV, cacheKey)
-  if (cached && hasQuoteRange(cached)) {
+  if (cached && hasQuotePrice(cached)) {
     return cached
   }
 
   let quote: StockQuote
   try {
-    quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
-  } catch {
+    if (!hasSecret(c.env.FINNHUB_API_KEY)) {
+      throw new Error('missing_api_key')
+    }
+    quote = await getFinnhubQuote(normalizedTicker, c.env.FINNHUB_API_KEY)
+  } catch (error) {
+    noteProviderIssue?.('finnhub', 'quote', error)
     try {
-      quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
-    } catch {
-      quote = await getStooqQuote(normalizedTicker)
+      quote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker)
+    } catch (error) {
+      noteProviderIssue?.('yahoo', 'quote', error)
+      try {
+        quote = await getFmpQuote(normalizedTicker, c.env.FMP_API_KEY)
+      } catch (error) {
+        noteProviderIssue?.('fmp', 'quote', error)
+        quote = await getStooqQuote(normalizedTicker)
+      }
     }
   }
 
@@ -212,8 +237,33 @@ const resolveCompanySnapshot = async (
   let fundamentalsFetchedAt = snapshot?.fundamentalsFetchedAt ?? null
   let incomeFetchedAt = snapshot?.incomeFetchedAt ?? null
   let epsHistoryFetchedAt = snapshot?.epsHistoryFetchedAt ?? null
+  let finnhubProfile: FinnhubCompanyProfile | null = null
+  let finnhubProfileError: unknown = null
   let alphaOverview: AlphaVantageOverview | null = null
   let alphaOverviewError: unknown = null
+
+  const getFinnhubProfile = async () => {
+    if (finnhubProfileError) {
+      throw finnhubProfileError
+    }
+
+    if (!finnhubProfile) {
+      if (!hasSecret(c.env.FINNHUB_API_KEY)) {
+        throw new Error('missing_api_key')
+      }
+      try {
+        finnhubProfile = await getFinnhubCompanyProfile(
+          normalizedTicker,
+          c.env.FINNHUB_API_KEY,
+        )
+      } catch (error) {
+        finnhubProfileError = error
+        throw error
+      }
+    }
+
+    return finnhubProfile
+  }
 
   const getOverview = async () => {
     if (alphaOverviewError) {
@@ -275,36 +325,35 @@ const resolveCompanySnapshot = async (
 
   if (!company || !isFresh(companyFetchedAt) || !hasCompanyDisplayFields(company)) {
     try {
-      const overview = await getOverview()
-      const alphaCompany = withCompanyIdentity(overview.company)
-      company = alphaCompany
+      const profile = await getFinnhubProfile()
+      const finnhubCompany = withCompanyIdentity(profile.company)
+      company = finnhubCompany
       companyFetchedAt = nowIso()
-      await upsertCompany(c.env.DB, alphaCompany)
+      await upsertCompany(c.env.DB, finnhubCompany)
       snapshot = await upsertCompanySnapshot(c.env.DB, {
         ticker: normalizedTicker,
         company,
         companyFetchedAt,
       })
     } catch (error) {
-      noteProviderIssue('alphaVantage', 'company', error)
+      noteProviderIssue('finnhub', 'company', error)
       try {
-        const fmpCompany = await getFmpCompanyProfile(normalizedTicker, c.env.FMP_API_KEY)
-        if (fmpCompany) {
-          company = withCompanyIdentity(fmpCompany)
-          companyFetchedAt = nowIso()
-          await upsertCompany(c.env.DB, company)
-          snapshot = await upsertCompanySnapshot(c.env.DB, {
-            ticker: normalizedTicker,
-            company,
-            companyFetchedAt,
-          })
-        }
+        const overview = await getOverview()
+        const alphaCompany = withCompanyIdentity(overview.company)
+        company = alphaCompany
+        companyFetchedAt = nowIso()
+        await upsertCompany(c.env.DB, alphaCompany)
+        snapshot = await upsertCompanySnapshot(c.env.DB, {
+          ticker: normalizedTicker,
+          company,
+          companyFetchedAt,
+        })
       } catch (error) {
-        noteProviderIssue('fmp', 'company', error)
+        noteProviderIssue('alphaVantage', 'company', error)
         try {
-          const secProfile = await getSecCompanyProfile(normalizedTicker)
-          if (secProfile) {
-            company = withCompanyIdentity(secProfile.company)
+          const fmpCompany = await getFmpCompanyProfile(normalizedTicker, c.env.FMP_API_KEY)
+          if (fmpCompany) {
+            company = withCompanyIdentity(fmpCompany)
             companyFetchedAt = nowIso()
             await upsertCompany(c.env.DB, company)
             snapshot = await upsertCompanySnapshot(c.env.DB, {
@@ -314,8 +363,23 @@ const resolveCompanySnapshot = async (
             })
           }
         } catch (error) {
-          noteProviderIssue('sec', 'company', error)
-          // Keep stale D1 data if providers are unavailable.
+          noteProviderIssue('fmp', 'company', error)
+          try {
+            const secProfile = await getSecCompanyProfile(normalizedTicker)
+            if (secProfile) {
+              company = withCompanyIdentity(secProfile.company)
+              companyFetchedAt = nowIso()
+              await upsertCompany(c.env.DB, company)
+              snapshot = await upsertCompanySnapshot(c.env.DB, {
+                ticker: normalizedTicker,
+                company,
+                companyFetchedAt,
+              })
+            }
+          } catch (error) {
+            noteProviderIssue('sec', 'company', error)
+            // Keep stale D1 data if providers are unavailable.
+          }
         }
       }
     }
@@ -337,22 +401,15 @@ const resolveCompanySnapshot = async (
     (!fundamentals || !isFresh(fundamentalsFetchedAt) || !hasSnapshotFundamentals(fundamentals))
   ) {
     try {
-      const overview = await getOverview()
-      let alphaFundamentals = withFundamentalsCompany(overview.fundamentals)
-
-      try {
-        const epsTtm = await getAlphaVantageEpsTTM(
+      const profile = await getFinnhubProfile()
+      let finnhubFundamentals = withFundamentalsCompany(
+        await getFinnhubBasicFinancials(
+          company.id,
           normalizedTicker,
-          c.env.ALPHA_VANTAGE_API_KEY,
-        )
-        alphaFundamentals = {
-          ...alphaFundamentals,
-          epsTtm: epsTtm ?? alphaFundamentals.epsTtm,
-        }
-      } catch (error) {
-        noteProviderIssue('alphaVantage', 'epsTtm', error)
-        // Keep OVERVIEW EPS fallback if quarterly EARNINGS is unavailable.
-      }
+          c.env.FINNHUB_API_KEY,
+          profile,
+        ),
+      )
 
       try {
         const fmpSupplement = await getFmpFundamentals(
@@ -360,13 +417,13 @@ const resolveCompanySnapshot = async (
           normalizedTicker,
           c.env.FMP_API_KEY,
         )
-        alphaFundamentals = mergeFundamentals(alphaFundamentals, fmpSupplement)
+        finnhubFundamentals = mergeFundamentals(finnhubFundamentals, fmpSupplement)
       } catch (error) {
         noteProviderIssue('fmp', 'fundamentalsSupplement', error)
-        // Alpha Vantage remains primary; FMP only fills optional gaps.
+        // Finnhub remains primary; FMP only fills optional gaps.
       }
 
-      fundamentals = alphaFundamentals
+      fundamentals = finnhubFundamentals
       fundamentalsFetchedAt = nowIso()
       await upsertFundamentals(c.env.DB, fundamentals)
       snapshot = await upsertCompanySnapshot(c.env.DB, {
@@ -375,14 +432,38 @@ const resolveCompanySnapshot = async (
         fundamentalsFetchedAt,
       })
     } catch (error) {
-      noteProviderIssue('alphaVantage', 'fundamentals', error)
+      noteProviderIssue('finnhub', 'fundamentals', error)
       try {
-        const fmpFundamentals = await getFmpFundamentals(
-          company.id,
-          normalizedTicker,
-          c.env.FMP_API_KEY,
-        )
-        fundamentals = withFundamentalsCompany(fmpFundamentals)
+        const overview = await getOverview()
+        let alphaFundamentals = withFundamentalsCompany(overview.fundamentals)
+
+        try {
+          const epsTtm = await getAlphaVantageEpsTTM(
+            normalizedTicker,
+            c.env.ALPHA_VANTAGE_API_KEY,
+          )
+          alphaFundamentals = {
+            ...alphaFundamentals,
+            epsTtm: epsTtm ?? alphaFundamentals.epsTtm,
+          }
+        } catch (error) {
+          noteProviderIssue('alphaVantage', 'epsTtm', error)
+          // Keep OVERVIEW EPS fallback if quarterly EARNINGS is unavailable.
+        }
+
+        try {
+          const fmpSupplement = await getFmpFundamentals(
+            company.id,
+            normalizedTicker,
+            c.env.FMP_API_KEY,
+          )
+          alphaFundamentals = mergeFundamentals(alphaFundamentals, fmpSupplement)
+        } catch (error) {
+          noteProviderIssue('fmp', 'fundamentalsSupplement', error)
+          // Alpha Vantage remains the first fallback; FMP only fills optional gaps.
+        }
+
+        fundamentals = alphaFundamentals
         fundamentalsFetchedAt = nowIso()
         await upsertFundamentals(c.env.DB, fundamentals)
         snapshot = await upsertCompanySnapshot(c.env.DB, {
@@ -391,28 +472,44 @@ const resolveCompanySnapshot = async (
           fundamentalsFetchedAt,
         })
       } catch (error) {
-        noteProviderIssue('fmp', 'fundamentals', error)
+        noteProviderIssue('alphaVantage', 'fundamentals', error)
         try {
-          const secProfile = await getSecCompanyProfile(normalizedTicker)
-          if (secProfile) {
-            const secFundamentals = await getSecFundamentals(company.id, secProfile.cik)
-            fundamentals = secFundamentals
-            fundamentalsFetchedAt = nowIso()
-            await upsertFundamentals(c.env.DB, secFundamentals)
-            snapshot = await upsertCompanySnapshot(c.env.DB, {
-              ticker: normalizedTicker,
-              fundamentals,
-              fundamentalsFetchedAt,
-            })
-          }
+          const fmpFundamentals = await getFmpFundamentals(
+            company.id,
+            normalizedTicker,
+            c.env.FMP_API_KEY,
+          )
+          fundamentals = withFundamentalsCompany(fmpFundamentals)
+          fundamentalsFetchedAt = nowIso()
+          await upsertFundamentals(c.env.DB, fundamentals)
+          snapshot = await upsertCompanySnapshot(c.env.DB, {
+            ticker: normalizedTicker,
+            fundamentals,
+            fundamentalsFetchedAt,
+          })
         } catch (error) {
-          noteProviderIssue('sec', 'fundamentals', error)
-          // Keep stale D1 data if providers are unavailable.
+          noteProviderIssue('fmp', 'fundamentals', error)
+          try {
+            const secProfile = await getSecCompanyProfile(normalizedTicker)
+            if (secProfile) {
+              const secFundamentals = await getSecFundamentals(company.id, secProfile.cik)
+              fundamentals = secFundamentals
+              fundamentalsFetchedAt = nowIso()
+              await upsertFundamentals(c.env.DB, secFundamentals)
+              snapshot = await upsertCompanySnapshot(c.env.DB, {
+                ticker: normalizedTicker,
+                fundamentals,
+                fundamentalsFetchedAt,
+              })
+            }
+          } catch (error) {
+            noteProviderIssue('sec', 'fundamentals', error)
+            // Keep stale D1 data if providers are unavailable.
+          }
         }
       }
     }
   }
-
   if (!isFresh(incomeFetchedAt) || !hasIncomeHistory(incomeHistory)) {
     try {
       if (alphaOverviewError) {
@@ -501,7 +598,7 @@ const resolveCompanySnapshot = async (
   }
 
   try {
-    quote = await getQuote(c, normalizedTicker)
+    quote = await getQuote(c, normalizedTicker, noteProviderIssue)
     quoteFetchedAt = quote.marketTime ?? nowIso()
   } catch (error) {
     noteProviderIssue('quote', 'live', error)

@@ -12,6 +12,9 @@ export interface StockQuote {
   fiftyTwoWeekLow?: number | null
   change?: number | null
   changePercent?: number | null
+  dayHigh?: number | null
+  dayLow?: number | null
+  previousClose?: number | null
 }
 
 interface YahooChartResponse {

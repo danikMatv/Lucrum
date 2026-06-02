@@ -208,3 +208,27 @@ FMP remains as the fallback and supplementary provider for fields Alpha Vantage 
 
 ### Quotes
 Live quotes remain separate from 90-day fundamentals caching and continue to use short-lived KV caching with the existing quote providers.
+
+---
+
+## ADR-011: Finnhub as Primary Fundamentals Source
+
+**Date:** June 2026
+**Status:** Accepted
+
+### Decision
+Use **Finnhub** as the primary source for company profiles, core fundamentals, TTM EPS, valuation ratios, and live quotes.
+
+### Reasoning
+- Finnhub's free tier allows 60 API calls/minute, which is more practical than Alpha Vantage's 25 requests/day for new ticker discovery
+- Finnhub `epsTTM` from Basic Financials is more reliable for tickers where Alpha Vantage OVERVIEW reports quarterly-looking EPS
+- Finnhub profile and metric endpoints provide the main fields needed for the stock analysis dashboard while still fitting the existing 90-day D1 snapshot cache
+- Finnhub is built by ex-engineers from Bloomberg, Google, and Tradeweb
+
+### Fallbacks
+Alpha Vantage remains available for company/fundamentals fallback and stays the primary source for 5-year income statements because Finnhub's free tier does not include full financial statements.
+
+FMP remains a secondary fallback and supplementary provider for fields that Finnhub or Alpha Vantage do not provide.
+
+### Quotes
+Live quotes prefer Finnhub first, then Yahoo Finance, FMP, and Stooq. Quote data remains separate from 90-day D1 snapshots and keeps the short KV TTL.

@@ -201,6 +201,11 @@ const getRevenueGrowthTone = (row: RevenueGrowthRow) => {
 }
 
 const getGrossMargin = (snapshot: CompanySnapshot) => {
+  const directGrossMargin = snapshot.fundamentals?.grossMargin
+  if (typeof directGrossMargin === 'number' && Number.isFinite(directGrossMargin)) {
+    return directGrossMargin
+  }
+
   const grossProfit = snapshot.fundamentals?.grossProfit
   const revenue = snapshot.fundamentals?.revenue
 

@@ -8,3 +8,7 @@ FMP_API_KEY=your-fmp-api-key-here
 # Alpha Vantage API key
 # Get free key at: https://www.alphavantage.co/support/#api-key
 ALPHA_VANTAGE_API_KEY=your-alpha-vantage-api-key-here
+
+# Finnhub API key
+# Get free key at: https://finnhub.io/register
+FINNHUB_API_KEY=your-finnhub-api-key-here
