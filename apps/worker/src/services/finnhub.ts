@@ -22,6 +22,12 @@ interface FinnhubBasicFinancialsResponse {
   symbol?: string
 }
 
+export interface FinnhubBasicFinancialsDebug {
+  rawMetricEpsTTM: number | string | null
+  rawMetricEpsBasicExclExtraItemsTTM: number | string | null
+  mappedEpsTtm: number | null
+}
+
 interface FinnhubEarningsResponse {
   actual?: number | string | null
   estimate?: number | string | null
@@ -114,6 +120,8 @@ const firstFiniteNumber = (...values: FinnhubMetricValue[]) => {
   return null
 }
 
+const debugValue = (value: FinnhubMetricValue) => value ?? null
+
 const millionsToAbsolute = (value: FinnhubMetricValue) => {
   const parsed = finiteNumberOrNull(value)
   return parsed === null ? null : parsed * million
@@ -194,6 +202,7 @@ export const getFinnhubBasicFinancials = async (
   ticker: string,
   apiKey: string,
   profile: FinnhubCompanyProfile | null = null,
+  onDebug?: (debug: FinnhubBasicFinancialsDebug) => void,
 ): Promise<CompanyFundamentals> => {
   const normalizedTicker = ticker.toUpperCase()
   const data = await fetchFinnhub<FinnhubBasicFinancialsResponse>(
@@ -203,12 +212,18 @@ export const getFinnhubBasicFinancials = async (
   )
   const metric = data.metric ?? {}
   const netMargin = finiteNumberOrNull(metric.netProfitMarginTTM)
+  const epsTtm = firstFiniteNumber(metric.epsTTM, metric.epsBasicExclExtraItemsTTM)
   const timestamp = nowIso()
+  onDebug?.({
+    rawMetricEpsTTM: debugValue(metric.epsTTM),
+    rawMetricEpsBasicExclExtraItemsTTM: debugValue(metric.epsBasicExclExtraItemsTTM),
+    mappedEpsTtm: epsTtm,
+  })
 
   return {
     id: crypto.randomUUID(),
     companyId,
-    epsTtm: firstFiniteNumber(metric.epsTTM, metric.epsBasicExclExtraItemsTTM),
+    epsTtm,
     revenue: null,
     netIncome: null,
     freeCashFlow: null,
