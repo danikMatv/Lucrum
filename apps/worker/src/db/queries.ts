@@ -10,6 +10,7 @@ import type {
   UserRole,
   WatchlistItem,
 } from '../types'
+import type { ToolUsageAnalyticsInput } from '../utils/analytics'
 
 interface UserRow {
   id: string
@@ -655,13 +656,33 @@ export const softDeleteLearnResource = async (db: D1Database, topic: string, id:
 
 export const logToolUsage = async (
   db: D1Database,
-  input: { userId: string | null; toolType: string; ticker: string | null },
+  input: { userId: string | null; toolType: string; ticker: string | null } & ToolUsageAnalyticsInput,
 ) =>
   db
     .prepare(
-      'INSERT INTO tool_usage_events (id, user_id, tool_type, ticker, created_at) VALUES (?, ?, ?, ?, ?)',
+      'INSERT INTO tool_usage_events (id, user_id, tool_type, ticker, source, medium, campaign, referrer, page_path, country, region, city, timezone, colo, device_type, browser, os, language, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     )
-    .bind(crypto.randomUUID(), input.userId, input.toolType, input.ticker, nowIso())
+    .bind(
+      crypto.randomUUID(),
+      input.userId,
+      input.toolType,
+      input.ticker,
+      input.source,
+      input.medium,
+      input.campaign,
+      input.referrer,
+      input.pagePath,
+      input.country,
+      input.region,
+      input.city,
+      input.timezone,
+      input.colo,
+      input.deviceType,
+      input.browser,
+      input.os,
+      input.language,
+      nowIso(),
+    )
     .run()
 
 export const getUsersCount = async (db: D1Database) =>
@@ -716,6 +737,54 @@ export const getTopTickers = async (db: D1Database) => {
     .prepare('SELECT ticker, COUNT(*) AS count FROM tool_usage_events WHERE ticker IS NOT NULL GROUP BY ticker ORDER BY count DESC LIMIT 20')
     .all<{ ticker: string; count: number }>()
   return result.results
+}
+
+type UsageAnalyticsColumn = 'source' | 'country' | 'device_type' | 'browser' | 'os' | 'language'
+
+const getTopUsageDimension = async (
+  db: D1Database,
+  column: UsageAnalyticsColumn,
+  limit: number,
+) => {
+  const result = await db
+    .prepare(
+      `SELECT COALESCE(${column}, 'unknown') AS label, COUNT(*) AS count FROM tool_usage_events GROUP BY label ORDER BY count DESC LIMIT ?`,
+    )
+    .bind(limit)
+    .all<{ label: string; count: number }>()
+  return result.results
+}
+
+export const getTopSources = (db: D1Database) => getTopUsageDimension(db, 'source', 12)
+
+export const getTopCountries = (db: D1Database) => getTopUsageDimension(db, 'country', 12)
+
+export const getTopDevices = (db: D1Database) => getTopUsageDimension(db, 'device_type', 8)
+
+export const getTopBrowsers = (db: D1Database) => getTopUsageDimension(db, 'browser', 8)
+
+export const getTopOperatingSystems = (db: D1Database) => getTopUsageDimension(db, 'os', 8)
+
+export const getTopLanguages = (db: D1Database) => getTopUsageDimension(db, 'language', 8)
+
+export const getToolUsageByDate = async (db: D1Database, days: number) => {
+  const since = new Date()
+  since.setUTCDate(since.getUTCDate() - (days - 1))
+  since.setUTCHours(0, 0, 0, 0)
+  const result = await db
+    .prepare(
+      'SELECT substr(created_at, 1, 10) AS date, COUNT(*) AS count FROM tool_usage_events WHERE created_at >= ? GROUP BY date',
+    )
+    .bind(since.toISOString())
+    .all<DateCountRow>()
+  const counts = new Map(result.results.map((row) => [row.date, row.count]))
+
+  return Array.from({ length: days }, (_, index) => {
+    const date = new Date(since)
+    date.setUTCDate(since.getUTCDate() + index)
+    const label = date.toISOString().slice(0, 10)
+    return { date: label, count: counts.get(label) ?? 0 }
+  })
 }
 
 export const listUsers = async (db: D1Database, page: number, limit: number) => {

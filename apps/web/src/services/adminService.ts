@@ -1,10 +1,12 @@
 import { apiClient, unwrapApiResponse } from './apiClient.ts'
 import type {
   AdminTickerStats,
+  AdminDimensionStats,
   AdminToolStats,
   AdminUser,
   AdminUserStats,
   ApiResponse,
+  CountByDate,
   UserRole,
 } from '../types/api.ts'
 
@@ -20,6 +22,48 @@ export const adminService = {
   getTickerStats: async () => {
     const response = await apiClient.get<ApiResponse<AdminTickerStats[]>>(
       '/api/admin/stats/tickers',
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getDailyUsageStats: async () => {
+    const response = await apiClient.get<ApiResponse<CountByDate[]>>(
+      '/api/admin/stats/usage/daily',
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getSourceStats: async () => {
+    const response = await apiClient.get<ApiResponse<AdminDimensionStats[]>>(
+      '/api/admin/stats/sources',
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getLocationStats: async () => {
+    const response = await apiClient.get<ApiResponse<AdminDimensionStats[]>>(
+      '/api/admin/stats/locations',
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getDeviceStats: async () => {
+    const response = await apiClient.get<ApiResponse<AdminDimensionStats[]>>(
+      '/api/admin/stats/devices',
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getBrowserStats: async () => {
+    const response = await apiClient.get<ApiResponse<AdminDimensionStats[]>>(
+      '/api/admin/stats/browsers',
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getOsStats: async () => {
+    const response = await apiClient.get<ApiResponse<AdminDimensionStats[]>>(
+      '/api/admin/stats/os',
+    )
+    return unwrapApiResponse(response.data)
+  },
+  getLanguageStats: async () => {
+    const response = await apiClient.get<ApiResponse<AdminDimensionStats[]>>(
+      '/api/admin/stats/languages',
     )
     return unwrapApiResponse(response.data)
   },

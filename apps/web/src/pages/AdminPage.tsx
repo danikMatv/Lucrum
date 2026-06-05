@@ -16,7 +16,12 @@ import {
 import { adminService } from '../services/adminService.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
 import { parseApiError } from '../utils/errorHandler.ts'
-import { UserRole, type AdminUser, type UserRole as UserRoleType } from '../types/api.ts'
+import {
+  UserRole,
+  type AdminDimensionStats,
+  type AdminUser,
+  type UserRole as UserRoleType,
+} from '../types/api.ts'
 
 const roleOptions: UserRoleType[] = [
   UserRole.USER,
@@ -70,6 +75,41 @@ export const AdminPage = () => {
     queryFn: adminService.getTickerStats,
   })
 
+  const dailyUsageQuery = useQuery({
+    queryKey: ['admin', 'stats', 'usage', 'daily'],
+    queryFn: adminService.getDailyUsageStats,
+  })
+
+  const sourceStatsQuery = useQuery({
+    queryKey: ['admin', 'stats', 'sources'],
+    queryFn: adminService.getSourceStats,
+  })
+
+  const locationStatsQuery = useQuery({
+    queryKey: ['admin', 'stats', 'locations'],
+    queryFn: adminService.getLocationStats,
+  })
+
+  const deviceStatsQuery = useQuery({
+    queryKey: ['admin', 'stats', 'devices'],
+    queryFn: adminService.getDeviceStats,
+  })
+
+  const browserStatsQuery = useQuery({
+    queryKey: ['admin', 'stats', 'browsers'],
+    queryFn: adminService.getBrowserStats,
+  })
+
+  const osStatsQuery = useQuery({
+    queryKey: ['admin', 'stats', 'os'],
+    queryFn: adminService.getOsStats,
+  })
+
+  const languageStatsQuery = useQuery({
+    queryKey: ['admin', 'stats', 'languages'],
+    queryFn: adminService.getLanguageStats,
+  })
+
   const usersQuery = useQuery({
     queryKey: ['admin', 'users'],
     queryFn: () => adminService.getUsers(1, 20),
@@ -100,6 +140,13 @@ export const AdminPage = () => {
   const userStats = userStatsQuery.data
   const toolStats = toolStatsQuery.data ?? []
   const tickerStats = tickerStatsQuery.data ?? []
+  const dailyUsage = dailyUsageQuery.data ?? []
+  const sourceStats = sourceStatsQuery.data ?? []
+  const locationStats = locationStatsQuery.data ?? []
+  const deviceStats = deviceStatsQuery.data ?? []
+  const browserStats = browserStatsQuery.data ?? []
+  const osStats = osStatsQuery.data ?? []
+  const languageStats = languageStatsQuery.data ?? []
   const users = usersQuery.data ?? []
   const newUsers7 = userStats ? sumCounts(userStats.newUsersLast7Days) : 0
   const newUsers30 = userStats ? sumCounts(userStats.newUsersLast30Days) : 0
@@ -110,6 +157,13 @@ export const AdminPage = () => {
     userStatsQuery.isLoading ||
     toolStatsQuery.isLoading ||
     tickerStatsQuery.isLoading ||
+    dailyUsageQuery.isLoading ||
+    sourceStatsQuery.isLoading ||
+    locationStatsQuery.isLoading ||
+    deviceStatsQuery.isLoading ||
+    browserStatsQuery.isLoading ||
+    osStatsQuery.isLoading ||
+    languageStatsQuery.isLoading ||
     usersQuery.isLoading
 
   const growthRows =
@@ -124,11 +178,23 @@ export const AdminPage = () => {
       label: t(`admin.roles.${row.role}`),
     })) ?? []
 
+  const usageRows = dailyUsage.map((row) => ({
+    ...row,
+    label: dateFormatter.format(new Date(`${row.date}T00:00:00.000Z`)),
+  }))
+
   const errorMessage = useMemo(() => {
     const error =
       userStatsQuery.error ??
       toolStatsQuery.error ??
       tickerStatsQuery.error ??
+      dailyUsageQuery.error ??
+      sourceStatsQuery.error ??
+      locationStatsQuery.error ??
+      deviceStatsQuery.error ??
+      browserStatsQuery.error ??
+      osStatsQuery.error ??
+      languageStatsQuery.error ??
       usersQuery.error ??
       roleMutation.error ??
       activeMutation.error
@@ -136,6 +202,13 @@ export const AdminPage = () => {
   }, [
     activeMutation.error,
     roleMutation.error,
+    browserStatsQuery.error,
+    dailyUsageQuery.error,
+    deviceStatsQuery.error,
+    languageStatsQuery.error,
+    locationStatsQuery.error,
+    osStatsQuery.error,
+    sourceStatsQuery.error,
     t,
     tickerStatsQuery.error,
     toolStatsQuery.error,
@@ -156,6 +229,42 @@ export const AdminPage = () => {
     const key = `admin.toolTypes.${toolType}`
     const label = t(key)
     return label === key ? toolType : label
+  }
+
+  const getDimensionLabel = (
+    label: string,
+    dictionary: 'sources' | 'deviceTypes' | 'dimensionLabels' = 'dimensionLabels',
+  ) => {
+    const key = `admin.${dictionary}.${label}`
+    const translated = t(key)
+    return translated === key ? label : translated
+  }
+
+  const renderDimensionList = (
+    rows: AdminDimensionStats[],
+    dictionary?: 'sources' | 'deviceTypes' | 'dimensionLabels',
+  ) => {
+    const total = sumCounts(rows)
+
+    return rows.length > 0 ? (
+      <div className="mt-5 grid gap-3">
+        {rows.map((row) => (
+          <div key={row.label} className="rounded-md border-[0.5px] border-border p-4">
+            <div className="flex items-center justify-between gap-4">
+              <p className="font-bold text-text-primary">
+                {getDimensionLabel(row.label, dictionary)}
+              </p>
+              <div className="text-right">
+                <p className="text-sm font-bold text-primary">{row.count}</p>
+                <p className="mt-1 text-xs text-text-subtle">{formatPercent(row.count, total)}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p className="mt-5 text-sm text-text-muted">{t('admin.empty')}</p>
+    )
   }
 
   const handleLogout = () => {
@@ -338,6 +447,92 @@ export const AdminPage = () => {
                 <p className="text-sm text-text-muted">{t('admin.empty')}</p>
               )}
             </div>
+          </section>
+        </div>
+
+        <div className="grid gap-6 xl:grid-cols-[1fr_0.75fr]">
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-xl font-bold text-text-primary">
+                {t('admin.analytics.dailyUsage')}
+              </h2>
+              <span className="text-xs font-semibold uppercase text-text-muted">
+                {t('admin.charts.last30')}
+              </span>
+            </div>
+            <div className="mt-5 h-72">
+              {usageRows.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={usageRows}>
+                    <CartesianGrid stroke="#1E1E1E" vertical={false} />
+                    <XAxis dataKey="label" stroke="#666666" tickLine={false} />
+                    <YAxis stroke="#666666" allowDecimals={false} tickLine={false} />
+                    <Tooltip
+                      contentStyle={{
+                        background: '#111111',
+                        border: '0.5px solid #1E1E1E',
+                        color: '#FFFFFF',
+                      }}
+                      labelFormatter={(_, payload) => {
+                        const date = payload?.[0]?.payload?.date as string | undefined
+                        return date ? formatChartDate(date) : ''
+                      }}
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="count"
+                      stroke="#C9A84C"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              ) : (
+                <p className="text-sm text-text-muted">{t('admin.empty')}</p>
+              )}
+            </div>
+          </section>
+
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <h2 className="text-xl font-bold text-text-primary">
+              {t('admin.analytics.sources')}
+            </h2>
+            {renderDimensionList(sourceStats, 'sources')}
+          </section>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <h2 className="text-xl font-bold text-text-primary">
+              {t('admin.analytics.locations')}
+            </h2>
+            {renderDimensionList(locationStats)}
+          </section>
+
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <h2 className="text-xl font-bold text-text-primary">
+              {t('admin.analytics.devices')}
+            </h2>
+            {renderDimensionList(deviceStats, 'deviceTypes')}
+          </section>
+
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <h2 className="text-xl font-bold text-text-primary">
+              {t('admin.analytics.browsers')}
+            </h2>
+            {renderDimensionList(browserStats)}
+          </section>
+
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <h2 className="text-xl font-bold text-text-primary">{t('admin.analytics.os')}</h2>
+            {renderDimensionList(osStats)}
+          </section>
+
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <h2 className="text-xl font-bold text-text-primary">
+              {t('admin.analytics.languages')}
+            </h2>
+            {renderDimensionList(languageStats)}
           </section>
         </div>
 

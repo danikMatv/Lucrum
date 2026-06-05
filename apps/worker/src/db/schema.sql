@@ -87,6 +87,20 @@ CREATE TABLE IF NOT EXISTS tool_usage_events (
   user_id TEXT,
   tool_type TEXT,
   ticker TEXT,
+  source TEXT,
+  medium TEXT,
+  campaign TEXT,
+  referrer TEXT,
+  page_path TEXT,
+  country TEXT,
+  region TEXT,
+  city TEXT,
+  timezone TEXT,
+  colo TEXT,
+  device_type TEXT,
+  browser TEXT,
+  os TEXT,
+  language TEXT,
   created_at TEXT
 );
 

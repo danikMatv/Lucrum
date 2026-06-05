@@ -62,6 +62,11 @@ export interface AdminTickerStats {
   count: number
 }
 
+export interface AdminDimensionStats {
+  label: string
+  count: number
+}
+
 export interface Company {
   id: string
   ticker: string

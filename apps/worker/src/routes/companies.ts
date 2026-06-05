@@ -50,6 +50,7 @@ import type {
   CompanyFundamentals,
   CompanyIncomeHistoryRow,
 } from '../types'
+import { getToolUsageAnalytics } from '../utils/analytics'
 import { createError, createSuccess } from '../utils/response'
 import { normalizeTicker } from '../utils/ticker'
 
@@ -72,7 +73,12 @@ const validatorHook = (result: { success: boolean; error?: { message: string } }
 
 const logUsage = async (c: Context, toolType: string, ticker: string | null) => {
   const user = await getOptionalUser(c)
-  await logToolUsage(c.env.DB, { userId: user?.id ?? null, toolType, ticker })
+  await logToolUsage(c.env.DB, {
+    userId: user?.id ?? null,
+    toolType,
+    ticker,
+    ...getToolUsageAnalytics(c),
+  })
 }
 
 const nowIso = () => new Date().toISOString()

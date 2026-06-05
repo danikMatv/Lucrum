@@ -10,6 +10,7 @@ import { getFinnhubQuote } from '../services/finnhub'
 import { getStooqQuote } from '../services/stooq'
 import { getYahooHistory, getYahooQuote, type StockHistory, type StockQuote } from '../services/yahoo'
 import type { AppEnv } from '../types'
+import { getToolUsageAnalytics } from '../utils/analytics'
 import { calculateDca, calculateMockDca } from '../utils/dca'
 import { createError, createSuccess } from '../utils/response'
 import { normalizeTicker } from '../utils/ticker'
@@ -39,7 +40,12 @@ const validatorHook = (result: { success: boolean; error?: { message: string } }
 
 const logUsage = async (c: Context, toolType: string, ticker: string | null) => {
   const user = await getOptionalUser(c)
-  await logToolUsage(c.env.DB, { userId: user?.id ?? null, toolType, ticker })
+  await logToolUsage(c.env.DB, {
+    userId: user?.id ?? null,
+    toolType,
+    ticker,
+    ...getToolUsageAnalytics(c),
+  })
 }
 
 const hasSecret = (value: string | undefined) => typeof value === 'string' && value.trim() !== ''

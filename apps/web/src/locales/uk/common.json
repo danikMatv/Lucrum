@@ -1454,6 +1454,31 @@
       "tools": "Популярні інструменти",
       "tickers": "Популярні тікери"
     },
+    "analytics": {
+      "dailyUsage": "Використання інструментів",
+      "sources": "Джерела трафіку",
+      "locations": "Локації",
+      "devices": "Пристрої",
+      "browsers": "Браузери",
+      "os": "Операційні системи",
+      "languages": "Мови"
+    },
+    "sources": {
+      "direct": "Прямий",
+      "internal": "Внутрішній",
+      "referral": "Реферальний",
+      "unknown": "Невідомо"
+    },
+    "deviceTypes": {
+      "desktop": "Комп'ютер",
+      "mobile": "Мобільний",
+      "tablet": "Планшет",
+      "bot": "Бот",
+      "unknown": "Невідомо"
+    },
+    "dimensionLabels": {
+      "unknown": "Невідомо"
+    },
     "users": {
       "title": "Останні користувачі",
       "latest": "20 останніх",

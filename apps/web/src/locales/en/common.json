@@ -1454,6 +1454,31 @@
       "tools": "Popular tools",
       "tickers": "Popular tickers"
     },
+    "analytics": {
+      "dailyUsage": "Tool usage",
+      "sources": "Traffic sources",
+      "locations": "Locations",
+      "devices": "Devices",
+      "browsers": "Browsers",
+      "os": "Operating systems",
+      "languages": "Languages"
+    },
+    "sources": {
+      "direct": "Direct",
+      "internal": "Internal",
+      "referral": "Referral",
+      "unknown": "Unknown"
+    },
+    "deviceTypes": {
+      "desktop": "Desktop",
+      "mobile": "Mobile",
+      "tablet": "Tablet",
+      "bot": "Bot",
+      "unknown": "Unknown"
+    },
+    "dimensionLabels": {
+      "unknown": "Unknown"
+    },
     "users": {
       "title": "Latest users",
       "latest": "Latest 20",

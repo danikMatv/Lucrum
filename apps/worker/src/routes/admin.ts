@@ -4,6 +4,13 @@ import type { Context } from 'hono'
 import { z } from 'zod'
 import {
   getNewUsersByDate,
+  getToolUsageByDate,
+  getTopBrowsers,
+  getTopCountries,
+  getTopDevices,
+  getTopLanguages,
+  getTopOperatingSystems,
+  getTopSources,
   getTopTickers,
   getTopTools,
   getUsersByActiveState,
@@ -70,6 +77,26 @@ admin.get('/stats/users', async (c) => {
 admin.get('/stats/tools', async (c) => c.json(createSuccess(await getTopTools(c.env.DB))))
 
 admin.get('/stats/tickers', async (c) => c.json(createSuccess(await getTopTickers(c.env.DB))))
+
+admin.get('/stats/usage/daily', async (c) =>
+  c.json(createSuccess(await getToolUsageByDate(c.env.DB, 30))),
+)
+
+admin.get('/stats/sources', async (c) => c.json(createSuccess(await getTopSources(c.env.DB))))
+
+admin.get('/stats/locations', async (c) => c.json(createSuccess(await getTopCountries(c.env.DB))))
+
+admin.get('/stats/devices', async (c) => c.json(createSuccess(await getTopDevices(c.env.DB))))
+
+admin.get('/stats/browsers', async (c) => c.json(createSuccess(await getTopBrowsers(c.env.DB))))
+
+admin.get('/stats/os', async (c) =>
+  c.json(createSuccess(await getTopOperatingSystems(c.env.DB))),
+)
+
+admin.get('/stats/languages', async (c) =>
+  c.json(createSuccess(await getTopLanguages(c.env.DB))),
+)
 
 admin.get('/users', zValidator('query', paginationSchema, validatorHook), async (c) => {
   const { page, limit } = c.req.valid('query')

@@ -1,0 +1,14 @@
+ALTER TABLE tool_usage_events ADD COLUMN source TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN medium TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN campaign TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN referrer TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN page_path TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN country TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN region TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN city TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN timezone TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN colo TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN device_type TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN browser TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN os TEXT;
+ALTER TABLE tool_usage_events ADD COLUMN language TEXT;

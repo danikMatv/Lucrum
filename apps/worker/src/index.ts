@@ -24,7 +24,16 @@ app.use(
       return allowedOrigins.has(origin) ? origin : null
     },
     allowMethods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowHeaders: ['Content-Type', 'Authorization'],
+    allowHeaders: [
+      'Content-Type',
+      'Authorization',
+      'X-Lucrum-Campaign',
+      'X-Lucrum-Language',
+      'X-Lucrum-Medium',
+      'X-Lucrum-Page-Path',
+      'X-Lucrum-Referrer',
+      'X-Lucrum-Source',
+    ],
     credentials: true,
   }),
 )
