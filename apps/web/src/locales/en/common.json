@@ -315,7 +315,14 @@
         "address": "Address",
         "industry": "Industry",
         "sector": "Sector",
-        "grossProfit": "Gross Profit"
+        "grossProfit": "Gross Profit",
+        "instrumentType": "Type",
+        "exchange": "Exchange",
+        "currency": "Currency",
+        "dailyMove": "Daily move",
+        "previousClose": "Previous close",
+        "dayHigh": "Day high",
+        "dayLow": "Day low"
       },
       "chart": {
         "title": "Revenue vs Net Income",
@@ -362,6 +369,15 @@
         "description": "Description",
         "showMore": "Show more",
         "showLess": "Show less"
+      },
+      "funds": {
+        "etf": "ETF",
+        "fund": "Fund",
+        "instrument": "Instrument",
+        "notice": "This ticker appears to be a fund or ETF. Company metrics such as EPS, P/E, revenue and ROE usually do not apply, so Lucrum shows market quote data instead.",
+        "quoteOnlyNotice": "Lucrum found live quote data, but company fundamentals are unavailable for this ticker. The page shows the market fields that could be verified.",
+        "marketSnapshot": "Market snapshot",
+        "marketSnapshotText": "Funds and ETFs are analyzed through holdings, fees, tracking and portfolio fit. This view keeps live quote fields visible without forcing company-style fundamentals."
       },
       "verdict": {
         "upside": "upside",

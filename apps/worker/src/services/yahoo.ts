@@ -15,6 +15,10 @@ export interface StockQuote {
   dayHigh?: number | null
   dayLow?: number | null
   previousClose?: number | null
+  shortName?: string | null
+  longName?: string | null
+  exchangeName?: string | null
+  quoteType?: string | null
 }
 
 interface YahooChartResponse {
@@ -30,6 +34,12 @@ interface YahooChartResponse {
         fiftyTwoWeekLow?: number
         regularMarketChange?: number
         regularMarketChangePercent?: number
+        shortName?: string
+        longName?: string
+        exchangeName?: string
+        fullExchangeName?: string
+        instrumentType?: string
+        quoteType?: string
       }
       timestamp?: number[]
       indicators?: {
@@ -104,5 +114,9 @@ export const getYahooQuote = async (baseUrl: string, ticker: string): Promise<St
     fiftyTwoWeekLow: meta?.fiftyTwoWeekLow ?? null,
     change: meta?.regularMarketChange ?? null,
     changePercent: meta?.regularMarketChangePercent ?? null,
+    shortName: meta?.shortName ?? null,
+    longName: meta?.longName ?? null,
+    exchangeName: meta?.fullExchangeName ?? meta?.exchangeName ?? null,
+    quoteType: meta?.quoteType ?? meta?.instrumentType ?? null,
   }
 }

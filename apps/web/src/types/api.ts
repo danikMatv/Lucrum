@@ -144,6 +144,10 @@ export interface StockQuote {
   dayHigh?: number | null
   dayLow?: number | null
   previousClose?: number | null
+  shortName?: string | null
+  longName?: string | null
+  exchangeName?: string | null
+  quoteType?: string | null
 }
 
 export interface CompanySnapshot {

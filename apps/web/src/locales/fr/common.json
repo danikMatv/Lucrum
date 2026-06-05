@@ -315,7 +315,14 @@
         "address": "Adresse",
         "industry": "Industrie",
         "sector": "Secteur",
-        "grossProfit": "Marge brute en valeur"
+        "grossProfit": "Marge brute en valeur",
+        "instrumentType": "Type",
+        "exchange": "Place de cotation",
+        "currency": "Devise",
+        "dailyMove": "Variation du jour",
+        "previousClose": "Clôture précédente",
+        "dayHigh": "Plus haut du jour",
+        "dayLow": "Plus bas du jour"
       },
       "chart": {
         "title": "Chiffre d'affaires vs résultat net",
@@ -362,6 +369,15 @@
         "description": "Description",
         "showMore": "Voir plus",
         "showLess": "Voir moins"
+      },
+      "funds": {
+        "etf": "ETF",
+        "fund": "Fonds",
+        "instrument": "Instrument",
+        "notice": "Ce ticker ressemble à un fonds ou un ETF. Les métriques d'entreprise comme l'EPS, le P/E, le chiffre d'affaires et le ROE ne s'appliquent généralement pas, donc Lucrum affiche les données de marché.",
+        "quoteOnlyNotice": "Lucrum a trouvé une cotation en direct, mais les fondamentaux d'entreprise sont indisponibles pour ce ticker. La page affiche les champs de marché vérifiables.",
+        "marketSnapshot": "Aperçu de marché",
+        "marketSnapshotText": "Les fonds et ETF s'analysent par leurs positions, frais, suivi d'indice et rôle dans le portefeuille. Cette vue garde les données de cotation visibles sans forcer des fondamentaux d'entreprise."
       },
       "verdict": {
         "upside": "hausse potentielle",

@@ -82,6 +82,22 @@ const formatDividendPercent = (value: number | null | undefined) =>
     ? `${(value * 100).toFixed(2)}%`
     : '—'
 
+const formatQuoteMove = (
+  change: number | null | undefined,
+  changePercent: number | null | undefined,
+) => {
+  if (typeof change !== 'number' || !Number.isFinite(change)) {
+    return '—'
+  }
+
+  const percent =
+    typeof changePercent === 'number' && Number.isFinite(changePercent)
+      ? ` (${changePercent.toFixed(2)}%)`
+      : ''
+
+  return `${formatCurrency(change)}${percent}`
+}
+
 const formatEmployees = (value: number | null | undefined, label: string) =>
   typeof value === 'number' && Number.isFinite(value)
     ? `${formatLargeValue(value)} ${label}`
@@ -222,6 +238,28 @@ const getGrossMargin = (snapshot: CompanySnapshot) => {
   return (grossProfit / revenue) * 100
 }
 
+const isFundLikeSnapshot = (snapshot: CompanySnapshot) => {
+  const quoteType = snapshot.quote?.quoteType?.toLowerCase() ?? ''
+  const profileText = [
+    snapshot.company?.sector,
+    snapshot.company?.industry,
+    snapshot.company?.name,
+    snapshot.quote?.longName,
+    snapshot.quote?.shortName,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+
+  return (
+    quoteType.includes('etf') ||
+    quoteType.includes('fund') ||
+    profileText.includes('etf') ||
+    profileText.includes(' fund') ||
+    profileText.includes('index fund')
+  )
+}
+
 export const StockPage = () => {
   const { t, i18n } = useTranslation('common')
   const [tickerInput, setTickerInput] = useState('AAPL')
@@ -273,6 +311,33 @@ export const StockPage = () => {
     t('tools.stock.verdict.downside'),
   )
   const grossMargin = snapshot ? getGrossMargin(snapshot) : null
+  const fundLikeInstrument = snapshot ? isFundLikeSnapshot(snapshot) : false
+  const quoteOnlyInstrument = Boolean(snapshot?.quote && !snapshot.company && !snapshot.fundamentals)
+  const marketOnlyInstrument = fundLikeInstrument || quoteOnlyInstrument
+  const quoteType = snapshot?.quote?.quoteType?.toLowerCase() ?? ''
+  const instrumentTypeLabel =
+    quoteType.includes('etf') || snapshot?.company?.sector === 'ETF'
+      ? t('tools.stock.funds.etf')
+      : fundLikeInstrument
+        ? t('tools.stock.funds.fund')
+        : t('tools.stock.funds.instrument')
+  const displayName =
+    snapshot?.company?.name ??
+    snapshot?.quote?.longName ??
+    snapshot?.quote?.shortName ??
+    snapshot?.ticker
+  const displayExchange =
+    snapshot?.company?.exchange ?? snapshot?.quote?.exchangeName ?? null
+  const displaySector =
+    snapshot?.company?.sector ??
+    (marketOnlyInstrument ? instrumentTypeLabel : t('tools.stock.unavailable'))
+  const fiftyTwoWeekHigh =
+    snapshot?.fundamentals?.fiftyTwoWeekHigh ?? snapshot?.quote?.fiftyTwoWeekHigh
+  const fiftyTwoWeekLow =
+    snapshot?.fundamentals?.fiftyTwoWeekLow ?? snapshot?.quote?.fiftyTwoWeekLow
+  const marketOnlyNotice = fundLikeInstrument
+    ? t('tools.stock.funds.notice')
+    : t('tools.stock.funds.quoteOnlyNotice')
 
   const sidebar = (
     <>
@@ -355,11 +420,10 @@ export const StockPage = () => {
           <>
             <Panel>
               <p className="text-sm font-semibold uppercase text-primary">
-                {snapshot.company?.exchange ?? t('tools.stock.unavailable')} ·{' '}
-                {snapshot.company?.sector ?? t('tools.stock.unavailable')}
+                {displayExchange ? `${displayExchange} · ${displaySector}` : displaySector}
               </p>
               <h2 className="mt-2 font-heading text-4xl font-bold text-text-primary">
-                {snapshot.company?.name ?? snapshot.ticker}
+                {displayName}
               </h2>
               <p className="mt-1 text-lg font-semibold text-text-muted">
                 {snapshot.ticker}
@@ -381,30 +445,57 @@ export const StockPage = () => {
                   ) : null}
                 </div>
               ) : null}
-              <div className="mt-5 grid gap-3 text-sm text-text-muted md:grid-cols-3">
-                <p>
-                  <span className="font-semibold text-text-primary">
-                    {t('tools.stock.metrics.country')}:{' '}
-                  </span>
-                  {snapshot.fundamentals?.country ?? t('tools.stock.unavailable')}
+              {marketOnlyInstrument && !snapshot.fundamentals ? (
+                <div className="mt-5 grid gap-3 text-sm text-text-muted md:grid-cols-3">
+                  <p>
+                    <span className="font-semibold text-text-primary">
+                      {t('tools.stock.metrics.instrumentType')}:{' '}
+                    </span>
+                    {instrumentTypeLabel}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-text-primary">
+                      {t('tools.stock.metrics.exchange')}:{' '}
+                    </span>
+                    {displayExchange ?? '—'}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-text-primary">
+                      {t('tools.stock.metrics.currency')}:{' '}
+                    </span>
+                    {snapshot.quote?.currency ?? '—'}
+                  </p>
+                </div>
+              ) : (
+                <div className="mt-5 grid gap-3 text-sm text-text-muted md:grid-cols-3">
+                  <p>
+                    <span className="font-semibold text-text-primary">
+                      {t('tools.stock.metrics.country')}:{' '}
+                    </span>
+                    {snapshot.fundamentals?.country ?? t('tools.stock.unavailable')}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-text-primary">
+                      {t('tools.stock.metrics.employees')}:{' '}
+                    </span>
+                    {formatEmployees(
+                      snapshot.fundamentals?.employees,
+                      t('tools.stock.metrics.employeeUnit'),
+                    )}
+                  </p>
+                  <p>
+                    <span className="font-semibold text-text-primary">
+                      {t('tools.stock.metrics.fiscalYearEnd')}:{' '}
+                    </span>
+                    {snapshot.fundamentals?.fiscalYearEnd ?? '—'}
+                  </p>
+                </div>
+              )}
+              {marketOnlyInstrument && !snapshot.fundamentals ? (
+                <p className="mt-4 text-sm leading-6 text-text-muted">
+                  {marketOnlyNotice}
                 </p>
-                <p>
-                  <span className="font-semibold text-text-primary">
-                    {t('tools.stock.metrics.employees')}:{' '}
-                  </span>
-                  {formatEmployees(
-                    snapshot.fundamentals?.employees,
-                    t('tools.stock.metrics.employeeUnit'),
-                  )}
-                </p>
-                <p>
-                  <span className="font-semibold text-text-primary">
-                    {t('tools.stock.metrics.fiscalYearEnd')}:{' '}
-                  </span>
-                  {snapshot.fundamentals?.fiscalYearEnd ?? '—'}
-                </p>
-              </div>
-              {(snapshot.missing?.length ?? 0) > 0 ? (
+              ) : (snapshot.missing?.length ?? 0) > 0 ? (
                 <p className="mt-4 text-sm leading-6 text-text-muted">
                   {t('tools.stock.notice.partial')}
                 </p>
@@ -422,53 +513,84 @@ export const StockPage = () => {
                   <div>
                     <p className="text-sm text-text-muted">{t('tools.stock.price.high')}</p>
                     <p className="mt-2 text-2xl font-bold text-text-primary">
-                      {formatCurrency(snapshot.fundamentals?.fiftyTwoWeekHigh)}
+                      {formatCurrency(fiftyTwoWeekHigh)}
                     </p>
                   </div>
                   <div>
                     <p className="text-sm text-text-muted">{t('tools.stock.price.low')}</p>
                     <p className="mt-2 text-2xl font-bold text-text-primary">
-                      {formatCurrency(snapshot.fundamentals?.fiftyTwoWeekLow)}
+                      {formatCurrency(fiftyTwoWeekLow)}
                     </p>
                   </div>
                 </div>
               </Panel>
             </div>
 
-            <StatGrid>
-              <StatCard
-                label={t('tools.stock.metrics.pe')}
-                value={formatNumber(snapshot.fundamentals?.peRatio)}
-              />
-              <StatCard
-                label={t('tools.stock.metrics.forwardPE')}
-                value={formatNumber(snapshot.fundamentals?.forwardPE)}
-              />
-              <StatCard
-                label={t('tools.stock.metrics.eps')}
-                value={formatCurrency(snapshot.fundamentals?.epsTtm)}
-              />
-              <StatCard
-                label={t('tools.stock.metrics.marketCap')}
-                value={formatLargeCurrency(snapshot.fundamentals?.marketCap)}
-              />
-              <StatCard
-                label={t('tools.stock.metrics.revenue')}
-                value={formatLargeCurrency(snapshot.fundamentals?.revenue)}
-              />
-              <StatCard
-                label={t('tools.stock.metrics.netIncome')}
-                value={formatLargeCurrency(snapshot.fundamentals?.netIncome)}
-              />
-              <StatCard
-                label={t('tools.stock.metrics.fcf')}
-                value={formatLargeCurrency(snapshot.fundamentals?.freeCashFlow)}
-              />
-              <StatCard
-                label={t('tools.stock.metrics.dividend')}
-                value={formatDividendPercent(snapshot.fundamentals?.dividendYield)}
-              />
-            </StatGrid>
+            {marketOnlyInstrument && !snapshot.fundamentals ? (
+              <Panel>
+                <p className="text-sm font-semibold uppercase text-primary">
+                  {t('tools.stock.funds.marketSnapshot')}
+                </p>
+                <p className="mt-3 text-sm leading-6 text-text-muted">
+                  {t('tools.stock.funds.marketSnapshotText')}
+                </p>
+                <div className="mt-5">
+                  <StatGrid>
+                    <StatCard
+                      label={t('tools.stock.metrics.dailyMove')}
+                      value={formatQuoteMove(snapshot.quote?.change, snapshot.quote?.changePercent)}
+                    />
+                    <StatCard
+                      label={t('tools.stock.metrics.previousClose')}
+                      value={formatCurrency(snapshot.quote?.previousClose)}
+                    />
+                    <StatCard
+                      label={t('tools.stock.metrics.dayHigh')}
+                      value={formatCurrency(snapshot.quote?.dayHigh)}
+                    />
+                    <StatCard
+                      label={t('tools.stock.metrics.dayLow')}
+                      value={formatCurrency(snapshot.quote?.dayLow)}
+                    />
+                  </StatGrid>
+                </div>
+              </Panel>
+            ) : (
+              <>
+                <StatGrid>
+                  <StatCard
+                    label={t('tools.stock.metrics.pe')}
+                    value={formatNumber(snapshot.fundamentals?.peRatio)}
+                  />
+                  <StatCard
+                    label={t('tools.stock.metrics.forwardPE')}
+                    value={formatNumber(snapshot.fundamentals?.forwardPE)}
+                  />
+                  <StatCard
+                    label={t('tools.stock.metrics.eps')}
+                    value={formatCurrency(snapshot.fundamentals?.epsTtm)}
+                  />
+                  <StatCard
+                    label={t('tools.stock.metrics.marketCap')}
+                    value={formatLargeCurrency(snapshot.fundamentals?.marketCap)}
+                  />
+                  <StatCard
+                    label={t('tools.stock.metrics.revenue')}
+                    value={formatLargeCurrency(snapshot.fundamentals?.revenue)}
+                  />
+                  <StatCard
+                    label={t('tools.stock.metrics.netIncome')}
+                    value={formatLargeCurrency(snapshot.fundamentals?.netIncome)}
+                  />
+                  <StatCard
+                    label={t('tools.stock.metrics.fcf')}
+                    value={formatLargeCurrency(snapshot.fundamentals?.freeCashFlow)}
+                  />
+                  <StatCard
+                    label={t('tools.stock.metrics.dividend')}
+                    value={formatDividendPercent(snapshot.fundamentals?.dividendYield)}
+                  />
+                </StatGrid>
 
             <section className="grid gap-4">
               <h2 className="text-lg font-bold text-text-primary">
@@ -787,6 +909,8 @@ export const StockPage = () => {
                 </div>
               </div>
             </Panel>
+              </>
+            )}
           </>
         )}
       </div>

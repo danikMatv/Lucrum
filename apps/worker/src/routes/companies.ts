@@ -121,7 +121,94 @@ const hasEpsHistory = (epsHistory: CompanyEpsHistoryRow[]) => epsHistory.length 
 const hasQuotePrice = (quote: StockQuote | null) =>
   typeof quote?.price === 'number' && Number.isFinite(quote.price)
 
+const hasQuoteRange = (quote: StockQuote | null) =>
+  Boolean(
+    quote &&
+      typeof quote.fiftyTwoWeekHigh === 'number' &&
+      typeof quote.fiftyTwoWeekLow === 'number',
+  )
+
 const hasSecret = (value: string | undefined) => typeof value === 'string' && value.trim() !== ''
+
+const mergeQuote = (primary: StockQuote, fallback: StockQuote): StockQuote => ({
+  ...primary,
+  currency: primary.currency ?? fallback.currency,
+  marketTime: primary.marketTime ?? fallback.marketTime,
+  fiftyTwoWeekHigh: primary.fiftyTwoWeekHigh ?? fallback.fiftyTwoWeekHigh,
+  fiftyTwoWeekLow: primary.fiftyTwoWeekLow ?? fallback.fiftyTwoWeekLow,
+  change: primary.change ?? fallback.change,
+  changePercent: primary.changePercent ?? fallback.changePercent,
+  dayHigh: primary.dayHigh ?? fallback.dayHigh,
+  dayLow: primary.dayLow ?? fallback.dayLow,
+  previousClose: primary.previousClose ?? fallback.previousClose,
+  shortName: primary.shortName ?? fallback.shortName,
+  longName: primary.longName ?? fallback.longName,
+  exchangeName: primary.exchangeName ?? fallback.exchangeName,
+  quoteType: primary.quoteType ?? fallback.quoteType,
+})
+
+const enrichQuote = async (
+  quote: StockQuote,
+  c: Context,
+  ticker: string,
+  noteProviderIssue?: (provider: string, section: string, error: unknown) => void,
+) => {
+  if (hasQuoteRange(quote) && quote.longName && quote.quoteType) {
+    return quote
+  }
+
+  let enrichedQuote = quote
+  try {
+    const yahooQuote = await getYahooQuote(c.env.YAHOO_FINANCE_BASE_URL, ticker)
+    enrichedQuote = mergeQuote(enrichedQuote, yahooQuote)
+  } catch (error) {
+    noteProviderIssue?.('yahoo', 'quoteSupplement', error)
+  }
+
+  if (hasQuoteRange(enrichedQuote)) {
+    return enrichedQuote
+  }
+
+  try {
+    const fmpQuote = await getFmpQuote(ticker, c.env.FMP_API_KEY)
+    return mergeQuote(enrichedQuote, fmpQuote)
+  } catch (error) {
+    noteProviderIssue?.('fmp', 'quoteSupplement', error)
+    return enrichedQuote
+  }
+}
+
+const isFundQuote = (quote: StockQuote | null) => {
+  const quoteType = quote?.quoteType?.toLowerCase() ?? ''
+  const name = `${quote?.longName ?? ''} ${quote?.shortName ?? ''}`.toLowerCase()
+  return (
+    quoteType.includes('etf') ||
+    quoteType.includes('fund') ||
+    name.includes(' etf') ||
+    name.includes(' fund') ||
+    name.includes('index fund')
+  )
+}
+
+const createFundSnapshotCompany = (ticker: string, quote: StockQuote): Company => {
+  const timestamp = nowIso()
+  const instrumentText = `${quote.quoteType ?? ''} ${quote.longName ?? ''} ${
+    quote.shortName ?? ''
+  }`.toUpperCase()
+  const quoteType = instrumentText.includes('ETF') ? 'ETF' : 'Fund'
+
+  return {
+    id: crypto.randomUUID(),
+    ticker,
+    name: quote.longName ?? quote.shortName ?? ticker,
+    exchange: quote.exchangeName ?? null,
+    sector: quoteType,
+    industry: quoteType,
+    description: null,
+    lastSyncedAt: timestamp,
+    createdAt: timestamp,
+  }
+}
 
 interface EpsTtmDebugEntry {
   stage: string
@@ -245,7 +332,16 @@ const getQuote = async (
   const cacheKey = `quote:${normalizedTicker}`
   const cached = await getJsonCache<StockQuote>(c.env.KV, cacheKey)
   if (cached && hasQuotePrice(cached)) {
-    return cached
+    const enrichedCached = await enrichQuote(
+      cached,
+      c,
+      normalizedTicker,
+      noteProviderIssue,
+    )
+    if (enrichedCached !== cached) {
+      await putJsonCache(c.env.KV, cacheKey, enrichedCached, CacheTtl.quote)
+    }
+    return enrichedCached
   }
 
   let quote: StockQuote
@@ -254,6 +350,7 @@ const getQuote = async (
       throw new Error('missing_api_key')
     }
     quote = await getFinnhubQuote(normalizedTicker, c.env.FINNHUB_API_KEY)
+    quote = await enrichQuote(quote, c, normalizedTicker, noteProviderIssue)
   } catch (error) {
     noteProviderIssue?.('finnhub', 'quote', error)
     try {
@@ -944,6 +1041,27 @@ const resolveCompanySnapshot = async (
     quote = null
   }
 
+  if (quote && isFundQuote(quote) && (!company || !hasCompanyDisplayFields(company))) {
+    company = {
+      ...createFundSnapshotCompany(normalizedTicker, quote),
+      id: company?.id ?? crypto.randomUUID(),
+      createdAt: company?.createdAt ?? nowIso(),
+    }
+    companyFetchedAt = nowIso()
+    snapshot = await upsertCompanySnapshot(c.env.DB, {
+      ticker: normalizedTicker,
+      company,
+      companyFetchedAt,
+    })
+    company = snapshot?.company ?? company
+    companyFetchedAt = snapshot?.companyFetchedAt ?? companyFetchedAt
+  }
+
+  const companyInstrumentType = company?.sector?.toLowerCase() ?? ''
+  const fundLikeInstrument =
+    isFundQuote(quote) ||
+    companyInstrumentType.includes('etf') ||
+    companyInstrumentType.includes('fund')
   const freshness = {
     company: freshnessFor(Boolean(company), companyFetchedAt),
     fundamentals: freshnessFor(Boolean(fundamentals), fundamentalsFetchedAt),
@@ -953,11 +1071,11 @@ const resolveCompanySnapshot = async (
   }
   const missing = [
     ...(!company ? ['company'] : []),
-    ...(!fundamentals ? ['fundamentals'] : []),
+    ...(!fundLikeInstrument && !fundamentals ? ['fundamentals'] : []),
     ...(fundamentals && typeof fundamentals.peRatio !== 'number' ? ['peRatio'] : []),
     ...(fundamentals && typeof fundamentals.marketCap !== 'number' ? ['marketCap'] : []),
-    ...(!hasIncomeHistory(incomeHistory) ? ['incomeHistory'] : []),
-    ...(!hasEpsHistory(epsHistory) ? ['epsHistory'] : []),
+    ...(!fundLikeInstrument && !hasIncomeHistory(incomeHistory) ? ['incomeHistory'] : []),
+    ...(!fundLikeInstrument && !hasEpsHistory(epsHistory) ? ['epsHistory'] : []),
     ...(!quote ? ['quote'] : []),
   ]
 
