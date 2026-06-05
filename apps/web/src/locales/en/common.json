@@ -39,6 +39,7 @@
       "title": "Invest Calculator",
       "description": "Project recurring investments, returns, inflation, and contribution growth over time.",
       "inputs": {
+        "currency": "Currency",
         "years": "Planning horizon",
         "startingCapital": "Starting capital",
         "contribution": "Contribution amount",
@@ -46,6 +47,31 @@
         "return": "Expected annual return",
         "inflation": "Inflation rate",
         "contributionGrowth": "Annual contribution growth"
+      },
+      "currency": {
+        "uah": "UAH - hryvnia",
+        "usd": "USD - dollar",
+        "eur": "EUR - euro"
+      },
+      "helpers": {
+        "currency": "Choose the currency you use for the goal. The calculator does not convert exchange rates.",
+        "years": "How many years you plan to invest regularly.",
+        "startingCapital": "Money you already have today. Leave 0 if you are starting from scratch.",
+        "contribution": "How much you can realistically add at the selected frequency.",
+        "frequency": "Monthly is usually enough for a first scenario.",
+        "return": "A rough expected average annual return before inflation.",
+        "inflation": "Used to estimate the future purchasing power of the result.",
+        "contributionGrowth": "If you plan to raise contributions with income, enter the annual increase. Otherwise leave 0."
+      },
+      "presets": {
+        "title": "Quick start",
+        "starter": "Careful: 10 years, smaller contribution",
+        "balanced": "Base: 20 years, regular contribution",
+        "growth": "Long: 30 years, higher contribution"
+      },
+      "advanced": {
+        "title": "Advanced settings",
+        "summary": "Currently using {{inflation}}% inflation and {{contributionGrowth}}% annual contribution growth."
       },
       "frequency": {
         "monthly": "Monthly",

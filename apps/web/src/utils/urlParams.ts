@@ -7,7 +7,12 @@ export const getNumberParam = (
   fallback: number,
   options: { min?: number; max?: number } = {},
 ) => {
-  const value = Number(params.get(key))
+  const rawValue = params.get(key)
+  if (rawValue === null) {
+    return fallback
+  }
+
+  const value = Number(rawValue)
   if (!Number.isFinite(value)) {
     return fallback
   }

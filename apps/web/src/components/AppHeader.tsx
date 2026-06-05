@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supportedLanguages } from '../i18n.ts'
+import { localizedPath, type Locale } from '../seo/locales.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
 
 const navLinks = [
@@ -16,13 +17,13 @@ interface AppHeaderProps {
 
 export const AppHeader = ({ compact = false }: AppHeaderProps) => {
   const { t, i18n } = useTranslation('common')
+  const location = useLocation()
   const { user, isAuthenticated, logout } = useAuthStore()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const activeLanguage = i18n.resolvedLanguage ?? i18n.language
 
-  const handleLanguageChange = (language: string) => {
-    void i18n.changeLanguage(language)
-  }
+  const getLanguageHref = (language: Locale) =>
+    `${localizedPath(location.pathname, language)}${location.search}${location.hash}`
 
   const handleLogout = () => {
     void logout()
@@ -92,10 +93,9 @@ export const AppHeader = ({ compact = false }: AppHeaderProps) => {
         <div className="hidden items-center gap-2 md:flex">
           <div className="flex rounded-md border-[0.5px] border-border bg-surface-alt p-1">
             {supportedLanguages.map((language) => (
-              <button
+              <a
                 key={language}
-                type="button"
-                onClick={() => handleLanguageChange(language)}
+                href={getLanguageHref(language)}
                 className={`rounded px-2.5 py-1 text-xs font-semibold uppercase transition ${
                   activeLanguage.startsWith(language)
                     ? 'bg-primary text-background'
@@ -104,7 +104,7 @@ export const AppHeader = ({ compact = false }: AppHeaderProps) => {
                 aria-pressed={activeLanguage.startsWith(language)}
               >
                 {language}
-              </button>
+              </a>
             ))}
           </div>
           {!compact ? authLinks : null}
@@ -133,10 +133,9 @@ export const AppHeader = ({ compact = false }: AppHeaderProps) => {
             ))}
             <div className="flex rounded-md border-[0.5px] border-border bg-surface-alt p-1">
               {supportedLanguages.map((language) => (
-                <button
+                <a
                   key={language}
-                  type="button"
-                  onClick={() => handleLanguageChange(language)}
+                  href={getLanguageHref(language)}
                   className={`flex-1 rounded px-2.5 py-2 text-xs font-semibold uppercase transition ${
                     activeLanguage.startsWith(language)
                       ? 'bg-primary text-background'
@@ -145,7 +144,7 @@ export const AppHeader = ({ compact = false }: AppHeaderProps) => {
                   aria-pressed={activeLanguage.startsWith(language)}
                 >
                   {language}
-                </button>
+                </a>
               ))}
             </div>
             <div className="grid gap-2">{authLinks}</div>

@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { ProtectedRoute } from '../components/ProtectedRoute.tsx'
 import { AdminPage } from '../pages/AdminPage.tsx'
 import { DcaPage } from '../pages/DcaPage.tsx'
@@ -18,17 +18,41 @@ import { StockMiniCoursePage } from '../pages/StockMiniCoursePage.tsx'
 import { ToolsPage } from '../pages/ToolsPage.tsx'
 import { LoginPage } from '../pages/auth/LoginPage.tsx'
 import { RegisterPage } from '../pages/auth/RegisterPage.tsx'
+import i18n from '../i18n.ts'
+import { applySeoToDocument } from '../seo/head.ts'
+import type { Locale } from '../seo/locales.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
 
-export const App = () => {
+interface SeoManagerProps {
+  locale: Locale
+}
+
+const SeoManager = ({ locale }: SeoManagerProps) => {
+  const location = useLocation()
+
+  useEffect(() => {
+    document.documentElement.lang = locale
+    applySeoToDocument(location.pathname, locale)
+  }, [locale, location.pathname])
+
+  return null
+}
+
+interface AppProps {
+  locale: Locale
+}
+
+export const App = ({ locale }: AppProps) => {
   const fetchMe = useAuthStore((state) => state.fetchMe)
 
   useEffect(() => {
+    void i18n.changeLanguage(locale)
     void fetchMe()
-  }, [fetchMe])
+  }, [fetchMe, locale])
 
   return (
-    <BrowserRouter>
+    <>
+      <SeoManager locale={locale} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/learn" element={<LearnPage />} />
@@ -94,6 +118,6 @@ export const App = () => {
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </>
   )
 }

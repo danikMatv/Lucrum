@@ -25,36 +25,65 @@ import {
 import { getNumberParam, getSearchParams, getUnionParam } from '../utils/urlParams.ts'
 
 type ValueMode = 'real' | 'nominal'
+type CurrencyCode = 'UAH' | 'USD' | 'EUR'
+type PresetKey = 'starter' | 'balanced' | 'growth'
+
 const frequencyOptions = ['monthly', 'quarterly', 'yearly'] as const
 const valueModeOptions = ['real', 'nominal'] as const
+const currencyOptions = ['UAH', 'USD', 'EUR'] as const
 
 const defaultInvestInput = {
   years: 30,
   startingCapital: 10000,
-  monthlyContribution: 500,
+  monthlyContribution: 3000,
   frequency: 'monthly' as ContributionFrequency,
-  annualReturn: 7,
-  inflation: 2.5,
-  contributionGrowth: 2,
+  annualReturn: 8,
+  inflation: 6,
+  contributionGrowth: 0,
+  currency: 'UAH' as CurrencyCode,
   valueMode: 'real' as ValueMode,
 }
 
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumFractionDigits: 0,
-})
-
-const compactCurrency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
+const presets: Record<
+  PresetKey,
+  Pick<
+    typeof defaultInvestInput,
+    'years' | 'startingCapital' | 'monthlyContribution' | 'annualReturn' | 'inflation' | 'contributionGrowth'
+  >
+> = {
+  starter: {
+    years: 10,
+    startingCapital: 5000,
+    monthlyContribution: 2000,
+    annualReturn: 6,
+    inflation: 5,
+    contributionGrowth: 0,
+  },
+  balanced: {
+    years: 20,
+    startingCapital: 10000,
+    monthlyContribution: 3000,
+    annualReturn: 8,
+    inflation: 6,
+    contributionGrowth: 2,
+  },
+  growth: {
+    years: 30,
+    startingCapital: 25000,
+    monthlyContribution: 6000,
+    annualReturn: 10,
+    inflation: 6,
+    contributionGrowth: 3,
+  },
+}
 
 export const InvestCalcPage = () => {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
   const params = getSearchParams()
+  const [isAdvancedOpen, setIsAdvancedOpen] = useState(false)
+  const [currencyCode, setCurrencyCode] = useState<CurrencyCode>(
+    getUnionParam(params, 'currency', defaultInvestInput.currency, currencyOptions),
+  )
   const [years, setYears] = useState(
     getNumberParam(params, 'years', defaultInvestInput.years, { min: 1, max: 60 }),
   )
@@ -80,6 +109,27 @@ export const InvestCalcPage = () => {
     getUnionParam(params, 'mode', defaultInvestInput.valueMode, valueModeOptions),
   )
 
+  const locale = i18n.resolvedLanguage ?? i18n.language
+  const currency = useMemo(
+    () =>
+      new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: currencyCode,
+        maximumFractionDigits: 0,
+      }),
+    [currencyCode, locale],
+  )
+  const compactCurrency = useMemo(
+    () =>
+      new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: currencyCode,
+        notation: 'compact',
+        maximumFractionDigits: 1,
+      }),
+    [currencyCode, locale],
+  )
+
   const result = useMemo(
     () =>
       calculateInvestProjection({
@@ -94,25 +144,141 @@ export const InvestCalcPage = () => {
     [annualReturn, contributionGrowth, frequency, inflation, monthlyContribution, startingCapital, years],
   )
 
+  const applyPreset = (presetKey: PresetKey) => {
+    const preset = presets[presetKey]
+    setYears(preset.years)
+    setStartingCapital(preset.startingCapital)
+    setMonthlyContribution(preset.monthlyContribution)
+    setAnnualReturn(preset.annualReturn)
+    setInflation(preset.inflation)
+    setContributionGrowth(preset.contributionGrowth)
+  }
+
   const sidebar = (
     <>
-      <NumberInput id="years" label={t('tools.invest.inputs.years')} value={years} min={1} max={60} onChange={setYears} />
-      <NumberInput id="starting-capital" label={t('tools.invest.inputs.startingCapital')} value={startingCapital} min={0} step={500} onChange={setStartingCapital} />
-      <NumberInput id="monthly-contribution" label={t('tools.invest.inputs.contribution')} value={monthlyContribution} min={0} step={50} onChange={setMonthlyContribution} />
+      <SelectInput
+        id="currency"
+        label={t('tools.invest.inputs.currency')}
+        value={currencyCode}
+        onChange={setCurrencyCode}
+        helper={t('tools.invest.helpers.currency')}
+        options={[
+          { value: 'UAH', label: t('tools.invest.currency.uah') },
+          { value: 'USD', label: t('tools.invest.currency.usd') },
+          { value: 'EUR', label: t('tools.invest.currency.eur') },
+        ]}
+      />
+      <section className="grid gap-3 rounded-md border-[0.5px] border-border bg-surface-alt p-3">
+        <p className="text-sm font-semibold text-text-primary">{t('tools.invest.presets.title')}</p>
+        <div className="grid gap-2">
+          {(Object.keys(presets) as PresetKey[]).map((presetKey) => (
+            <button
+              key={presetKey}
+              type="button"
+              onClick={() => applyPreset(presetKey)}
+              className="rounded-md border-[0.5px] border-border bg-surface px-3 py-2 text-left text-sm font-semibold text-text-muted transition hover:border-border-hover hover:text-text-primary"
+            >
+              {t(`tools.invest.presets.${presetKey}`)}
+            </button>
+          ))}
+        </div>
+      </section>
+      <NumberInput
+        id="years"
+        label={t('tools.invest.inputs.years')}
+        value={years}
+        min={1}
+        max={60}
+        helper={t('tools.invest.helpers.years')}
+        onChange={setYears}
+      />
+      <NumberInput
+        id="starting-capital"
+        label={t('tools.invest.inputs.startingCapital')}
+        value={startingCapital}
+        min={0}
+        step={500}
+        suffix={currencyCode}
+        helper={t('tools.invest.helpers.startingCapital')}
+        onChange={setStartingCapital}
+      />
+      <NumberInput
+        id="monthly-contribution"
+        label={t('tools.invest.inputs.contribution')}
+        value={monthlyContribution}
+        min={0}
+        step={100}
+        suffix={currencyCode}
+        helper={t('tools.invest.helpers.contribution')}
+        onChange={setMonthlyContribution}
+      />
       <SelectInput
         id="frequency"
         label={t('tools.invest.inputs.frequency')}
         value={frequency}
         onChange={setFrequency}
+        helper={t('tools.invest.helpers.frequency')}
         options={[
           { value: 'monthly', label: t('tools.invest.frequency.monthly') },
           { value: 'quarterly', label: t('tools.invest.frequency.quarterly') },
           { value: 'yearly', label: t('tools.invest.frequency.yearly') },
         ]}
       />
-      <NumberInput id="return" label={t('tools.invest.inputs.return')} value={annualReturn} min={0} max={20} step={0.1} suffix="%" onChange={setAnnualReturn} />
-      <NumberInput id="inflation" label={t('tools.invest.inputs.inflation')} value={inflation} min={0} max={15} step={0.1} suffix="%" onChange={setInflation} />
-      <NumberInput id="growth" label={t('tools.invest.inputs.contributionGrowth')} value={contributionGrowth} min={0} max={15} step={0.1} suffix="%" onChange={setContributionGrowth} />
+      <NumberInput
+        id="return"
+        label={t('tools.invest.inputs.return')}
+        value={annualReturn}
+        min={0}
+        max={20}
+        step={0.1}
+        suffix="%"
+        helper={t('tools.invest.helpers.return')}
+        onChange={setAnnualReturn}
+      />
+      <section className="grid gap-3 border-t-[0.5px] border-border pt-4">
+        <button
+          type="button"
+          onClick={() => setIsAdvancedOpen((current) => !current)}
+          className="flex items-center justify-between rounded-md border-[0.5px] border-border px-3 py-2 text-left text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface-alt"
+          aria-expanded={isAdvancedOpen}
+        >
+          <span>{t('tools.invest.advanced.title')}</span>
+          <span className="text-primary">{isAdvancedOpen ? '-' : '+'}</span>
+        </button>
+        {isAdvancedOpen ? (
+          <div className="grid gap-5">
+            <NumberInput
+              id="inflation"
+              label={t('tools.invest.inputs.inflation')}
+              value={inflation}
+              min={0}
+              max={20}
+              step={0.1}
+              suffix="%"
+              helper={t('tools.invest.helpers.inflation')}
+              onChange={setInflation}
+            />
+            <NumberInput
+              id="growth"
+              label={t('tools.invest.inputs.contributionGrowth')}
+              value={contributionGrowth}
+              min={0}
+              max={20}
+              step={0.1}
+              suffix="%"
+              helper={t('tools.invest.helpers.contributionGrowth')}
+              onChange={setContributionGrowth}
+            />
+          </div>
+        ) : (
+          <p className="text-xs leading-5 text-text-subtle">
+            {t('tools.invest.advanced.summary', {
+              inflation,
+              contributionGrowth,
+            })}
+          </p>
+        )}
+      </section>
     </>
   )
 
@@ -124,7 +290,9 @@ export const InvestCalcPage = () => {
     setAnnualReturn(defaultInvestInput.annualReturn)
     setInflation(defaultInvestInput.inflation)
     setContributionGrowth(defaultInvestInput.contributionGrowth)
+    setCurrencyCode(defaultInvestInput.currency)
     setValueMode(defaultInvestInput.valueMode)
+    setIsAdvancedOpen(false)
   }
 
   return (
@@ -144,6 +312,7 @@ export const InvestCalcPage = () => {
             return: annualReturn,
             inflation,
             growth: contributionGrowth,
+            currency: currencyCode,
             mode: valueMode,
           }}
         />

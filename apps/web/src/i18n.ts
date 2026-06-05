@@ -1,14 +1,13 @@
 import i18n from 'i18next'
-import LanguageDetector from 'i18next-browser-languagedetector'
 import { initReactI18next } from 'react-i18next'
 import enCommon from './locales/en/common.json'
 import frCommon from './locales/fr/common.json'
 import ukCommon from './locales/uk/common.json'
+import { defaultLocale, supportedLocales } from './seo/locales.ts'
 
-export const supportedLanguages = ['en', 'fr', 'uk'] as const
+export const supportedLanguages = supportedLocales
 
 i18n
-  .use(LanguageDetector)
   .use(initReactI18next)
   .init({
     resources: {
@@ -22,15 +21,12 @@ i18n
         common: ukCommon,
       },
     },
-    fallbackLng: 'en',
+    lng: defaultLocale,
+    fallbackLng: defaultLocale,
     defaultNS: 'common',
     supportedLngs: supportedLanguages,
     interpolation: {
       escapeValue: false,
-    },
-    detection: {
-      order: ['localStorage', 'navigator'],
-      caches: ['localStorage'],
     },
   })
 

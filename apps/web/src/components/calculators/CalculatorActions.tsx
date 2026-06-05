@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 type ShareParamValue = string | number | boolean | null | undefined
@@ -9,6 +9,10 @@ interface CalculatorActionsProps {
 }
 
 const buildShareUrl = (params: Record<string, ShareParamValue>) => {
+  if (typeof window === 'undefined') {
+    return ''
+  }
+
   const url = new URL(window.location.href)
   url.search = ''
 
@@ -24,9 +28,10 @@ const buildShareUrl = (params: Record<string, ShareParamValue>) => {
 export const CalculatorActions = ({ params, onReset }: CalculatorActionsProps) => {
   const { t } = useTranslation('common')
   const [copied, setCopied] = useState(false)
-  const shareUrl = useMemo(() => buildShareUrl(params), [params])
 
   const handleShare = async () => {
+    const shareUrl = buildShareUrl(params)
+
     try {
       await navigator.clipboard.writeText(shareUrl)
       setCopied(true)

@@ -11,6 +11,7 @@ interface NumberInputProps {
   max?: number
   step?: number
   suffix?: string
+  helper?: string
   labelAccessory?: ReactNode
 }
 
@@ -37,6 +38,7 @@ interface SelectInputProps<T extends string | number> {
   value: T
   options: readonly SelectOption<T>[]
   onChange: (value: T) => void
+  helper?: string
 }
 
 interface SegmentedControlProps<T extends string | number> {
@@ -58,6 +60,7 @@ export const NumberInput = ({
   max,
   step = 1,
   suffix,
+  helper,
   labelAccessory,
 }: NumberInputProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -81,8 +84,9 @@ export const NumberInput = ({
           onChange={handleChange}
           className={controlClass}
         />
-        {suffix ? <span className="w-8 text-sm text-text-subtle">{suffix}</span> : null}
+        {suffix ? <span className="w-12 text-sm text-text-subtle">{suffix}</span> : null}
       </div>
+      {helper ? <span className="text-xs leading-5 text-text-subtle">{helper}</span> : null}
     </label>
   )
 }
@@ -96,6 +100,7 @@ export const SliderInput = ({
   max = 100,
   step = 1,
   suffix,
+  helper,
 }: NumberInputProps) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(Number(event.target.value))
@@ -126,9 +131,10 @@ export const SliderInput = ({
             className={controlClass}
             aria-label={label}
           />
-          {suffix ? <span className="w-8 text-sm text-text-subtle">{suffix}</span> : null}
+          {suffix ? <span className="w-12 text-sm text-text-subtle">{suffix}</span> : null}
         </div>
       </div>
+      {helper ? <span className="text-xs leading-5 text-text-subtle">{helper}</span> : null}
     </label>
   )
 }
@@ -229,6 +235,7 @@ export const SelectInput = <T extends string | number>({
   value,
   options,
   onChange,
+  helper,
 }: SelectInputProps<T>) => (
   <label htmlFor={id} className="grid gap-2">
     <span className="text-sm font-medium text-text-muted">{label}</span>
@@ -244,6 +251,7 @@ export const SelectInput = <T extends string | number>({
         </option>
       ))}
     </select>
+    {helper ? <span className="text-xs leading-5 text-text-subtle">{helper}</span> : null}
   </label>
 )
 

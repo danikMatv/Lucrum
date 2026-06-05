@@ -47,7 +47,7 @@ apiClient.interceptors.response.use(
           return apiClient(originalRequest)
         } catch (refreshError) {
           setAccessToken(null)
-          if (window.location.pathname !== '/auth/login') {
+          if (typeof window !== 'undefined' && window.location.pathname !== '/auth/login') {
             window.location.assign('/auth/login')
           }
           return Promise.reject(refreshError)

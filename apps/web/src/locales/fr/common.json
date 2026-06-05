@@ -39,6 +39,7 @@
       "title": "Calculateur d'investissement",
       "description": "Projetez des investissements réguliers avec rendement, inflation et hausse des versements.",
       "inputs": {
+        "currency": "Devise",
         "years": "Horizon de planification",
         "startingCapital": "Capital initial",
         "contribution": "Montant du versement",
@@ -46,6 +47,31 @@
         "return": "Rendement annuel attendu",
         "inflation": "Taux d'inflation",
         "contributionGrowth": "Hausse annuelle des versements"
+      },
+      "currency": {
+        "uah": "UAH - hryvnia",
+        "usd": "USD - dollar",
+        "eur": "EUR - euro"
+      },
+      "helpers": {
+        "currency": "Choisissez la devise de votre objectif. Le calculateur ne convertit pas les taux de change.",
+        "years": "Pendant combien d'années vous prévoyez d'investir régulièrement.",
+        "startingCapital": "L'argent que vous avez déjà aujourd'hui. Laissez 0 si vous commencez de zéro.",
+        "contribution": "Combien vous pouvez ajouter de manière réaliste selon la fréquence choisie.",
+        "frequency": "Mensuel suffit généralement pour un premier scénario.",
+        "return": "Une estimation du rendement annuel moyen avant inflation.",
+        "inflation": "Sert à estimer le pouvoir d'achat futur du résultat.",
+        "contributionGrowth": "Si vous prévoyez d'augmenter les versements avec vos revenus, indiquez la hausse annuelle. Sinon laissez 0."
+      },
+      "presets": {
+        "title": "Démarrage rapide",
+        "starter": "Prudent : 10 ans, versement plus petit",
+        "balanced": "Base : 20 ans, versement régulier",
+        "growth": "Long : 30 ans, versement plus élevé"
+      },
+      "advanced": {
+        "title": "Réglages avancés",
+        "summary": "Utilise actuellement {{inflation}}% d'inflation et {{contributionGrowth}}% de hausse annuelle des versements."
       },
       "frequency": {
         "monthly": "Mensuelle",
