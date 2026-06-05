@@ -11,6 +11,7 @@ import {
   YAxis,
 } from 'recharts'
 import { MonthYearInput, NumberInput } from '../components/calculators/CalculatorControls.tsx'
+import { CalculatorActions } from '../components/calculators/CalculatorActions.tsx'
 import {
   CompanySearchInput,
 } from '../components/calculators/CompanySearchInput.tsx'
@@ -19,6 +20,7 @@ import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { calculateDcaSimulation, type DcaInput } from '../utils/dca.ts'
 import { toolsService } from '../services/toolsService.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
+import { getNumberParam, getSearchParams, getStringParam } from '../utils/urlParams.ts'
 import type { DcaResult as ApiDcaResult } from '../types/api.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
@@ -41,6 +43,12 @@ const monthYearsAgo = (yearsAgo: number) => {
   const date = new Date()
   date.setFullYear(date.getFullYear() - yearsAgo)
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+}
+
+const defaultDcaInput = {
+  ticker: 'SPY',
+  monthlyInvestment: 500,
+  inflation: 2.5,
 }
 
 const mapApiDcaResult = (result: ApiDcaResult, inflationPercent: number) => {
@@ -70,15 +78,25 @@ const mapApiDcaResult = (result: ApiDcaResult, inflationPercent: number) => {
 
 export const DcaPage = () => {
   const { t } = useTranslation('common')
-  const [ticker, setTicker] = useState('SPY')
-  const [monthlyInvestment, setMonthlyInvestment] = useState(500)
-  const [startDate, setStartDate] = useState(monthYearsAgo(10))
-  const [inflation, setInflation] = useState(2.5)
+  const defaultStartDate = monthYearsAgo(10)
+  const params = getSearchParams()
+  const [ticker, setTicker] = useState(
+    getStringParam(params, 'ticker', defaultDcaInput.ticker).toUpperCase(),
+  )
+  const [monthlyInvestment, setMonthlyInvestment] = useState(
+    getNumberParam(params, 'monthly', defaultDcaInput.monthlyInvestment, { min: 0 }),
+  )
+  const [startDate, setStartDate] = useState(
+    getStringParam(params, 'from', defaultStartDate, /^\d{4}-\d{2}$/),
+  )
+  const [inflation, setInflation] = useState(
+    getNumberParam(params, 'inflation', defaultDcaInput.inflation, { min: 0, max: 15 }),
+  )
   const [submittedInput, setSubmittedInput] = useState<DcaInput>({
-    ticker: 'SPY',
-    monthlyInvestment: 500,
-    startDate: monthYearsAgo(10),
-    inflationPercent: 2.5,
+    ticker: getStringParam(params, 'ticker', defaultDcaInput.ticker).toUpperCase(),
+    monthlyInvestment: getNumberParam(params, 'monthly', defaultDcaInput.monthlyInvestment, { min: 0 }),
+    startDate: getStringParam(params, 'from', defaultStartDate, /^\d{4}-\d{2}$/),
+    inflationPercent: getNumberParam(params, 'inflation', defaultDcaInput.inflation, { min: 0, max: 15 }),
   })
   const [apiResult, setApiResult] = useState<ReturnType<typeof mapApiDcaResult> | null>(null)
 
@@ -126,9 +144,34 @@ export const DcaPage = () => {
     </>
   )
 
+  const handleReset = () => {
+    const nextInput = {
+      ticker: defaultDcaInput.ticker,
+      monthlyInvestment: defaultDcaInput.monthlyInvestment,
+      startDate: defaultStartDate,
+      inflationPercent: defaultDcaInput.inflation,
+    }
+    setTicker(nextInput.ticker)
+    setMonthlyInvestment(nextInput.monthlyInvestment)
+    setStartDate(nextInput.startDate)
+    setInflation(nextInput.inflationPercent)
+    setSubmittedInput(nextInput)
+    setApiResult(null)
+  }
+
   return (
     <SidebarLayout title={t('tools.dca.title')} description={t('tools.dca.description')} sidebar={sidebar}>
       <div className="grid gap-5">
+        <CalculatorActions
+          onReset={handleReset}
+          params={{
+            ticker,
+            monthly: monthlyInvestment,
+            from: startDate,
+            inflation,
+          }}
+        />
+
         <HeroMetric
           label={t('tools.dca.hero.value', { ticker: result.ticker })}
           value={currency.format(result.portfolioValue)}
@@ -136,11 +179,16 @@ export const DcaPage = () => {
         />
 
         <StatGrid>
-          <StatCard label={t('tools.dca.stats.invested')} value={currency.format(result.invested)} />
-          <StatCard label={t('tools.dca.stats.profit')} value={currency.format(result.profit)} tone="success" />
-          <StatCard label={t('tools.dca.stats.return')} value={`${percent.format(result.returnPercent)}%`} tone="primary" />
-          <StatCard label={t('tools.dca.stats.averagePrice')} value={priceCurrency.format(result.averagePrice)} />
+          <StatCard label={t('tools.dca.stats.invested')} value={currency.format(result.invested)} helper={t('tools.dca.explain.invested')} />
+          <StatCard label={t('tools.dca.stats.profit')} value={currency.format(result.profit)} tone="success" helper={t('tools.dca.explain.profit')} />
+          <StatCard label={t('tools.dca.stats.return')} value={`${percent.format(result.returnPercent)}%`} tone="primary" helper={t('tools.dca.explain.return')} />
+          <StatCard label={t('tools.dca.stats.averagePrice')} value={priceCurrency.format(result.averagePrice)} helper={t('tools.dca.explain.averagePrice')} />
         </StatGrid>
+
+        <Panel>
+          <h2 className="text-lg font-bold text-text-primary">{t('tools.dca.guide.title')}</h2>
+          <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.dca.guide.text')}</p>
+        </Panel>
 
         <Panel>
           <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.dca.chart.title')}</h2>

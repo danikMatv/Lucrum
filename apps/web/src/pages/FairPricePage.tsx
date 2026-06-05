@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { NumberInput, SegmentedControl, SliderInput } from '../components/calculators/CalculatorControls.tsx'
+import { CalculatorActions } from '../components/calculators/CalculatorActions.tsx'
 import { CompanySearchInput } from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
@@ -15,6 +16,7 @@ import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import { companiesService } from '../services/companiesService.ts'
 import { toolsService } from '../services/toolsService.ts'
 import { parseApiError } from '../utils/errorHandler.ts'
+import { getNumberParam, getSearchParams, getStringParam, getUnionParam } from '../utils/urlParams.ts'
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -69,6 +71,22 @@ const FINANCIAL_TICKERS = [
 
 const growthTickerSet = new Set<string>(GROWTH_TICKERS)
 const financialTickerSet = new Set<string>(FINANCIAL_TICKERS)
+const valuationModeOptions = ['dcf', 'pe', 'ps'] as const
+const marginOptions = [20, 30, 40] as const
+
+const defaultFairPriceInput = {
+  ticker: 'AAPL',
+  eps: 6.5,
+  marketPrice: 190,
+  growthRate: 12,
+  terminalGrowth: 3,
+  discountRate: 10,
+  marginOfSafety: 30 as MarginOfSafety,
+  valuationMode: 'dcf' as ValuationMode,
+  targetPe: 25,
+  targetPs: 4,
+  revenuePerShare: 0,
+}
 
 const isGrowthCompany = (ticker: string): boolean =>
   growthTickerSet.has(normalizeCompanyQuery(ticker) ?? '')
@@ -151,17 +169,40 @@ const getAutoTargetPe = (input: { marketPrice: number; eps: number }) => {
 
 export const FairPricePage = () => {
   const { t } = useTranslation('common')
-  const [ticker, setTicker] = useState('AAPL')
-  const [eps, setEps] = useState(6.5)
-  const [marketPrice, setMarketPrice] = useState(190)
-  const [growthRate, setGrowthRate] = useState(12)
-  const [terminalGrowth, setTerminalGrowth] = useState(3)
-  const [discountRate, setDiscountRate] = useState(10)
-  const [marginOfSafety, setMarginOfSafety] = useState<MarginOfSafety>(30)
-  const [valuationMode, setValuationMode] = useState<ValuationMode>('dcf')
-  const [targetPe, setTargetPe] = useState(25)
-  const [targetPs, setTargetPs] = useState(4)
-  const [revenuePerShare, setRevenuePerShare] = useState(0)
+  const params = getSearchParams()
+  const [ticker, setTicker] = useState(
+    getStringParam(params, 'ticker', defaultFairPriceInput.ticker).toUpperCase(),
+  )
+  const [eps, setEps] = useState(
+    getNumberParam(params, 'eps', defaultFairPriceInput.eps, { min: 0 }),
+  )
+  const [marketPrice, setMarketPrice] = useState(
+    getNumberParam(params, 'price', defaultFairPriceInput.marketPrice, { min: 0 }),
+  )
+  const [growthRate, setGrowthRate] = useState(
+    getNumberParam(params, 'growth', defaultFairPriceInput.growthRate, { min: 0, max: 40 }),
+  )
+  const [terminalGrowth, setTerminalGrowth] = useState(
+    getNumberParam(params, 'terminal', defaultFairPriceInput.terminalGrowth, { min: 0, max: 6 }),
+  )
+  const [discountRate, setDiscountRate] = useState(
+    getNumberParam(params, 'discount', defaultFairPriceInput.discountRate, { min: 5, max: 20 }),
+  )
+  const [marginOfSafety, setMarginOfSafety] = useState<MarginOfSafety>(
+    getUnionParam(params, 'margin', defaultFairPriceInput.marginOfSafety, marginOptions),
+  )
+  const [valuationMode, setValuationMode] = useState<ValuationMode>(
+    getUnionParam(params, 'mode', defaultFairPriceInput.valuationMode, valuationModeOptions),
+  )
+  const [targetPe, setTargetPe] = useState(
+    getNumberParam(params, 'targetPe', defaultFairPriceInput.targetPe, { min: 5, max: 80 }),
+  )
+  const [targetPs, setTargetPs] = useState(
+    getNumberParam(params, 'targetPs', defaultFairPriceInput.targetPs, { min: 0.5, max: 20 }),
+  )
+  const [revenuePerShare, setRevenuePerShare] = useState(
+    getNumberParam(params, 'revenueShare', defaultFairPriceInput.revenuePerShare, { min: 0 }),
+  )
   const [valuationFit, setValuationFit] = useState<ValuationFit>('standard')
   const [lookupNotice, setLookupNotice] = useState('')
   const [epsEditedManually, setEpsEditedManually] = useState(false)
@@ -423,9 +464,44 @@ export const FairPricePage = () => {
     </>
   )
 
+  const handleReset = () => {
+    setTicker(defaultFairPriceInput.ticker)
+    setEps(defaultFairPriceInput.eps)
+    setMarketPrice(defaultFairPriceInput.marketPrice)
+    setGrowthRate(defaultFairPriceInput.growthRate)
+    setTerminalGrowth(defaultFairPriceInput.terminalGrowth)
+    setDiscountRate(defaultFairPriceInput.discountRate)
+    setMarginOfSafety(defaultFairPriceInput.marginOfSafety)
+    setValuationMode(defaultFairPriceInput.valuationMode)
+    setTargetPe(defaultFairPriceInput.targetPe)
+    setTargetPs(defaultFairPriceInput.targetPs)
+    setRevenuePerShare(defaultFairPriceInput.revenuePerShare)
+    setValuationFit('standard')
+    setLookupNotice('')
+    setEpsEditedManually(false)
+    setGrowthHintDismissed(false)
+  }
+
   return (
     <SidebarLayout title={t('tools.fairPrice.title')} description={t('tools.fairPrice.description')} sidebar={sidebar}>
       <div className="grid gap-5">
+        <CalculatorActions
+          onReset={handleReset}
+          params={{
+            ticker,
+            mode: valuationMode,
+            eps,
+            price: marketPrice,
+            growth: growthRate,
+            terminal: terminalGrowth,
+            discount: discountRate,
+            margin: marginOfSafety,
+            targetPe,
+            targetPs,
+            revenueShare: revenuePerShare,
+          }}
+        />
+
         {lookupNotice ? (
           <Panel>
             <p className="text-sm font-semibold uppercase text-primary">
@@ -470,24 +546,24 @@ export const FairPricePage = () => {
         </div>
 
         <StatGrid>
-          <StatCard label={t('tools.fairPrice.stats.marketPrice')} value={currency.format(marketPrice)} />
-          <StatCard label={t('tools.fairPrice.stats.upside')} value={`${percent.format(activeResult.upsidePercent)}%`} tone={isUndervalued ? 'success' : 'danger'} />
+          <StatCard label={t('tools.fairPrice.stats.marketPrice')} value={currency.format(marketPrice)} helper={t('tools.fairPrice.explain.marketPrice')} />
+          <StatCard label={t('tools.fairPrice.stats.upside')} value={`${percent.format(activeResult.upsidePercent)}%`} tone={isUndervalued ? 'success' : 'danger'} helper={t('tools.fairPrice.explain.upside')} />
           {valuationMode === 'dcf' ? (
             <>
-              <StatCard label={t('tools.fairPrice.stats.forecastPv')} value={currency.format(result.forecastPresentValue)} />
-              <StatCard label={t('tools.fairPrice.stats.terminalPv')} value={currency.format(result.terminalPresentValue)} tone="primary" />
+              <StatCard label={t('tools.fairPrice.stats.forecastPv')} value={currency.format(result.forecastPresentValue)} helper={t('tools.fairPrice.explain.forecastPv')} />
+              <StatCard label={t('tools.fairPrice.stats.terminalPv')} value={currency.format(result.terminalPresentValue)} tone="primary" helper={t('tools.fairPrice.explain.terminalPv')} />
             </>
           ) : null}
           {valuationMode === 'pe' ? (
             <>
-              <StatCard label={t('tools.fairPrice.stats.currentPe')} value={peResult.currentMultiple.toFixed(1)} />
-              <StatCard label={t('tools.fairPrice.stats.targetPe')} value={targetPe.toFixed(0)} tone="primary" />
+              <StatCard label={t('tools.fairPrice.stats.currentPe')} value={peResult.currentMultiple.toFixed(1)} helper={t('tools.fairPrice.explain.currentPe')} />
+              <StatCard label={t('tools.fairPrice.stats.targetPe')} value={targetPe.toFixed(0)} tone="primary" helper={t('tools.fairPrice.explain.targetPe')} />
             </>
           ) : null}
           {valuationMode === 'ps' ? (
             <>
-              <StatCard label={t('tools.fairPrice.stats.currentPs')} value={psResult.currentMultiple.toFixed(1)} />
-              <StatCard label={t('tools.fairPrice.stats.targetPs')} value={targetPs.toFixed(2)} tone="primary" />
+              <StatCard label={t('tools.fairPrice.stats.currentPs')} value={psResult.currentMultiple.toFixed(1)} helper={t('tools.fairPrice.explain.currentPs')} />
+              <StatCard label={t('tools.fairPrice.stats.targetPs')} value={targetPs.toFixed(2)} tone="primary" helper={t('tools.fairPrice.explain.targetPs')} />
             </>
           ) : null}
         </StatGrid>

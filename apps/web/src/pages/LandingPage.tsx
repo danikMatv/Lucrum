@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { supportedLanguages } from '../i18n.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
+import { AppFooter } from '../components/AppFooter.tsx'
 
 const navLinks = [
   { to: '/learn', labelKey: 'nav.learn' },
@@ -56,6 +57,8 @@ const tools = [
     descriptionKey: 'landing.tools.items.stock.description',
   },
 ] as const
+
+const proofItems = ['education', 'transparent', 'privacy'] as const
 
 export const LandingPage = () => {
   const { t, i18n } = useTranslation('common')
@@ -266,14 +269,35 @@ export const LandingPage = () => {
         </div>
       </section>
 
-      <footer className="border-t-[0.5px] border-border">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 px-6 py-8 text-sm text-text-subtle md:flex-row md:items-center lg:px-8">
-          <span className="font-heading text-xl font-bold tracking-[0.28em] text-primary">
-            {t('brand.name')}
-          </span>
-          <span>{t('footer.copyright')}</span>
+      <section className="border-y-[0.5px] border-border bg-surface-alt">
+        <div className="mx-auto grid max-w-7xl gap-6 px-6 py-12 lg:grid-cols-[0.8fr_1.2fr] lg:px-8">
+          <div>
+            <p className="text-sm font-semibold uppercase text-primary">
+              {t('landing.afterTools.kicker')}
+            </p>
+            <h2 className="mt-3 font-heading text-4xl font-bold text-text-primary">
+              {t('landing.afterTools.title')}
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-text-muted">
+              {t('landing.afterTools.description')}
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {proofItems.map((item) => (
+              <div key={item} className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+                <h3 className="text-lg font-bold text-text-primary">
+                  {t(`landing.afterTools.items.${item}.title`)}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-text-muted">
+                  {t(`landing.afterTools.items.${item}.text`)}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-      </footer>
+      </section>
+
+      <AppFooter />
     </main>
   )
 }

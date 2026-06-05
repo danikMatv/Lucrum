@@ -14,14 +14,29 @@ import {
   SegmentedControl,
   SelectInput,
 } from '../components/calculators/CalculatorControls.tsx'
+import { CalculatorActions } from '../components/calculators/CalculatorActions.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import {
   calculateInvestProjection,
   type ContributionFrequency,
 } from '../utils/investCalc.ts'
+import { getNumberParam, getSearchParams, getUnionParam } from '../utils/urlParams.ts'
 
 type ValueMode = 'real' | 'nominal'
+const frequencyOptions = ['monthly', 'quarterly', 'yearly'] as const
+const valueModeOptions = ['real', 'nominal'] as const
+
+const defaultInvestInput = {
+  years: 30,
+  startingCapital: 10000,
+  monthlyContribution: 500,
+  frequency: 'monthly' as ContributionFrequency,
+  annualReturn: 7,
+  inflation: 2.5,
+  contributionGrowth: 2,
+  valueMode: 'real' as ValueMode,
+}
 
 const currency = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -38,14 +53,31 @@ const compactCurrency = new Intl.NumberFormat('en-US', {
 
 export const InvestCalcPage = () => {
   const { t } = useTranslation('common')
-  const [years, setYears] = useState(30)
-  const [startingCapital, setStartingCapital] = useState(10000)
-  const [monthlyContribution, setMonthlyContribution] = useState(500)
-  const [frequency, setFrequency] = useState<ContributionFrequency>('monthly')
-  const [annualReturn, setAnnualReturn] = useState(7)
-  const [inflation, setInflation] = useState(2.5)
-  const [contributionGrowth, setContributionGrowth] = useState(2)
-  const [valueMode, setValueMode] = useState<ValueMode>('real')
+  const params = getSearchParams()
+  const [years, setYears] = useState(
+    getNumberParam(params, 'years', defaultInvestInput.years, { min: 1, max: 60 }),
+  )
+  const [startingCapital, setStartingCapital] = useState(
+    getNumberParam(params, 'start', defaultInvestInput.startingCapital, { min: 0 }),
+  )
+  const [monthlyContribution, setMonthlyContribution] = useState(
+    getNumberParam(params, 'contribution', defaultInvestInput.monthlyContribution, { min: 0 }),
+  )
+  const [frequency, setFrequency] = useState<ContributionFrequency>(
+    getUnionParam(params, 'frequency', defaultInvestInput.frequency, frequencyOptions),
+  )
+  const [annualReturn, setAnnualReturn] = useState(
+    getNumberParam(params, 'return', defaultInvestInput.annualReturn, { min: 0, max: 20 }),
+  )
+  const [inflation, setInflation] = useState(
+    getNumberParam(params, 'inflation', defaultInvestInput.inflation, { min: 0, max: 15 }),
+  )
+  const [contributionGrowth, setContributionGrowth] = useState(
+    getNumberParam(params, 'growth', defaultInvestInput.contributionGrowth, { min: 0, max: 15 }),
+  )
+  const [valueMode, setValueMode] = useState<ValueMode>(
+    getUnionParam(params, 'mode', defaultInvestInput.valueMode, valueModeOptions),
+  )
 
   const result = useMemo(
     () =>
@@ -83,6 +115,17 @@ export const InvestCalcPage = () => {
     </>
   )
 
+  const handleReset = () => {
+    setYears(defaultInvestInput.years)
+    setStartingCapital(defaultInvestInput.startingCapital)
+    setMonthlyContribution(defaultInvestInput.monthlyContribution)
+    setFrequency(defaultInvestInput.frequency)
+    setAnnualReturn(defaultInvestInput.annualReturn)
+    setInflation(defaultInvestInput.inflation)
+    setContributionGrowth(defaultInvestInput.contributionGrowth)
+    setValueMode(defaultInvestInput.valueMode)
+  }
+
   return (
     <SidebarLayout
       title={t('tools.invest.title')}
@@ -90,6 +133,20 @@ export const InvestCalcPage = () => {
       sidebar={sidebar}
     >
       <div className="grid gap-5">
+        <CalculatorActions
+          onReset={handleReset}
+          params={{
+            years,
+            start: startingCapital,
+            contribution: monthlyContribution,
+            frequency,
+            return: annualReturn,
+            inflation,
+            growth: contributionGrowth,
+            mode: valueMode,
+          }}
+        />
+
         <div className="grid gap-4 xl:grid-cols-[1fr_320px]">
           <HeroMetric
             label={valueMode === 'real' ? t('tools.invest.hero.real') : t('tools.invest.hero.nominal')}
@@ -110,11 +167,16 @@ export const InvestCalcPage = () => {
         </div>
 
         <StatGrid>
-          <StatCard label={t('tools.invest.stats.totalContributions')} value={currency.format(result.totalContributions)} />
-          <StatCard label={t('tools.invest.stats.netProfit')} value={currency.format(result.netProfit)} tone="success" />
-          <StatCard label={t('tools.invest.stats.nominalValue')} value={currency.format(result.nominalValue)} tone="primary" />
-          <StatCard label={t('tools.invest.stats.inflationLoss')} value={currency.format(result.inflationLoss)} tone="danger" />
+          <StatCard label={t('tools.invest.stats.totalContributions')} value={currency.format(result.totalContributions)} helper={t('tools.invest.explain.totalContributions')} />
+          <StatCard label={t('tools.invest.stats.netProfit')} value={currency.format(result.netProfit)} tone="success" helper={t('tools.invest.explain.netProfit')} />
+          <StatCard label={t('tools.invest.stats.nominalValue')} value={currency.format(result.nominalValue)} tone="primary" helper={t('tools.invest.explain.nominalValue')} />
+          <StatCard label={t('tools.invest.stats.inflationLoss')} value={currency.format(result.inflationLoss)} tone="danger" helper={t('tools.invest.explain.inflationLoss')} />
         </StatGrid>
+
+        <Panel>
+          <h2 className="text-lg font-bold text-text-primary">{t('tools.invest.guide.title')}</h2>
+          <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.invest.guide.text')}</p>
+        </Panel>
 
         <Panel>
           <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.invest.chart.title')}</h2>

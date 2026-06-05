@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { AppFooter } from '../components/AppFooter.tsx'
 
 const stubItems = [
   'tools',
@@ -68,6 +69,7 @@ export const PricingPage = () => {
           </div>
         </section>
       </section>
+      <AppFooter />
     </main>
   )
 }

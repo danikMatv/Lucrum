@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { AppFooter } from '../components/AppFooter.tsx'
 
 const tools = [
   {
@@ -44,6 +45,9 @@ const workflowSteps = [
   'toolsDirectory.workflow.test',
   'toolsDirectory.workflow.decide',
 ] as const
+
+const trustItems = ['beginner', 'assumptions', 'data'] as const
+const glossaryTerms = ['cagr', 'pv', 'nominal', 'swr'] as const
 
 export const ToolsPage = () => {
   const { t } = useTranslation('common')
@@ -117,7 +121,68 @@ export const ToolsPage = () => {
             </Link>
           ))}
         </div>
+
+        <section className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="text-sm font-semibold uppercase text-primary">
+              {t('toolsDirectory.academy.kicker')}
+            </p>
+            <h2 className="mt-3 font-heading text-4xl font-bold text-text-primary">
+              {t('toolsDirectory.academy.title')}
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-text-muted">
+              {t('toolsDirectory.academy.description')}
+            </p>
+            <Link
+              to="/learn"
+              className="mt-6 inline-flex rounded-md bg-primary px-5 py-3 text-sm font-bold text-background transition hover:opacity-90"
+            >
+              {t('toolsDirectory.academy.cta')}
+            </Link>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {trustItems.map((item) => (
+              <section key={item} className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+                <h3 className="text-lg font-bold text-text-primary">
+                  {t(`toolsDirectory.trust.${item}.title`)}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-text-muted">
+                  {t(`toolsDirectory.trust.${item}.text`)}
+                </p>
+              </section>
+            ))}
+          </div>
+        </section>
+
+        <section className="rounded-lg border-[0.5px] border-border bg-surface p-6">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase text-primary">
+                {t('toolsDirectory.glossary.kicker')}
+              </p>
+              <h2 className="mt-3 font-heading text-4xl font-bold text-text-primary">
+                {t('toolsDirectory.glossary.title')}
+              </h2>
+            </div>
+            <p className="max-w-xl text-sm leading-6 text-text-muted">
+              {t('toolsDirectory.glossary.description')}
+            </p>
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            {glossaryTerms.map((term) => (
+              <div key={term} className="rounded-md border-[0.5px] border-border bg-surface-alt p-4">
+                <p className="font-bold text-text-primary">
+                  {t(`toolsDirectory.glossary.terms.${term}.term`)}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-text-muted">
+                  {t(`toolsDirectory.glossary.terms.${term}.definition`)}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
       </section>
+      <AppFooter />
     </main>
   )
 }

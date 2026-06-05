@@ -4,6 +4,7 @@ interface StatCardProps {
   label: string
   value: string
   tone?: 'default' | 'success' | 'danger' | 'primary'
+  helper?: string
 }
 
 interface PanelProps {
@@ -24,10 +25,11 @@ export const Panel = ({ children, className = '' }: PanelProps) => (
   </div>
 )
 
-export const StatCard = ({ label, value, tone = 'default' }: StatCardProps) => (
+export const StatCard = ({ label, value, tone = 'default', helper }: StatCardProps) => (
   <Panel>
     <p className="text-sm text-text-muted">{label}</p>
     <p className={`mt-2 text-2xl font-bold ${toneClass[tone]}`}>{value}</p>
+    {helper ? <p className="mt-3 text-xs leading-5 text-text-subtle">{helper}</p> : null}
   </Panel>
 )
 

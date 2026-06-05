@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { ProtectedRoute } from '../components/ProtectedRoute.tsx'
 import { AdminPage } from '../pages/AdminPage.tsx'
 import { DcaPage } from '../pages/DcaPage.tsx'
@@ -10,6 +10,8 @@ import { InvestCalcPage } from '../pages/InvestCalcPage.tsx'
 import { LandingPage } from '../pages/LandingPage.tsx'
 import { LearnPage } from '../pages/LearnPage.tsx'
 import { LearnTopicPage } from '../pages/LearnTopicPage.tsx'
+import { NotFoundPage } from '../pages/NotFoundPage.tsx'
+import { PlaceholderPage } from '../pages/PlaceholderPage.tsx'
 import { PricingPage } from '../pages/PricingPage.tsx'
 import { StockPage } from '../pages/StockPage.tsx'
 import { StockMiniCoursePage } from '../pages/StockMiniCoursePage.tsx'
@@ -38,9 +40,42 @@ export const App = () => {
         <Route path="/tools/fire" element={<FirePage />} />
         <Route path="/tools/dca" element={<DcaPage />} />
         <Route path="/tools/fair-price" element={<FairPricePage />} />
+        <Route path="/tools/fair-value" element={<Navigate to="/tools/fair-price" replace />} />
         <Route path="/tools/stock" element={<StockPage />} />
+        <Route path="/login" element={<Navigate to="/auth/login" replace />} />
+        <Route path="/register" element={<Navigate to="/auth/register" replace />} />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
+        <Route
+          path="/about"
+          element={
+            <PlaceholderPage titleKey="pages.about.title" descriptionKey="pages.about.description" />
+          }
+        />
+        <Route
+          path="/privacy"
+          element={
+            <PlaceholderPage
+              titleKey="pages.privacy.title"
+              descriptionKey="pages.privacy.description"
+            />
+          }
+        />
+        <Route
+          path="/terms"
+          element={
+            <PlaceholderPage titleKey="pages.terms.title" descriptionKey="pages.terms.description" />
+          }
+        />
+        <Route
+          path="/contact"
+          element={
+            <PlaceholderPage
+              titleKey="pages.contact.title"
+              descriptionKey="pages.contact.description"
+            />
+          }
+        />
         <Route
           path="/dashboard"
           element={
@@ -57,6 +92,7 @@ export const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   )

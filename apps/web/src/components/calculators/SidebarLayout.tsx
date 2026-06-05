@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
+import { AppFooter } from '../AppFooter.tsx'
 
 interface SidebarLayoutProps {
   title: string
@@ -47,6 +48,7 @@ export const SidebarLayout = ({ title, description, sidebar, children }: Sidebar
           {children}
         </section>
       </div>
+      <AppFooter />
     </main>
   )
 }

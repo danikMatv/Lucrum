@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { learnTopics } from '../data/learnTopics.ts'
+import { AppFooter } from '../components/AppFooter.tsx'
 
 const learningPrinciples = ['goal', 'risk', 'time'] as const
 
@@ -113,6 +114,7 @@ export const LearnPage = () => {
           </div>
         </section>
       </section>
+      <AppFooter />
     </main>
   )
 }

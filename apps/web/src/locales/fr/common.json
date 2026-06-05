@@ -28,7 +28,11 @@
     "common": {
       "allTools": "Tous les outils",
       "inputs": "Paramètres",
-      "year": "Année"
+      "year": "Année",
+      "reset": "Réinitialiser",
+      "copyLink": "Copier le lien",
+      "linkCopied": "Lien copié",
+      "shareFallback": "Copiez ce lien pour garder votre scénario :"
     },
     "invest": {
       "title": "Calculateur d'investissement",
@@ -62,6 +66,16 @@
         "netProfit": "Gain net",
         "nominalValue": "Valeur nominale",
         "inflationLoss": "Perte liée à l'inflation"
+      },
+      "explain": {
+        "totalContributions": "L'argent que vous ajoutez sur toute la période.",
+        "netProfit": "La croissance projetée après retrait de vos versements.",
+        "nominalValue": "Des dollars futurs avant ajustement de l'inflation.",
+        "inflationLoss": "La part de pouvoir d'achat retirée par l'inflation."
+      },
+      "guide": {
+        "title": "Comment lire le résultat",
+        "text": "Comparez la valeur réelle à la valeur nominale. La valeur réelle est souvent meilleure pour planifier, car elle estime le pouvoir d'achat futur."
       },
       "chart": {
         "title": "Croissance du portefeuille",
@@ -107,6 +121,12 @@
         "growthProfit": "Gain de croissance",
         "passiveIncome": "Revenu passif mensuel"
       },
+      "explain": {
+        "currentPortfolio": "Ce que vous avez déjà investi aujourd'hui.",
+        "totalContributions": "Nouvel argent ajouté avant d'atteindre l'objectif FIRE.",
+        "growthProfit": "Croissance projetée du portefeuille grâce aux rendements.",
+        "passiveIncome": "Dépense mensuelle estimée avec le taux de retrait choisi."
+      },
       "chart": {
         "title": "Trajectoire du portefeuille",
         "portfolio": "Portefeuille"
@@ -134,6 +154,16 @@
         "profit": "Gain",
         "return": "Rendement",
         "averagePrice": "Prix moyen"
+      },
+      "explain": {
+        "invested": "Somme totale versée pendant la simulation.",
+        "profit": "Valeur du portefeuille moins l'argent investi.",
+        "return": "Gain ou perte en pourcentage sur l'argent investi.",
+        "averagePrice": "Prix d'achat moyen sur tous les achats mensuels."
+      },
+      "guide": {
+        "title": "Ce que montre le DCA",
+        "text": "Le DCA teste la régularité, pas le timing parfait. Un bon résultat signifie que les achats réguliers ont fonctionné dans ce scénario historique ; l'avenir peut être différent."
       },
       "chart": {
         "title": "Valeur vs investi",
@@ -223,6 +253,16 @@
         "targetPe": "P/E cible",
         "currentPs": "P/S actuel",
         "targetPs": "P/S cible"
+      },
+      "explain": {
+        "marketPrice": "Le prix actuellement affiché par le marché.",
+        "upside": "Écart entre le prix de marché et le prix d'achat prudent du modèle.",
+        "forecastPv": "Valeur actuelle des cinq premières années prévues.",
+        "terminalPv": "Valeur actuelle de la valeur après l'année cinq.",
+        "currentPe": "Combien les investisseurs paient pour un dollar de bénéfice aujourd'hui.",
+        "targetPe": "Le multiple de bénéfice que vous jugez raisonnable.",
+        "currentPs": "Combien les investisseurs paient pour un dollar de ventes aujourd'hui.",
+        "targetPs": "Le multiple de ventes que vous jugez raisonnable."
       },
       "verdict": {
         "undervalued": "Sous-évaluée",
@@ -492,6 +532,25 @@
           "description": "Recherchez un ticker et consultez les métriques clés dans une vue claire."
         }
       }
+    },
+    "afterTools": {
+      "kicker": "Avant de décider",
+      "title": "Un calculateur doit ouvrir une question, pas la fermer.",
+      "description": "Lucrum associe les chiffres à l'apprentissage, aux hypothèses visibles et à des avertissements simples pour éviter de traiter une sortie comme un ordre.",
+      "items": {
+        "education": {
+          "title": "Académie à côté des outils",
+          "text": "Les résultats renvoient vers les notions à comprendre avant d'agir."
+        },
+        "transparent": {
+          "title": "Hypothèses visibles",
+          "text": "Croissance, inflation, taux d'actualisation et marge de sécurité restent modifiables."
+        },
+        "privacy": {
+          "title": "Pas de conseil caché",
+          "text": "Lucrum est un logiciel éducatif, pas un courtier ni un conseiller financier."
+        }
+      }
     }
   },
   "toolsDirectory": {
@@ -520,6 +579,49 @@
       },
       "stock": {
         "detail": "Idéal pour un aperçu rapide d'une société avec fondamentaux, rentabilité, levier et verdict de valorisation."
+      }
+    },
+    "academy": {
+      "kicker": "Couche pédagogique",
+      "title": "Le résultat n'est pas clair ?",
+      "description": "Ouvrez l'Académie pour de courtes explications sur le risque, l'allocation, la valorisation, le DCA et les termes visibles dans les calculateurs.",
+      "cta": "Ouvrir l'Académie"
+    },
+    "trust": {
+      "beginner": {
+        "title": "Pensé pour débuter",
+        "text": "Les outils privilégient des scénarios simples et des hypothèses lisibles plutôt que des recommandations opaques."
+      },
+      "assumptions": {
+        "title": "Vous contrôlez le modèle",
+        "text": "Changez chaque entrée importante et observez comment le résultat bouge."
+      },
+      "data": {
+        "title": "Données signalées",
+        "text": "Quand les données live manquent, Lucrum le dit au lieu de faire semblant."
+      }
+    },
+    "glossary": {
+      "kicker": "Mini glossaire",
+      "title": "Termes que vous verrez",
+      "description": "Ces définitions courtes réduisent la confusion avant d'ouvrir une leçon détaillée.",
+      "terms": {
+        "cagr": {
+          "term": "CAGR",
+          "definition": "Taux de croissance annuel moyen avec capitalisation."
+        },
+        "pv": {
+          "term": "VA",
+          "definition": "Valeur actuelle : argent futur ramené à sa valeur d'aujourd'hui."
+        },
+        "nominal": {
+          "term": "Nominal vs réel",
+          "definition": "Le nominal ignore l'inflation. Le réel ajuste le pouvoir d'achat."
+        },
+        "swr": {
+          "term": "SWR",
+          "definition": "Taux de retrait prudent utilisé dans la planification FIRE."
+        }
       }
     }
   },
@@ -1559,9 +1661,40 @@
     "admin": {
       "title": "Admin",
       "description": "Un espace réservé pour l'espace administrateur."
+    },
+    "about": {
+      "title": "À propos de Lucrum",
+      "description": "Lucrum aide les investisseurs débutants à comprendre les scénarios, les hypothèses et le vocabulaire de marché avant leurs propres décisions."
+    },
+    "privacy": {
+      "title": "Politique de confidentialité",
+      "description": "Lucrum collecte uniquement les données nécessaires aux comptes, à l'analyse produit et à la sécurité. Une politique plus complète précisera conservation, cookies et contrôles utilisateur avant le lancement payant."
+    },
+    "terms": {
+      "title": "Conditions",
+      "description": "Lucrum est un logiciel éducatif. Les sorties des calculateurs sont des estimations basées sur vos entrées et les données disponibles, pas des garanties ni un conseil financier personnalisé."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Pour le feedback, les problèmes de données ou les questions produit, contactez l'équipe Lucrum via le propriétaire du projet pendant la préparation du canal public."
     }
   },
   "footer": {
+    "links": {
+      "about": "À propos",
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "contact": "Contact"
+    },
+    "disclaimer": "Lucrum sert uniquement à l'apprentissage et à la planification. Il ne fournit pas de conseil en investissement, juridique ou fiscal, et les résultats ne doivent pas être traités comme une recommandation d'achat ou de vente.",
+    "educational": "Outils éducatifs, pas conseil financier.",
     "copyright": "© 2026 Lucrum. Tous droits réservés."
+  },
+  "notFound": {
+    "kicker": "404",
+    "title": "Cette page n'existe pas.",
+    "description": "Le lien est peut-être ancien ou mal saisi. Retournez aux outils ou continuez dans l'Académie.",
+    "toolsCta": "Ouvrir les outils",
+    "learnCta": "Ouvrir l'Académie"
   }
 }

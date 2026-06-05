@@ -28,7 +28,11 @@
     "common": {
       "allTools": "All tools",
       "inputs": "Inputs",
-      "year": "Year"
+      "year": "Year",
+      "reset": "Reset",
+      "copyLink": "Copy link",
+      "linkCopied": "Link copied",
+      "shareFallback": "Copy this link to save your scenario:"
     },
     "invest": {
       "title": "Invest Calculator",
@@ -62,6 +66,16 @@
         "netProfit": "Net profit",
         "nominalValue": "Nominal value",
         "inflationLoss": "Inflation loss"
+      },
+      "explain": {
+        "totalContributions": "Money you personally add over the whole period.",
+        "netProfit": "Projected growth after subtracting your contributions.",
+        "nominalValue": "Future dollars before adjusting for inflation.",
+        "inflationLoss": "How much purchasing power inflation removes from the nominal result."
+      },
+      "guide": {
+        "title": "How to read this result",
+        "text": "Compare real value with nominal value. Real value is usually the better planning number because it estimates future purchasing power."
       },
       "chart": {
         "title": "Portfolio growth",
@@ -107,6 +121,12 @@
         "growthProfit": "Growth profit",
         "passiveIncome": "Monthly passive income"
       },
+      "explain": {
+        "currentPortfolio": "What you already have invested today.",
+        "totalContributions": "New money added before reaching the FIRE target.",
+        "growthProfit": "Projected portfolio growth from investment returns.",
+        "passiveIncome": "Estimated monthly spending supported by the withdrawal rate."
+      },
       "chart": {
         "title": "Portfolio path",
         "portfolio": "Portfolio"
@@ -134,6 +154,16 @@
         "profit": "Profit",
         "return": "Return",
         "averagePrice": "Average price"
+      },
+      "explain": {
+        "invested": "Total money contributed over the simulated period.",
+        "profit": "Portfolio value minus total invested.",
+        "return": "Percentage gain or loss on the money invested.",
+        "averagePrice": "Blended purchase price across all monthly buys."
+      },
+      "guide": {
+        "title": "What DCA shows",
+        "text": "DCA tests consistency, not perfect timing. A strong result means regular buying worked in this historical path; it does not guarantee the next path."
       },
       "chart": {
         "title": "Value vs invested",
@@ -223,6 +253,16 @@
         "targetPe": "Target P/E",
         "currentPs": "Current P/S",
         "targetPs": "Target P/S"
+      },
+      "explain": {
+        "marketPrice": "The price the market is currently showing.",
+        "upside": "Distance between market price and the model's safe-buy price.",
+        "forecastPv": "Present value of the first five forecast years.",
+        "terminalPv": "Present value of the value after year five.",
+        "currentPe": "How many dollars investors pay for one dollar of earnings today.",
+        "targetPe": "The earnings multiple you assume could be fair.",
+        "currentPs": "How many dollars investors pay for one dollar of sales today.",
+        "targetPs": "The sales multiple you assume could be fair."
       },
       "verdict": {
         "undervalued": "Undervalued",
@@ -492,6 +532,25 @@
           "description": "Look up a ticker and review key company metrics in one focused view."
         }
       }
+    },
+    "afterTools": {
+      "kicker": "Before you decide",
+      "title": "A calculator should start a question, not end it.",
+      "description": "Lucrum pairs numbers with education, assumptions and plain-language cautions so beginners do not treat a single output as a command.",
+      "items": {
+        "education": {
+          "title": "Academy beside the tools",
+          "text": "Each result points back to concepts you can learn before acting."
+        },
+        "transparent": {
+          "title": "Assumptions stay visible",
+          "text": "Growth, inflation, discount rates and safety margins are inputs you can challenge."
+        },
+        "privacy": {
+          "title": "No hidden advice",
+          "text": "Lucrum is educational software, not a broker or financial advisor."
+        }
+      }
     }
   },
   "toolsDirectory": {
@@ -520,6 +579,49 @@
       },
       "stock": {
         "detail": "Best for a quick company snapshot with fundamentals, profitability, leverage, and a valuation verdict."
+      }
+    },
+    "academy": {
+      "kicker": "Learning layer",
+      "title": "Not sure what the output means?",
+      "description": "Open the Academy for short explanations of risk, asset allocation, valuation, DCA and the terms that show up inside the calculators.",
+      "cta": "Open Academy"
+    },
+    "trust": {
+      "beginner": {
+        "title": "Built for beginners",
+        "text": "The tools favor simple scenarios and readable assumptions over opaque recommendations."
+      },
+      "assumptions": {
+        "title": "You control the model",
+        "text": "Change every important input and see how the result moves before trusting it."
+      },
+      "data": {
+        "title": "Data is labeled",
+        "text": "When live market data is unavailable, Lucrum tells you instead of pretending."
+      }
+    },
+    "glossary": {
+      "kicker": "Quick glossary",
+      "title": "Terms you will see",
+      "description": "These short definitions reduce the first-click confusion before you open a detailed lesson.",
+      "terms": {
+        "cagr": {
+          "term": "CAGR",
+          "definition": "Average annual growth rate after compounding."
+        },
+        "pv": {
+          "term": "PV",
+          "definition": "Present value: future money translated into today's value."
+        },
+        "nominal": {
+          "term": "Nominal vs real",
+          "definition": "Nominal ignores inflation. Real adjusts for purchasing power."
+        },
+        "swr": {
+          "term": "SWR",
+          "definition": "Safe withdrawal rate used in FIRE planning."
+        }
       }
     }
   },
@@ -1559,9 +1661,40 @@
     "admin": {
       "title": "Admin",
       "description": "The admin workspace placeholder."
+    },
+    "about": {
+      "title": "About Lucrum",
+      "description": "Lucrum helps beginner investors understand scenarios, assumptions and basic market language before making their own decisions."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "Lucrum collects only the data needed to run accounts, analytics and product security. A fuller policy will document retention, cookies and user controls before paid features launch."
+    },
+    "terms": {
+      "title": "Terms",
+      "description": "Lucrum is educational software. Calculator outputs are estimates based on user inputs and available data, not guarantees or personalized financial advice."
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "For feedback, data issues or product questions, contact the Lucrum team through the project owner while the public support channel is being prepared."
     }
   },
   "footer": {
+    "links": {
+      "about": "About",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "contact": "Contact"
+    },
+    "disclaimer": "Lucrum is for education and planning only. It does not provide investment, legal or tax advice, and calculator outputs should not be treated as a recommendation to buy or sell any asset.",
+    "educational": "Educational tools, not financial advice.",
     "copyright": "© 2026 Lucrum. All rights reserved."
+  },
+  "notFound": {
+    "kicker": "404",
+    "title": "This page does not exist.",
+    "description": "The link may be old or mistyped. You can return to the tools or continue learning from the Academy.",
+    "toolsCta": "Open tools",
+    "learnCta": "Open Academy"
   }
 }
