@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -187,6 +188,7 @@ export const InvestCalcPage = () => {
                 <XAxis dataKey="year" stroke="#666666" />
                 <YAxis stroke="#666666" tickFormatter={(value) => compactCurrency.format(Number(value))} />
                 <Tooltip formatter={(value) => currency.format(Number(value))} />
+                <Legend />
                 <Line type="monotone" dataKey="nominalValue" name={t('tools.invest.chart.nominal')} stroke="#C9A84C" strokeWidth={2} dot={false} />
                 <Line type="monotone" dataKey="realValue" name={t('tools.invest.chart.real')} stroke="#4CAF50" strokeWidth={2} dot={false} />
               </LineChart>

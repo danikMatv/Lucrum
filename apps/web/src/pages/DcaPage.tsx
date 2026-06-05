@@ -5,6 +5,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -199,6 +200,7 @@ export const DcaPage = () => {
                 <XAxis dataKey="label" stroke="#666666" minTickGap={32} />
                 <YAxis stroke="#666666" tickFormatter={(value) => currency.format(Number(value))} />
                 <Tooltip formatter={(value) => currency.format(Number(value))} />
+                <Legend />
                 <Area type="monotone" dataKey="invested" name={t('tools.dca.chart.invested')} stroke="#666666" fill="#666666" fillOpacity={0.12} />
                 <Area type="monotone" dataKey="portfolioValue" name={t('tools.dca.chart.value')} stroke="#C9A84C" fill="#C9A84C" fillOpacity={0.18} />
               </AreaChart>

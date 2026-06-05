@@ -1,14 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { supportedLanguages } from '../i18n.ts'
-import { useAuthStore } from '../store/useAuthStore.ts'
 import { AppFooter } from '../components/AppFooter.tsx'
-
-const navLinks = [
-  { to: '/learn', labelKey: 'nav.learn' },
-  { to: '/tools', labelKey: 'nav.tools' },
-  { to: '/pricing', labelKey: 'nav.pricing' },
-] as const
+import { AppHeader } from '../components/AppHeader.tsx'
 
 const statCards = [
   { labelKey: 'landing.hero.stats.fairValue.label', valueKey: 'landing.hero.stats.fairValue.value' },
@@ -59,97 +52,18 @@ const tools = [
 ] as const
 
 const proofItems = ['education', 'transparent', 'privacy'] as const
+const workflowSteps = [
+  { key: 'plan', to: '/tools/invest-calc' },
+  { key: 'test', to: '/tools/dca' },
+  { key: 'decide', to: '/tools/stock' },
+] as const
 
 export const LandingPage = () => {
-  const { t, i18n } = useTranslation('common')
-  const { user, isAuthenticated, logout } = useAuthStore()
-  const activeLanguage = i18n.resolvedLanguage ?? i18n.language
-
-  const handleLanguageChange = (language: string) => {
-    void i18n.changeLanguage(language)
-  }
-
-  const handleLogout = () => {
-    void logout()
-  }
+  const { t } = useTranslation('common')
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
-      <header className="border-b-[0.5px] border-border">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-5 lg:px-8">
-          <Link
-            to="/"
-            className="font-heading text-2xl font-bold tracking-[0.28em] text-primary"
-          >
-            {t('brand.name')}
-          </Link>
-          <div className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="text-sm font-medium text-text-muted transition hover:text-text-primary"
-              >
-                {t(link.labelKey)}
-              </Link>
-            ))}
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="flex rounded-md border-[0.5px] border-border bg-surface-alt p-1">
-              {supportedLanguages.map((language) => (
-                <button
-                  key={language}
-                  type="button"
-                  onClick={() => handleLanguageChange(language)}
-                  className={`rounded px-2.5 py-1 text-xs font-semibold uppercase transition ${
-                    activeLanguage.startsWith(language)
-                      ? 'bg-primary text-background'
-                      : 'text-text-muted hover:text-text-primary'
-                  }`}
-                  aria-pressed={activeLanguage.startsWith(language)}
-                >
-                  {language}
-                </button>
-              ))}
-            </div>
-            {isAuthenticated ? (
-              <>
-                <span className="hidden text-sm font-semibold text-text-muted lg:inline">
-                  {user?.firstName}
-                </span>
-                <Link
-                  to="/dashboard"
-                  className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
-                >
-                  {t('nav.dashboard')}
-                </Link>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  className="hidden rounded-md px-4 py-2 text-sm font-semibold text-text-muted transition hover:text-text-primary sm:inline-flex"
-                >
-                  {t('buttons.logout')}
-                </button>
-              </>
-            ) : (
-              <>
-                <Link
-                  to="/auth/login"
-                  className="hidden rounded-md px-4 py-2 text-sm font-semibold text-text-muted transition hover:text-text-primary sm:inline-flex"
-                >
-                  {t('buttons.login')}
-                </Link>
-                <Link
-                  to="/auth/register"
-                  className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"
-                >
-                  {t('buttons.getStarted')}
-                </Link>
-              </>
-            )}
-          </div>
-        </nav>
-      </header>
+      <AppHeader />
 
       <section className="mx-auto grid max-w-7xl gap-14 px-6 py-16 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-24">
         <div className="flex flex-col justify-center">
@@ -220,6 +134,31 @@ export const LandingPage = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-y-[0.5px] border-border bg-surface-alt">
+        <div className="mx-auto grid max-w-7xl gap-5 px-6 py-8 md:grid-cols-3 lg:px-8">
+          {workflowSteps.map((step, index) => (
+            <Link
+              key={step.key}
+              to={step.to}
+              className="group rounded-lg border-[0.5px] border-border bg-surface p-5 transition hover:border-border-hover"
+            >
+              <span className="grid h-9 w-9 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
+                {index + 1}
+              </span>
+              <p className="mt-4 text-sm font-semibold uppercase text-primary">
+                {t('toolsDirectory.workflow.title')}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-text-muted">
+                {t(`toolsDirectory.workflow.${step.key}`)}
+              </p>
+              <span className="mt-4 inline-flex text-sm font-bold text-primary transition group-hover:translate-x-1">
+                {t('landing.hero.flowCta')}
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 

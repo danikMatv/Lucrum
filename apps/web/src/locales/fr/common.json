@@ -15,7 +15,8 @@
     "calculate": "Calculer",
     "analyze": "Analyser",
     "logout": "Déconnexion",
-    "dismiss": "Fermer"
+    "dismiss": "Fermer",
+    "menu": "Menu"
   },
   "common": {
     "loading": "Chargement..."
@@ -218,7 +219,7 @@
         "body": "Les entreprises comme Amazon ou Tesla réinvestissent la plupart de leurs bénéfices, ce qui rend le BPA très faible. Les analystes utilisent généralement le flux de trésorerie disponible par action (FCF/action) pour une évaluation plus précise.",
         "link": "En savoir plus sur l'évaluation FCF ->"
       },
-      "epsTooltip": "Utilisez le BPA pour les entreprises stables. Pour les entreprises technologiques à forte croissance, utilisez plutôt le FCF par action.",
+      "epsTooltip": "Utilisez l'EPS pour les entreprises stables. Pour les sociétés de croissance, comparez aussi le chiffre d'affaires, les marges et le cash-flow.",
       "modelFit": {
         "financial": {
           "title": "Profil banque ou fintech détecté",
@@ -265,8 +266,8 @@
         "targetPs": "Le multiple de ventes que vous jugez raisonnable."
       },
       "verdict": {
-        "undervalued": "Sous-évaluée",
-        "overvalued": "Surévaluée",
+        "undervalued": "Potentiellement sous la valeur du modèle",
+        "overvalued": "Potentiellement au-dessus de la valeur du modèle",
         "undervaluedText": "Le prix de marché est inférieur au prix d'achat ajusté par la marge de sécurité.",
         "overvaluedText": "Le prix de marché est supérieur au prix d'achat ajusté par la marge de sécurité."
       },
@@ -363,6 +364,20 @@
         "previousClose": "Clôture précédente",
         "dayHigh": "Plus haut du jour",
         "dayLow": "Plus bas du jour"
+      },
+      "explain": {
+        "pe": "Prix comparé aux bénéfices actuels. Plus bas ne veut pas toujours dire mieux.",
+        "forwardPE": "Prix comparé aux bénéfices futurs attendus. Vide si la donnée manque.",
+        "eps": "Bénéfice par action : profit attribué à une action.",
+        "fcf": "Cash restant après opérations et investissements nécessaires.",
+        "priceToSales": "Prix comparé au chiffre d'affaires. Utile quand les profits mûrissent encore.",
+        "priceToBook": "Prix comparé à la valeur comptable.",
+        "pegRatio": "P/E ajusté de la croissance. Vide si la donnée de croissance manque.",
+        "beta": "Volatilité comparée au marché. 1 ressemble au marché.",
+        "grossMargin": "Chiffre d'affaires restant après coûts directs.",
+        "roe": "Profit généré sur les fonds propres.",
+        "currentRatio": "Actifs court terme divisés par passifs court terme.",
+        "debt": "Dette comparée aux fonds propres."
       },
       "chart": {
         "title": "Chiffre d'affaires vs résultat net",
@@ -464,6 +479,7 @@
       "subtext": "Planifiez votre prochain mouvement avec des calculateurs simples, des estimations de juste valeur et des analyses d'actions pensées pour les investisseurs long terme.",
       "primaryCta": "Explorer les outils",
       "secondaryCta": "Apprendre",
+      "flowCta": "Commencer ici ->",
       "chartLabel": "Mini graphique de croissance du portefeuille",
       "pills": {
         "free": "Calculateurs gratuits",

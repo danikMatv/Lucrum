@@ -62,7 +62,7 @@ export const calculateFireProjection = (input: FireInput): FireResult => {
     fireNumber,
     progressPercent: Math.min((input.currentPortfolio / fireNumber) * 100, 100),
     yearsToFire,
-    monthlyPassiveIncome: (input.currentPortfolio * (input.withdrawalRatePercent / 100)) / 12,
+    monthlyPassiveIncome: (fireNumber * (input.withdrawalRatePercent / 100)) / 12,
     totalContributions: lastRow?.totalContributions ?? 0,
     growthProfit: lastRow?.growthProfit ?? 0,
     rows,

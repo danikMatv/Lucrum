@@ -5,6 +5,7 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -561,14 +562,17 @@ export const StockPage = () => {
                   <StatCard
                     label={t('tools.stock.metrics.pe')}
                     value={formatNumber(snapshot.fundamentals?.peRatio)}
+                    helper={t('tools.stock.explain.pe')}
                   />
                   <StatCard
                     label={t('tools.stock.metrics.forwardPE')}
                     value={formatNumber(snapshot.fundamentals?.forwardPE)}
+                    helper={t('tools.stock.explain.forwardPE')}
                   />
                   <StatCard
                     label={t('tools.stock.metrics.eps')}
                     value={formatCurrency(snapshot.fundamentals?.epsTtm)}
+                    helper={t('tools.stock.explain.eps')}
                   />
                   <StatCard
                     label={t('tools.stock.metrics.marketCap')}
@@ -585,6 +589,7 @@ export const StockPage = () => {
                   <StatCard
                     label={t('tools.stock.metrics.fcf')}
                     value={formatLargeCurrency(snapshot.fundamentals?.freeCashFlow)}
+                    helper={t('tools.stock.explain.fcf')}
                   />
                   <StatCard
                     label={t('tools.stock.metrics.dividend')}
@@ -600,18 +605,22 @@ export const StockPage = () => {
                 <StatCard
                   label={t('tools.stock.metrics.priceToSales')}
                   value={formatNumber(snapshot.fundamentals?.priceToSales, 2)}
+                  helper={t('tools.stock.explain.priceToSales')}
                 />
                 <StatCard
                   label={t('tools.stock.metrics.priceToBook')}
                   value={formatNumber(snapshot.fundamentals?.priceToBook, 2)}
+                  helper={t('tools.stock.explain.priceToBook')}
                 />
                 <StatCard
                   label={t('tools.stock.metrics.pegRatio')}
                   value={formatNumber(snapshot.fundamentals?.pegRatio, 2)}
+                  helper={t('tools.stock.explain.pegRatio')}
                 />
                 <StatCard
                   label={t('tools.stock.metrics.beta')}
                   value={formatNumber(snapshot.fundamentals?.beta, 2)}
+                  helper={t('tools.stock.explain.beta')}
                 />
               </StatGrid>
             </section>
@@ -624,6 +633,7 @@ export const StockPage = () => {
                 <StatCard
                   label={t('tools.stock.metrics.grossMargin')}
                   value={formatPercentValue(grossMargin)}
+                  helper={t('tools.stock.explain.grossMargin')}
                 />
                 <StatCard
                   label={t('tools.stock.metrics.operatingMargin')}
@@ -636,6 +646,7 @@ export const StockPage = () => {
                 <StatCard
                   label={t('tools.stock.metrics.roe')}
                   value={formatPercentValue(snapshot.fundamentals?.returnOnEquity)}
+                  helper={t('tools.stock.explain.roe')}
                 />
               </StatGrid>
             </section>
@@ -648,6 +659,7 @@ export const StockPage = () => {
                 <StatCard
                   label={t('tools.stock.metrics.currentRatio')}
                   value={formatNumber(snapshot.fundamentals?.currentRatio, 2)}
+                  helper={t('tools.stock.explain.currentRatio')}
                 />
                 <StatCard
                   label={t('tools.stock.metrics.quickRatio')}
@@ -656,6 +668,7 @@ export const StockPage = () => {
                 <StatCard
                   label={t('tools.stock.metrics.debt')}
                   value={formatNumber(snapshot.fundamentals?.debtToEquity, 2)}
+                  helper={t('tools.stock.explain.debt')}
                 />
               </div>
             </section>
@@ -697,6 +710,7 @@ export const StockPage = () => {
                           tickFormatter={(value) => number.format(Number(value))}
                         />
                         <Tooltip formatter={(value) => formatLargeCurrency(Number(value))} />
+                        <Legend />
                         <Bar
                           dataKey="revenue"
                           name={t('tools.stock.chart.revenue')}

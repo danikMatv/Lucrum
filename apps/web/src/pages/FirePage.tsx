@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   CartesianGrid,
+  Legend,
   Line,
   LineChart,
   ReferenceLine,
@@ -146,6 +147,7 @@ export const FirePage = () => {
                 <XAxis dataKey="year" stroke="#666666" />
                 <YAxis stroke="#666666" tickFormatter={(value) => compactCurrency.format(Number(value))} />
                 <Tooltip formatter={(value) => currency.format(Number(value))} />
+                <Legend />
                 <ReferenceLine y={result.fireNumber} stroke="#C9A84C" strokeDasharray="6 6" />
                 <Line type="monotone" dataKey="portfolioValue" name={t('tools.fire.chart.portfolio')} stroke="#4CAF50" strokeWidth={2} dot={false} />
               </LineChart>

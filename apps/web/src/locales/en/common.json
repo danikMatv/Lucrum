@@ -15,7 +15,8 @@
     "calculate": "Calculate",
     "analyze": "Analyze",
     "logout": "Log out",
-    "dismiss": "Dismiss"
+    "dismiss": "Dismiss",
+    "menu": "Menu"
   },
   "common": {
     "loading": "Loading..."
@@ -218,7 +219,7 @@
         "body": "Companies like Amazon or Tesla reinvest most profits, making EPS very low. Analysts typically use Free Cash Flow per share (FCF/share) instead of EPS for more accurate valuation. You can find FCF/share on financial sites like Macrotrends or Simply Wall St.",
         "link": "Learn more about FCF valuation ->"
       },
-      "epsTooltip": "Use EPS for stable companies (banks, consumer goods). For high-growth tech companies, consider using FCF per share instead.",
+      "epsTooltip": "Use EPS for stable companies. For high-growth companies, compare this result with revenue, margins and cash flow before trusting it.",
       "modelFit": {
         "financial": {
           "title": "Bank or fintech profile detected",
@@ -265,8 +266,8 @@
         "targetPs": "The sales multiple you assume could be fair."
       },
       "verdict": {
-        "undervalued": "Undervalued",
-        "overvalued": "Overvalued",
+        "undervalued": "Potentially below model value",
+        "overvalued": "Potentially above model value",
         "undervaluedText": "The market price is below the safety-adjusted buy price.",
         "overvaluedText": "The market price is above the safety-adjusted buy price."
       },
@@ -363,6 +364,20 @@
         "previousClose": "Previous close",
         "dayHigh": "Day high",
         "dayLow": "Day low"
+      },
+      "explain": {
+        "pe": "Price compared with current earnings. Lower is not always better.",
+        "forwardPE": "Price compared with expected future earnings. Empty means data is unavailable.",
+        "eps": "Earnings per share: profit assigned to one share.",
+        "fcf": "Cash left after operating needs and capital spending.",
+        "priceToSales": "Price compared with revenue. Useful when profits are still maturing.",
+        "priceToBook": "Price compared with accounting book value.",
+        "pegRatio": "P/E adjusted for growth. Empty means growth data is unavailable.",
+        "beta": "Volatility compared with the market. 1 is roughly market-like.",
+        "grossMargin": "Revenue left after direct production costs.",
+        "roe": "Profit generated on shareholder equity.",
+        "currentRatio": "Short-term assets divided by short-term liabilities.",
+        "debt": "Debt compared with shareholder equity."
       },
       "chart": {
         "title": "Revenue vs Net Income",
@@ -464,6 +479,7 @@
       "subtext": "Plan your next move with simple calculators, fair value checks, and stock insights built for long-term investors.",
       "primaryCta": "Explore tools",
       "secondaryCta": "Start learning",
+      "flowCta": "Start here ->",
       "chartLabel": "Portfolio growth mini chart",
       "pills": {
         "free": "Free calculators",

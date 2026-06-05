@@ -103,23 +103,32 @@ export const SliderInput = ({
 
   return (
     <label htmlFor={id} className="grid gap-2">
-      <span className="flex items-center justify-between gap-3 text-sm font-medium text-text-muted">
-        <span>{label}</span>
-        <span className="text-primary">
-          {value}
-          {suffix}
-        </span>
-      </span>
-      <input
-        id={id}
-        type="range"
-        min={min}
-        max={max}
-        step={step}
-        value={value}
-        onChange={handleChange}
-        className="h-2 w-full cursor-pointer accent-primary"
-      />
+      <span className="text-sm font-medium text-text-muted">{label}</span>
+      <div className="grid gap-3">
+        <input
+          id={id}
+          type="range"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={handleChange}
+          className="h-2 w-full cursor-pointer accent-primary"
+        />
+        <div className="flex items-center gap-2">
+          <input
+            type="number"
+            min={min}
+            max={max}
+            step={step}
+            value={value}
+            onChange={handleChange}
+            className={controlClass}
+            aria-label={label}
+          />
+          {suffix ? <span className="w-8 text-sm text-text-subtle">{suffix}</span> : null}
+        </div>
+      </div>
     </label>
   )
 }
