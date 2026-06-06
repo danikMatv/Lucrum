@@ -103,6 +103,37 @@ const freshnessFor = (hasValue: boolean, fetchedAt: string | null) => {
 const hasCompanyDisplayFields = (company: Company | null) =>
   Boolean(company?.exchange && company.sector)
 
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+const isMajorUsExchange = (exchange: string | null | undefined) =>
+  /nasdaq|nyse|amex|global market|capital market|nms/i.test(exchange ?? '')
+
+const getCompanySearchScore = (company: Company, query: string) => {
+  const normalizedQuery = query.trim().toLowerCase()
+  const normalizedTicker = normalizeTicker(query)
+  const companyTicker = normalizeTicker(company.ticker)
+  const companyName = company.name.toLowerCase()
+  const exchangeBonus = isMajorUsExchange(company.exchange) ? 15 : 0
+
+  if (companyTicker === normalizedTicker) return 100 + exchangeBonus
+  if (companyName.startsWith(normalizedQuery) && normalizedQuery.length >= 2) {
+    return 90 + exchangeBonus
+  }
+  if (
+    normalizedQuery.length >= 2 &&
+    new RegExp(`(^|[^a-z0-9])${escapeRegExp(normalizedQuery)}([^a-z0-9]|$)`, 'i').test(
+      companyName,
+    )
+  ) {
+    return 80 + exchangeBonus
+  }
+  if (companyTicker.startsWith(normalizedTicker) && normalizedTicker.length >= 2) {
+    return 60 + exchangeBonus
+  }
+
+  return 0
+}
+
 type FundamentalsSourceProvider = NonNullable<CompanyFundamentals['sourceProvider']>
 
 const hasSnapshotFundamentals = (
@@ -1107,26 +1138,49 @@ const resolveCompanySnapshot = async (
 
 companies.get('/search', zValidator('query', searchSchema, validatorHook), async (c) => {
   const { q } = c.req.valid('query')
-  const cacheKey = `search:${q.toLowerCase()}`
+  const cacheKey = `search:v3:${q.toLowerCase()}`
   c.executionCtx.waitUntil(logUsage(c, 'COMPANY_SEARCH', null).catch(() => undefined))
 
   const cached = await getJsonCache<Company[]>(c.env.KV, cacheKey)
   if (cached) {
-    return c.json(createSuccess(cached))
+    return c.json(
+      createSuccess(
+        cached
+          .sort(
+            (left, right) =>
+              getCompanySearchScore(right, q) - getCompanySearchScore(left, q) ||
+              left.ticker.localeCompare(right.ticker),
+          )
+          .slice(0, 10),
+      ),
+    )
   }
 
   const dbResults = await searchCompaniesInDb(c.env.DB, q)
-  if (dbResults.length > 0) {
-    await putJsonCache(c.env.KV, cacheKey, dbResults, CacheTtl.search)
-    return c.json(createSuccess(dbResults))
-  }
 
   try {
     const fmpResults = await searchFmpCompanies(q, c.env.FMP_API_KEY)
+    const resultsByTicker = new Map<string, Company>()
+    ;[...fmpResults, ...dbResults].forEach((company) => {
+      resultsByTicker.set(company.ticker.toUpperCase(), company)
+    })
+    const mergedResults = Array.from(resultsByTicker.values())
+      .sort(
+        (left, right) =>
+          getCompanySearchScore(right, q) - getCompanySearchScore(left, q) ||
+          left.ticker.localeCompare(right.ticker),
+      )
+      .slice(0, 10)
+
     await Promise.all(fmpResults.map((company) => upsertCompany(c.env.DB, company)))
-    await putJsonCache(c.env.KV, cacheKey, fmpResults, CacheTtl.search)
-    return c.json(createSuccess(fmpResults))
+    await putJsonCache(c.env.KV, cacheKey, mergedResults, CacheTtl.search)
+    return c.json(createSuccess(mergedResults))
   } catch {
+    if (dbResults.length > 0) {
+      await putJsonCache(c.env.KV, cacheKey, dbResults, CacheTtl.search)
+      return c.json(createSuccess(dbResults))
+    }
+
     return c.json(createError('COMPANY_SEARCH_FAILED', 'Company search failed'), 502)
   }
 })

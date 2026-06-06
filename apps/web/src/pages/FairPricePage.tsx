@@ -14,6 +14,7 @@ import {
 } from '../utils/fairPrice.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import { companiesService } from '../services/companiesService.ts'
+import type { Company } from '../types/api.ts'
 import { parseApiError } from '../utils/errorHandler.ts'
 import { getNumberParam, getSearchParams, getStringParam, getUnionParam } from '../utils/urlParams.ts'
 
@@ -168,6 +169,52 @@ const getAutoTargetPe = (input: { marketPrice: number; eps: number }) => {
   return Math.round(clamp(currentPe * 0.85, 8, 60))
 }
 
+const escapeRegExp = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+const isMajorUsExchange = (exchange: string | null | undefined) =>
+  /nasdaq|nyse|amex|global market|capital market|nms/i.test(exchange ?? '')
+
+const getCompanySearchScore = (company: Company, query: string, normalizedTicker: string) => {
+  const companyTicker = normalizeCompanyQuery(company.ticker)
+  const normalizedQuery = query.trim().toLowerCase()
+  const companyName = company.name.toLowerCase()
+  const exchangeBonus = isMajorUsExchange(company.exchange) ? 15 : 0
+
+  if (companyTicker === normalizedTicker) return 100 + exchangeBonus
+  if (companyName.startsWith(normalizedQuery) && normalizedQuery.length >= 2) return 90 + exchangeBonus
+  if (
+    normalizedQuery.length >= 2 &&
+    new RegExp(`(^|[^a-z0-9])${escapeRegExp(normalizedQuery)}([^a-z0-9]|$)`, 'i').test(
+      companyName,
+    )
+  ) {
+    return 80 + exchangeBonus
+  }
+  if (companyTicker.startsWith(normalizedTicker) && normalizedTicker.length >= 2) return 60 + exchangeBonus
+
+  return 0
+}
+
+const resolveTickerInput = async (value: string) => {
+  const rawQuery = value.trim()
+  const normalizedTicker = normalizeCompanyQuery(rawQuery) || 'AAPL'
+
+  try {
+    const companies = await companiesService.search(rawQuery || normalizedTicker)
+    const bestMatch = companies
+      .map((company) => ({
+        company,
+        score: getCompanySearchScore(company, rawQuery || normalizedTicker, normalizedTicker),
+      }))
+      .sort((left, right) => right.score - left.score)
+      .at(0)
+
+    return bestMatch && bestMatch.score > 0 ? bestMatch.company.ticker : normalizedTicker
+  } catch {
+    return normalizedTicker
+  }
+}
+
 export const FairPricePage = () => {
   const { t } = useTranslation('common')
   const params = getSearchParams()
@@ -211,8 +258,8 @@ export const FairPricePage = () => {
 
   const fundamentalsMutation = useMutation({
     mutationFn: async (tickerValue: string) => {
-      const normalizedTicker = normalizeCompanyQuery(tickerValue) || 'AAPL'
-      return companiesService.getSnapshot(normalizedTicker)
+      const resolvedTicker = await resolveTickerInput(tickerValue)
+      return companiesService.getSnapshot(resolvedTicker)
     },
     onSuccess: ({ ticker: snapshotTicker, company, fundamentals, quote }) => {
       let updatedFields = 0
