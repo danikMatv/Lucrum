@@ -18,40 +18,47 @@ import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
 import { calculateFireProjection } from '../utils/fire.ts'
 import { getNumberParam, getSearchParams, getUnionParam } from '../utils/urlParams.ts'
 
-const currency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  maximumFractionDigits: 0,
-})
-
-const compactCurrency = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
-
 const withdrawalOptions = [3, 4, 5] as const
 
 const defaultFireInput = {
-  monthlyExpenses: 4000,
-  currentPortfolio: 50000,
-  monthlyContribution: 1500,
+  monthlyExpenses: 40000,
+  currentPortfolio: 500000,
+  monthlyContribution: 15000,
   annualReturn: 5,
   withdrawalRate: 4 as 3 | 4 | 5,
 }
 
 export const FirePage = () => {
-  const { t } = useTranslation('common')
+  const { t, i18n } = useTranslation('common')
   const params = getSearchParams()
+  const locale = i18n.resolvedLanguage ?? i18n.language
+  const currency = useMemo(
+    () =>
+      new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: 'UAH',
+        maximumFractionDigits: 0,
+      }),
+    [locale],
+  )
+  const compactCurrency = useMemo(
+    () =>
+      new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: 'UAH',
+        notation: 'compact',
+        maximumFractionDigits: 1,
+      }),
+    [locale],
+  )
   const [monthlyExpenses, setMonthlyExpenses] = useState(
-    getNumberParam(params, 'expenses', defaultFireInput.monthlyExpenses, { min: 1000, max: 12000 }),
+    getNumberParam(params, 'expenses', defaultFireInput.monthlyExpenses, { min: 5000, max: 200000 }),
   )
   const [currentPortfolio, setCurrentPortfolio] = useState(
-    getNumberParam(params, 'portfolio', defaultFireInput.currentPortfolio, { min: 0, max: 1000000 }),
+    getNumberParam(params, 'portfolio', defaultFireInput.currentPortfolio, { min: 0, max: 20000000 }),
   )
   const [monthlyContribution, setMonthlyContribution] = useState(
-    getNumberParam(params, 'contribution', defaultFireInput.monthlyContribution, { min: 0, max: 10000 }),
+    getNumberParam(params, 'contribution', defaultFireInput.monthlyContribution, { min: 0, max: 300000 }),
   )
   const [annualReturn, setAnnualReturn] = useState(
     getNumberParam(params, 'return', defaultFireInput.annualReturn, { min: 0, max: 12 }),
@@ -74,9 +81,9 @@ export const FirePage = () => {
 
   const sidebar = (
     <>
-      <SliderInput id="fire-expenses" label={t('tools.fire.inputs.expenses')} value={monthlyExpenses} min={1000} max={12000} step={100} suffix="$" onChange={setMonthlyExpenses} />
-      <SliderInput id="fire-portfolio" label={t('tools.fire.inputs.portfolio')} value={currentPortfolio} min={0} max={1000000} step={5000} suffix="$" onChange={setCurrentPortfolio} />
-      <SliderInput id="fire-contribution" label={t('tools.fire.inputs.contribution')} value={monthlyContribution} min={0} max={10000} step={100} suffix="$" onChange={setMonthlyContribution} />
+      <SliderInput id="fire-expenses" label={t('tools.fire.inputs.expenses')} value={monthlyExpenses} min={5000} max={200000} step={1000} suffix="UAH" onChange={setMonthlyExpenses} />
+      <SliderInput id="fire-portfolio" label={t('tools.fire.inputs.portfolio')} value={currentPortfolio} min={0} max={20000000} step={50000} suffix="UAH" onChange={setCurrentPortfolio} />
+      <SliderInput id="fire-contribution" label={t('tools.fire.inputs.contribution')} value={monthlyContribution} min={0} max={300000} step={1000} suffix="UAH" onChange={setMonthlyContribution} />
       <SliderInput id="fire-return" label={t('tools.fire.inputs.return')} value={annualReturn} min={0} max={12} step={0.5} suffix="%" onChange={setAnnualReturn} />
       <SegmentedControl
         label={t('tools.fire.inputs.swr')}
@@ -142,10 +149,15 @@ export const FirePage = () => {
           <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.fire.chart.title')}</h2>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={result.rows}>
+              <LineChart data={result.rows} margin={{ left: 24, right: 16 }}>
                 <CartesianGrid stroke="#1E1E1E" />
                 <XAxis dataKey="year" stroke="#666666" />
-                <YAxis stroke="#666666" tickFormatter={(value) => compactCurrency.format(Number(value))} />
+                <YAxis
+                  stroke="#666666"
+                  width={96}
+                  tickMargin={8}
+                  tickFormatter={(value) => compactCurrency.format(Number(value))}
+                />
                 <Tooltip formatter={(value) => currency.format(Number(value))} />
                 <Legend />
                 <ReferenceLine y={result.fireNumber} stroke="#C9A84C" strokeDasharray="6 6" />

@@ -263,13 +263,13 @@ export const SegmentedControl = <T extends string | number>({
 }: SegmentedControlProps<T>) => (
   <div className="grid gap-2">
     <span className="text-sm font-medium text-text-muted">{label}</span>
-    <div className="grid gap-2 rounded-md border-[0.5px] border-border bg-surface-alt p-1 sm:grid-flow-col sm:auto-cols-fr">
+    <div className="flex flex-wrap gap-2 rounded-md border-[0.5px] border-border bg-surface-alt p-1">
       {options.map((option) => (
         <button
           key={option.value}
           type="button"
           onClick={() => onChange(option.value)}
-          className={`rounded px-3 py-2 text-sm font-semibold transition ${
+          className={`min-w-fit flex-1 whitespace-normal rounded px-3 py-2 text-sm font-semibold leading-5 transition ${
             value === option.value
               ? 'bg-primary text-background'
               : 'text-text-muted hover:text-text-primary'

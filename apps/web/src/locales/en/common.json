@@ -207,6 +207,10 @@
         "title": "Estimated data active",
         "fallback": "Live history is unavailable, so this run uses estimated prices.",
         "backendFallback": "Live market history is unavailable right now, so this run uses estimated prices."
+      },
+      "noData": {
+        "title": "History not found",
+        "text": "Lucrum could not find real historical prices for {{ticker}}. Check the ticker or try another asset."
       }
     },
     "fairPrice": {

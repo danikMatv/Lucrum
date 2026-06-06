@@ -207,6 +207,10 @@
         "title": "Données estimées actives",
         "fallback": "L'historique réel est indisponible, donc cette simulation utilise des prix estimés.",
         "backendFallback": "L'historique de marché réel est indisponible pour le moment, donc cette simulation utilise des prix estimés."
+      },
+      "noData": {
+        "title": "Historique introuvable",
+        "text": "Lucrum n'a pas trouvé de prix historiques réels pour {{ticker}}. Vérifiez le ticker ou essayez un autre actif."
       }
     },
     "fairPrice": {

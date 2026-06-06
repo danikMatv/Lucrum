@@ -352,10 +352,15 @@ export const InvestCalcPage = () => {
           <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.invest.chart.title')}</h2>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={result.rows}>
+              <LineChart data={result.rows} margin={{ left: 24, right: 16 }}>
                 <CartesianGrid stroke="#1E1E1E" />
                 <XAxis dataKey="year" stroke="#666666" />
-                <YAxis stroke="#666666" tickFormatter={(value) => compactCurrency.format(Number(value))} />
+                <YAxis
+                  stroke="#666666"
+                  width={96}
+                  tickMargin={8}
+                  tickFormatter={(value) => compactCurrency.format(Number(value))}
+                />
                 <Tooltip formatter={(value) => currency.format(Number(value))} />
                 <Legend />
                 <Line type="monotone" dataKey="nominalValue" name={t('tools.invest.chart.nominal')} stroke="#C9A84C" strokeWidth={2} dot={false} />

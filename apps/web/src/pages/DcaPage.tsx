@@ -100,18 +100,28 @@ export const DcaPage = () => {
     inflationPercent: getNumberParam(params, 'inflation', defaultDcaInput.inflation, { min: 0, max: 15 }),
   })
   const [apiResult, setApiResult] = useState<ReturnType<typeof mapApiDcaResult> | null>(null)
+  const [dcaError, setDcaError] = useState('')
 
   const fallbackResult = useMemo(() => calculateDcaSimulation(submittedInput), [submittedInput])
-  const result = apiResult ?? fallbackResult
+  const result = apiResult ?? (dcaError ? null : fallbackResult)
+  const isEstimatedResult = result?.source === 'mock'
 
   const dcaMutation = useMutation({
     mutationFn: (input: DcaInput) =>
       toolsService.getDCA(input.ticker, input.startDate, input.monthlyInvestment),
     onSuccess: (data, input) => {
+      if (data.source === 'mock' || data.rows.length === 0) {
+        setApiResult(null)
+        setDcaError(t('tools.dca.noData.text', { ticker: input.ticker }))
+        return
+      }
+
+      setDcaError('')
       setApiResult(mapApiDcaResult(data, input.inflationPercent))
     },
-    onError: () => {
+    onError: (_error, input) => {
       setApiResult(null)
+      setDcaError(t('tools.dca.noData.text', { ticker: input.ticker }))
     },
   })
 
@@ -125,6 +135,8 @@ export const DcaPage = () => {
     }
     setTicker(normalizedTicker)
     setSubmittedInput(nextInput)
+    setDcaError('')
+    setApiResult(null)
     dcaMutation.mutate(nextInput)
   }
 
@@ -158,6 +170,7 @@ export const DcaPage = () => {
     setInflation(nextInput.inflationPercent)
     setSubmittedInput(nextInput)
     setApiResult(null)
+    setDcaError('')
   }
 
   return (
@@ -173,60 +186,87 @@ export const DcaPage = () => {
           }}
         />
 
-        <HeroMetric
-          label={t('tools.dca.hero.value', { ticker: result.ticker })}
-          value={currency.format(result.portfolioValue)}
-          helper={t('tools.dca.hero.helper')}
-        />
+        {dcaError ? (
+          <Panel className="border-danger bg-danger/10">
+            <h2 className="text-lg font-bold text-danger">{t('tools.dca.noData.title')}</h2>
+            <p className="mt-3 text-sm leading-6 text-text-muted">{dcaError}</p>
+          </Panel>
+        ) : null}
 
-        <StatGrid>
-          <StatCard label={t('tools.dca.stats.invested')} value={currency.format(result.invested)} helper={t('tools.dca.explain.invested')} />
-          <StatCard label={t('tools.dca.stats.profit')} value={currency.format(result.profit)} tone="success" helper={t('tools.dca.explain.profit')} />
-          <StatCard label={t('tools.dca.stats.return')} value={`${percent.format(result.returnPercent)}%`} tone="primary" helper={t('tools.dca.explain.return')} />
-          <StatCard label={t('tools.dca.stats.averagePrice')} value={priceCurrency.format(result.averagePrice)} helper={t('tools.dca.explain.averagePrice')} />
-        </StatGrid>
+        {isEstimatedResult ? (
+          <Panel className="border-primary/40 bg-primary-dim">
+            <h2 className="text-lg font-bold text-primary">{t('tools.dca.notice.title')}</h2>
+            <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.dca.notice.fallback')}</p>
+          </Panel>
+        ) : null}
+
+        {result ? (
+          <>
+            <HeroMetric
+              label={t('tools.dca.hero.value', { ticker: result.ticker })}
+              value={currency.format(result.portfolioValue)}
+              helper={t('tools.dca.hero.helper')}
+            />
+
+            <StatGrid>
+              <StatCard label={t('tools.dca.stats.invested')} value={currency.format(result.invested)} helper={t('tools.dca.explain.invested')} />
+              <StatCard label={t('tools.dca.stats.profit')} value={currency.format(result.profit)} tone="success" helper={t('tools.dca.explain.profit')} />
+              <StatCard label={t('tools.dca.stats.return')} value={`${percent.format(result.returnPercent)}%`} tone="primary" helper={t('tools.dca.explain.return')} />
+              <StatCard label={t('tools.dca.stats.averagePrice')} value={priceCurrency.format(result.averagePrice)} helper={t('tools.dca.explain.averagePrice')} />
+            </StatGrid>
+          </>
+        ) : null}
 
         <Panel>
           <h2 className="text-lg font-bold text-text-primary">{t('tools.dca.guide.title')}</h2>
           <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.dca.guide.text')}</p>
         </Panel>
 
-        <Panel>
-          <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.dca.chart.title')}</h2>
-          <div className="h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={result.rows}>
-                <CartesianGrid stroke="#1E1E1E" />
-                <XAxis dataKey="label" stroke="#666666" minTickGap={32} />
-                <YAxis stroke="#666666" tickFormatter={(value) => currency.format(Number(value))} />
-                <Tooltip formatter={(value) => currency.format(Number(value))} />
-                <Legend />
-                <Area type="monotone" dataKey="invested" name={t('tools.dca.chart.invested')} stroke="#666666" fill="#666666" fillOpacity={0.12} />
-                <Area type="monotone" dataKey="portfolioValue" name={t('tools.dca.chart.value')} stroke="#C9A84C" fill="#C9A84C" fillOpacity={0.18} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </Panel>
+        {result ? (
+          <>
+            <Panel>
+              <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.dca.chart.title')}</h2>
+              <div className="h-80">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={result.rows} margin={{ left: 24, right: 16 }}>
+                    <CartesianGrid stroke="#1E1E1E" />
+                    <XAxis dataKey="label" stroke="#666666" minTickGap={32} />
+                    <YAxis
+                      stroke="#666666"
+                      width={96}
+                      tickMargin={8}
+                      tickFormatter={(value) => currency.format(Number(value))}
+                    />
+                    <Tooltip formatter={(value) => currency.format(Number(value))} />
+                    <Legend />
+                    <Area type="monotone" dataKey="invested" name={t('tools.dca.chart.invested')} stroke="#666666" fill="#666666" fillOpacity={0.12} />
+                    <Area type="monotone" dataKey="portfolioValue" name={t('tools.dca.chart.value')} stroke="#C9A84C" fill="#C9A84C" fillOpacity={0.18} />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </Panel>
 
-        <Panel className="overflow-x-auto">
-          <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.dca.table.title')}</h2>
-          <table className="w-full min-w-[620px] text-left text-sm">
-            <tbody>
-              <tr className="border-b-[0.5px] border-border">
-                <th className="py-3 text-text-subtle">{t('tools.dca.table.shares')}</th>
-                <td className="text-text-primary">{result.shares.toFixed(3)}</td>
-              </tr>
-              <tr className="border-b-[0.5px] border-border">
-                <th className="py-3 text-text-subtle">{t('tools.dca.table.finalPrice')}</th>
-                <td className="text-text-primary">{priceCurrency.format(result.finalPrice)}</td>
-              </tr>
-              <tr className="border-b-[0.5px] border-border">
-                <th className="py-3 text-text-subtle">{t('tools.dca.table.months')}</th>
-                <td className="text-text-primary">{result.rows.length}</td>
-              </tr>
-            </tbody>
-          </table>
-        </Panel>
+            <Panel className="overflow-x-auto">
+              <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.dca.table.title')}</h2>
+              <table className="w-full min-w-[620px] text-left text-sm">
+                <tbody>
+                  <tr className="border-b-[0.5px] border-border">
+                    <th className="py-3 text-text-subtle">{t('tools.dca.table.shares')}</th>
+                    <td className="text-text-primary">{result.shares.toFixed(3)}</td>
+                  </tr>
+                  <tr className="border-b-[0.5px] border-border">
+                    <th className="py-3 text-text-subtle">{t('tools.dca.table.finalPrice')}</th>
+                    <td className="text-text-primary">{priceCurrency.format(result.finalPrice)}</td>
+                  </tr>
+                  <tr className="border-b-[0.5px] border-border">
+                    <th className="py-3 text-text-subtle">{t('tools.dca.table.months')}</th>
+                    <td className="text-text-primary">{result.rows.length}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </Panel>
+          </>
+        ) : null}
       </div>
     </SidebarLayout>
   )

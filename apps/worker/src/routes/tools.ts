@@ -11,7 +11,7 @@ import { getStooqQuote } from '../services/stooq'
 import { getYahooHistory, getYahooQuote, type StockHistory, type StockQuote } from '../services/yahoo'
 import type { AppEnv } from '../types'
 import { getToolUsageAnalytics } from '../utils/analytics'
-import { calculateDca, calculateMockDca } from '../utils/dca'
+import { calculateDca } from '../utils/dca'
 import { createError, createSuccess } from '../utils/response'
 import { normalizeTicker } from '../utils/ticker'
 
@@ -210,9 +210,20 @@ tools.get('/dca', zValidator('query', dcaSchema, validatorHook), async (c) => {
 
   try {
     const history = await getHistory(c, normalizedTicker, '10y')
-    return c.json(createSuccess(calculateDca(normalizedTicker, amount, history, from)))
+    const result = calculateDca(normalizedTicker, amount, history, from)
+    if (result.rows.length === 0) {
+      return c.json(
+        createError('DCA_HISTORY_UNAVAILABLE', 'No historical prices found for this ticker.'),
+        404,
+      )
+    }
+
+    return c.json(createSuccess(result))
   } catch {
-    return c.json(createSuccess(calculateMockDca(normalizedTicker, amount, from)))
+    return c.json(
+      createError('DCA_HISTORY_UNAVAILABLE', 'No historical prices found for this ticker.'),
+      404,
+    )
   }
 })
 
