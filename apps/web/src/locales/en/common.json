@@ -33,7 +33,12 @@
       "reset": "Reset",
       "copyLink": "Copy link",
       "linkCopied": "Link copied",
-      "shareFallback": "Copy this link to save your scenario:"
+      "shareFallback": "Copy this link to save your scenario:",
+      "search": {
+        "loading": "Searching companies...",
+        "empty": "No company found. You can enter an exact ticker and press Calculate.",
+        "error": "Search is temporarily unavailable. Enter an exact ticker and press Calculate."
+      }
     },
     "invest": {
       "title": "Invest Calculator",
@@ -241,8 +246,10 @@
       },
       "lookup": {
         "title": "Ticker data",
-        "updated": "Live fields were loaded where available. Review the model and assumptions before relying on the result.",
-        "noData": "Live data is unavailable for this ticker right now. You can still edit EPS and market price manually."
+        "updated": "Data for {{ticker}} was loaded. Review the model and assumptions before relying on the result.",
+        "partial": "Found {{ticker}}, but these fields are missing: {{fields}}. Unavailable values were cleared so old data from another company does not leak into the model.",
+        "noData": "Live data is unavailable for {{ticker}} right now. You can still edit EPS and market price manually.",
+        "notFound": "Could not find reliable data for {{ticker}}. Check the ticker or try another symbol. Details: {{message}}"
       },
       "growthHint": {
         "title": "Growth company detected",
@@ -333,6 +340,56 @@
         "dcf": "Think of a company like an apple tree. EPS is the apples it produces today, growth estimates more apples in the next five years, and the discount rate asks what those future apples are worth in today's money.",
         "pe": "Choose the earnings multiple you think the market could reasonably pay. This is simpler than DCF and makes the assumption visible: the result depends on both EPS quality and the target P/E.",
         "ps": "Choose the sales multiple you think the business could deserve. This can fit companies where revenue scale is clear but profits are still ramping, but it must be checked against margins and cash flow."
+      },
+      "beginner": {
+        "kicker": "Plain-language guide",
+        "title": "What do these numbers mean?",
+        "description": "This calculator does not tell you to buy or sell. It shows the price implied by your selected model and how far the market is from that price.",
+        "terms": {
+          "fairPrice": {
+            "title": "Fair price",
+            "text": "An estimated share price from the selected model. It is not a forecast or guarantee, just the output of your assumptions."
+          },
+          "safeBuy": {
+            "title": "Safe buy price",
+            "text": "Fair price minus the margin of safety. It is lower so there is room for errors in the data or forecast."
+          },
+          "margin": {
+            "title": "Margin of safety",
+            "text": "A discount to the model price. 30% means you only consider buying if the market is roughly one-third below your estimate."
+          },
+          "eps": {
+            "title": "EPS",
+            "text": "Earnings per share. If a company earns money steadily, EPS can be a useful base for valuation."
+          },
+          "pe": {
+            "title": "P/E",
+            "text": "How much the market pays for 1 dollar of earnings. A higher P/E means the market expects more from the future."
+          },
+          "ps": {
+            "title": "P/S",
+            "text": "How much the market pays for 1 dollar of revenue. It can help with companies whose profits are still uneven."
+          },
+          "dcf": {
+            "title": "DCF",
+            "text": "An attempt to estimate what future profits are worth today. Bolder assumptions create bolder results."
+          },
+          "discount": {
+            "title": "Discount rate",
+            "text": "The higher it is, the stricter the model is about future money. It is a way to account for time and risk."
+          }
+        },
+        "steps": {
+          "title": "How to use it without a finance degree",
+          "chooseModel": "Start with a model you understand: DCF or P/E for stable profitable companies, often P/S for fintech and growth companies.",
+          "checkInputs": "Check the input numbers. If EPS, revenue, or price looks strange, the result will be strange too.",
+          "comparePrices": "Compare the market price with the safe buy price, not only with the fair price.",
+          "useCaution": "If upside is negative, it is not an order to sell. It means the price is high under your current assumptions."
+        },
+        "warning": {
+          "title": "When not to trust the result",
+          "text": "Do not rely on one model for banks, unprofitable growth companies, cyclical businesses, or tickers with incomplete live data. Compare several scenarios and understand the business, not only the number."
+        }
       }
     },
     "stock": {

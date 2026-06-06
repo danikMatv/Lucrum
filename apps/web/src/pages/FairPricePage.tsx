@@ -14,7 +14,6 @@ import {
 } from '../utils/fairPrice.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import { companiesService } from '../services/companiesService.ts'
-import { toolsService } from '../services/toolsService.ts'
 import { parseApiError } from '../utils/errorHandler.ts'
 import { getNumberParam, getSearchParams, getStringParam, getUnionParam } from '../utils/urlParams.ts'
 
@@ -73,6 +72,8 @@ const growthTickerSet = new Set<string>(GROWTH_TICKERS)
 const financialTickerSet = new Set<string>(FINANCIAL_TICKERS)
 const valuationModeOptions = ['dcf', 'pe', 'ps'] as const
 const marginOptions = [20, 30, 40] as const
+const beginnerTermKeys = ['fairPrice', 'safeBuy', 'margin', 'eps', 'pe', 'ps', 'dcf', 'discount'] as const
+const beginnerStepKeys = ['chooseModel', 'checkInputs', 'comparePrices', 'useCaution'] as const
 
 const defaultFairPriceInput = {
   ticker: 'AAPL',
@@ -211,49 +212,37 @@ export const FairPricePage = () => {
   const fundamentalsMutation = useMutation({
     mutationFn: async (tickerValue: string) => {
       const normalizedTicker = normalizeCompanyQuery(tickerValue) || 'AAPL'
-      const [companyResult, fundamentalsResult, quoteResult] = await Promise.allSettled([
-        companiesService.getByTicker(normalizedTicker),
-        companiesService.getFundamentals(normalizedTicker),
-        toolsService.getQuote(normalizedTicker),
-      ])
-      const fundamentals =
-        fundamentalsResult.status === 'fulfilled' ? fundamentalsResult.value : null
-      const quote = quoteResult.status === 'fulfilled' ? quoteResult.value : null
-      const company = companyResult.status === 'fulfilled' ? companyResult.value : null
-
-      return {
-        ticker: company?.ticker ?? normalizedTicker,
-        company,
-        fundamentals,
-        quote,
-      }
+      return companiesService.getSnapshot(normalizedTicker)
     },
-    onSuccess: ({ ticker: nextTicker, company, fundamentals, quote }) => {
+    onSuccess: ({ ticker: snapshotTicker, company, fundamentals, quote }) => {
       let updatedFields = 0
-      let nextEps = eps
-      let nextMarketPrice = marketPrice
+      const nextTicker = company?.ticker ?? quote?.ticker ?? snapshotTicker
+      const nextEps =
+        typeof fundamentals?.epsTtm === 'number' && fundamentals.epsTtm > 0
+          ? Number(fundamentals.epsTtm.toFixed(2))
+          : 0
+      const nextMarketPrice =
+        quote?.price && quote.price > 0
+          ? Number(quote.price.toFixed(2))
+          : fundamentals?.peRatio && fundamentals.peRatio > 0 && nextEps > 0
+            ? Number((fundamentals.peRatio * nextEps).toFixed(2))
+            : 0
+      const nextRevenuePerShare = getRevenuePerShare(fundamentals)
 
       setTicker(nextTicker)
-      if (fundamentals?.epsTtm && fundamentals.epsTtm > 0) {
-        nextEps = Number(fundamentals.epsTtm.toFixed(2))
-        setEps(nextEps)
-        setEpsEditedManually(false)
+      setEps(nextEps)
+      setEpsEditedManually(false)
+      if (nextEps > 0) {
         updatedFields += 1
       }
 
-      if (quote?.price && quote.price > 0) {
-        nextMarketPrice = Number(quote.price.toFixed(2))
-        setMarketPrice(nextMarketPrice)
-        updatedFields += 1
-      } else if (fundamentals?.peRatio && fundamentals.peRatio > 0 && fundamentals.epsTtm && fundamentals.epsTtm > 0) {
-        nextMarketPrice = Number((fundamentals.peRatio * fundamentals.epsTtm).toFixed(2))
-        setMarketPrice(nextMarketPrice)
+      setMarketPrice(nextMarketPrice)
+      if (nextMarketPrice > 0) {
         updatedFields += 1
       }
 
-      const nextRevenuePerShare = getRevenuePerShare(fundamentals)
+      setRevenuePerShare(nextRevenuePerShare > 0 ? Number(nextRevenuePerShare.toFixed(2)) : 0)
       if (nextRevenuePerShare > 0) {
-        setRevenuePerShare(Number(nextRevenuePerShare.toFixed(2)))
         updatedFields += 1
       }
 
@@ -281,15 +270,44 @@ export const FairPricePage = () => {
         }
       }
 
+      const shouldNeedRevenuePerShare = valuationMode === 'ps' || nextFit === 'financial' || nextFit === 'growth'
+      const missingFields = [
+        nextEps <= 0 ? t('tools.fairPrice.inputs.eps') : null,
+        shouldNeedRevenuePerShare && nextRevenuePerShare <= 0
+          ? t('tools.fairPrice.inputs.revenuePerShare')
+          : null,
+        nextMarketPrice <= 0 ? t('tools.fairPrice.inputs.marketPrice') : null,
+      ].filter((field): field is string => Boolean(field))
+
+      if (updatedFields > 0 && missingFields.length > 0) {
+        setLookupNotice(
+          t('tools.fairPrice.lookup.partial', {
+            ticker: nextTicker,
+            fields: missingFields.join(', '),
+          }),
+        )
+        return
+      }
+
       setLookupNotice(
         updatedFields > 0
-          ? t('tools.fairPrice.lookup.updated')
-          : t('tools.fairPrice.lookup.noData'),
+          ? t('tools.fairPrice.lookup.updated', { ticker: nextTicker })
+          : t('tools.fairPrice.lookup.noData', { ticker: nextTicker }),
       )
     },
-    onError: (error) => {
-      setTicker((currentTicker) => normalizeCompanyQuery(currentTicker) || 'AAPL')
-      setLookupNotice(parseApiError(error, t('errors.generic'), t('errors.validation')))
+    onError: (error, tickerValue) => {
+      const normalizedTicker = normalizeCompanyQuery(tickerValue) || 'AAPL'
+      setTicker(normalizedTicker)
+      setEps(0)
+      setMarketPrice(0)
+      setRevenuePerShare(0)
+      setEpsEditedManually(false)
+      setLookupNotice(
+        t('tools.fairPrice.lookup.notFound', {
+          ticker: normalizedTicker,
+          message: parseApiError(error, t('errors.generic'), t('errors.validation')),
+        }),
+      )
     },
   })
 
@@ -336,9 +354,13 @@ export const FairPricePage = () => {
     valuationMode !== 'ps' && isGrowthCompany(ticker) && epsEditedManually && !growthHintDismissed
   const shouldShowModelWarning = valuationFit !== 'standard'
 
-  const handleCalculate = () => {
+  const loadTicker = (tickerValue: string) => {
     setLookupNotice('')
-    fundamentalsMutation.mutate(ticker)
+    fundamentalsMutation.mutate(tickerValue)
+  }
+
+  const handleCalculate = () => {
+    loadTicker(ticker)
   }
 
   const handleEpsChange = (value: number) => {
@@ -353,7 +375,10 @@ export const FairPricePage = () => {
         label={t('tools.fairPrice.inputs.ticker')}
         value={ticker}
         onChange={setTicker}
-        onSelect={(company) => setTicker(company.ticker)}
+        onSelect={(company) => {
+          setTicker(company.ticker)
+          loadTicker(company.ticker)
+        }}
       />
       <SegmentedControl
         label={t('tools.fairPrice.inputs.mode')}
@@ -663,6 +688,60 @@ export const FairPricePage = () => {
           <p className="mt-3 text-sm leading-6 text-text-muted">
             {t(`tools.fairPrice.how.${valuationMode}`)}
           </p>
+        </Panel>
+
+        <Panel>
+          <div className="grid gap-6">
+            <div>
+              <p className="text-sm font-semibold uppercase text-primary">
+                {t('tools.fairPrice.beginner.kicker')}
+              </p>
+              <h2 className="mt-2 text-2xl font-bold text-text-primary">
+                {t('tools.fairPrice.beginner.title')}
+              </h2>
+              <p className="mt-3 text-sm leading-6 text-text-muted">
+                {t('tools.fairPrice.beginner.description')}
+              </p>
+            </div>
+
+            <div className="grid gap-x-6 gap-y-5 md:grid-cols-2">
+              {beginnerTermKeys.map((term) => (
+                <section key={term} className="border-t-[0.5px] border-border pt-4">
+                  <h3 className="text-base font-bold text-text-primary">
+                    {t(`tools.fairPrice.beginner.terms.${term}.title`)}
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-text-muted">
+                    {t(`tools.fairPrice.beginner.terms.${term}.text`)}
+                  </p>
+                </section>
+              ))}
+            </div>
+
+            <section className="border-t-[0.5px] border-primary/50 pt-5">
+              <h3 className="text-base font-bold text-primary">
+                {t('tools.fairPrice.beginner.steps.title')}
+              </h3>
+              <ol className="mt-4 grid gap-3">
+                {beginnerStepKeys.map((step, index) => (
+                  <li key={step} className="flex gap-3 text-sm leading-6 text-text-muted">
+                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-md bg-primary text-xs font-bold text-background">
+                      {index + 1}
+                    </span>
+                    <span>{t(`tools.fairPrice.beginner.steps.${step}`)}</span>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section className="border-t-[0.5px] border-danger/50 pt-5">
+              <h3 className="text-base font-bold text-danger">
+                {t('tools.fairPrice.beginner.warning.title')}
+              </h3>
+              <p className="mt-2 text-sm leading-6 text-text-muted">
+                {t('tools.fairPrice.beginner.warning.text')}
+              </p>
+            </section>
+          </div>
         </Panel>
       </div>
     </SidebarLayout>

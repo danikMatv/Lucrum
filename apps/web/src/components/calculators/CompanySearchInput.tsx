@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { companiesService } from '../../services/companiesService.ts'
 import type { Company } from '../../types/api.ts'
 
@@ -53,6 +54,7 @@ export const CompanySearchInput = ({
   onChange,
   onSelect,
 }: CompanySearchInputProps) => {
+  const { t } = useTranslation('common')
   const [isFocused, setIsFocused] = useState(false)
   const query = value.trim()
   const shouldSearch = query.length >= 2
@@ -96,24 +98,37 @@ export const CompanySearchInput = ({
         className="w-full rounded-md border-[0.5px] border-border bg-surface-alt px-3 py-2 text-sm text-text-primary outline-none transition focus:border-primary"
         autoComplete="off"
       />
-      {isFocused && suggestions.length > 0 ? (
+      {isFocused && shouldSearch && (suggestions.length > 0 || companiesQuery.isLoading || companiesQuery.isError) ? (
         <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-md border-[0.5px] border-border bg-surface shadow-2xl shadow-black/30">
-          {suggestions.map((company) => (
-            <button
-              key={company.ticker}
-              type="button"
-              onMouseDown={(event) => event.preventDefault()}
-              onClick={() => handleSelect(company)}
-              className="grid w-full gap-1 border-b-[0.5px] border-border px-3 py-2 text-left transition last:border-b-0 hover:bg-surface-alt"
-            >
-              <span className="text-sm font-bold text-text-primary">{company.ticker}</span>
-              <span className="text-xs text-text-muted">
-                {company.name}
-                {company.exchange ? ` · ${company.exchange}` : ''}
-              </span>
-            </button>
-          ))}
+          {suggestions.length === 0 && companiesQuery.isLoading ? (
+            <p className="px-3 py-2 text-sm text-text-muted">{t('tools.common.search.loading')}</p>
+          ) : null}
+          {suggestions.length === 0 && !companiesQuery.isLoading && companiesQuery.isError ? (
+            <p className="px-3 py-2 text-sm text-text-muted">{t('tools.common.search.error')}</p>
+          ) : null}
+          {suggestions.length > 0
+            ? suggestions.map((company) => (
+                <button
+                  key={company.ticker}
+                  type="button"
+                  onMouseDown={(event) => event.preventDefault()}
+                  onClick={() => handleSelect(company)}
+                  className="grid w-full gap-1 border-b-[0.5px] border-border px-3 py-2 text-left transition last:border-b-0 hover:bg-surface-alt"
+                >
+                  <span className="text-sm font-bold text-text-primary">{company.ticker}</span>
+                  <span className="text-xs text-text-muted">
+                    {company.name}
+                    {company.exchange ? ` · ${company.exchange}` : ''}
+                  </span>
+                </button>
+              ))
+            : null}
         </div>
+      ) : null}
+      {isFocused && shouldSearch && !companiesQuery.isLoading && !companiesQuery.isError && suggestions.length === 0 ? (
+        <p className="absolute left-0 right-0 top-full z-20 mt-2 rounded-md border-[0.5px] border-border bg-surface px-3 py-2 text-sm text-text-muted shadow-2xl shadow-black/30">
+          {t('tools.common.search.empty')}
+        </p>
       ) : null}
     </label>
   )

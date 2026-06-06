@@ -33,7 +33,12 @@
       "reset": "Réinitialiser",
       "copyLink": "Copier le lien",
       "linkCopied": "Lien copié",
-      "shareFallback": "Copiez ce lien pour garder votre scénario :"
+      "shareFallback": "Copiez ce lien pour garder votre scénario :",
+      "search": {
+        "loading": "Recherche de sociétés...",
+        "empty": "Aucune société trouvée. Vous pouvez saisir le ticker exact puis lancer le calcul.",
+        "error": "La recherche est temporairement indisponible. Saisissez le ticker exact puis lancez le calcul."
+      }
     },
     "invest": {
       "title": "Calculateur d'investissement",
@@ -241,8 +246,10 @@
       },
       "lookup": {
         "title": "Données du ticker",
-        "updated": "Les champs live disponibles ont été chargés. Vérifiez le modèle et les hypothèses avant de vous fier au résultat.",
-        "noData": "Les données live de ce ticker sont indisponibles pour le moment. Vous pouvez toujours modifier l'EPS et le prix de marché manuellement."
+        "updated": "Les données de {{ticker}} ont été chargées. Vérifiez le modèle et les hypothèses avant de vous fier au résultat.",
+        "partial": "{{ticker}} a été trouvé, mais ces champs manquent : {{fields}}. Les valeurs indisponibles ont été vidées pour éviter de garder les anciennes données d'une autre société.",
+        "noData": "Les données live de {{ticker}} sont indisponibles pour le moment. Vous pouvez toujours modifier l'EPS et le prix de marché manuellement.",
+        "notFound": "Impossible de trouver des données fiables pour {{ticker}}. Vérifiez le ticker ou essayez un autre symbole. Détails : {{message}}"
       },
       "growthHint": {
         "title": "Société de croissance détectée",
@@ -333,6 +340,56 @@
         "dcf": "Imaginez une entreprise comme un pommier. L'EPS représente les pommes produites aujourd'hui, la croissance estime les pommes des cinq prochaines années, et le taux d'actualisation demande ce que ces pommes futures valent aujourd'hui.",
         "pe": "Choisissez le multiple de bénéfice que le marché pourrait raisonnablement payer. C'est plus simple qu'un DCF et rend l'hypothèse visible : le résultat dépend de la qualité de l'EPS et du P/E cible.",
         "ps": "Choisissez le multiple de ventes que l'entreprise pourrait mériter. Cela peut convenir quand l'échelle du chiffre d'affaires est claire mais que les profits montent encore, à vérifier avec les marges et le cash-flow."
+      },
+      "beginner": {
+        "kicker": "Explication simple",
+        "title": "Que signifient ces chiffres ?",
+        "description": "Ce calculateur ne dit pas acheter ou vendre. Il montre le prix donné par le modèle choisi et l'écart entre ce prix et le marché.",
+        "terms": {
+          "fairPrice": {
+            "title": "Juste valeur",
+            "text": "Prix estimé de l'action selon le modèle choisi. Ce n'est pas une prévision ni une garantie, seulement le résultat de vos hypothèses."
+          },
+          "safeBuy": {
+            "title": "Prix d'achat prudent",
+            "text": "Juste valeur moins la marge de sécurité. Il est plus bas pour laisser de la place aux erreurs de données ou de prévision."
+          },
+          "margin": {
+            "title": "Marge de sécurité",
+            "text": "Une décote sur le prix du modèle. 30 % signifie envisager l'achat seulement si le marché est environ un tiers sous votre estimation."
+          },
+          "eps": {
+            "title": "EPS",
+            "text": "Bénéfice par action. Si l'entreprise gagne de l'argent de façon stable, l'EPS peut être une bonne base d'évaluation."
+          },
+          "pe": {
+            "title": "P/E",
+            "text": "Combien le marché paie pour 1 dollar de bénéfice. Un P/E plus élevé signifie plus d'attentes pour l'avenir."
+          },
+          "ps": {
+            "title": "P/S",
+            "text": "Combien le marché paie pour 1 dollar de chiffre d'affaires. Utile quand les bénéfices sont encore irréguliers."
+          },
+          "dcf": {
+            "title": "DCF",
+            "text": "Une tentative d'estimer ce que les profits futurs valent aujourd'hui. Des hypothèses plus audacieuses donnent des résultats plus audacieux."
+          },
+          "discount": {
+            "title": "Taux d'actualisation",
+            "text": "Plus il est élevé, plus le modèle est strict avec l'argent futur. C'est une façon d'intégrer le temps et le risque."
+          }
+        },
+        "steps": {
+          "title": "Comment l'utiliser sans formation finance",
+          "chooseModel": "Commencez par un modèle que vous comprenez : DCF ou P/E pour les sociétés stables et rentables, souvent P/S pour fintech et croissance.",
+          "checkInputs": "Vérifiez les chiffres saisis. Si l'EPS, le chiffre d'affaires ou le prix semble étrange, le résultat le sera aussi.",
+          "comparePrices": "Comparez le prix de marché au prix d'achat prudent, pas seulement à la juste valeur.",
+          "useCaution": "Si le potentiel est négatif, ce n'est pas un ordre de vendre. Cela signifie que le prix est élevé selon vos hypothèses."
+        },
+        "warning": {
+          "title": "Quand ne pas faire confiance au résultat",
+          "text": "Ne vous fiez pas à un seul modèle pour les banques, sociétés de croissance non rentables, entreprises cycliques ou tickers avec données live incomplètes. Comparez plusieurs scénarios et comprenez le business, pas seulement le chiffre."
+        }
       }
     },
     "stock": {
