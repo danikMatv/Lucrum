@@ -1,7 +1,12 @@
 import { useMemo, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { NumberInput, SegmentedControl, SliderInput } from '../components/calculators/CalculatorControls.tsx'
+import {
+  HelpTooltip,
+  NumberInput,
+  SegmentedControl,
+  SliderInput,
+} from '../components/calculators/CalculatorControls.tsx'
 import { CalculatorActions } from '../components/calculators/CalculatorActions.tsx'
 import { CompanySearchInput } from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
@@ -446,23 +451,11 @@ export const FairPricePage = () => {
           step={0.1}
           onChange={handleEpsChange}
           labelAccessory={
-            <span className="group relative inline-flex">
-              <button
-                type="button"
-                aria-label={t('tools.fairPrice.epsTooltip')}
-                title={t('tools.fairPrice.epsTooltip')}
-                className="grid h-5 w-5 place-items-center rounded-full border-[0.5px] border-primary text-xs font-bold text-primary transition hover:bg-primary-dim focus:bg-primary-dim focus:outline-none"
-              >
-                i
-              </button>
-              <span
-                role="tooltip"
-                className="pointer-events-none absolute left-1/2 top-7 z-20 hidden w-64 -translate-x-1/2 rounded-md border-[0.5px] border-border bg-surface p-3 text-xs font-normal leading-5 text-text-muted shadow-lg group-hover:block group-focus-within:block"
-              >
-                {t('tools.fairPrice.epsTooltip')}
-              </span>
-            </span>
+            <HelpTooltip label={t('tools.fairPrice.epsTooltip')}>
+              {t('tools.fairPrice.epsTooltip')}
+            </HelpTooltip>
           }
+          helper={t('tools.fairPrice.helpers.eps')}
         />
       ) : null}
       {shouldShowGrowthHint ? (
@@ -498,21 +491,29 @@ export const FairPricePage = () => {
           </div>
         </div>
       ) : null}
-      <NumberInput id="fair-market-price" label={t('tools.fairPrice.inputs.marketPrice')} value={marketPrice} min={0} step={1} onChange={setMarketPrice} />
+      <NumberInput
+        id="fair-market-price"
+        label={t('tools.fairPrice.inputs.marketPrice')}
+        value={marketPrice}
+        min={0}
+        step={1}
+        helper={t('tools.fairPrice.helpers.marketPrice')}
+        onChange={setMarketPrice}
+      />
       {valuationMode === 'dcf' ? (
         <>
-          <SliderInput id="fair-growth" label={t('tools.fairPrice.inputs.growth')} value={growthRate} min={0} max={40} step={0.5} suffix="%" onChange={setGrowthRate} />
-          <SliderInput id="fair-terminal" label={t('tools.fairPrice.inputs.terminalGrowth')} value={terminalGrowth} min={0} max={6} step={0.25} suffix="%" onChange={setTerminalGrowth} />
-          <SliderInput id="fair-discount" label={t('tools.fairPrice.inputs.discount')} value={discountRate} min={5} max={20} step={0.5} suffix="%" onChange={setDiscountRate} />
+          <SliderInput id="fair-growth" label={t('tools.fairPrice.inputs.growth')} value={growthRate} min={0} max={40} step={0.5} suffix="%" helper={t('tools.fairPrice.helpers.growth')} onChange={setGrowthRate} />
+          <SliderInput id="fair-terminal" label={t('tools.fairPrice.inputs.terminalGrowth')} value={terminalGrowth} min={0} max={6} step={0.25} suffix="%" helper={t('tools.fairPrice.helpers.terminalGrowth')} onChange={setTerminalGrowth} />
+          <SliderInput id="fair-discount" label={t('tools.fairPrice.inputs.discount')} value={discountRate} min={5} max={20} step={0.5} suffix="%" helper={t('tools.fairPrice.helpers.discount')} onChange={setDiscountRate} />
         </>
       ) : null}
       {valuationMode === 'pe' ? (
-        <SliderInput id="fair-target-pe" label={t('tools.fairPrice.inputs.targetPe')} value={targetPe} min={5} max={80} step={1} onChange={setTargetPe} />
+        <SliderInput id="fair-target-pe" label={t('tools.fairPrice.inputs.targetPe')} value={targetPe} min={5} max={80} step={1} helper={t('tools.fairPrice.helpers.targetPe')} onChange={setTargetPe} />
       ) : null}
       {valuationMode === 'ps' ? (
         <>
-          <NumberInput id="fair-revenue-share" label={t('tools.fairPrice.inputs.revenuePerShare')} value={revenuePerShare} min={0} step={0.1} onChange={setRevenuePerShare} />
-          <SliderInput id="fair-target-ps" label={t('tools.fairPrice.inputs.targetPs')} value={targetPs} min={0.5} max={20} step={0.25} onChange={setTargetPs} />
+          <NumberInput id="fair-revenue-share" label={t('tools.fairPrice.inputs.revenuePerShare')} value={revenuePerShare} min={0} step={0.1} helper={t('tools.fairPrice.helpers.revenuePerShare')} onChange={setRevenuePerShare} />
+          <SliderInput id="fair-target-ps" label={t('tools.fairPrice.inputs.targetPs')} value={targetPs} min={0.5} max={20} step={0.25} helper={t('tools.fairPrice.helpers.targetPs')} onChange={setTargetPs} />
         </>
       ) : null}
       <SegmentedControl
@@ -531,7 +532,7 @@ export const FairPricePage = () => {
         disabled={fundamentalsMutation.isPending}
         className="rounded-md bg-primary px-4 py-3 text-sm font-bold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {fundamentalsMutation.isPending ? t('common.loading') : t('buttons.calculate')}
+        {fundamentalsMutation.isPending ? t('common.loading') : t('tools.fairPrice.loadTicker')}
       </button>
     </>
   )

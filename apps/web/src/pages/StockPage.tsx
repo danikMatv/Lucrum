@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
@@ -48,6 +48,8 @@ interface StockFinancialRow {
 }
 
 type ChartTab = 'financials' | 'eps'
+const defaultTicker = 'AAPL'
+const popularTickers = ['AAPL', 'MSFT', 'NVDA', 'SPY'] as const
 
 const formatCurrency = (value: number | null | undefined) =>
   typeof value === 'number' && Number.isFinite(value) ? currency.format(value) : '—'
@@ -263,13 +265,13 @@ const isFundLikeSnapshot = (snapshot: CompanySnapshot) => {
 
 export const StockPage = () => {
   const { t, i18n } = useTranslation('common')
-  const [tickerInput, setTickerInput] = useState('AAPL')
+  const [tickerInput, setTickerInput] = useState(defaultTicker)
   const [snapshot, setSnapshot] = useState<CompanySnapshot | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
   const [activeChart, setActiveChart] = useState<ChartTab>('financials')
 
-  const stockMutation = useMutation({
+  const { mutate: fetchStock, isPending: isStockPending } = useMutation({
     mutationFn: async (ticker: string) => {
       const normalizedTicker = normalizeCompanyQuery(ticker) || 'AAPL'
       return companiesService.getSnapshot(normalizedTicker)
@@ -287,8 +289,17 @@ export const StockPage = () => {
     },
   })
 
+  useEffect(() => {
+    fetchStock(defaultTicker)
+  }, [fetchStock])
+
   const handleAnalyze = () => {
-    stockMutation.mutate(tickerInput)
+    fetchStock(tickerInput)
+  }
+
+  const handleTickerChip = (ticker: string) => {
+    setTickerInput(ticker)
+    fetchStock(ticker)
   }
 
   const verdict = snapshot ? getVerdict(snapshot) : 'unknown'
@@ -347,15 +358,36 @@ export const StockPage = () => {
         label={t('tools.stock.inputs.ticker')}
         value={tickerInput}
         onChange={setTickerInput}
+        onSelect={(company) => {
+          setTickerInput(company.ticker)
+          fetchStock(company.ticker)
+        }}
       />
       <button
         type="button"
         onClick={handleAnalyze}
-        disabled={stockMutation.isPending}
+        disabled={isStockPending}
         className="rounded-md bg-primary px-4 py-3 text-sm font-bold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
       >
-        {stockMutation.isPending ? t('common.loading') : t('buttons.analyze')}
+        {isStockPending ? t('common.loading') : t('buttons.analyze')}
       </button>
+      <div className="grid gap-2">
+        <p className="text-xs font-semibold uppercase text-text-subtle">
+          {t('tools.stock.popularTickers')}
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {popularTickers.map((ticker) => (
+            <button
+              key={ticker}
+              type="button"
+              onClick={() => handleTickerChip(ticker)}
+              className="rounded-md border-[0.5px] border-border px-3 py-2 text-xs font-bold text-primary transition hover:border-border-hover hover:bg-surface-alt"
+            >
+              {ticker}
+            </button>
+          ))}
+        </div>
+      </div>
     </>
   )
 
@@ -411,7 +443,9 @@ export const StockPage = () => {
         {!snapshot ? (
           <Panel>
             <p className="text-sm font-semibold uppercase text-primary">
-              {t('tools.stock.notice.readyTitle')}
+              {isStockPending
+                ? t('common.loading')
+                : t('tools.stock.notice.readyTitle')}
             </p>
             <p className="mt-3 text-sm leading-6 text-text-muted">
               {t('tools.stock.notice.readyText')}

@@ -45,7 +45,10 @@ export const HeroMetric = ({
 }: StatCardProps & { helper?: string }) => (
   <Panel className="bg-surface-alt">
     <p className="text-sm font-semibold uppercase text-text-subtle">{label}</p>
-    <p className={`mt-3 font-heading text-5xl font-bold leading-tight ${toneClass[tone]}`}>
+    <p
+      key={value}
+      className={`metric-pop mt-3 font-heading text-5xl font-bold leading-tight ${toneClass[tone]}`}
+    >
       {value}
     </p>
     {helper ? <p className="mt-3 text-sm leading-6 text-text-muted">{helper}</p> : null}

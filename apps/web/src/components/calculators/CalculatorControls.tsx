@@ -15,6 +15,11 @@ interface NumberInputProps {
   labelAccessory?: ReactNode
 }
 
+interface HelpTooltipProps {
+  label: string
+  children: ReactNode
+}
+
 interface TextInputProps {
   id: string
   label: string
@@ -63,6 +68,7 @@ export const NumberInput = ({
   helper,
   labelAccessory,
 }: NumberInputProps) => {
+  const helperId = helper ? `${id}-helper` : undefined
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(Number(event.target.value))
   }
@@ -77,16 +83,22 @@ export const NumberInput = ({
         <input
           id={id}
           type="number"
+          inputMode="decimal"
           min={min}
           max={max}
           step={step}
           value={value}
           onChange={handleChange}
           className={controlClass}
+          aria-describedby={helperId}
         />
         {suffix ? <span className="w-12 text-sm text-text-subtle">{suffix}</span> : null}
       </div>
-      {helper ? <span className="text-xs leading-5 text-text-subtle">{helper}</span> : null}
+      {helper ? (
+        <span id={helperId} className="text-xs leading-5 text-text-subtle">
+          {helper}
+        </span>
+      ) : null}
     </label>
   )
 }
@@ -102,6 +114,7 @@ export const SliderInput = ({
   suffix,
   helper,
 }: NumberInputProps) => {
+  const helperId = helper ? `${id}-helper` : undefined
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(Number(event.target.value))
   }
@@ -119,10 +132,12 @@ export const SliderInput = ({
           value={value}
           onChange={handleChange}
           className="h-2 w-full cursor-pointer accent-primary"
+          aria-describedby={helperId}
         />
         <div className="flex items-center gap-2">
           <input
             type="number"
+            inputMode="decimal"
             min={min}
             max={max}
             step={step}
@@ -130,11 +145,16 @@ export const SliderInput = ({
             onChange={handleChange}
             className={controlClass}
             aria-label={label}
+            aria-describedby={helperId}
           />
           {suffix ? <span className="w-12 text-sm text-text-subtle">{suffix}</span> : null}
         </div>
       </div>
-      {helper ? <span className="text-xs leading-5 text-text-subtle">{helper}</span> : null}
+      {helper ? (
+        <span id={helperId} className="text-xs leading-5 text-text-subtle">
+          {helper}
+        </span>
+      ) : null}
     </label>
   )
 }
@@ -203,10 +223,12 @@ export const MonthYearInput = ({
 
   return (
     <fieldset id={id} className="grid gap-2">
-      <legend className="text-sm font-medium text-text-muted">{label}</legend>
+      <legend id={`${id}-label`} className="text-sm font-medium text-text-muted">
+        {label}
+      </legend>
       <div className="grid grid-cols-[1fr_88px] gap-2">
         <select
-          aria-label={label}
+          aria-labelledby={`${id}-label`}
           value={String(safeMonth).padStart(2, '0')}
           onChange={handleMonthChange}
           className={controlClass}
@@ -217,7 +239,12 @@ export const MonthYearInput = ({
             </option>
           ))}
         </select>
-        <select value={safeYear} onChange={handleYearChange} className={controlClass}>
+        <select
+          value={safeYear}
+          onChange={handleYearChange}
+          className={controlClass}
+          aria-labelledby={`${id}-label`}
+        >
           {yearOptions.map((year) => (
             <option key={year} value={year}>
               {year}
@@ -281,4 +308,23 @@ export const SegmentedControl = <T extends string | number>({
       ))}
     </div>
   </div>
+)
+
+export const HelpTooltip = ({ label, children }: HelpTooltipProps) => (
+  <span className="group relative inline-flex">
+    <button
+      type="button"
+      aria-label={label}
+      title={label}
+      className="grid h-5 w-5 place-items-center rounded-full border-[0.5px] border-primary text-xs font-bold text-primary transition hover:bg-primary-dim focus:bg-primary-dim focus:outline-none"
+    >
+      i
+    </button>
+    <span
+      role="tooltip"
+      className="pointer-events-none absolute left-0 top-7 z-20 hidden w-64 max-w-[calc(100vw-3rem)] rounded-md border-[0.5px] border-border bg-surface p-3 text-xs font-normal leading-5 text-text-muted shadow-lg group-hover:block group-focus-within:block sm:left-1/2 sm:-translate-x-1/2"
+    >
+      {children}
+    </span>
+  </span>
 )

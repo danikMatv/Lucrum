@@ -10,6 +10,7 @@ interface CompanySearchInputProps {
   value: string
   onChange: (value: string) => void
   onSelect?: (company: CompanySuggestion) => void
+  helper?: string
 }
 
 export interface CompanySuggestion {
@@ -53,6 +54,7 @@ export const CompanySearchInput = ({
   value,
   onChange,
   onSelect,
+  helper,
 }: CompanySearchInputProps) => {
   const { t } = useTranslation('common')
   const [isFocused, setIsFocused] = useState(false)
@@ -97,7 +99,13 @@ export const CompanySearchInput = ({
         onBlur={() => setIsFocused(false)}
         className="w-full rounded-md border-[0.5px] border-border bg-surface-alt px-3 py-2 text-sm text-text-primary outline-none transition focus:border-primary"
         autoComplete="off"
+        aria-describedby={helper ? `${id}-helper` : undefined}
       />
+      {helper ? (
+        <span id={`${id}-helper`} className="text-xs leading-5 text-text-subtle">
+          {helper}
+        </span>
+      ) : null}
       {isFocused && shouldSearch && (suggestions.length > 0 || companiesQuery.isLoading || companiesQuery.isError) ? (
         <div className="absolute left-0 right-0 top-full z-20 mt-2 overflow-hidden rounded-md border-[0.5px] border-border bg-surface shadow-2xl shadow-black/30">
           {suggestions.length === 0 && companiesQuery.isLoading ? (

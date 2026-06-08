@@ -4,6 +4,7 @@ import type {
   CompanyFundamentals,
   CompanyIncomeHistoryRow,
 } from '../types'
+import type { StockHistory } from './yahoo'
 
 interface AlphaVantageOverviewResponse {
   Symbol?: string
@@ -65,6 +66,18 @@ interface AlphaVantageEarningsResponse {
     reportedDate?: string
     reportedEPS?: string
   }>
+  Note?: string
+  Information?: string
+}
+
+interface AlphaVantageMonthlyAdjustedResponse {
+  'Monthly Adjusted Time Series'?: Record<
+    string,
+    {
+      '4. close'?: string
+      '5. adjusted close'?: string
+    }
+  >
   Note?: string
   Information?: string
 }
@@ -276,6 +289,43 @@ export const getAlphaVantageIncomeHistory = async (
   }
 
   return rows
+}
+
+export const getAlphaVantageMonthlyHistory = async (
+  ticker: string,
+  apiKey: string,
+  from: string,
+): Promise<StockHistory> => {
+  const normalizedTicker = ticker.toUpperCase()
+  const data = await fetchAlphaVantage<AlphaVantageMonthlyAdjustedResponse>(
+    {
+      function: 'TIME_SERIES_MONTHLY_ADJUSTED',
+      symbol: normalizedTicker,
+      outputsize: 'full',
+    },
+    apiKey,
+  )
+  assertNotRateLimited(data)
+
+  const rows = Object.entries(data['Monthly Adjusted Time Series'] ?? {})
+    .map(([date, values]) => {
+      const price = parseNumber(values['5. adjusted close']) ?? parseNumber(values['4. close'])
+      return { date, price }
+    })
+    .filter(
+      (row): row is { date: string; price: number } =>
+        row.date.slice(0, 7) >= from && typeof row.price === 'number',
+    )
+    .sort((left, right) => left.date.localeCompare(right.date))
+
+  if (rows.length === 0) {
+    throw new Error('Alpha Vantage returned no monthly prices')
+  }
+
+  return {
+    dates: rows.map((row) => row.date),
+    prices: rows.map((row) => row.price),
+  }
 }
 
 export const getAlphaVantageEarnings = async (

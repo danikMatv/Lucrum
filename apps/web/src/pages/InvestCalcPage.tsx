@@ -370,32 +370,67 @@ export const InvestCalcPage = () => {
           </div>
         </Panel>
 
-        <Panel className="overflow-x-auto">
+        <Panel>
           <h2 className="mb-4 text-lg font-bold text-text-primary">{t('tools.invest.table.title')}</h2>
-          <table className="w-full min-w-[760px] text-left text-sm">
-            <thead className="text-text-subtle">
-              <tr className="border-b-[0.5px] border-border">
-                <th className="py-3">{t('tools.common.year')}</th>
-                <th>{t('tools.invest.table.contributionYear')}</th>
-                <th>{t('tools.invest.table.totalContributed')}</th>
-                <th>{t('tools.invest.table.nominal')}</th>
-                <th>{t('tools.invest.table.real')}</th>
-                <th>{t('tools.invest.table.profit')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result.rows.map((row) => (
-                <tr key={row.year} className="border-b-[0.5px] border-border text-text-muted">
-                  <td className="py-3 text-text-primary">{row.year}</td>
-                  <td>{currency.format(row.contributionYear)}</td>
-                  <td>{currency.format(row.totalContributed)}</td>
-                  <td>{currency.format(row.nominalValue)}</td>
-                  <td>{currency.format(row.realValue)}</td>
-                  <td className="text-success">{currency.format(row.profit)}</td>
+          <div className="grid gap-3 md:hidden">
+            {result.rows.map((row) => (
+              <article
+                key={row.year}
+                className="rounded-md border-[0.5px] border-border bg-surface-alt p-4"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="font-bold text-text-primary">
+                    {t('tools.common.year')} {row.year}
+                  </h3>
+                  <p className="font-semibold text-success">{currency.format(row.profit)}</p>
+                </div>
+                <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                  <div>
+                    <dt className="text-text-subtle">{t('tools.invest.table.contributionYear')}</dt>
+                    <dd className="mt-1 text-text-muted">{currency.format(row.contributionYear)}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-text-subtle">{t('tools.invest.table.totalContributed')}</dt>
+                    <dd className="mt-1 text-text-muted">{currency.format(row.totalContributed)}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-text-subtle">{t('tools.invest.table.nominal')}</dt>
+                    <dd className="mt-1 text-text-muted">{currency.format(row.nominalValue)}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-text-subtle">{t('tools.invest.table.real')}</dt>
+                    <dd className="mt-1 text-text-muted">{currency.format(row.realValue)}</dd>
+                  </div>
+                </dl>
+              </article>
+            ))}
+          </div>
+          <div className="hidden overflow-x-auto md:block">
+            <table className="w-full min-w-[760px] text-left text-sm">
+              <thead className="text-text-subtle">
+                <tr className="border-b-[0.5px] border-border">
+                  <th className="py-3">{t('tools.common.year')}</th>
+                  <th>{t('tools.invest.table.contributionYear')}</th>
+                  <th>{t('tools.invest.table.totalContributed')}</th>
+                  <th>{t('tools.invest.table.nominal')}</th>
+                  <th>{t('tools.invest.table.real')}</th>
+                  <th>{t('tools.invest.table.profit')}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {result.rows.map((row) => (
+                  <tr key={row.year} className="border-b-[0.5px] border-border text-text-muted">
+                    <td className="py-3 text-text-primary">{row.year}</td>
+                    <td>{currency.format(row.contributionYear)}</td>
+                    <td>{currency.format(row.totalContributed)}</td>
+                    <td>{currency.format(row.nominalValue)}</td>
+                    <td>{currency.format(row.realValue)}</td>
+                    <td className="text-success">{currency.format(row.profit)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </Panel>
       </div>
     </SidebarLayout>

@@ -52,21 +52,7 @@ interface YahooChartResponse {
   }
 }
 
-export const getYahooHistory = async (
-  baseUrl: string,
-  ticker: string,
-  period: string,
-): Promise<StockHistory> => {
-  const url = new URL(`/v8/finance/chart/${ticker.toUpperCase()}`, baseUrl)
-  url.searchParams.set('range', period)
-  url.searchParams.set('interval', '1mo')
-
-  const response = await fetch(url.toString())
-  if (!response.ok) {
-    throw new Error(`Yahoo Finance request failed with ${response.status}`)
-  }
-
-  const data = (await response.json()) as YahooChartResponse
+const toStockHistory = (data: YahooChartResponse): StockHistory => {
   const result = data.chart?.result?.at(0)
   const timestamps = result?.timestamp ?? []
   const prices = result?.indicators?.quote?.at(0)?.close ?? []
@@ -83,6 +69,48 @@ export const getYahooHistory = async (
   })
 
   return { dates, prices: validPrices }
+}
+
+export const getYahooHistory = async (
+  baseUrl: string,
+  ticker: string,
+  period: string,
+): Promise<StockHistory> => {
+  const url = new URL(`/v8/finance/chart/${ticker.toUpperCase()}`, baseUrl)
+  url.searchParams.set('range', period)
+  url.searchParams.set('interval', '1mo')
+
+  const response = await fetch(url.toString())
+  if (!response.ok) {
+    throw new Error(`Yahoo Finance request failed with ${response.status}`)
+  }
+
+  const data = (await response.json()) as YahooChartResponse
+  return toStockHistory(data)
+}
+
+export const getYahooHistoryFromDate = async (
+  baseUrl: string,
+  ticker: string,
+  from: string,
+): Promise<StockHistory> => {
+  const fromDate = new Date(`${from}-01T00:00:00.000Z`)
+  const period1 = Number.isFinite(fromDate.getTime())
+    ? Math.floor(fromDate.getTime() / 1000)
+    : Math.floor(Date.now() / 1000)
+  const period2 = Math.floor(Date.now() / 1000)
+  const url = new URL(`/v8/finance/chart/${ticker.toUpperCase()}`, baseUrl)
+  url.searchParams.set('period1', String(period1))
+  url.searchParams.set('period2', String(period2))
+  url.searchParams.set('interval', '1mo')
+
+  const response = await fetch(url.toString())
+  if (!response.ok) {
+    throw new Error(`Yahoo Finance request failed with ${response.status}`)
+  }
+
+  const data = (await response.json()) as YahooChartResponse
+  return toStockHistory(data)
 }
 
 export const getYahooQuote = async (baseUrl: string, ticker: string): Promise<StockQuote> => {

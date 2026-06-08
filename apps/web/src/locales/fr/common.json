@@ -102,7 +102,7 @@
       "explain": {
         "totalContributions": "L'argent que vous ajoutez sur toute la période.",
         "netProfit": "La croissance projetée après retrait de vos versements.",
-        "nominalValue": "Des dollars futurs avant ajustement de l'inflation.",
+        "nominalValue": "Le montant futur dans la devise choisie avant ajustement de l'inflation.",
         "inflationLoss": "La part de pouvoir d'achat retirée par l'inflation."
       },
       "guide": {
@@ -177,6 +177,10 @@
         "startDate": "Date de début",
         "inflation": "Inflation annuelle"
       },
+      "helpers": {
+        "ticker": "Exemple : SPY est un ETF qui suit l'indice S&P 500."
+      },
+      "liveLoading": "Mise à jour automatique de l'historique de marché...",
       "hero": {
         "value": "Valeur du portefeuille {{ticker}}",
         "helper": "Utilise l'historique de marché quand il est disponible."
@@ -210,7 +214,7 @@
       },
       "notice": {
         "title": "Données estimées actives",
-        "fallback": "L'historique réel est indisponible, donc cette simulation utilise des prix estimés.",
+        "fallback": "L'historique réel de {{ticker}} est indisponible pour le moment, donc cette simulation utilise des prix estimés.",
         "backendFallback": "L'historique de marché réel est indisponible pour le moment, donc cette simulation utilise des prix estimés."
       },
       "noData": {
@@ -234,6 +238,17 @@
         "targetPs": "P/S cible",
         "revenuePerShare": "Chiffre d'affaires par action"
       },
+      "helpers": {
+        "eps": "Bénéfice par action sur les 12 derniers mois. À utiliser surtout pour les sociétés déjà rentables et stables.",
+        "marketPrice": "Le prix actuel de l'action utilisé pour comparer le résultat du modèle.",
+        "growth": "Votre estimation de croissance annuelle du bénéfice sur les cinq prochaines années.",
+        "terminalGrowth": "Un taux de croissance long terme prudent après la cinquième année.",
+        "discount": "Un taux plus élevé rend le modèle plus strict sur l'argent futur et le risque.",
+        "targetPe": "Le multiple de bénéfice que la société pourrait raisonnablement mériter.",
+        "targetPs": "Le multiple de chiffre d'affaires que la société pourrait raisonnablement mériter.",
+        "revenuePerShare": "Chiffre d'affaires annuel divisé par le nombre d'actions. Utile quand les profits se forment encore."
+      },
+      "loadTicker": "Charger les données du ticker",
       "modes": {
         "dcf": "DCF EPS",
         "pe": "Scénario P/E",
@@ -396,6 +411,7 @@
       "title": "Analyse d'action",
       "description": "Consultez les fondamentaux d'une société et un aperçu simple de valorisation.",
       "unavailable": "Indisponible",
+      "popularTickers": "Exemples populaires",
       "sections": {
         "valuationRatios": "Ratios de valorisation",
         "profitability": "Rentabilité",
@@ -564,7 +580,7 @@
       "headlineLineOne": "Investissez mieux.",
       "headlineLineTwo": "Créez du patrimoine.",
       "subtext": "Planifiez votre prochain mouvement avec des calculateurs simples, des estimations de juste valeur et des analyses d'actions pensées pour les investisseurs long terme.",
-      "primaryCta": "Explorer les outils",
+      "primaryCta": "Commencer par le calculateur",
       "secondaryCta": "Apprendre",
       "flowCta": "Commencer ici ->",
       "chartLabel": "Mini graphique de croissance du portefeuille",
@@ -615,15 +631,15 @@
       "arrow": "Ouvrir ->",
       "items": {
         "investCalc": {
-          "title": "Invest Calc",
+          "title": "Calculateur d'investissement",
           "description": "Estimez la valeur future d'un portefeuille selon les versements, rendements et horizons."
         },
         "fire": {
-          "title": "FIRE",
+          "title": "FIRE : indépendance financière",
           "description": "Trouvez le taux d'épargne et le calendrier vers l'indépendance financière."
         },
         "dca": {
-          "title": "DCA",
+          "title": "Investissement régulier (DCA)",
           "description": "Simulez des investissements réguliers et comparez les effets du timing."
         },
         "fairPrice": {
@@ -663,6 +679,16 @@
     "openTool": "Ouvrir l'outil ->",
     "workflow": {
       "title": "Parcours suggéré",
+      "steps": {
+        "plan": "Étape 1",
+        "test": "Étape 2",
+        "decide": "Étape 3"
+      },
+      "ctas": {
+        "plan": "Commencer ici ->",
+        "test": "Tester la régularité ->",
+        "decide": "Analyser une action ->"
+      },
       "plan": "Planifiez la croissance long terme avec Invest Calc ou FIRE.",
       "test": "Comparez les investissements réguliers avec DCA.",
       "decide": "Vérifiez la valorisation avec Juste valeur et Analyse d'action."

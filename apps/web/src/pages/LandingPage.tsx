@@ -53,9 +53,9 @@ const tools = [
 
 const proofItems = ['education', 'transparent', 'privacy'] as const
 const workflowSteps = [
-  { key: 'plan', to: '/tools/invest-calc' },
-  { key: 'test', to: '/tools/dca' },
-  { key: 'decide', to: '/tools/stock' },
+  { key: 'plan', to: '/tools/invest-calc', highlight: true },
+  { key: 'test', to: '/tools/dca', highlight: false },
+  { key: 'decide', to: '/tools/stock', highlight: false },
 ] as const
 
 export const LandingPage = () => {
@@ -77,7 +77,7 @@ export const LandingPage = () => {
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
-              to="/tools"
+              to="/tools/invest-calc"
               className="inline-flex justify-center rounded-md bg-primary px-6 py-3 text-sm font-bold text-background transition hover:opacity-90"
             >
               {t('landing.hero.primaryCta')}
@@ -143,19 +143,23 @@ export const LandingPage = () => {
             <Link
               key={step.key}
               to={step.to}
-              className="group rounded-lg border-[0.5px] border-border bg-surface p-5 transition hover:border-border-hover"
+              className={`group rounded-lg border-[0.5px] p-5 transition hover:border-border-hover ${
+                step.highlight
+                  ? 'border-primary/60 bg-primary-dim'
+                  : 'border-border bg-surface'
+              }`}
             >
               <span className="grid h-9 w-9 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
                 {index + 1}
               </span>
               <p className="mt-4 text-sm font-semibold uppercase text-primary">
-                {t('toolsDirectory.workflow.title')}
+                {t(`toolsDirectory.workflow.steps.${step.key}`)}
               </p>
               <p className="mt-2 text-sm leading-6 text-text-muted">
                 {t(`toolsDirectory.workflow.${step.key}`)}
               </p>
               <span className="mt-4 inline-flex text-sm font-bold text-primary transition group-hover:translate-x-1">
-                {t('landing.hero.flowCta')}
+                {t(`toolsDirectory.workflow.ctas.${step.key}`)}
               </span>
             </Link>
           ))}

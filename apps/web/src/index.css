@@ -40,3 +40,21 @@
     font: inherit;
   }
 }
+
+@layer utilities {
+  @keyframes metric-pop {
+    0% {
+      opacity: 0.72;
+      transform: translateY(2px) scale(0.99);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .metric-pop {
+    animation: metric-pop 220ms ease-out;
+  }
+}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import {
@@ -52,6 +52,9 @@ const defaultDcaInput = {
   inflation: 2.5,
 }
 
+const getDcaInputKey = (input: DcaInput) =>
+  `${input.ticker}:${input.monthlyInvestment}:${input.startDate}:${input.inflationPercent}`
+
 const mapApiDcaResult = (result: ApiDcaResult, inflationPercent: number) => {
   const rows = result.rows.map((row, index) => ({
     label: row.date.slice(0, 7),
@@ -93,67 +96,85 @@ export const DcaPage = () => {
   const [inflation, setInflation] = useState(
     getNumberParam(params, 'inflation', defaultDcaInput.inflation, { min: 0, max: 15 }),
   )
-  const [submittedInput, setSubmittedInput] = useState<DcaInput>({
-    ticker: getStringParam(params, 'ticker', defaultDcaInput.ticker).toUpperCase(),
-    monthlyInvestment: getNumberParam(params, 'monthly', defaultDcaInput.monthlyInvestment, { min: 0 }),
-    startDate: getStringParam(params, 'from', defaultStartDate, /^\d{4}-\d{2}$/),
-    inflationPercent: getNumberParam(params, 'inflation', defaultDcaInput.inflation, { min: 0, max: 15 }),
-  })
-  const [apiResult, setApiResult] = useState<ReturnType<typeof mapApiDcaResult> | null>(null)
-  const [dcaError, setDcaError] = useState('')
+  const [apiResult, setApiResult] = useState<{
+    key: string
+    result: ReturnType<typeof mapApiDcaResult>
+  } | null>(null)
+  const [dcaError, setDcaError] = useState<{ key: string; message: string } | null>(null)
 
-  const fallbackResult = useMemo(() => calculateDcaSimulation(submittedInput), [submittedInput])
-  const result = apiResult ?? (dcaError ? null : fallbackResult)
-  const isEstimatedResult = result?.source === 'mock'
-
-  const dcaMutation = useMutation({
-    mutationFn: (input: DcaInput) =>
-      toolsService.getDCA(input.ticker, input.startDate, input.monthlyInvestment),
-    onSuccess: (data, input) => {
-      if (data.source === 'mock' || data.rows.length === 0) {
-        setApiResult(null)
-        setDcaError(t('tools.dca.noData.text', { ticker: input.ticker }))
-        return
-      }
-
-      setDcaError('')
-      setApiResult(mapApiDcaResult(data, input.inflationPercent))
-    },
-    onError: (_error, input) => {
-      setApiResult(null)
-      setDcaError(t('tools.dca.noData.text', { ticker: input.ticker }))
-    },
-  })
-
-  const handleCalculate = () => {
-    const normalizedTicker = normalizeCompanyQuery(ticker)
-    const nextInput = {
-      ticker: normalizedTicker,
+  const currentInput = useMemo<DcaInput>(
+    () => ({
+      ticker: normalizeCompanyQuery(ticker) || defaultDcaInput.ticker,
       monthlyInvestment,
       startDate,
       inflationPercent: inflation,
+    }),
+    [inflation, monthlyInvestment, startDate, ticker],
+  )
+  const currentInputKey = getDcaInputKey(currentInput)
+  const fallbackResult = useMemo(() => calculateDcaSimulation(currentInput), [currentInput])
+  const activeApiResult = apiResult?.key === currentInputKey ? apiResult.result : null
+  const activeDcaError = dcaError?.key === currentInputKey ? dcaError.message : ''
+  const result = activeApiResult ?? fallbackResult
+  const isEstimatedResult = !activeApiResult && Boolean(activeDcaError)
+
+  const { mutate: fetchDca, isPending: isDcaPending } = useMutation({
+    mutationFn: (input: DcaInput) =>
+      toolsService.getDCA(input.ticker, input.startDate, input.monthlyInvestment),
+    onSuccess: (data, input) => {
+      const key = getDcaInputKey(input)
+      if (data.source === 'mock' || data.rows.length === 0) {
+        setApiResult(null)
+        setDcaError({
+          key,
+          message: t('tools.dca.notice.fallback', { ticker: input.ticker }),
+        })
+        return
+      }
+
+      setDcaError(null)
+      setApiResult({
+        key,
+        result: mapApiDcaResult(data, input.inflationPercent),
+      })
+    },
+    onError: (_error, input) => {
+      const key = getDcaInputKey(input)
+      setApiResult(null)
+      setDcaError({
+        key,
+        message: t('tools.dca.notice.fallback', { ticker: input.ticker }),
+      })
+    },
+  })
+
+  useEffect(() => {
+    if (currentInput.monthlyInvestment <= 0) {
+      return undefined
     }
-    setTicker(normalizedTicker)
-    setSubmittedInput(nextInput)
-    setDcaError('')
-    setApiResult(null)
-    dcaMutation.mutate(nextInput)
-  }
+
+    const timeoutId = window.setTimeout(() => {
+      fetchDca(currentInput)
+    }, 450)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [currentInput, fetchDca])
 
   const sidebar = (
     <>
-      <CompanySearchInput id="dca-ticker" label={t('tools.dca.inputs.ticker')} value={ticker} onChange={setTicker} />
+      <CompanySearchInput
+        id="dca-ticker"
+        label={t('tools.dca.inputs.ticker')}
+        value={ticker}
+        onChange={setTicker}
+        helper={t('tools.dca.helpers.ticker')}
+      />
       <NumberInput id="dca-monthly" label={t('tools.dca.inputs.monthly')} value={monthlyInvestment} min={0} step={50} onChange={setMonthlyInvestment} />
       <MonthYearInput id="dca-start" label={t('tools.dca.inputs.startDate')} value={startDate} minYear={1980} onChange={setStartDate} />
       <NumberInput id="dca-inflation" label={t('tools.dca.inputs.inflation')} value={inflation} min={0} max={15} step={0.1} suffix="%" onChange={setInflation} />
-      <button
-        type="button"
-        onClick={handleCalculate}
-        disabled={dcaMutation.isPending}
-        className="rounded-md bg-primary px-4 py-3 text-sm font-bold text-background transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
-      >
-        {dcaMutation.isPending ? t('common.loading') : t('buttons.calculate')}
-      </button>
+      {isDcaPending ? (
+        <p className="text-xs leading-5 text-text-subtle">{t('tools.dca.liveLoading')}</p>
+      ) : null}
     </>
   )
 
@@ -168,9 +189,8 @@ export const DcaPage = () => {
     setMonthlyInvestment(nextInput.monthlyInvestment)
     setStartDate(nextInput.startDate)
     setInflation(nextInput.inflationPercent)
-    setSubmittedInput(nextInput)
     setApiResult(null)
-    setDcaError('')
+    setDcaError(null)
   }
 
   return (
@@ -186,17 +206,10 @@ export const DcaPage = () => {
           }}
         />
 
-        {dcaError ? (
-          <Panel className="border-danger bg-danger/10">
-            <h2 className="text-lg font-bold text-danger">{t('tools.dca.noData.title')}</h2>
-            <p className="mt-3 text-sm leading-6 text-text-muted">{dcaError}</p>
-          </Panel>
-        ) : null}
-
         {isEstimatedResult ? (
           <Panel className="border-primary/40 bg-primary-dim">
             <h2 className="text-lg font-bold text-primary">{t('tools.dca.notice.title')}</h2>
-            <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.dca.notice.fallback')}</p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">{activeDcaError}</p>
           </Panel>
         ) : null}
 

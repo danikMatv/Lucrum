@@ -102,7 +102,7 @@
       "explain": {
         "totalContributions": "Money you personally add over the whole period.",
         "netProfit": "Projected growth after subtracting your contributions.",
-        "nominalValue": "Future dollars before adjusting for inflation.",
+        "nominalValue": "Future amount in the selected currency before adjusting for inflation.",
         "inflationLoss": "How much purchasing power inflation removes from the nominal result."
       },
       "guide": {
@@ -177,6 +177,10 @@
         "startDate": "Start date",
         "inflation": "Annual inflation"
       },
+      "helpers": {
+        "ticker": "Example: SPY is an ETF that tracks the S&P 500 index."
+      },
+      "liveLoading": "Updating market history automatically...",
       "hero": {
         "value": "{{ticker}} portfolio value",
         "helper": "Uses historical market prices when available."
@@ -210,7 +214,7 @@
       },
       "notice": {
         "title": "Estimated data active",
-        "fallback": "Live history is unavailable, so this run uses estimated prices.",
+        "fallback": "Live history for {{ticker}} is unavailable right now, so this run uses estimated prices.",
         "backendFallback": "Live market history is unavailable right now, so this run uses estimated prices."
       },
       "noData": {
@@ -234,6 +238,17 @@
         "targetPs": "Target P/S",
         "revenuePerShare": "Revenue per share"
       },
+      "helpers": {
+        "eps": "Profit per share over the last 12 months. Use it mainly for companies that already earn steady profits.",
+        "marketPrice": "The current share price used for comparison with your model result.",
+        "growth": "Your estimate for annual profit growth over the next five years.",
+        "terminalGrowth": "A conservative long-term growth rate after year five.",
+        "discount": "A higher rate makes the model stricter about future money and risk.",
+        "targetPe": "The earnings multiple you think the company could reasonably deserve.",
+        "targetPs": "The sales multiple you think the company could reasonably deserve.",
+        "revenuePerShare": "Annual revenue divided by shares. Useful when profits are still developing."
+      },
+      "loadTicker": "Load ticker data",
       "modes": {
         "dcf": "EPS DCF",
         "pe": "P/E scenario",
@@ -396,6 +411,7 @@
       "title": "Stock Analysis",
       "description": "Review company fundamentals and a simple valuation snapshot.",
       "unavailable": "Unavailable",
+      "popularTickers": "Popular examples",
       "sections": {
         "valuationRatios": "Valuation ratios",
         "profitability": "Profitability",
@@ -564,7 +580,7 @@
       "headlineLineOne": "Invest smarter.",
       "headlineLineTwo": "Grow wealth.",
       "subtext": "Plan your next move with simple calculators, fair value checks, and stock insights built for long-term investors.",
-      "primaryCta": "Explore tools",
+      "primaryCta": "Start with calculator",
       "secondaryCta": "Start learning",
       "flowCta": "Start here ->",
       "chartLabel": "Portfolio growth mini chart",
@@ -615,15 +631,15 @@
       "arrow": "Open ->",
       "items": {
         "investCalc": {
-          "title": "Invest Calc",
+          "title": "Investment calculator",
           "description": "Estimate future portfolio value from deposits, returns, and time horizon."
         },
         "fire": {
-          "title": "FIRE",
+          "title": "FIRE: financial independence",
           "description": "Find the savings rate and timeline that can support financial independence."
         },
         "dca": {
-          "title": "DCA",
+          "title": "Regular investing (DCA)",
           "description": "Simulate recurring investments and compare market timing outcomes."
         },
         "fairPrice": {
@@ -663,6 +679,16 @@
     "openTool": "Open tool ->",
     "workflow": {
       "title": "Suggested flow",
+      "steps": {
+        "plan": "Step 1",
+        "test": "Step 2",
+        "decide": "Step 3"
+      },
+      "ctas": {
+        "plan": "Start here ->",
+        "test": "Test consistency ->",
+        "decide": "Analyze a stock ->"
+      },
       "plan": "Plan long-term growth with Invest Calc or FIRE.",
       "test": "Compare recurring investments with DCA.",
       "decide": "Check valuation with Fair Price and Stock Analysis."

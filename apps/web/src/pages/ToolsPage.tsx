@@ -41,9 +41,9 @@ const tools = [
 ] as const
 
 const workflowSteps = [
-  'toolsDirectory.workflow.plan',
-  'toolsDirectory.workflow.test',
-  'toolsDirectory.workflow.decide',
+  { key: 'plan', textKey: 'toolsDirectory.workflow.plan' },
+  { key: 'test', textKey: 'toolsDirectory.workflow.test' },
+  { key: 'decide', textKey: 'toolsDirectory.workflow.decide' },
 ] as const
 
 const trustItems = ['beginner', 'assumptions', 'data'] as const
@@ -85,12 +85,17 @@ export const ToolsPage = () => {
           <div className="rounded-lg border-[0.5px] border-border bg-surface p-5">
             <p className="text-sm font-semibold uppercase text-primary">{t('toolsDirectory.workflow.title')}</p>
             <div className="mt-4 grid gap-3">
-              {workflowSteps.map((stepKey, index) => (
-                <div key={stepKey} className="flex items-center gap-3">
+              {workflowSteps.map((step, index) => (
+                <div key={step.key} className="flex items-center gap-3">
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
                     {index + 1}
                   </span>
-                  <p className="text-sm leading-6 text-text-muted">{t(stepKey)}</p>
+                  <div>
+                    <p className="text-xs font-semibold uppercase text-primary">
+                      {t(`toolsDirectory.workflow.steps.${step.key}`)}
+                    </p>
+                    <p className="mt-1 text-sm leading-6 text-text-muted">{t(step.textKey)}</p>
+                  </div>
                 </div>
               ))}
             </div>

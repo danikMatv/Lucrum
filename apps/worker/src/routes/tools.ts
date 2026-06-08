@@ -5,10 +5,17 @@ import { z } from 'zod'
 import { logToolUsage } from '../db/queries'
 import { getOptionalUser } from '../middleware/auth'
 import { CacheTtl, getJsonCache, putJsonCache } from '../services/cache'
+import { getAlphaVantageMonthlyHistory } from '../services/alphavantage'
 import { getFmpHistoricalPrices, getFmpQuote } from '../services/fmp'
 import { getFinnhubQuote } from '../services/finnhub'
 import { getStooqQuote } from '../services/stooq'
-import { getYahooHistory, getYahooQuote, type StockHistory, type StockQuote } from '../services/yahoo'
+import {
+  getYahooHistory,
+  getYahooHistoryFromDate,
+  getYahooQuote,
+  type StockHistory,
+  type StockQuote,
+} from '../services/yahoo'
 import type { AppEnv } from '../types'
 import { getToolUsageAnalytics } from '../utils/analytics'
 import { calculateDca } from '../utils/dca'
@@ -142,6 +149,37 @@ const getHistory = async (c: Context, ticker: string, period: string) => {
   return history
 }
 
+const getHistoryFromDate = async (c: Context, ticker: string, from: string) => {
+  const normalizedTicker = normalizeTicker(ticker)
+  const cacheKey = `history:${normalizedTicker}:${from}`
+  const cached = await getJsonCache<StockHistory>(c.env.KV, cacheKey)
+  if (cached) {
+    return cached
+  }
+
+  let history: StockHistory
+  try {
+    history = await getFmpHistoricalPrices(
+      normalizedTicker,
+      c.env.FMP_API_KEY,
+      `${from}-01`,
+    )
+  } catch {
+    try {
+      history = await getYahooHistoryFromDate(c.env.YAHOO_FINANCE_BASE_URL, normalizedTicker, from)
+    } catch {
+      history = await getAlphaVantageMonthlyHistory(
+        normalizedTicker,
+        c.env.ALPHA_VANTAGE_API_KEY,
+        from,
+      )
+    }
+  }
+
+  await putJsonCache(c.env.KV, cacheKey, history, CacheTtl.history)
+  return history
+}
+
 const getQuote = async (c: Context, ticker: string) => {
   const normalizedTicker = normalizeTicker(ticker)
   const cacheKey = `quote:${normalizedTicker}`
@@ -209,7 +247,7 @@ tools.get('/dca', zValidator('query', dcaSchema, validatorHook), async (c) => {
   c.executionCtx.waitUntil(logUsage(c, 'DCA', normalizedTicker).catch(() => undefined))
 
   try {
-    const history = await getHistory(c, normalizedTicker, '10y')
+    const history = await getHistoryFromDate(c, normalizedTicker, from)
     const result = calculateDca(normalizedTicker, amount, history, from)
     if (result.rows.length === 0) {
       return c.json(
