@@ -1812,7 +1812,11 @@
     },
     "about": {
       "title": "About Lucrum",
-      "description": "Lucrum helps beginner investors understand scenarios, assumptions and basic market language before making their own decisions."
+      "description": "Lucrum helps beginner investors understand scenarios, assumptions and basic market language before making their own decisions.",
+      "feedback": {
+        "title": "Have an idea for Lucrum?",
+        "description": "If you have suggestions, feedback, or something you would like to see improved, write to us."
+      }
     },
     "privacy": {
       "title": "Privacy Policy",

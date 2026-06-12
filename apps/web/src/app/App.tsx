@@ -73,7 +73,13 @@ export const App = ({ locale }: AppProps) => {
         <Route
           path="/about"
           element={
-            <PlaceholderPage titleKey="pages.about.title" descriptionKey="pages.about.description" />
+            <PlaceholderPage
+              titleKey="pages.about.title"
+              descriptionKey="pages.about.description"
+              bannerTitleKey="pages.about.feedback.title"
+              bannerDescriptionKey="pages.about.feedback.description"
+              bannerEmail="healthvoklen@gmail.com"
+            />
           }
         />
         <Route

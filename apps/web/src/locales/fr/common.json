@@ -1812,7 +1812,11 @@
     },
     "about": {
       "title": "À propos de Lucrum",
-      "description": "Lucrum aide les investisseurs débutants à comprendre les scénarios, les hypothèses et le vocabulaire de marché avant leurs propres décisions."
+      "description": "Lucrum aide les investisseurs débutants à comprendre les scénarios, les hypothèses et le vocabulaire de marché avant leurs propres décisions.",
+      "feedback": {
+        "title": "Une idée pour Lucrum ?",
+        "description": "Si vous avez des suggestions, un retour ou quelque chose à améliorer, écrivez-nous."
+      }
     },
     "privacy": {
       "title": "Politique de confidentialité",

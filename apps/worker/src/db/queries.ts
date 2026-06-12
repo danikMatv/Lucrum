@@ -657,33 +657,50 @@ export const softDeleteLearnResource = async (db: D1Database, topic: string, id:
 export const logToolUsage = async (
   db: D1Database,
   input: { userId: string | null; toolType: string; ticker: string | null } & ToolUsageAnalyticsInput,
-) =>
-  db
-    .prepare(
-      'INSERT INTO tool_usage_events (id, user_id, tool_type, ticker, source, medium, campaign, referrer, page_path, country, region, city, timezone, colo, device_type, browser, os, language, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    )
-    .bind(
-      crypto.randomUUID(),
-      input.userId,
-      input.toolType,
-      input.ticker,
-      input.source,
-      input.medium,
-      input.campaign,
-      input.referrer,
-      input.pagePath,
-      input.country,
-      input.region,
-      input.city,
-      input.timezone,
-      input.colo,
-      input.deviceType,
-      input.browser,
-      input.os,
-      input.language,
-      nowIso(),
-    )
-    .run()
+) => {
+  const id = crypto.randomUUID()
+  const createdAt = nowIso()
+
+  try {
+    return await db
+      .prepare(
+        'INSERT INTO tool_usage_events (id, user_id, tool_type, ticker, source, medium, campaign, referrer, page_path, country, region, city, timezone, colo, device_type, browser, os, language, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      )
+      .bind(
+        id,
+        input.userId,
+        input.toolType,
+        input.ticker,
+        input.source,
+        input.medium,
+        input.campaign,
+        input.referrer,
+        input.pagePath,
+        input.country,
+        input.region,
+        input.city,
+        input.timezone,
+        input.colo,
+        input.deviceType,
+        input.browser,
+        input.os,
+        input.language,
+        createdAt,
+      )
+      .run()
+  } catch (error) {
+    if (error instanceof Error && /(no such column|has no column)/i.test(error.message)) {
+      return db
+        .prepare(
+          'INSERT INTO tool_usage_events (id, user_id, tool_type, ticker, created_at) VALUES (?, ?, ?, ?, ?)',
+        )
+        .bind(id, input.userId, input.toolType, input.ticker, createdAt)
+        .run()
+    }
+
+    throw error
+  }
+}
 
 export const getUsersCount = async (db: D1Database) =>
   db.prepare('SELECT COUNT(*) AS count FROM users').first<CountRow>()
@@ -741,11 +758,23 @@ export const getTopTickers = async (db: D1Database) => {
 
 type UsageAnalyticsColumn = 'source' | 'country' | 'device_type' | 'browser' | 'os' | 'language'
 
+const getTableColumns = async (db: D1Database, tableName: string) => {
+  const result = await db
+    .prepare(`PRAGMA table_info(${tableName})`)
+    .all<{ name: string }>()
+  return new Set(result.results.map((row) => row.name))
+}
+
 const getTopUsageDimension = async (
   db: D1Database,
   column: UsageAnalyticsColumn,
   limit: number,
 ) => {
+  const columns = await getTableColumns(db, 'tool_usage_events')
+  if (!columns.has(column)) {
+    return []
+  }
+
   const result = await db
     .prepare(
       `SELECT COALESCE(${column}, 'unknown') AS label, COUNT(*) AS count FROM tool_usage_events GROUP BY label ORDER BY count DESC LIMIT ?`,
