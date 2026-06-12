@@ -1064,6 +1064,11 @@
       "description": "Each section explains what the asset is, how it can make money or preserve value, what can go wrong, and which terms matter.",
       "open": "Open lesson"
     },
+    "resourcesOverview": {
+      "kicker": "Useful links",
+      "title": "Sources for each topic",
+      "description": "A grouped set of neutral regulator and education resources for each learning category."
+    },
     "topic": {
       "back": "Back to Learn",
       "contents": "Sections",

@@ -113,6 +113,54 @@ export const LearnPage = () => {
             ))}
           </div>
         </section>
+
+        <section className="grid gap-6">
+          <div>
+            <p className="text-sm font-semibold uppercase text-primary">
+              {t('learnAcademy.resourcesOverview.kicker')}
+            </p>
+            <h2 className="mt-3 font-heading text-4xl font-bold text-text-primary">
+              {t('learnAcademy.resourcesOverview.title')}
+            </h2>
+            <p className="mt-4 max-w-3xl text-sm leading-6 text-text-muted">
+              {t('learnAcademy.resourcesOverview.description')}
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {learnTopics.map((topic) => (
+              <section
+                key={topic.id}
+                className="rounded-lg border-[0.5px] border-border bg-surface p-5"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="text-xl font-bold text-text-primary">
+                    {t(`learnAcademy.topics.${topic.id}.title`)}
+                  </h3>
+                  <Link
+                    to={topic.path}
+                    className="shrink-0 text-sm font-bold text-primary transition hover:opacity-80"
+                  >
+                    {t('learnAcademy.catalog.open')}
+                  </Link>
+                </div>
+                <div className="mt-5 grid gap-3">
+                  {topic.resources.map((resource) => (
+                    <a
+                      key={resource.key}
+                      href={resource.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-md border-[0.5px] border-border px-4 py-3 text-sm font-semibold leading-5 text-text-muted transition hover:border-border-hover hover:text-text-primary"
+                    >
+                      {t(`learnAcademy.resources.${resource.key}`)}
+                    </a>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        </section>
       </section>
       <AppFooter />
     </main>

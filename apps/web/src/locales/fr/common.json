@@ -1064,6 +1064,11 @@
       "description": "Chaque section explique ce qu'est l'actif, comment il peut rapporter ou préserver de la valeur, ce qui peut mal tourner et quels termes connaître.",
       "open": "Ouvrir la leçon"
     },
+    "resourcesOverview": {
+      "kicker": "Liens utiles",
+      "title": "Sources pour chaque sujet",
+      "description": "Une sélection de ressources neutres de régulateurs et de sites éducatifs, groupées par catégorie d'apprentissage."
+    },
     "topic": {
       "back": "Retour à Apprendre",
       "contents": "Sections",
