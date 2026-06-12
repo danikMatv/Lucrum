@@ -127,11 +127,20 @@
       "title": "FIRE калькулятор",
       "description": "Оцініть портфель для фінансової незалежності та строк досягнення цілі.",
       "inputs": {
+        "currency": "Валюта",
         "expenses": "Щомісячні витрати",
         "portfolio": "Поточний портфель",
         "contribution": "Щомісячні внески",
         "return": "Річна реальна дохідність",
         "swr": "Ставка виведення"
+      },
+      "currency": {
+        "uah": "UAH - гривня",
+        "usd": "USD - долар",
+        "eur": "EUR - євро"
+      },
+      "helpers": {
+        "currency": "Оберіть валюту для FIRE-плану. Калькулятор не конвертує курси."
       },
       "swr": {
         "conservative": "3% Консервативно",
@@ -1118,7 +1127,17 @@
       "investorCrypto": "Investor.gov: криптоактиви",
       "secPrivate": "Investor.gov: приватні пропозиції",
       "investorRisk": "Investor.gov: оцінка толерантності до ризику",
-      "fred": "FRED: економічні дані"
+      "fred": "FRED: економічні дані",
+      "investorBonds": "Investor.gov: облігації та fixed income",
+      "finraBonds": "FINRA: облігації",
+      "investorStocks": "Investor.gov: акції",
+      "investorResearch": "Investor.gov: дослідження інвестицій",
+      "investorEtfs": "Investor.gov: біржові фонди ETF",
+      "finraEtps": "FINRA: ETF та біржові продукти",
+      "howeyTrade": "Investor.gov: як розпізнати інвестиційне шахрайство",
+      "investorPrivateEquity": "Investor.gov: фонди private equity",
+      "investorAssetAllocation": "Investor.gov: розподіл активів і диверсифікація",
+      "fdicDepositInsurance": "FDIC: страхування депозитів"
     },
     "topics": {
       "bonds": {

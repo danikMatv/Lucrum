@@ -6,16 +6,12 @@ export const learnTopics = [
     toolLinks: ['/tools/invest-calc'],
     resources: [
       {
-        key: 'investorIntro',
-        href: 'https://www.investor.gov/introduction-investing',
+        key: 'investorBonds',
+        href: 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/bonds-or-fixed-income-products',
       },
       {
-        key: 'finraBasics',
-        href: 'https://www.finra.org/investors/investing/investing-basics',
-      },
-      {
-        key: 'treasuryDirect',
-        href: 'https://treasurydirect.gov',
+        key: 'finraBonds',
+        href: 'https://www.finra.org/investors/investing/investment-products/bonds',
       },
     ],
     risks: ['rates', 'credit', 'inflation'],
@@ -30,12 +26,12 @@ export const learnTopics = [
     toolLinks: ['/tools/stock', '/tools/fair-price'],
     resources: [
       {
-        key: 'investorIntro',
-        href: 'https://www.investor.gov/introduction-investing',
+        key: 'investorStocks',
+        href: 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks',
       },
       {
-        key: 'finraBasics',
-        href: 'https://www.finra.org/investors/investing/investing-basics',
+        key: 'investorResearch',
+        href: 'https://www.investor.gov/introduction-investing/getting-started/researching-investments',
       },
     ],
     risks: ['business', 'valuation', 'volatility'],
@@ -50,12 +46,12 @@ export const learnTopics = [
     toolLinks: ['/tools/dca', '/tools/invest-calc'],
     resources: [
       {
-        key: 'investorIntro',
-        href: 'https://www.investor.gov/introduction-investing',
+        key: 'investorEtfs',
+        href: 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/mutual-funds-and-exchange-traded-2',
       },
       {
-        key: 'finraBasics',
-        href: 'https://www.finra.org/investors/investing/investing-basics',
+        key: 'finraEtps',
+        href: 'https://www.finra.org/investors/investing/investment-products/exchange-traded-funds-and-products',
       },
     ],
     risks: ['tracking', 'fees', 'concentration'],
@@ -74,8 +70,8 @@ export const learnTopics = [
         href: 'https://www.investor.gov/additional-resources/spotlight/crypto-assets',
       },
       {
-        key: 'investorIntro',
-        href: 'https://www.investor.gov/introduction-investing',
+        key: 'howeyTrade',
+        href: 'https://www.investor.gov/additional-resources/spotlight/howeytrade',
       },
     ],
     risks: ['volatility', 'custody', 'cashFlow'],
@@ -94,8 +90,8 @@ export const learnTopics = [
         href: 'https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins/private',
       },
       {
-        key: 'investorIntro',
-        href: 'https://www.investor.gov/introduction-investing',
+        key: 'investorPrivateEquity',
+        href: 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/private-investment-funds/private-equity',
       },
     ],
     risks: ['illiquidity', 'dilution', 'failure'],
@@ -110,16 +106,12 @@ export const learnTopics = [
     toolLinks: ['/tools/fire', '/tools/invest-calc'],
     resources: [
       {
-        key: 'investorRisk',
-        href: 'https://www.investor.gov/introduction-investing/getting-started/assessing-your-risk-tolerance',
+        key: 'investorAssetAllocation',
+        href: 'https://www.investor.gov/introduction-investing/getting-started/asset-allocation',
       },
       {
-        key: 'finraBasics',
-        href: 'https://www.finra.org/investors/investing/investing-basics',
-      },
-      {
-        key: 'fred',
-        href: 'https://fred.stlouisfed.org/',
+        key: 'fdicDepositInsurance',
+        href: 'https://www.fdic.gov/resources/deposit-insurance',
       },
     ],
     risks: ['inflation', 'underinvesting', 'panic'],

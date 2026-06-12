@@ -11,7 +11,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
-import { SegmentedControl, SliderInput } from '../components/calculators/CalculatorControls.tsx'
+import { SegmentedControl, SelectInput, SliderInput } from '../components/calculators/CalculatorControls.tsx'
 import { CalculatorActions } from '../components/calculators/CalculatorActions.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
@@ -19,6 +19,9 @@ import { calculateFireProjection } from '../utils/fire.ts'
 import { getNumberParam, getSearchParams, getUnionParam } from '../utils/urlParams.ts'
 
 const withdrawalOptions = [3, 4, 5] as const
+const currencyOptions = ['UAH', 'USD', 'EUR'] as const
+
+type CurrencyCode = (typeof currencyOptions)[number]
 
 const defaultFireInput = {
   monthlyExpenses: 40000,
@@ -26,30 +29,34 @@ const defaultFireInput = {
   monthlyContribution: 15000,
   annualReturn: 5,
   withdrawalRate: 4 as 3 | 4 | 5,
+  currency: 'UAH' as CurrencyCode,
 }
 
 export const FirePage = () => {
   const { t, i18n } = useTranslation('common')
   const params = getSearchParams()
   const locale = i18n.resolvedLanguage ?? i18n.language
+  const [currencyCode, setCurrencyCode] = useState<CurrencyCode>(
+    getUnionParam(params, 'currency', defaultFireInput.currency, currencyOptions),
+  )
   const currency = useMemo(
     () =>
       new Intl.NumberFormat(locale, {
         style: 'currency',
-        currency: 'UAH',
+        currency: currencyCode,
         maximumFractionDigits: 0,
       }),
-    [locale],
+    [currencyCode, locale],
   )
   const compactCurrency = useMemo(
     () =>
       new Intl.NumberFormat(locale, {
         style: 'currency',
-        currency: 'UAH',
+        currency: currencyCode,
         notation: 'compact',
         maximumFractionDigits: 1,
       }),
-    [locale],
+    [currencyCode, locale],
   )
   const [monthlyExpenses, setMonthlyExpenses] = useState(
     getNumberParam(params, 'expenses', defaultFireInput.monthlyExpenses, { min: 5000, max: 200000 }),
@@ -81,9 +88,21 @@ export const FirePage = () => {
 
   const sidebar = (
     <>
-      <SliderInput id="fire-expenses" label={t('tools.fire.inputs.expenses')} value={monthlyExpenses} min={5000} max={200000} step={1000} suffix="UAH" onChange={setMonthlyExpenses} />
-      <SliderInput id="fire-portfolio" label={t('tools.fire.inputs.portfolio')} value={currentPortfolio} min={0} max={20000000} step={50000} suffix="UAH" onChange={setCurrentPortfolio} />
-      <SliderInput id="fire-contribution" label={t('tools.fire.inputs.contribution')} value={monthlyContribution} min={0} max={300000} step={1000} suffix="UAH" onChange={setMonthlyContribution} />
+      <SelectInput
+        id="fire-currency"
+        label={t('tools.fire.inputs.currency')}
+        value={currencyCode}
+        onChange={setCurrencyCode}
+        helper={t('tools.fire.helpers.currency')}
+        options={[
+          { value: 'UAH', label: t('tools.fire.currency.uah') },
+          { value: 'USD', label: t('tools.fire.currency.usd') },
+          { value: 'EUR', label: t('tools.fire.currency.eur') },
+        ]}
+      />
+      <SliderInput id="fire-expenses" label={t('tools.fire.inputs.expenses')} value={monthlyExpenses} min={5000} max={200000} step={1000} suffix={currencyCode} onChange={setMonthlyExpenses} />
+      <SliderInput id="fire-portfolio" label={t('tools.fire.inputs.portfolio')} value={currentPortfolio} min={0} max={20000000} step={50000} suffix={currencyCode} onChange={setCurrentPortfolio} />
+      <SliderInput id="fire-contribution" label={t('tools.fire.inputs.contribution')} value={monthlyContribution} min={0} max={300000} step={1000} suffix={currencyCode} onChange={setMonthlyContribution} />
       <SliderInput id="fire-return" label={t('tools.fire.inputs.return')} value={annualReturn} min={0} max={12} step={0.5} suffix="%" onChange={setAnnualReturn} />
       <SegmentedControl
         label={t('tools.fire.inputs.swr')}
@@ -104,6 +123,7 @@ export const FirePage = () => {
     setMonthlyContribution(defaultFireInput.monthlyContribution)
     setAnnualReturn(defaultFireInput.annualReturn)
     setWithdrawalRate(defaultFireInput.withdrawalRate)
+    setCurrencyCode(defaultFireInput.currency)
   }
 
   return (
@@ -117,6 +137,7 @@ export const FirePage = () => {
             contribution: monthlyContribution,
             return: annualReturn,
             swr: withdrawalRate,
+            currency: currencyCode,
           }}
         />
 

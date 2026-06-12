@@ -127,11 +127,20 @@
       "title": "Calculateur FIRE",
       "description": "Estimez le portefeuille nécessaire à l'indépendance financière et le délai pour l'atteindre.",
       "inputs": {
+        "currency": "Devise",
         "expenses": "Dépenses mensuelles",
         "portfolio": "Portefeuille actuel",
         "contribution": "Versements mensuels",
         "return": "Rendement annuel réel",
         "swr": "Taux de retrait"
+      },
+      "currency": {
+        "uah": "UAH - hryvnia",
+        "usd": "USD - dollar",
+        "eur": "EUR - euro"
+      },
+      "helpers": {
+        "currency": "Choisissez la devise utilisée pour votre plan FIRE. Le calculateur ne convertit pas les taux de change."
       },
       "swr": {
         "conservative": "3 % Prudent",
@@ -1118,7 +1127,17 @@
       "investorCrypto": "Investor.gov : crypto-actifs",
       "secPrivate": "Investor.gov : offres privées",
       "investorRisk": "Investor.gov : évaluer sa tolérance au risque",
-      "fred": "FRED : données économiques"
+      "fred": "FRED : données économiques",
+      "investorBonds": "Investor.gov : obligations et revenu fixe",
+      "finraBonds": "FINRA : obligations",
+      "investorStocks": "Investor.gov : actions",
+      "investorResearch": "Investor.gov : rechercher des investissements",
+      "investorEtfs": "Investor.gov : ETF",
+      "finraEtps": "FINRA : ETF et produits cotés",
+      "howeyTrade": "Investor.gov : repérer la fraude d'investissement",
+      "investorPrivateEquity": "Investor.gov : fonds de private equity",
+      "investorAssetAllocation": "Investor.gov : allocation d'actifs et diversification",
+      "fdicDepositInsurance": "FDIC : assurance des dépôts"
     },
     "topics": {
       "bonds": {

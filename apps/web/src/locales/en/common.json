@@ -127,11 +127,20 @@
       "title": "FIRE Calculator",
       "description": "Estimate the portfolio needed for financial independence and the timeline to reach it.",
       "inputs": {
+        "currency": "Currency",
         "expenses": "Monthly expenses",
         "portfolio": "Current portfolio",
         "contribution": "Monthly contributions",
         "return": "Annual return, real",
         "swr": "Withdrawal rate"
+      },
+      "currency": {
+        "uah": "UAH - hryvnia",
+        "usd": "USD - dollar",
+        "eur": "EUR - euro"
+      },
+      "helpers": {
+        "currency": "Choose the currency you use for FIRE planning. The calculator does not convert exchange rates."
       },
       "swr": {
         "conservative": "3% Conservative",
@@ -1118,7 +1127,17 @@
       "investorCrypto": "Investor.gov: crypto assets",
       "secPrivate": "Investor.gov: private offerings",
       "investorRisk": "Investor.gov: assessing risk tolerance",
-      "fred": "FRED: economic data"
+      "fred": "FRED: economic data",
+      "investorBonds": "Investor.gov: bonds and fixed income",
+      "finraBonds": "FINRA: bonds",
+      "investorStocks": "Investor.gov: stocks",
+      "investorResearch": "Investor.gov: researching investments",
+      "investorEtfs": "Investor.gov: exchange-traded funds",
+      "finraEtps": "FINRA: exchange-traded funds and products",
+      "howeyTrade": "Investor.gov: spotting investment fraud",
+      "investorPrivateEquity": "Investor.gov: private equity funds",
+      "investorAssetAllocation": "Investor.gov: asset allocation and diversification",
+      "fdicDepositInsurance": "FDIC: deposit insurance"
     },
     "topics": {
       "bonds": {
