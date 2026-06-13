@@ -192,6 +192,24 @@ const percentFromValues = (
   return (numerator / denominator) * 100
 }
 
+const positiveRatio = (
+  numerator: number | null | undefined,
+  denominator: number | null | undefined,
+) => {
+  if (
+    typeof numerator !== 'number' ||
+    !Number.isFinite(numerator) ||
+    numerator <= 0 ||
+    typeof denominator !== 'number' ||
+    !Number.isFinite(denominator) ||
+    denominator <= 0
+  ) {
+    return null
+  }
+
+  return numerator / denominator
+}
+
 const toIsoFromUnixTimestamp = (timestamp: number | undefined) => {
   if (typeof timestamp !== 'number' || !Number.isFinite(timestamp)) {
     return null
@@ -367,19 +385,22 @@ export const getFmpFundamentals = async (
   const profile = profileResults.at(0)
   const quote = quoteResults.at(0)
   const epsTtm = finiteNumberOrNull(metrics?.netIncomePerShareTTM ?? income?.eps)
+  const revenue = finiteNumberOrNull(income?.revenue)
+  const sharesOutstanding = finiteNumberOrNull(profile?.sharesOutstanding)
+  const priceToSales = finiteNumberOrNull(metrics?.priceToSalesRatioTTM)
+  const quotePrice = finiteNumberOrNull(quote?.price)
   const peRatio =
     finiteNumberOrNull(metrics?.peRatioTTM) ??
-    (typeof quote?.price === 'number' && typeof epsTtm === 'number' && epsTtm !== 0
-      ? quote.price / epsTtm
+    (typeof quotePrice === 'number' && typeof epsTtm === 'number' && epsTtm !== 0
+      ? quotePrice / epsTtm
       : null)
   const lastDividend = finiteNumberOrNull(profile?.lastDividend ?? profile?.lastDiv)
   const dividendYield =
     finiteNumberOrNull(profile?.dividendYield ?? metrics?.dividendYieldTTM) ??
     (typeof lastDividend === 'number' &&
-    typeof quote?.price === 'number' &&
-    Number.isFinite(quote.price) &&
-    quote.price > 0
-      ? lastDividend / quote.price
+    typeof quotePrice === 'number' &&
+    quotePrice > 0
+      ? lastDividend / quotePrice
       : null)
   const grossProfit = finiteNumberOrNull(income?.grossProfit)
   const operatingMargin =
@@ -392,7 +413,7 @@ export const getFmpFundamentals = async (
     id: crypto.randomUUID(),
     companyId,
     epsTtm,
-    revenue: finiteNumberOrNull(income?.revenue),
+    revenue,
     netIncome: finiteNumberOrNull(income?.netIncome),
     freeCashFlow: finiteNumberOrNull(cashFlow?.freeCashFlow),
     peRatio,
@@ -405,9 +426,9 @@ export const getFmpFundamentals = async (
     createdAt: new Date().toISOString(),
     fiftyTwoWeekHigh: finiteNumberOrNull(quote?.fiftyTwoWeekHigh ?? quote?.yearHigh),
     fiftyTwoWeekLow: finiteNumberOrNull(quote?.fiftyTwoWeekLow ?? quote?.yearLow),
-    sharesOutstanding: finiteNumberOrNull(profile?.sharesOutstanding),
+    sharesOutstanding,
     profitMargin: null,
-    priceToSales: finiteNumberOrNull(metrics?.priceToSalesRatioTTM),
+    priceToSales,
     priceToBook: finiteNumberOrNull(metrics?.priceToBookRatioTTM),
     returnOnEquity: ratioToPercent(metrics?.returnOnEquityTTM),
     returnOnAssets: ratioToPercent(metrics?.returnOnAssetsTTM),
@@ -427,6 +448,8 @@ export const getFmpFundamentals = async (
       metrics?.priceEarningsToGrowthRatioTTM ?? metrics?.pegRatioTTM,
     ),
     beta: finiteNumberOrNull(profile?.beta),
+    revenuePerShare:
+      positiveRatio(revenue, sharesOutstanding) ?? positiveRatio(quotePrice, priceToSales),
   }
 }
 

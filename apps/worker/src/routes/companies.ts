@@ -227,6 +227,37 @@ const isFundQuote = (quote: StockQuote | null) => {
   )
 }
 
+const hasPositiveNumber = (value: number | null | undefined): value is number =>
+  typeof value === 'number' && Number.isFinite(value) && value > 0
+
+const deriveRevenuePerShare = (
+  fundamentals: CompanyFundamentals | null,
+  quote: StockQuote | null,
+) => {
+  if (!fundamentals || hasPositiveNumber(fundamentals.revenuePerShare)) {
+    return fundamentals
+  }
+
+  if (
+    hasPositiveNumber(fundamentals.revenue) &&
+    hasPositiveNumber(fundamentals.sharesOutstanding)
+  ) {
+    return {
+      ...fundamentals,
+      revenuePerShare: fundamentals.revenue / fundamentals.sharesOutstanding,
+    }
+  }
+
+  if (hasPositiveNumber(quote?.price) && hasPositiveNumber(fundamentals.priceToSales)) {
+    return {
+      ...fundamentals,
+      revenuePerShare: quote.price / fundamentals.priceToSales,
+    }
+  }
+
+  return fundamentals
+}
+
 const createFundSnapshotCompany = (ticker: string, quote: StockQuote): Company => {
   const timestamp = nowIso()
   const instrumentText = `${quote.quoteType ?? ''} ${quote.longName ?? ''} ${
@@ -1077,6 +1108,8 @@ const resolveCompanySnapshot = async (
     noteProviderIssue('quote', 'live', error)
     quote = null
   }
+
+  fundamentals = deriveRevenuePerShare(fundamentals, quote)
 
   if (quote && isFundQuote(quote) && (!company || !hasCompanyDisplayFields(company))) {
     company = {

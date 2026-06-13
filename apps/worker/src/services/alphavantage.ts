@@ -157,6 +157,22 @@ const percentNumber = (value: string | undefined) => {
   return typeof parsed === 'number' ? parsed * 100 : null
 }
 
+const perShareValue = (
+  numerator: number | null,
+  sharesOutstanding: number | null,
+) => {
+  if (
+    typeof numerator !== 'number' ||
+    numerator <= 0 ||
+    typeof sharesOutstanding !== 'number' ||
+    sharesOutstanding <= 0
+  ) {
+    return null
+  }
+
+  return numerator / sharesOutstanding
+}
+
 const resolveEpsTtm = (data: AlphaVantageOverviewResponse) =>
   parseNumber(data.DilutedEPSTTM) ?? parseNumber(data.EPS)
 
@@ -221,6 +237,8 @@ export const getAlphaVantageOverview = async (
     industry: normalizeNullableString(data.Industry),
     description: normalizeNullableString(data.Description),
   })
+  const revenue = parseInteger(data.RevenueTTM)
+  const sharesOutstanding = parseInteger(data.SharesOutstanding)
 
   return {
     company,
@@ -228,7 +246,7 @@ export const getAlphaVantageOverview = async (
       id: crypto.randomUUID(),
       companyId: company.id,
       epsTtm: resolveEpsTtm(data),
-      revenue: parseInteger(data.RevenueTTM),
+      revenue,
       netIncome: null,
       freeCashFlow: null,
       peRatio: parseNumber(data.PERatio),
@@ -239,7 +257,7 @@ export const getAlphaVantageOverview = async (
       createdAt: nowIso(),
       fiftyTwoWeekHigh: parseNumber(data['52WeekHigh']),
       fiftyTwoWeekLow: parseNumber(data['52WeekLow']),
-      sharesOutstanding: parseInteger(data.SharesOutstanding),
+      sharesOutstanding,
       profitMargin: parseNumber(data.ProfitMargin),
       priceToSales: parseNumber(data.PriceToSalesRatioTTM),
       priceToBook: parseNumber(data.PriceToBookRatio),
@@ -259,6 +277,7 @@ export const getAlphaVantageOverview = async (
       forwardPE: parseNumber(data.ForwardPE),
       pegRatio: parseNumber(data.PEGRatio),
       beta: parseNumber(data.Beta),
+      revenuePerShare: perShareValue(revenue, sharesOutstanding),
     },
   }
 }

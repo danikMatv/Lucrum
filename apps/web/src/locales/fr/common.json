@@ -306,6 +306,11 @@
         "fairPrice": "Juste valeur {{ticker}}",
         "safeBuy": "Prix d'achat prudent"
       },
+      "unavailable": {
+        "value": "Indisponible",
+        "title": "Le modèle a besoin de plus de données",
+        "text": "Saisissez {{fields}} pour calculer ce modèle. Les données live manquantes ne sont pas traitées comme zéro."
+      },
       "stats": {
         "marketPrice": "Prix de marché",
         "upside": "Potentiel / baisse",

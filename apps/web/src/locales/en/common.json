@@ -306,6 +306,11 @@
         "fairPrice": "{{ticker}} fair price",
         "safeBuy": "Safe buy price"
       },
+      "unavailable": {
+        "value": "Unavailable",
+        "title": "Model needs more data",
+        "text": "Enter {{fields}} to calculate this model. Missing live data is not treated as zero."
+      },
       "stats": {
         "marketPrice": "Market price",
         "upside": "Upside / downside",

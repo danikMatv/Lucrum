@@ -401,7 +401,44 @@ export const FairPricePage = () => {
   const activeResult =
     valuationMode === 'pe' ? peResult : valuationMode === 'ps' ? psResult : result
 
-  const isUndervalued = activeResult.verdict === 'undervalued'
+  const activeBaseMetric = valuationMode === 'ps' ? revenuePerShare : eps
+  const activeBaseInputLabel =
+    valuationMode === 'ps'
+      ? t('tools.fairPrice.inputs.revenuePerShare')
+      : t('tools.fairPrice.inputs.eps')
+  const activeMissingFields = [
+    activeBaseMetric <= 0 ? activeBaseInputLabel : null,
+    marketPrice <= 0 ? t('tools.fairPrice.inputs.marketPrice') : null,
+  ].filter((field): field is string => Boolean(field))
+  const hasActiveBaseMetric = activeBaseMetric > 0
+  const hasCompleteActiveInputs = activeMissingFields.length === 0
+  const unavailableValue = t('tools.fairPrice.unavailable.value')
+  const fairPriceValue = hasActiveBaseMetric
+    ? currency.format(activeResult.fairPrice)
+    : unavailableValue
+  const safeBuyPriceValue = hasActiveBaseMetric
+    ? currency.format(activeResult.safeBuyPrice)
+    : unavailableValue
+  const upsideValue = hasCompleteActiveInputs
+    ? `${percent.format(activeResult.upsidePercent)}%`
+    : unavailableValue
+  const currentPeValue =
+    valuationMode === 'pe' && hasCompleteActiveInputs
+      ? peResult.currentMultiple.toFixed(1)
+      : unavailableValue
+  const currentPsValue =
+    valuationMode === 'ps' && hasCompleteActiveInputs
+      ? psResult.currentMultiple.toFixed(1)
+      : unavailableValue
+  const scenarioBaseValue =
+    valuationMode === 'pe'
+      ? eps > 0
+        ? currency.format(eps)
+        : unavailableValue
+      : revenuePerShare > 0
+        ? currency.format(revenuePerShare)
+        : unavailableValue
+  const isUndervalued = hasCompleteActiveInputs && activeResult.verdict === 'undervalued'
   const shouldShowGrowthHint =
     valuationMode !== 'ps' && isGrowthCompany(ticker) && epsEditedManually && !growthHintDismissed
   const shouldShowModelWarning = valuationFit !== 'standard'
@@ -614,13 +651,13 @@ export const FairPricePage = () => {
         </Panel>
 
         <div className="grid gap-4 lg:grid-cols-2">
-          <HeroMetric label={t('tools.fairPrice.hero.fairPrice', { ticker: normalizeCompanyQuery(ticker) })} value={currency.format(activeResult.fairPrice)} />
-          <HeroMetric label={t('tools.fairPrice.hero.safeBuy')} value={currency.format(activeResult.safeBuyPrice)} tone="success" />
+          <HeroMetric label={t('tools.fairPrice.hero.fairPrice', { ticker: normalizeCompanyQuery(ticker) })} value={fairPriceValue} tone={hasActiveBaseMetric ? 'primary' : 'default'} />
+          <HeroMetric label={t('tools.fairPrice.hero.safeBuy')} value={safeBuyPriceValue} tone={hasActiveBaseMetric ? 'success' : 'default'} />
         </div>
 
         <StatGrid>
           <StatCard label={t('tools.fairPrice.stats.marketPrice')} value={currency.format(marketPrice)} helper={t('tools.fairPrice.explain.marketPrice')} />
-          <StatCard label={t('tools.fairPrice.stats.upside')} value={`${percent.format(activeResult.upsidePercent)}%`} tone={isUndervalued ? 'success' : 'danger'} helper={t('tools.fairPrice.explain.upside')} />
+          <StatCard label={t('tools.fairPrice.stats.upside')} value={upsideValue} tone={hasCompleteActiveInputs ? (isUndervalued ? 'success' : 'danger') : 'default'} helper={t('tools.fairPrice.explain.upside')} />
           {valuationMode === 'dcf' ? (
             <>
               <StatCard label={t('tools.fairPrice.stats.forecastPv')} value={currency.format(result.forecastPresentValue)} helper={t('tools.fairPrice.explain.forecastPv')} />
@@ -629,26 +666,39 @@ export const FairPricePage = () => {
           ) : null}
           {valuationMode === 'pe' ? (
             <>
-              <StatCard label={t('tools.fairPrice.stats.currentPe')} value={peResult.currentMultiple.toFixed(1)} helper={t('tools.fairPrice.explain.currentPe')} />
+              <StatCard label={t('tools.fairPrice.stats.currentPe')} value={currentPeValue} helper={t('tools.fairPrice.explain.currentPe')} />
               <StatCard label={t('tools.fairPrice.stats.targetPe')} value={targetPe.toFixed(0)} tone="primary" helper={t('tools.fairPrice.explain.targetPe')} />
             </>
           ) : null}
           {valuationMode === 'ps' ? (
             <>
-              <StatCard label={t('tools.fairPrice.stats.currentPs')} value={psResult.currentMultiple.toFixed(1)} helper={t('tools.fairPrice.explain.currentPs')} />
+              <StatCard label={t('tools.fairPrice.stats.currentPs')} value={currentPsValue} helper={t('tools.fairPrice.explain.currentPs')} />
               <StatCard label={t('tools.fairPrice.stats.targetPs')} value={targetPs.toFixed(2)} tone="primary" helper={t('tools.fairPrice.explain.targetPs')} />
             </>
           ) : null}
         </StatGrid>
 
-        <Panel className={isUndervalued ? 'bg-primary-dim' : ''}>
-          <p className={`text-sm font-semibold uppercase ${isUndervalued ? 'text-success' : 'text-danger'}`}>
-            {isUndervalued ? t('tools.fairPrice.verdict.undervalued') : t('tools.fairPrice.verdict.overvalued')}
-          </p>
-          <p className="mt-3 text-sm leading-6 text-text-muted">
-            {isUndervalued ? t('tools.fairPrice.verdict.undervaluedText') : t('tools.fairPrice.verdict.overvaluedText')}
-          </p>
-        </Panel>
+        {hasCompleteActiveInputs ? (
+          <Panel className={isUndervalued ? 'bg-primary-dim' : ''}>
+            <p className={`text-sm font-semibold uppercase ${isUndervalued ? 'text-success' : 'text-danger'}`}>
+              {isUndervalued ? t('tools.fairPrice.verdict.undervalued') : t('tools.fairPrice.verdict.overvalued')}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">
+              {isUndervalued ? t('tools.fairPrice.verdict.undervaluedText') : t('tools.fairPrice.verdict.overvaluedText')}
+            </p>
+          </Panel>
+        ) : (
+          <Panel className="border-l-4 border-l-danger">
+            <p className="text-sm font-semibold uppercase text-danger">
+              {t('tools.fairPrice.unavailable.title')}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-text-muted">
+              {t('tools.fairPrice.unavailable.text', {
+                fields: activeMissingFields.join(', '),
+              })}
+            </p>
+          </Panel>
+        )}
 
         {valuationMode === 'dcf' ? (
           <Panel className="overflow-x-auto">
@@ -703,11 +753,11 @@ export const FairPricePage = () => {
                   </td>
                   <td>
                     {valuationMode === 'pe'
-                      ? peResult.currentMultiple.toFixed(1)
-                      : psResult.currentMultiple.toFixed(1)}
+                      ? currentPeValue
+                      : currentPsValue}
                   </td>
                   <td>{valuationMode === 'pe' ? targetPe.toFixed(0) : targetPs.toFixed(2)}</td>
-                  <td className="text-primary">{currency.format(activeResult.fairPrice)}</td>
+                  <td className="text-primary">{fairPriceValue}</td>
                 </tr>
                 <tr className="text-text-muted">
                   <td className="py-3 text-text-primary">
@@ -715,9 +765,9 @@ export const FairPricePage = () => {
                       ? t('tools.fairPrice.scenario.epsBase')
                       : t('tools.fairPrice.scenario.revenueBase')}
                   </td>
-                  <td>{valuationMode === 'pe' ? currency.format(eps) : currency.format(revenuePerShare)}</td>
+                  <td>{scenarioBaseValue}</td>
                   <td>{t('tools.fairPrice.hero.safeBuy')}</td>
-                  <td className="text-success">{currency.format(activeResult.safeBuyPrice)}</td>
+                  <td className="text-success">{safeBuyPriceValue}</td>
                 </tr>
               </tbody>
             </table>
