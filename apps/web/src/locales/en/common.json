@@ -95,6 +95,7 @@
       },
       "stats": {
         "totalContributions": "Total contributions",
+        "realTotalContributions": "Contributions in real value",
         "netProfit": "Net profit",
         "realNetProfit": "Real result",
         "nominalValue": "Nominal value",
@@ -102,8 +103,9 @@
       },
       "explain": {
         "totalContributions": "Money you personally add over the whole period.",
+        "realTotalContributions": "Your contributions converted to today's purchasing power.",
         "netProfit": "Nominal projected growth after subtracting your contributions.",
-        "realNetProfit": "Real value minus your contributions. If this is negative, inflation removes more purchasing power than the portfolio earns.",
+        "realNetProfit": "Real value minus contributions that are also converted to today's purchasing power.",
         "nominalValue": "Future amount in the selected currency before adjusting for inflation.",
         "inflationLoss": "The difference between the nominal amount and its real purchasing power."
       },
@@ -119,7 +121,9 @@
       "table": {
         "title": "Yearly details",
         "contributionYear": "Contribution/year",
+        "realContributionYear": "Real contribution/year",
         "totalContributed": "Total contributed",
+        "realTotalContributed": "Total in real value",
         "nominal": "Nominal",
         "real": "Real",
         "profit": "Profit",

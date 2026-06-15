@@ -95,6 +95,7 @@
       },
       "stats": {
         "totalContributions": "Versements totaux",
+        "realTotalContributions": "Versements en valeur réelle",
         "netProfit": "Gain net",
         "realNetProfit": "Résultat réel",
         "nominalValue": "Valeur nominale",
@@ -102,8 +103,9 @@
       },
       "explain": {
         "totalContributions": "L'argent que vous ajoutez sur toute la période.",
+        "realTotalContributions": "Vos versements convertis en pouvoir d'achat d'aujourd'hui.",
         "netProfit": "La croissance nominale projetée après retrait de vos versements.",
-        "realNetProfit": "La valeur réelle moins vos versements. Si ce nombre est négatif, l'inflation retire plus de pouvoir d'achat que le portefeuille ne gagne.",
+        "realNetProfit": "La valeur réelle moins les versements eux aussi convertis en pouvoir d'achat d'aujourd'hui.",
         "nominalValue": "Le montant futur dans la devise choisie avant ajustement de l'inflation.",
         "inflationLoss": "La différence entre le montant nominal et son pouvoir d'achat réel."
       },
@@ -119,7 +121,9 @@
       "table": {
         "title": "Détails annuels",
         "contributionYear": "Versement/an",
+        "realContributionYear": "Versement réel/an",
         "totalContributed": "Total versé",
+        "realTotalContributed": "Total en valeur réelle",
         "nominal": "Nominal",
         "real": "Réel",
         "profit": "Gain",

@@ -13,7 +13,9 @@ export interface InvestCalcInput {
 export interface InvestYearResult {
   year: number
   contributionYear: number
+  realContributionYear: number
   totalContributed: number
+  realTotalContributed: number
   nominalValue: number
   realValue: number
   profit: number
@@ -24,6 +26,7 @@ export interface InvestYearResult {
 export interface InvestCalcResult {
   rows: InvestYearResult[]
   totalContributions: number
+  realTotalContributions: number
   netProfit: number
   realNetProfit: number
   nominalValue: number
@@ -46,27 +49,36 @@ export const calculateInvestProjection = (input: InvestCalcInput): InvestCalcRes
 
   let nominalValue = input.startingCapital
   let totalContributed = input.startingCapital
+  let realTotalContributed = input.startingCapital
   const rows: InvestYearResult[] = []
 
   for (let year = 1; year <= input.years; year += 1) {
     const contributionAmount =
       input.contributionAmount * Math.pow(1 + contributionGrowth, year - 1)
     let contributionYear = 0
+    let realContributionYear = 0
 
     for (let period = 0; period < periodsPerYear; period += 1) {
+      const yearsElapsed = year - 1 + (period + 1) / periodsPerYear
+      const realContribution = contributionAmount / Math.pow(1 + inflation, yearsElapsed)
+
       nominalValue *= 1 + periodReturn
       nominalValue += contributionAmount
       contributionYear += contributionAmount
+      realContributionYear += realContribution
       totalContributed += contributionAmount
+      realTotalContributed += realContribution
     }
 
     const realValue = nominalValue / Math.pow(1 + inflation, year)
     const profit = nominalValue - totalContributed
-    const realProfit = realValue - totalContributed
+    const realProfit = realValue - realTotalContributed
     rows.push({
       year,
       contributionYear,
+      realContributionYear,
       totalContributed,
+      realTotalContributed,
       nominalValue,
       realValue,
       profit,
@@ -82,8 +94,9 @@ export const calculateInvestProjection = (input: InvestCalcInput): InvestCalcRes
   return {
     rows,
     totalContributions: totalContributed,
+    realTotalContributions: realTotalContributed,
     netProfit: finalNominalValue - totalContributed,
-    realNetProfit: finalRealValue - totalContributed,
+    realNetProfit: finalRealValue - realTotalContributed,
     nominalValue: finalNominalValue,
     realValue: finalRealValue,
     inflationLoss: finalNominalValue - finalRealValue,

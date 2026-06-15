@@ -143,10 +143,16 @@ export const InvestCalcPage = () => {
       }),
     [annualReturn, contributionGrowth, frequency, inflation, monthlyContribution, startingCapital, years],
   )
+  const displayedTotalContributions =
+    valueMode === 'real' ? result.realTotalContributions : result.totalContributions
   const displayedNetProfit = valueMode === 'real' ? result.realNetProfit : result.netProfit
   const displayedNetProfitTone = displayedNetProfit >= 0 ? 'success' : 'danger'
   const getDisplayedRowProfit = (row: (typeof result.rows)[number]) =>
     valueMode === 'real' ? row.realProfit : row.profit
+  const getDisplayedContributionYear = (row: (typeof result.rows)[number]) =>
+    valueMode === 'real' ? row.realContributionYear : row.contributionYear
+  const getDisplayedTotalContributed = (row: (typeof result.rows)[number]) =>
+    valueMode === 'real' ? row.realTotalContributed : row.totalContributed
 
   const applyPreset = (presetKey: PresetKey) => {
     const preset = presets[presetKey]
@@ -341,7 +347,11 @@ export const InvestCalcPage = () => {
         </div>
 
         <StatGrid>
-          <StatCard label={t('tools.invest.stats.totalContributions')} value={currency.format(result.totalContributions)} helper={t('tools.invest.explain.totalContributions')} />
+          <StatCard
+            label={valueMode === 'real' ? t('tools.invest.stats.realTotalContributions') : t('tools.invest.stats.totalContributions')}
+            value={currency.format(displayedTotalContributions)}
+            helper={valueMode === 'real' ? t('tools.invest.explain.realTotalContributions') : t('tools.invest.explain.totalContributions')}
+          />
           <StatCard
             label={valueMode === 'real' ? t('tools.invest.stats.realNetProfit') : t('tools.invest.stats.netProfit')}
             value={currency.format(displayedNetProfit)}
@@ -384,6 +394,8 @@ export const InvestCalcPage = () => {
           <div className="grid gap-3 md:hidden">
             {result.rows.map((row) => {
               const rowProfit = getDisplayedRowProfit(row)
+              const contributionYear = getDisplayedContributionYear(row)
+              const totalContributed = getDisplayedTotalContributed(row)
 
               return (
                 <article
@@ -397,16 +409,20 @@ export const InvestCalcPage = () => {
                     <p className={`font-semibold ${rowProfit >= 0 ? 'text-success' : 'text-danger'}`}>
                       {currency.format(rowProfit)}
                     </p>
-                  </div>
-                  <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <dt className="text-text-subtle">{t('tools.invest.table.contributionYear')}</dt>
-                      <dd className="mt-1 text-text-muted">{currency.format(row.contributionYear)}</dd>
                     </div>
-                    <div>
-                      <dt className="text-text-subtle">{t('tools.invest.table.totalContributed')}</dt>
-                      <dd className="mt-1 text-text-muted">{currency.format(row.totalContributed)}</dd>
-                    </div>
+                    <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                      <div>
+                        <dt className="text-text-subtle">
+                          {valueMode === 'real' ? t('tools.invest.table.realContributionYear') : t('tools.invest.table.contributionYear')}
+                        </dt>
+                        <dd className="mt-1 text-text-muted">{currency.format(contributionYear)}</dd>
+                      </div>
+                      <div>
+                        <dt className="text-text-subtle">
+                          {valueMode === 'real' ? t('tools.invest.table.realTotalContributed') : t('tools.invest.table.totalContributed')}
+                        </dt>
+                        <dd className="mt-1 text-text-muted">{currency.format(totalContributed)}</dd>
+                      </div>
                     <div>
                       <dt className="text-text-subtle">{t('tools.invest.table.nominal')}</dt>
                       <dd className="mt-1 text-text-muted">{currency.format(row.nominalValue)}</dd>
@@ -425,8 +441,8 @@ export const InvestCalcPage = () => {
               <thead className="text-text-subtle">
                 <tr className="border-b-[0.5px] border-border">
                   <th className="py-3">{t('tools.common.year')}</th>
-                  <th>{t('tools.invest.table.contributionYear')}</th>
-                  <th>{t('tools.invest.table.totalContributed')}</th>
+                  <th>{valueMode === 'real' ? t('tools.invest.table.realContributionYear') : t('tools.invest.table.contributionYear')}</th>
+                  <th>{valueMode === 'real' ? t('tools.invest.table.realTotalContributed') : t('tools.invest.table.totalContributed')}</th>
                   <th>{t('tools.invest.table.nominal')}</th>
                   <th>{t('tools.invest.table.real')}</th>
                   <th>{valueMode === 'real' ? t('tools.invest.table.realProfit') : t('tools.invest.table.profit')}</th>
@@ -435,12 +451,14 @@ export const InvestCalcPage = () => {
               <tbody>
                 {result.rows.map((row) => {
                   const rowProfit = getDisplayedRowProfit(row)
+                  const contributionYear = getDisplayedContributionYear(row)
+                  const totalContributed = getDisplayedTotalContributed(row)
 
                   return (
                     <tr key={row.year} className="border-b-[0.5px] border-border text-text-muted">
                       <td className="py-3 text-text-primary">{row.year}</td>
-                      <td>{currency.format(row.contributionYear)}</td>
-                      <td>{currency.format(row.totalContributed)}</td>
+                      <td>{currency.format(contributionYear)}</td>
+                      <td>{currency.format(totalContributed)}</td>
                       <td>{currency.format(row.nominalValue)}</td>
                       <td>{currency.format(row.realValue)}</td>
                       <td className={rowProfit >= 0 ? 'text-success' : 'text-danger'}>{currency.format(rowProfit)}</td>
