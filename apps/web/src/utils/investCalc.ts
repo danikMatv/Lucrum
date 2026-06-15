@@ -17,6 +17,7 @@ export interface InvestYearResult {
   nominalValue: number
   realValue: number
   profit: number
+  realProfit: number
   inflationLoss: number
 }
 
@@ -24,6 +25,7 @@ export interface InvestCalcResult {
   rows: InvestYearResult[]
   totalContributions: number
   netProfit: number
+  realNetProfit: number
   nominalValue: number
   realValue: number
   inflationLoss: number
@@ -60,6 +62,7 @@ export const calculateInvestProjection = (input: InvestCalcInput): InvestCalcRes
 
     const realValue = nominalValue / Math.pow(1 + inflation, year)
     const profit = nominalValue - totalContributed
+    const realProfit = realValue - totalContributed
     rows.push({
       year,
       contributionYear,
@@ -67,6 +70,7 @@ export const calculateInvestProjection = (input: InvestCalcInput): InvestCalcRes
       nominalValue,
       realValue,
       profit,
+      realProfit,
       inflationLoss: nominalValue - realValue,
     })
   }
@@ -79,6 +83,7 @@ export const calculateInvestProjection = (input: InvestCalcInput): InvestCalcRes
     rows,
     totalContributions: totalContributed,
     netProfit: finalNominalValue - totalContributed,
+    realNetProfit: finalRealValue - totalContributed,
     nominalValue: finalNominalValue,
     realValue: finalRealValue,
     inflationLoss: finalNominalValue - finalRealValue,

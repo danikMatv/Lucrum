@@ -96,14 +96,16 @@
       "stats": {
         "totalContributions": "Total contributions",
         "netProfit": "Net profit",
+        "realNetProfit": "Real result",
         "nominalValue": "Nominal value",
-        "inflationLoss": "Inflation loss"
+        "inflationLoss": "Inflation difference"
       },
       "explain": {
         "totalContributions": "Money you personally add over the whole period.",
-        "netProfit": "Projected growth after subtracting your contributions.",
+        "netProfit": "Nominal projected growth after subtracting your contributions.",
+        "realNetProfit": "Real value minus your contributions. If this is negative, inflation removes more purchasing power than the portfolio earns.",
         "nominalValue": "Future amount in the selected currency before adjusting for inflation.",
-        "inflationLoss": "How much purchasing power inflation removes from the nominal result."
+        "inflationLoss": "The difference between the nominal amount and its real purchasing power."
       },
       "guide": {
         "title": "How to read this result",
@@ -120,7 +122,8 @@
         "totalContributed": "Total contributed",
         "nominal": "Nominal",
         "real": "Real",
-        "profit": "Profit"
+        "profit": "Profit",
+        "realProfit": "Real result"
       }
     },
     "fire": {
@@ -1703,7 +1706,13 @@
       "new7": "New in 7 days",
       "new30": "New in 30 days",
       "activeShare": "Active users",
-      "activeInactive": "{{active}} active · {{inactive}} inactive"
+      "activeInactive": "{{active}} active · {{inactive}} inactive",
+      "totalToolEvents": "Total tool events",
+      "guestToolEvents": "Guest events",
+      "registeredToolEvents": "Registered events",
+      "registeredToolUsers": "{{count}} registered users",
+      "guestUsageShare": "Guest usage share",
+      "guestRegisteredEvents": "{{guest}} guest · {{registered}} registered"
     },
     "charts": {
       "growth": "New users",

@@ -13,6 +13,7 @@ import {
   getTopSources,
   getTopTickers,
   getTopTools,
+  getToolAudienceStats,
   getUsersByActiveState,
   getUsersByRole,
   getUsersCount,
@@ -80,6 +81,10 @@ admin.get('/stats/tickers', async (c) => c.json(createSuccess(await getTopTicker
 
 admin.get('/stats/usage/daily', async (c) =>
   c.json(createSuccess(await getToolUsageByDate(c.env.DB, 30))),
+)
+
+admin.get('/stats/usage/audience', async (c) =>
+  c.json(createSuccess(await getToolAudienceStats(c.env.DB))),
 )
 
 admin.get('/stats/sources', async (c) => c.json(createSuccess(await getTopSources(c.env.DB))))

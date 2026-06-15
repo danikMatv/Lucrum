@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios'
 import { apiClient, unwrapApiResponse } from './apiClient.ts'
 import type {
+  AdminAudienceStats,
   AdminTickerStats,
   AdminDimensionStats,
   AdminToolStats,
@@ -65,6 +66,18 @@ export const adminService = {
     )
     return unwrapApiResponse(response.data)
     }, []),
+  getAudienceStats: () =>
+    withOptionalAdminStatsFallback(async () => {
+    const response = await apiClient.get<ApiResponse<AdminAudienceStats>>(
+      '/api/admin/stats/usage/audience',
+    )
+    return unwrapApiResponse(response.data)
+    }, {
+      totalEvents: 0,
+      guestEvents: 0,
+      registeredEvents: 0,
+      registeredUsers: 0,
+    }),
   getSourceStats: () =>
     withOptionalAdminStatsFallback(async () => {
     const response = await apiClient.get<ApiResponse<AdminDimensionStats[]>>(

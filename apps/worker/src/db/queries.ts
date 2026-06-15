@@ -816,6 +816,26 @@ export const getToolUsageByDate = async (db: D1Database, days: number) => {
   })
 }
 
+export const getToolAudienceStats = async (db: D1Database) => {
+  const row = await db
+    .prepare(
+      "SELECT COUNT(*) AS totalEvents, SUM(CASE WHEN user_id IS NULL THEN 1 ELSE 0 END) AS guestEvents, SUM(CASE WHEN user_id IS NOT NULL THEN 1 ELSE 0 END) AS registeredEvents, COUNT(DISTINCT user_id) AS registeredUsers FROM tool_usage_events",
+    )
+    .first<{
+      totalEvents: number
+      guestEvents: number | null
+      registeredEvents: number | null
+      registeredUsers: number
+    }>()
+
+  return {
+    totalEvents: row?.totalEvents ?? 0,
+    guestEvents: row?.guestEvents ?? 0,
+    registeredEvents: row?.registeredEvents ?? 0,
+    registeredUsers: row?.registeredUsers ?? 0,
+  }
+}
+
 export const listUsers = async (db: D1Database, page: number, limit: number) => {
   const offset = (page - 1) * limit
   const result = await db

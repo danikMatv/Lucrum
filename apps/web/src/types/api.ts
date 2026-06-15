@@ -62,6 +62,13 @@ export interface AdminTickerStats {
   count: number
 }
 
+export interface AdminAudienceStats {
+  totalEvents: number
+  guestEvents: number
+  registeredEvents: number
+  registeredUsers: number
+}
+
 export interface AdminDimensionStats {
   label: string
   count: number

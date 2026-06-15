@@ -96,14 +96,16 @@
       "stats": {
         "totalContributions": "Versements totaux",
         "netProfit": "Gain net",
+        "realNetProfit": "Résultat réel",
         "nominalValue": "Valeur nominale",
-        "inflationLoss": "Perte liée à l'inflation"
+        "inflationLoss": "Écart lié à l'inflation"
       },
       "explain": {
         "totalContributions": "L'argent que vous ajoutez sur toute la période.",
-        "netProfit": "La croissance projetée après retrait de vos versements.",
+        "netProfit": "La croissance nominale projetée après retrait de vos versements.",
+        "realNetProfit": "La valeur réelle moins vos versements. Si ce nombre est négatif, l'inflation retire plus de pouvoir d'achat que le portefeuille ne gagne.",
         "nominalValue": "Le montant futur dans la devise choisie avant ajustement de l'inflation.",
-        "inflationLoss": "La part de pouvoir d'achat retirée par l'inflation."
+        "inflationLoss": "La différence entre le montant nominal et son pouvoir d'achat réel."
       },
       "guide": {
         "title": "Comment lire le résultat",
@@ -120,7 +122,8 @@
         "totalContributed": "Total versé",
         "nominal": "Nominal",
         "real": "Réel",
-        "profit": "Gain"
+        "profit": "Gain",
+        "realProfit": "Résultat réel"
       }
     },
     "fire": {
@@ -1703,7 +1706,13 @@
       "new7": "Nouveaux en 7 jours",
       "new30": "Nouveaux en 30 jours",
       "activeShare": "Utilisateurs actifs",
-      "activeInactive": "{{active}} actifs · {{inactive}} inactifs"
+      "activeInactive": "{{active}} actifs · {{inactive}} inactifs",
+      "totalToolEvents": "Événements outils totaux",
+      "guestToolEvents": "Événements invités",
+      "registeredToolEvents": "Événements inscrits",
+      "registeredToolUsers": "{{count}} utilisateurs inscrits",
+      "guestUsageShare": "Part d'usage invité",
+      "guestRegisteredEvents": "{{guest}} invités · {{registered}} inscrits"
     },
     "charts": {
       "growth": "Nouveaux utilisateurs",

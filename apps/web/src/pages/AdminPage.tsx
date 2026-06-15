@@ -80,6 +80,11 @@ export const AdminPage = () => {
     queryFn: adminService.getDailyUsageStats,
   })
 
+  const audienceStatsQuery = useQuery({
+    queryKey: ['admin', 'stats', 'usage', 'audience'],
+    queryFn: adminService.getAudienceStats,
+  })
+
   const sourceStatsQuery = useQuery({
     queryKey: ['admin', 'stats', 'sources'],
     queryFn: adminService.getSourceStats,
@@ -141,6 +146,7 @@ export const AdminPage = () => {
   const toolStats = toolStatsQuery.data ?? []
   const tickerStats = tickerStatsQuery.data ?? []
   const dailyUsage = dailyUsageQuery.data ?? []
+  const audienceStats = audienceStatsQuery.data
   const sourceStats = sourceStatsQuery.data ?? []
   const locationStats = locationStatsQuery.data ?? []
   const deviceStats = deviceStatsQuery.data ?? []
@@ -153,11 +159,16 @@ export const AdminPage = () => {
   const activeUsers = userStats?.activeVsInactive.active ?? 0
   const inactiveUsers = userStats?.activeVsInactive.inactive ?? 0
   const totalUsers = userStats?.total ?? 0
+  const totalToolEvents = audienceStats?.totalEvents ?? 0
+  const guestToolEvents = audienceStats?.guestEvents ?? 0
+  const registeredToolEvents = audienceStats?.registeredEvents ?? 0
+  const registeredToolUsers = audienceStats?.registeredUsers ?? 0
   const isLoading =
     userStatsQuery.isLoading ||
     toolStatsQuery.isLoading ||
     tickerStatsQuery.isLoading ||
     dailyUsageQuery.isLoading ||
+    audienceStatsQuery.isLoading ||
     sourceStatsQuery.isLoading ||
     locationStatsQuery.isLoading ||
     deviceStatsQuery.isLoading ||
@@ -189,6 +200,7 @@ export const AdminPage = () => {
       toolStatsQuery.error ??
       tickerStatsQuery.error ??
       dailyUsageQuery.error ??
+      audienceStatsQuery.error ??
       sourceStatsQuery.error ??
       locationStatsQuery.error ??
       deviceStatsQuery.error ??
@@ -201,6 +213,7 @@ export const AdminPage = () => {
     return error ? parseApiError(error, t('errors.generic'), t('errors.validation')) : ''
   }, [
     activeMutation.error,
+    audienceStatsQuery.error,
     roleMutation.error,
     browserStatsQuery.error,
     dailyUsageQuery.error,
@@ -340,6 +353,39 @@ export const AdminPage = () => {
             </p>
             <p className="mt-2 text-xs text-text-subtle">
               {t('admin.metrics.activeInactive', { active: activeUsers, inactive: inactiveUsers })}
+            </p>
+          </section>
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <p className="text-sm text-text-muted">{t('admin.metrics.totalToolEvents')}</p>
+            <p className="mt-2 text-3xl font-bold text-text-primary">
+              {isLoading ? '—' : totalToolEvents}
+            </p>
+          </section>
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <p className="text-sm text-text-muted">{t('admin.metrics.guestToolEvents')}</p>
+            <p className="mt-2 text-3xl font-bold text-primary">
+              {isLoading ? '—' : guestToolEvents}
+            </p>
+          </section>
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <p className="text-sm text-text-muted">{t('admin.metrics.registeredToolEvents')}</p>
+            <p className="mt-2 text-3xl font-bold text-text-primary">
+              {isLoading ? '—' : registeredToolEvents}
+            </p>
+            <p className="mt-2 text-xs text-text-subtle">
+              {t('admin.metrics.registeredToolUsers', { count: registeredToolUsers })}
+            </p>
+          </section>
+          <section className="rounded-lg border-[0.5px] border-border bg-surface p-5">
+            <p className="text-sm text-text-muted">{t('admin.metrics.guestUsageShare')}</p>
+            <p className="mt-2 text-3xl font-bold text-text-primary">
+              {isLoading ? '—' : formatPercent(guestToolEvents, totalToolEvents)}
+            </p>
+            <p className="mt-2 text-xs text-text-subtle">
+              {t('admin.metrics.guestRegisteredEvents', {
+                guest: guestToolEvents,
+                registered: registeredToolEvents,
+              })}
             </p>
           </section>
         </div>
