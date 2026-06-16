@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AppFooter } from '../components/AppFooter.tsx'
+import { useAuthStore } from '../store/useAuthStore.ts'
 
 const tools = [
   {
@@ -59,6 +60,8 @@ const glossaryTerms = ['cagr', 'pv', 'nominal', 'swr'] as const
 
 export const ToolsPage = () => {
   const { t } = useTranslation('common')
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
+  const visibleTools = tools.filter((tool) => !('locked' in tool && tool.locked) || isAuthenticated)
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
@@ -111,7 +114,7 @@ export const ToolsPage = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {tools.map((tool) => (
+          {visibleTools.map((tool) => (
             <Link
               key={tool.to}
               to={tool.to}
