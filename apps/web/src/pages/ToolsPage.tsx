@@ -46,6 +46,7 @@ const tools = [
     titleKey: 'landing.tools.items.stock.title',
     descriptionKey: 'landing.tools.items.stock.description',
     detailKey: 'toolsDirectory.items.stock.detail',
+    locked: true,
   },
 ] as const
 

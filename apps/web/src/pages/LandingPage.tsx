@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AppFooter } from '../components/AppFooter.tsx'
 import { AppHeader } from '../components/AppHeader.tsx'
+import { useAuthStore } from '../store/useAuthStore.ts'
 
 const statCards = [
   { labelKey: 'landing.hero.stats.fairValue.label', valueKey: 'landing.hero.stats.fairValue.value' },
@@ -48,6 +49,7 @@ const tools = [
     icon: 'ST',
     titleKey: 'landing.tools.items.stock.title',
     descriptionKey: 'landing.tools.items.stock.description',
+    locked: true,
   },
 ] as const
 
@@ -60,6 +62,7 @@ const workflowSteps = [
 
 export const LandingPage = () => {
   const { t } = useTranslation('common')
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
@@ -188,27 +191,66 @@ export const LandingPage = () => {
           <p className="max-w-xl text-base leading-7 text-text-muted">{t('landing.tools.description')}</p>
         </div>
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {tools.map((tool) => (
-            <Link
-              key={tool.to}
-              to={tool.to}
-              className="group rounded-lg border-[0.5px] border-border bg-surface-alt p-5 transition hover:border-border-hover hover:bg-surface"
-            >
-              <div className="mb-6 flex items-center justify-between">
-                <span className="grid h-10 w-10 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
-                  {tool.icon}
-                </span>
-                <span className="rounded-full border-[0.5px] border-border px-2.5 py-1 text-xs font-semibold text-primary">
-                  {t('landing.tools.freeBadge')}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-text-primary">{t(tool.titleKey)}</h3>
-              <p className="mt-3 min-h-20 text-sm leading-6 text-text-muted">{t(tool.descriptionKey)}</p>
-              <span className="mt-6 inline-flex text-sm font-bold text-primary transition group-hover:translate-x-1">
-                {t('landing.tools.arrow')}
-              </span>
-            </Link>
-          ))}
+          {tools.map((tool) => {
+            const isLockedForGuest = 'locked' in tool && tool.locked && !isAuthenticated
+            const toolPath = isLockedForGuest
+              ? `/auth/login?returnTo=${encodeURIComponent(tool.to)}`
+              : tool.to
+
+            return (
+              <Link
+                key={tool.to}
+                to={toolPath}
+                aria-label={
+                  isLockedForGuest
+                    ? t('toolsDirectory.lockedOverlay.ariaLabel', { tool: t(tool.titleKey) })
+                    : undefined
+                }
+                className={`group relative overflow-hidden rounded-lg border-[0.5px] bg-surface-alt p-5 transition hover:border-border-hover hover:bg-surface ${
+                  isLockedForGuest ? 'border-primary/40' : 'border-border'
+                }`}
+              >
+                <div className={isLockedForGuest ? 'opacity-25 blur-[1px]' : ''}>
+                  <div className="mb-6 flex items-center justify-between">
+                    <span className="grid h-10 w-10 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
+                      {tool.icon}
+                    </span>
+                    <span className="rounded-full border-[0.5px] border-border px-2.5 py-1 text-xs font-semibold text-primary">
+                      {isLockedForGuest
+                        ? t('toolsDirectory.registeredOnlyBadge')
+                        : 'locked' in tool && tool.locked
+                          ? t('toolsDirectory.freeAccountBadge')
+                          : t('landing.tools.freeBadge')}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-bold text-text-primary">{t(tool.titleKey)}</h3>
+                  <p className="mt-3 min-h-20 text-sm leading-6 text-text-muted">{t(tool.descriptionKey)}</p>
+                  <span className="mt-6 inline-flex text-sm font-bold text-primary transition group-hover:translate-x-1">
+                    {isLockedForGuest ? t('toolsDirectory.loginToOpen') : t('landing.tools.arrow')}
+                  </span>
+                </div>
+
+                {isLockedForGuest ? (
+                  <div className="pointer-events-none absolute inset-0 grid place-items-center bg-background/75 px-5 text-center backdrop-blur-[2px]">
+                    <div className="grid justify-items-center gap-2">
+                      <span aria-hidden="true" className="relative h-12 w-12 text-primary">
+                        <span className="absolute left-1/2 top-1 h-6 w-6 -translate-x-1/2 rounded-full border-[2px] border-primary/70" />
+                        <span className="absolute left-1/2 top-7 h-6 w-[2px] -translate-x-1/2 bg-primary/70" />
+                        <span className="absolute left-1/2 top-10 h-[2px] w-4 bg-primary/70" />
+                        <span className="absolute left-[calc(50%+6px)] top-7 h-[2px] w-3 bg-primary/70" />
+                      </span>
+                      <p className="text-sm font-bold text-primary">
+                        {t('toolsDirectory.lockedOverlay.title')}
+                      </p>
+                      <p className="text-xs font-semibold leading-5 text-text-primary">
+                        {t('toolsDirectory.lockedOverlay.text')}
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
+              </Link>
+            )
+          })}
         </div>
       </section>
 
