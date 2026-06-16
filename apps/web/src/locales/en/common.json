@@ -33,6 +33,7 @@
       "reset": "Reset",
       "copyLink": "Copy link",
       "linkCopied": "Link copied",
+      "saveScenario": "Save scenario",
       "shareFallback": "Copy this link to save your scenario:",
       "search": {
         "loading": "Searching companies...",
@@ -667,6 +668,10 @@
           "title": "Fair Price",
           "description": "Run a beginner-friendly fair value check using fundamentals and assumptions."
         },
+        "reverseDcf": {
+          "title": "Reverse DCF",
+          "description": "See what growth assumptions the current price already implies."
+        },
         "stock": {
           "title": "Stock Analysis",
           "description": "Look up a ticker and review key company metrics in one focused view."
@@ -691,6 +696,87 @@
           "text": "Lucrum is educational software, not a broker or financial advisor."
         }
       }
+    },
+    "reverseDcf": {
+      "title": "Reverse DCF",
+      "description": "Estimate the EPS growth the current stock price already implies.",
+      "inputs": {
+        "ticker": "Company / ticker",
+        "eps": "EPS (TTM)",
+        "marketPrice": "Current market price",
+        "discount": "Discount rate",
+        "terminalGrowth": "Terminal growth rate"
+      },
+      "helpers": {
+        "eps": "Positive earnings per share over the last 12 months. Reverse DCF needs a profitable base.",
+        "marketPrice": "The share price the market is currently asking investors to pay.",
+        "discount": "Required return used to translate future earnings into today's value.",
+        "terminalGrowth": "Long-term growth after year five. It must be lower than the discount rate."
+      },
+      "loadTicker": "Load ticker data",
+      "lookup": {
+        "title": "Ticker data",
+        "updated": "Data for {{ticker}} was loaded. Review the assumptions before relying on the result.",
+        "partial": "Found {{ticker}}, but EPS or price is missing. You can enter the inputs manually.",
+        "notFound": "Could not find reliable data for {{ticker}}. You can still enter the inputs manually. Details: {{message}}"
+      },
+      "hero": {
+        "impliedGrowth": "{{ticker}} implied EPS growth",
+        "helper": "Annual EPS growth needed for the current price to match this DCF model."
+      },
+      "verdict": {
+        "title": "Market expectation",
+        "conservative": "Conservative",
+        "reasonable": "Reasonable",
+        "aggressive": "Aggressive",
+        "unavailable": "Unavailable",
+        "conservativeText": "The current price does not require much EPS growth under these assumptions.",
+        "reasonableText": "The current price implies a moderate EPS growth path.",
+        "aggressiveText": "The current price requires high EPS growth. Small misses can matter a lot.",
+        "unavailableText": "The model cannot solve a useful implied growth rate with these inputs."
+      },
+      "unavailable": {
+        "value": "Unavailable",
+        "reasons": {
+          "invalid_eps": "Reverse DCF needs positive EPS. Use a different valuation model for unprofitable companies.",
+          "invalid_price": "Enter a positive market price to solve the implied growth rate.",
+          "invalid_rates": "The discount rate must be higher than terminal growth.",
+          "below_range": "The market price implies growth below the modeled range.",
+          "above_range": "The market price implies growth above the modeled range."
+        }
+      },
+      "stats": {
+        "marketPrice": "Market price",
+        "modeledPrice": "Modeled price",
+        "yearFiveEps": "Year 5 EPS",
+        "terminalValue": "Terminal value"
+      },
+      "explain": {
+        "marketPrice": "The observed price the model is trying to match.",
+        "modeledPrice": "DCF value produced by the solved growth assumption.",
+        "yearFiveEps": "EPS implied at the end of the five-year forecast period.",
+        "terminalValue": "Estimated value after year five before discounting it back to today."
+      },
+      "guide": {
+        "title": "How to read this result",
+        "text": "Reverse DCF does not say what a stock is worth. It shows what growth must happen for today's price to make sense under your discount and terminal growth assumptions."
+      },
+      "breakdown": {
+        "title": "Present value breakdown",
+        "forecastPv": "PV, years 1-5",
+        "terminalPv": "Terminal PV",
+        "forecastYears": "Forecast years"
+      },
+      "table": {
+        "title": "Implied EPS path",
+        "eps": "EPS forecast",
+        "discountFactor": "Discount factor",
+        "presentValue": "Present value",
+        "unavailable": "Enter valid EPS, price and rates to see the implied EPS path."
+      },
+      "save": {
+        "saved": "Saved"
+      }
     }
   },
   "toolsDirectory": {
@@ -698,6 +784,7 @@
     "title": "All investment tools in one place.",
     "description": "Start with a goal, test assumptions, then inspect a company or strategy before making your next move.",
     "openTool": "Open tool ->",
+    "freeAccountBadge": "Free account",
     "workflow": {
       "title": "Suggested flow",
       "steps": {
@@ -726,6 +813,9 @@
       },
       "fairPrice": {
         "detail": "Best for turning EPS, growth, discount rate, and margin of safety into a simple buy-price range."
+      },
+      "reverseDcf": {
+        "detail": "Best for checking what EPS growth the market already expects before you trust a bullish story."
       },
       "stock": {
         "detail": "Best for a quick company snapshot with fundamentals, profitability, leverage, and a valuation verdict."

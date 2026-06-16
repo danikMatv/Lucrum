@@ -13,6 +13,7 @@ import { LearnTopicPage } from '../pages/LearnTopicPage.tsx'
 import { NotFoundPage } from '../pages/NotFoundPage.tsx'
 import { PlaceholderPage } from '../pages/PlaceholderPage.tsx'
 import { PricingPage } from '../pages/PricingPage.tsx'
+import { ReverseDcfPage } from '../pages/ReverseDcfPage.tsx'
 import { StockPage } from '../pages/StockPage.tsx'
 import { StockMiniCoursePage } from '../pages/StockMiniCoursePage.tsx'
 import { ToolsPage } from '../pages/ToolsPage.tsx'
@@ -65,6 +66,14 @@ export const App = ({ locale }: AppProps) => {
         <Route path="/tools/dca" element={<DcaPage />} />
         <Route path="/tools/fair-price" element={<FairPricePage />} />
         <Route path="/tools/fair-value" element={<Navigate to="/tools/fair-price" replace />} />
+        <Route
+          path="/tools/reverse-dcf"
+          element={
+            <ProtectedRoute>
+              <ReverseDcfPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/tools/stock" element={<StockPage />} />
         <Route path="/login" element={<Navigate to="/auth/login" replace />} />
         <Route path="/register" element={<Navigate to="/auth/register" replace />} />

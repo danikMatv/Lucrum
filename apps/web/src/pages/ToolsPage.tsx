@@ -32,6 +32,14 @@ const tools = [
     detailKey: 'toolsDirectory.items.fairPrice.detail',
   },
   {
+    to: '/tools/reverse-dcf',
+    icon: 'RD',
+    titleKey: 'landing.tools.items.reverseDcf.title',
+    descriptionKey: 'landing.tools.items.reverseDcf.description',
+    detailKey: 'toolsDirectory.items.reverseDcf.detail',
+    locked: true,
+  },
+  {
     to: '/tools/stock',
     icon: 'ST',
     titleKey: 'landing.tools.items.stock.title',
@@ -114,7 +122,9 @@ export const ToolsPage = () => {
                   {tool.icon}
                 </span>
                 <span className="rounded-full border-[0.5px] border-border px-3 py-1 text-xs font-semibold text-primary">
-                  {t('landing.tools.freeBadge')}
+                  {'locked' in tool && tool.locked
+                    ? t('toolsDirectory.freeAccountBadge')
+                    : t('landing.tools.freeBadge')}
                 </span>
               </div>
               <h2 className="text-2xl font-bold text-text-primary">{t(tool.titleKey)}</h2>

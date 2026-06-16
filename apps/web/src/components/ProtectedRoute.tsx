@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { UserRole } from '../types/api.ts'
@@ -12,6 +12,7 @@ interface ProtectedRouteProps {
 export const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps) => {
   const { t } = useTranslation('common')
   const { user, isAuthenticated, isLoading } = useAuthStore()
+  const location = useLocation()
 
   if (isLoading) {
     return (
@@ -22,7 +23,8 @@ export const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRout
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/auth/login" replace />
+    const returnTo = `${location.pathname}${location.search}${location.hash}`
+    return <Navigate to={`/auth/login?returnTo=${encodeURIComponent(returnTo)}`} replace />
   }
 
   if (requireAdmin && user?.role !== UserRole.ADMIN) {

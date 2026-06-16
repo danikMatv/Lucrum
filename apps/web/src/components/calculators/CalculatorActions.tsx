@@ -6,6 +6,9 @@ type ShareParamValue = string | number | boolean | null | undefined
 interface CalculatorActionsProps {
   params: Record<string, ShareParamValue>
   onReset: () => void
+  onSave?: () => void
+  saveLabel?: string
+  isSaving?: boolean
 }
 
 const buildShareUrl = (params: Record<string, ShareParamValue>) => {
@@ -25,7 +28,13 @@ const buildShareUrl = (params: Record<string, ShareParamValue>) => {
   return url.toString()
 }
 
-export const CalculatorActions = ({ params, onReset }: CalculatorActionsProps) => {
+export const CalculatorActions = ({
+  params,
+  onReset,
+  onSave,
+  saveLabel,
+  isSaving = false,
+}: CalculatorActionsProps) => {
   const { t } = useTranslation('common')
   const [copied, setCopied] = useState(false)
 
@@ -42,7 +51,7 @@ export const CalculatorActions = ({ params, onReset }: CalculatorActionsProps) =
   }
 
   return (
-    <div className="grid gap-3 rounded-lg border-[0.5px] border-border bg-surface p-4 sm:grid-cols-2">
+    <div className={`grid gap-3 rounded-lg border-[0.5px] border-border bg-surface p-4 ${onSave ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
       <button
         type="button"
         onClick={onReset}
@@ -57,6 +66,16 @@ export const CalculatorActions = ({ params, onReset }: CalculatorActionsProps) =
       >
         {copied ? t('tools.common.linkCopied') : t('tools.common.copyLink')}
       </button>
+      {onSave ? (
+        <button
+          type="button"
+          onClick={onSave}
+          disabled={isSaving}
+          className="rounded-md border-[0.5px] border-primary px-4 py-3 text-sm font-bold text-primary transition hover:bg-primary-dim disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {isSaving ? t('common.loading') : saveLabel ?? t('tools.common.saveScenario')}
+        </button>
+      ) : null}
     </div>
   )
 }

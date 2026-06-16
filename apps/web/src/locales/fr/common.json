@@ -33,6 +33,7 @@
       "reset": "Réinitialiser",
       "copyLink": "Copier le lien",
       "linkCopied": "Lien copié",
+      "saveScenario": "Enregistrer le scénario",
       "shareFallback": "Copiez ce lien pour garder votre scénario :",
       "search": {
         "loading": "Recherche de sociétés...",
@@ -667,6 +668,10 @@
           "title": "Juste valeur",
           "description": "Lancez une estimation de valeur accessible avec fondamentaux et hypothèses."
         },
+        "reverseDcf": {
+          "title": "Reverse DCF",
+          "description": "Voyez quelles hypothèses de croissance sont déjà intégrées au prix actuel."
+        },
         "stock": {
           "title": "Analyse d'action",
           "description": "Recherchez un ticker et consultez les métriques clés dans une vue claire."
@@ -691,6 +696,87 @@
           "text": "Lucrum est un logiciel éducatif, pas un courtier ni un conseiller financier."
         }
       }
+    },
+    "reverseDcf": {
+      "title": "Reverse DCF",
+      "description": "Estimez la croissance d'EPS déjà intégrée dans le prix actuel.",
+      "inputs": {
+        "ticker": "Société / ticker",
+        "eps": "EPS (TTM)",
+        "marketPrice": "Prix de marché actuel",
+        "discount": "Taux d'actualisation",
+        "terminalGrowth": "Croissance terminale"
+      },
+      "helpers": {
+        "eps": "Bénéfice par action positif sur les 12 derniers mois. Le Reverse DCF a besoin d'une base profitable.",
+        "marketPrice": "Le prix de l'action que le marché demande actuellement aux investisseurs.",
+        "discount": "Rendement exigé utilisé pour ramener les bénéfices futurs à leur valeur actuelle.",
+        "terminalGrowth": "Croissance long terme après la cinquième année. Elle doit être inférieure au taux d'actualisation."
+      },
+      "loadTicker": "Charger les données",
+      "lookup": {
+        "title": "Données du ticker",
+        "updated": "Les données de {{ticker}} ont été chargées. Vérifiez les hypothèses avant d'utiliser le résultat.",
+        "partial": "{{ticker}} a été trouvé, mais l'EPS ou le prix manque. Vous pouvez saisir les valeurs manuellement.",
+        "notFound": "Impossible de trouver des données fiables pour {{ticker}}. Vous pouvez saisir les valeurs manuellement. Détails : {{message}}"
+      },
+      "hero": {
+        "impliedGrowth": "Croissance EPS implicite de {{ticker}}",
+        "helper": "Croissance annuelle de l'EPS nécessaire pour que le prix actuel corresponde à ce modèle DCF."
+      },
+      "verdict": {
+        "title": "Attente du marché",
+        "conservative": "Conservatrice",
+        "reasonable": "Raisonnable",
+        "aggressive": "Agressive",
+        "unavailable": "Indisponible",
+        "conservativeText": "Le prix actuel n'exige pas beaucoup de croissance d'EPS avec ces hypothèses.",
+        "reasonableText": "Le prix actuel implique une trajectoire modérée de croissance de l'EPS.",
+        "aggressiveText": "Le prix actuel exige une forte croissance d'EPS. Les petits écarts peuvent compter beaucoup.",
+        "unavailableText": "Le modèle ne peut pas résoudre une croissance implicite utile avec ces entrées."
+      },
+      "unavailable": {
+        "value": "Indisponible",
+        "reasons": {
+          "invalid_eps": "Le Reverse DCF exige un EPS positif. Utilisez un autre modèle pour les sociétés déficitaires.",
+          "invalid_price": "Saisissez un prix de marché positif pour résoudre la croissance implicite.",
+          "invalid_rates": "Le taux d'actualisation doit être supérieur à la croissance terminale.",
+          "below_range": "Le prix de marché implique une croissance sous la plage modélisée.",
+          "above_range": "Le prix de marché implique une croissance au-dessus de la plage modélisée."
+        }
+      },
+      "stats": {
+        "marketPrice": "Prix de marché",
+        "modeledPrice": "Prix modélisé",
+        "yearFiveEps": "EPS année 5",
+        "terminalValue": "Valeur terminale"
+      },
+      "explain": {
+        "marketPrice": "Le prix observé que le modèle tente d'expliquer.",
+        "modeledPrice": "La valeur DCF produite par l'hypothèse de croissance résolue.",
+        "yearFiveEps": "EPS implicite à la fin de la période de prévision de cinq ans.",
+        "terminalValue": "Valeur estimée après la cinquième année avant actualisation."
+      },
+      "guide": {
+        "title": "Comment lire le résultat",
+        "text": "Le Reverse DCF ne dit pas combien une action vaut. Il montre quelle croissance doit se produire pour que le prix actuel ait du sens avec vos hypothèses."
+      },
+      "breakdown": {
+        "title": "Décomposition de la valeur actuelle",
+        "forecastPv": "PV, années 1-5",
+        "terminalPv": "PV terminale",
+        "forecastYears": "Années de prévision"
+      },
+      "table": {
+        "title": "Trajectoire EPS implicite",
+        "eps": "Prévision EPS",
+        "discountFactor": "Facteur d'actualisation",
+        "presentValue": "Valeur actuelle",
+        "unavailable": "Saisissez un EPS, un prix et des taux valides pour voir la trajectoire EPS."
+      },
+      "save": {
+        "saved": "Enregistré"
+      }
     }
   },
   "toolsDirectory": {
@@ -698,6 +784,7 @@
     "title": "Tous les outils d'investissement au même endroit.",
     "description": "Commencez par un objectif, testez vos hypothèses, puis analysez une société ou une stratégie avant votre prochain mouvement.",
     "openTool": "Ouvrir l'outil ->",
+    "freeAccountBadge": "Compte gratuit",
     "workflow": {
       "title": "Parcours suggéré",
       "steps": {
@@ -726,6 +813,9 @@
       },
       "fairPrice": {
         "detail": "Idéal pour transformer EPS, croissance, taux d'actualisation et marge de sécurité en zone de prix d'achat."
+      },
+      "reverseDcf": {
+        "detail": "Idéal pour vérifier quelle croissance d'EPS le marché attend déjà avant de croire une histoire optimiste."
       },
       "stock": {
         "detail": "Idéal pour un aperçu rapide d'une société avec fondamentaux, rentabilité, levier et verdict de valorisation."

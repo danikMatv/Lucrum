@@ -1,25 +1,31 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuthStore } from '../../store/useAuthStore.ts'
 import { parseApiError } from '../../utils/errorHandler.ts'
 
+const getSafeReturnTo = (value: string | null) =>
+  value && value.startsWith('/') && !value.startsWith('//') ? value : '/dashboard'
+
 export const LoginPage = () => {
   const { t } = useTranslation('common')
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const login = useAuthStore((state) => state.login)
   const isLoading = useAuthStore((state) => state.isLoading)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const returnTo = getSafeReturnTo(searchParams.get('returnTo'))
+  const registerPath = `/auth/register?returnTo=${encodeURIComponent(returnTo)}`
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     setError(null)
     try {
       await login(email, password)
-      navigate('/dashboard')
+      navigate(returnTo)
     } catch (loginError) {
       setError(parseApiError(loginError, t('errors.generic')))
     }
@@ -64,7 +70,7 @@ export const LoginPage = () => {
         </form>
         <p className="mt-5 text-center text-sm text-text-muted">
           {t('auth.login.noAccount')}{' '}
-          <Link to="/auth/register" className="font-semibold text-primary">
+          <Link to={registerPath} className="font-semibold text-primary">
             {t('buttons.getStarted')}
           </Link>
         </p>
