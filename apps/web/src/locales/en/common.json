@@ -868,6 +868,11 @@
     "loginToOpen": "Log in to open ->",
     "freeAccountBadge": "Free account",
     "registeredOnlyBadge": "Account only",
+    "lockedOverlay": {
+      "title": "Content locked",
+      "text": "Log in to your account to open it.",
+      "ariaLabel": "{{tool}}. Account only."
+    },
     "workflow": {
       "title": "Suggested flow",
       "steps": {

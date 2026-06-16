@@ -868,6 +868,11 @@
     "loginToOpen": "Se connecter pour ouvrir ->",
     "freeAccountBadge": "Compte gratuit",
     "registeredOnlyBadge": "Compte requis",
+    "lockedOverlay": {
+      "title": "Contenu verrouillé",
+      "text": "Connectez-vous pour ouvrir cet outil.",
+      "ariaLabel": "{{tool}}. Compte requis."
+    },
     "workflow": {
       "title": "Parcours suggéré",
       "steps": {

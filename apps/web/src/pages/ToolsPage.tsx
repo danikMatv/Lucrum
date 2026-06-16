@@ -120,30 +120,62 @@ export const ToolsPage = () => {
               : tool.to
 
             return (
-            <Link
-              key={tool.to}
-              to={toolPath}
-              className="group flex min-h-72 flex-col rounded-lg border-[0.5px] border-border bg-surface p-5 transition hover:border-border-hover hover:bg-surface-alt"
-            >
-              <div className="mb-6 flex items-start justify-between gap-4">
-                <span className="grid h-12 w-12 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
-                  {tool.icon}
-                </span>
-                <span className="rounded-full border-[0.5px] border-border px-3 py-1 text-xs font-semibold text-primary">
-                  {isLockedForGuest
-                    ? t('toolsDirectory.registeredOnlyBadge')
-                    : 'locked' in tool && tool.locked
-                      ? t('toolsDirectory.freeAccountBadge')
-                    : t('landing.tools.freeBadge')}
-                </span>
-              </div>
-              <h2 className="text-2xl font-bold text-text-primary">{t(tool.titleKey)}</h2>
-              <p className="mt-3 text-sm leading-6 text-text-muted">{t(tool.descriptionKey)}</p>
-              <p className="mt-4 text-sm leading-6 text-text-subtle">{t(tool.detailKey)}</p>
-              <span className="mt-auto pt-6 text-sm font-bold text-primary transition group-hover:translate-x-1">
-                {isLockedForGuest ? t('toolsDirectory.loginToOpen') : t('toolsDirectory.openTool')}
-              </span>
-            </Link>
+              <Link
+                key={tool.to}
+                to={toolPath}
+                aria-label={
+                  isLockedForGuest
+                    ? t('toolsDirectory.lockedOverlay.ariaLabel', { tool: t(tool.titleKey) })
+                    : undefined
+                }
+                className={`group relative flex min-h-72 flex-col overflow-hidden rounded-lg border-[0.5px] bg-surface p-5 transition hover:border-border-hover hover:bg-surface-alt ${
+                  isLockedForGuest ? 'border-primary/40' : 'border-border'
+                }`}
+              >
+                <div
+                  className={`flex flex-1 flex-col ${
+                    isLockedForGuest ? 'opacity-25 blur-[1px]' : ''
+                  }`}
+                >
+                  <div className="mb-6 flex items-start justify-between gap-4">
+                    <span className="grid h-12 w-12 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
+                      {tool.icon}
+                    </span>
+                    <span className="rounded-full border-[0.5px] border-border px-3 py-1 text-xs font-semibold text-primary">
+                      {isLockedForGuest
+                        ? t('toolsDirectory.registeredOnlyBadge')
+                        : 'locked' in tool && tool.locked
+                          ? t('toolsDirectory.freeAccountBadge')
+                          : t('landing.tools.freeBadge')}
+                    </span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-text-primary">{t(tool.titleKey)}</h2>
+                  <p className="mt-3 text-sm leading-6 text-text-muted">{t(tool.descriptionKey)}</p>
+                  <p className="mt-4 text-sm leading-6 text-text-subtle">{t(tool.detailKey)}</p>
+                  <span className="mt-auto pt-6 text-sm font-bold text-primary transition group-hover:translate-x-1">
+                    {isLockedForGuest ? t('toolsDirectory.loginToOpen') : t('toolsDirectory.openTool')}
+                  </span>
+                </div>
+
+                {isLockedForGuest ? (
+                  <div className="pointer-events-none absolute inset-0 grid place-items-center bg-background/75 px-8 text-center backdrop-blur-[2px]">
+                    <div className="grid justify-items-center gap-3">
+                      <span aria-hidden="true" className="relative h-16 w-16 text-primary">
+                        <span className="absolute left-1/2 top-1 h-8 w-8 -translate-x-1/2 rounded-full border-[3px] border-primary/70" />
+                        <span className="absolute left-1/2 top-9 h-7 w-[3px] -translate-x-1/2 bg-primary/70" />
+                        <span className="absolute left-1/2 top-12 h-[3px] w-5 bg-primary/70" />
+                        <span className="absolute left-[calc(50%+7px)] top-9 h-[3px] w-4 bg-primary/70" />
+                      </span>
+                      <p className="text-lg font-bold text-primary">
+                        {t('toolsDirectory.lockedOverlay.title')}
+                      </p>
+                      <p className="max-w-xs text-sm font-semibold leading-6 text-text-primary">
+                        {t('toolsDirectory.lockedOverlay.text')}
+                      </p>
+                    </div>
+                  </div>
+                ) : null}
+              </Link>
             )
           })}
         </div>

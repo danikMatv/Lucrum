@@ -868,6 +868,11 @@
     "loginToOpen": "Увійти, щоб відкрити ->",
     "freeAccountBadge": "Безкоштовний акаунт",
     "registeredOnlyBadge": "Лише для акаунта",
+    "lockedOverlay": {
+      "title": "Вміст заблоковано",
+      "text": "Увійдіть в акаунт, щоб відкрити.",
+      "ariaLabel": "{{tool}}. Лише для акаунта."
+    },
     "workflow": {
       "title": "Рекомендований шлях",
       "steps": {
