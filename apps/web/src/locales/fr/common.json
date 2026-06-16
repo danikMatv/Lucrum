@@ -865,7 +865,9 @@
     "title": "Tous les outils d'investissement au même endroit.",
     "description": "Commencez par un objectif, testez vos hypothèses, puis analysez une société ou une stratégie avant votre prochain mouvement.",
     "openTool": "Ouvrir l'outil ->",
+    "loginToOpen": "Se connecter pour ouvrir ->",
     "freeAccountBadge": "Compte gratuit",
+    "registeredOnlyBadge": "Compte requis",
     "workflow": {
       "title": "Parcours suggéré",
       "steps": {

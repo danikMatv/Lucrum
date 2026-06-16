@@ -61,7 +61,6 @@ const glossaryTerms = ['cagr', 'pv', 'nominal', 'swr'] as const
 export const ToolsPage = () => {
   const { t } = useTranslation('common')
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
-  const visibleTools = tools.filter((tool) => !('locked' in tool && tool.locked) || isAuthenticated)
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
@@ -114,10 +113,16 @@ export const ToolsPage = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {visibleTools.map((tool) => (
+          {tools.map((tool) => {
+            const isLockedForGuest = 'locked' in tool && tool.locked && !isAuthenticated
+            const toolPath = isLockedForGuest
+              ? `/auth/login?returnTo=${encodeURIComponent(tool.to)}`
+              : tool.to
+
+            return (
             <Link
               key={tool.to}
-              to={tool.to}
+              to={toolPath}
               className="group flex min-h-72 flex-col rounded-lg border-[0.5px] border-border bg-surface p-5 transition hover:border-border-hover hover:bg-surface-alt"
             >
               <div className="mb-6 flex items-start justify-between gap-4">
@@ -125,8 +130,10 @@ export const ToolsPage = () => {
                   {tool.icon}
                 </span>
                 <span className="rounded-full border-[0.5px] border-border px-3 py-1 text-xs font-semibold text-primary">
-                  {'locked' in tool && tool.locked
-                    ? t('toolsDirectory.freeAccountBadge')
+                  {isLockedForGuest
+                    ? t('toolsDirectory.registeredOnlyBadge')
+                    : 'locked' in tool && tool.locked
+                      ? t('toolsDirectory.freeAccountBadge')
                     : t('landing.tools.freeBadge')}
                 </span>
               </div>
@@ -134,10 +141,11 @@ export const ToolsPage = () => {
               <p className="mt-3 text-sm leading-6 text-text-muted">{t(tool.descriptionKey)}</p>
               <p className="mt-4 text-sm leading-6 text-text-subtle">{t(tool.detailKey)}</p>
               <span className="mt-auto pt-6 text-sm font-bold text-primary transition group-hover:translate-x-1">
-                {t('toolsDirectory.openTool')}
+                {isLockedForGuest ? t('toolsDirectory.loginToOpen') : t('toolsDirectory.openTool')}
               </span>
             </Link>
-          ))}
+            )
+          })}
         </div>
 
         <section className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr]">

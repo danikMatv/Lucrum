@@ -865,7 +865,9 @@
     "title": "All investment tools in one place.",
     "description": "Start with a goal, test assumptions, then inspect a company or strategy before making your next move.",
     "openTool": "Open tool ->",
+    "loginToOpen": "Log in to open ->",
     "freeAccountBadge": "Free account",
+    "registeredOnlyBadge": "Account only",
     "workflow": {
       "title": "Suggested flow",
       "steps": {
