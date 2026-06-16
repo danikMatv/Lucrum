@@ -6,6 +6,37 @@ const liveApiBaseUrl = 'https://lucrum-worker.danior202.workers.dev'
 let accessToken: string | null = null
 let isRefreshing = false
 
+const getReferrerSource = (referrer: string) => {
+  if (!referrer) {
+    return 'direct'
+  }
+
+  try {
+    const referrerHost = new URL(referrer).hostname
+    return referrerHost === window.location.hostname ? 'internal' : referrerHost.replace(/^www\./, '')
+  } catch {
+    return 'referral'
+  }
+}
+
+const getAnalyticsHeaders = () => {
+  if (typeof window === 'undefined') {
+    return {}
+  }
+
+  const params = new URLSearchParams(window.location.search)
+  const referrer = document.referrer
+
+  return {
+    'X-Lucrum-Source': params.get('utm_source') || getReferrerSource(referrer),
+    'X-Lucrum-Medium': params.get('utm_medium') || '',
+    'X-Lucrum-Campaign': params.get('utm_campaign') || '',
+    'X-Lucrum-Referrer': referrer,
+    'X-Lucrum-Page-Path': `${window.location.pathname}${window.location.search}`,
+    'X-Lucrum-Language': navigator.language,
+  }
+}
+
 export const setAccessToken = (token: string | null) => {
   accessToken = token
 }
@@ -19,6 +50,11 @@ apiClient.interceptors.request.use((config) => {
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`
   }
+  Object.entries(getAnalyticsHeaders()).forEach(([key, value]) => {
+    if (value) {
+      config.headers[key] = value
+    }
+  })
   return config
 })
 

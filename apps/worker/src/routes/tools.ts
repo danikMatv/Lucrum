@@ -218,10 +218,10 @@ const getQuote = async (c: Context, ticker: string) => {
 tools.get('/stock-history', zValidator('query', stockHistorySchema, validatorHook), async (c) => {
   const { ticker, period } = c.req.valid('query')
   const normalizedTicker = normalizeTicker(ticker)
-  c.executionCtx.waitUntil(logUsage(c, 'STOCK_HISTORY', normalizedTicker).catch(() => undefined))
 
   try {
     const history = await getHistory(c, normalizedTicker, period)
+    c.executionCtx.waitUntil(logUsage(c, 'STOCK_HISTORY', normalizedTicker).catch(() => undefined))
     return c.json(createSuccess(history))
   } catch {
     return c.json(createError('HISTORY_FETCH_FAILED', 'Stock history fetch failed'), 502)
@@ -231,10 +231,10 @@ tools.get('/stock-history', zValidator('query', stockHistorySchema, validatorHoo
 tools.get('/quote', zValidator('query', quoteSchema, validatorHook), async (c) => {
   const { ticker } = c.req.valid('query')
   const normalizedTicker = normalizeTicker(ticker)
-  c.executionCtx.waitUntil(logUsage(c, 'QUOTE', normalizedTicker).catch(() => undefined))
 
   try {
     const quote = await getQuote(c, normalizedTicker)
+    c.executionCtx.waitUntil(logUsage(c, 'QUOTE', normalizedTicker).catch(() => undefined))
     return c.json(createSuccess(quote))
   } catch {
     return c.json(createError('QUOTE_FETCH_FAILED', 'Quote fetch failed'), 502)
@@ -244,7 +244,6 @@ tools.get('/quote', zValidator('query', quoteSchema, validatorHook), async (c) =
 tools.get('/dca', zValidator('query', dcaSchema, validatorHook), async (c) => {
   const { ticker, from, amount } = c.req.valid('query')
   const normalizedTicker = normalizeTicker(ticker)
-  c.executionCtx.waitUntil(logUsage(c, 'DCA', normalizedTicker).catch(() => undefined))
 
   try {
     const history = await getHistoryFromDate(c, normalizedTicker, from)
@@ -256,6 +255,7 @@ tools.get('/dca', zValidator('query', dcaSchema, validatorHook), async (c) => {
       )
     }
 
+    c.executionCtx.waitUntil(logUsage(c, 'DCA', normalizedTicker).catch(() => undefined))
     return c.json(createSuccess(result))
   } catch {
     return c.json(

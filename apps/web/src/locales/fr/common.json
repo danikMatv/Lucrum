@@ -1701,8 +1701,8 @@
   },
   "admin": {
     "kicker": "Panneau admin",
-    "title": "Métriques utilisateurs",
-    "description": "Une vue compacte des utilisateurs Lucrum, des rôles, de l'activité et des signaux d'utilisation des outils.",
+    "title": "Analytique Lucrum",
+    "description": "Une vue compacte des utilisateurs Lucrum, des rôles et des événements réussis d'utilisation des outils.",
     "dashboardLink": "Tableau de bord",
     "empty": "Aucune donnée pour le moment.",
     "metrics": {
@@ -1711,7 +1711,7 @@
       "new30": "Nouveaux en 30 jours",
       "activeShare": "Utilisateurs actifs",
       "activeInactive": "{{active}} actifs · {{inactive}} inactifs",
-      "totalToolEvents": "Événements outils totaux",
+      "totalToolEvents": "Événements outils réussis",
       "guestToolEvents": "Événements invités",
       "registeredToolEvents": "Événements inscrits",
       "registeredToolUsers": "{{count}} utilisateurs inscrits",
@@ -1728,7 +1728,7 @@
       "tickers": "Tickers populaires"
     },
     "analytics": {
-      "dailyUsage": "Utilisation des outils",
+      "dailyUsage": "Utilisation réussie des outils",
       "sources": "Sources de trafic",
       "locations": "Localisations",
       "devices": "Appareils",

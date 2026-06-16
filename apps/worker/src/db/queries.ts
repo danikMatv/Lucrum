@@ -656,7 +656,12 @@ export const softDeleteLearnResource = async (db: D1Database, topic: string, id:
 
 export const logToolUsage = async (
   db: D1Database,
-  input: { userId: string | null; toolType: string; ticker: string | null } & ToolUsageAnalyticsInput,
+  input: {
+    userId: string | null
+    toolType: string
+    ticker: string | null
+    status?: 'success' | 'error'
+  } & ToolUsageAnalyticsInput,
 ) => {
   const id = crypto.randomUUID()
   const createdAt = nowIso()
@@ -664,7 +669,7 @@ export const logToolUsage = async (
   try {
     return await db
       .prepare(
-        'INSERT INTO tool_usage_events (id, user_id, tool_type, ticker, source, medium, campaign, referrer, page_path, country, region, city, timezone, colo, device_type, browser, os, language, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO tool_usage_events (id, user_id, tool_type, ticker, source, medium, campaign, referrer, page_path, country, region, city, timezone, colo, device_type, browser, os, language, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       )
       .bind(
         id,
@@ -685,6 +690,7 @@ export const logToolUsage = async (
         input.browser,
         input.os,
         input.language,
+        input.status ?? 'success',
         createdAt,
       )
       .run()
@@ -742,20 +748,6 @@ export const getNewUsersByDate = async (db: D1Database, days: number) => {
   })
 }
 
-export const getTopTools = async (db: D1Database) => {
-  const result = await db
-    .prepare('SELECT tool_type AS toolType, COUNT(*) AS count FROM tool_usage_events GROUP BY tool_type ORDER BY count DESC LIMIT 10')
-    .all<{ toolType: string; count: number }>()
-  return result.results
-}
-
-export const getTopTickers = async (db: D1Database) => {
-  const result = await db
-    .prepare('SELECT ticker, COUNT(*) AS count FROM tool_usage_events WHERE ticker IS NOT NULL GROUP BY ticker ORDER BY count DESC LIMIT 20')
-    .all<{ ticker: string; count: number }>()
-  return result.results
-}
-
 type UsageAnalyticsColumn = 'source' | 'country' | 'device_type' | 'browser' | 'os' | 'language'
 
 const getTableColumns = async (db: D1Database, tableName: string) => {
@@ -763,6 +755,34 @@ const getTableColumns = async (db: D1Database, tableName: string) => {
     .prepare(`PRAGMA table_info(${tableName})`)
     .all<{ name: string }>()
   return new Set(result.results.map((row) => row.name))
+}
+
+const getToolUsageSuccessWhere = async (db: D1Database) => {
+  const columns = await getTableColumns(db, 'tool_usage_events')
+  return columns.has('status') ? "WHERE status = 'success'" : ''
+}
+
+export const getTopTools = async (db: D1Database) => {
+  const successWhere = await getToolUsageSuccessWhere(db)
+  const result = await db
+    .prepare(
+      `SELECT tool_type AS toolType, COUNT(*) AS count FROM tool_usage_events ${successWhere} GROUP BY tool_type ORDER BY count DESC LIMIT 10`,
+    )
+    .all<{ toolType: string; count: number }>()
+  return result.results
+}
+
+export const getTopTickers = async (db: D1Database) => {
+  const successWhere = await getToolUsageSuccessWhere(db)
+  const where = successWhere
+    ? `${successWhere} AND ticker IS NOT NULL`
+    : 'WHERE ticker IS NOT NULL'
+  const result = await db
+    .prepare(
+      `SELECT ticker, COUNT(*) AS count FROM tool_usage_events ${where} GROUP BY ticker ORDER BY count DESC LIMIT 20`,
+    )
+    .all<{ ticker: string; count: number }>()
+  return result.results
 }
 
 const getTopUsageDimension = async (
@@ -775,9 +795,10 @@ const getTopUsageDimension = async (
     return []
   }
 
+  const successWhere = columns.has('status') ? "WHERE status = 'success'" : ''
   const result = await db
     .prepare(
-      `SELECT COALESCE(${column}, 'unknown') AS label, COUNT(*) AS count FROM tool_usage_events GROUP BY label ORDER BY count DESC LIMIT ?`,
+      `SELECT COALESCE(${column}, 'unknown') AS label, COUNT(*) AS count FROM tool_usage_events ${successWhere} GROUP BY label ORDER BY count DESC LIMIT ?`,
     )
     .bind(limit)
     .all<{ label: string; count: number }>()
@@ -800,9 +821,13 @@ export const getToolUsageByDate = async (db: D1Database, days: number) => {
   const since = new Date()
   since.setUTCDate(since.getUTCDate() - (days - 1))
   since.setUTCHours(0, 0, 0, 0)
+  const successWhere = await getToolUsageSuccessWhere(db)
+  const where = successWhere
+    ? `${successWhere} AND created_at >= ?`
+    : 'WHERE created_at >= ?'
   const result = await db
     .prepare(
-      'SELECT substr(created_at, 1, 10) AS date, COUNT(*) AS count FROM tool_usage_events WHERE created_at >= ? GROUP BY date',
+      `SELECT substr(created_at, 1, 10) AS date, COUNT(*) AS count FROM tool_usage_events ${where} GROUP BY date`,
     )
     .bind(since.toISOString())
     .all<DateCountRow>()
@@ -817,9 +842,10 @@ export const getToolUsageByDate = async (db: D1Database, days: number) => {
 }
 
 export const getToolAudienceStats = async (db: D1Database) => {
+  const successWhere = await getToolUsageSuccessWhere(db)
   const row = await db
     .prepare(
-      "SELECT COUNT(*) AS totalEvents, SUM(CASE WHEN user_id IS NULL THEN 1 ELSE 0 END) AS guestEvents, SUM(CASE WHEN user_id IS NOT NULL THEN 1 ELSE 0 END) AS registeredEvents, COUNT(DISTINCT user_id) AS registeredUsers FROM tool_usage_events",
+      `SELECT COUNT(*) AS totalEvents, SUM(CASE WHEN user_id IS NULL THEN 1 ELSE 0 END) AS guestEvents, SUM(CASE WHEN user_id IS NOT NULL THEN 1 ELSE 0 END) AS registeredEvents, COUNT(DISTINCT user_id) AS registeredUsers FROM tool_usage_events ${successWhere}`,
     )
     .first<{
       totalEvents: number

@@ -1172,7 +1172,6 @@ const resolveCompanySnapshot = async (
 companies.get('/search', zValidator('query', searchSchema, validatorHook), async (c) => {
   const { q } = c.req.valid('query')
   const cacheKey = `search:v3:${q.toLowerCase()}`
-  c.executionCtx.waitUntil(logUsage(c, 'COMPANY_SEARCH', null).catch(() => undefined))
 
   const cached = await getJsonCache<Company[]>(c.env.KV, cacheKey)
   if (cached) {
@@ -1222,7 +1221,6 @@ companies.get('/:ticker/snapshot', zValidator('param', tickerSchema, validatorHo
   const { ticker } = c.req.valid('param')
   const normalizedTicker = normalizeTicker(ticker)
   const debugProviders = c.req.query('debugProviders') === '1'
-  c.executionCtx.waitUntil(logUsage(c, 'COMPANY_SNAPSHOT', normalizedTicker).catch(() => undefined))
 
   const snapshot = await resolveCompanySnapshot(c, normalizedTicker, { debugProviders })
   if (
@@ -1235,6 +1233,7 @@ companies.get('/:ticker/snapshot', zValidator('param', tickerSchema, validatorHo
     return c.json(createError('COMPANY_DATA_NOT_FOUND', 'Company data not found'), 404)
   }
 
+  c.executionCtx.waitUntil(logUsage(c, 'COMPANY_SNAPSHOT', normalizedTicker).catch(() => undefined))
   return c.json(createSuccess(snapshot))
 })
 

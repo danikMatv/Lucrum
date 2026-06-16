@@ -1701,8 +1701,8 @@
   },
   "admin": {
     "kicker": "Admin panel",
-    "title": "User metrics",
-    "description": "A compact view of Lucrum users, roles, activity, and tool usage signals.",
+    "title": "Lucrum analytics",
+    "description": "A compact view of Lucrum users, roles, and successful tool usage events.",
     "dashboardLink": "Dashboard",
     "empty": "No data yet.",
     "metrics": {
@@ -1711,7 +1711,7 @@
       "new30": "New in 30 days",
       "activeShare": "Active users",
       "activeInactive": "{{active}} active · {{inactive}} inactive",
-      "totalToolEvents": "Total tool events",
+      "totalToolEvents": "Successful tool events",
       "guestToolEvents": "Guest events",
       "registeredToolEvents": "Registered events",
       "registeredToolUsers": "{{count}} registered users",
@@ -1728,7 +1728,7 @@
       "tickers": "Popular tickers"
     },
     "analytics": {
-      "dailyUsage": "Tool usage",
+      "dailyUsage": "Successful tool usage",
       "sources": "Traffic sources",
       "locations": "Locations",
       "devices": "Devices",

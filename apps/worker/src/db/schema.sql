@@ -101,6 +101,7 @@ CREATE TABLE IF NOT EXISTS tool_usage_events (
   browser TEXT,
   os TEXT,
   language TEXT,
+  status TEXT,
   created_at TEXT
 );
 
