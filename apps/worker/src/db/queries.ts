@@ -6,8 +6,10 @@ import type {
   CompanyIncomeHistoryRow,
   LearnResource,
   LearnResourceType,
+  LessonProgress,
   SavedCalculation,
   UserRole,
+  UserBadge,
   WatchlistItem,
 } from '../types'
 import type { ToolUsageAnalyticsInput } from '../utils/analytics'
@@ -96,6 +98,25 @@ interface LearnResourceRow {
   updated_at: string
 }
 
+interface LessonProgressRow {
+  id: string
+  user_id: string
+  topic: string
+  lesson_id: string
+  quiz_score: number | null
+  quiz_total: number | null
+  completed_at: string
+  created_at: string
+  updated_at: string
+}
+
+interface UserBadgeRow {
+  id: string
+  user_id: string
+  badge_id: string
+  earned_at: string
+}
+
 interface CountRow {
   count: number
 }
@@ -176,6 +197,25 @@ const mapLearnResource = (row: LearnResourceRow): LearnResource => ({
   isActive: row.is_active === 1,
   createdAt: row.created_at,
   updatedAt: row.updated_at,
+})
+
+const mapLessonProgress = (row: LessonProgressRow): LessonProgress => ({
+  id: row.id,
+  userId: row.user_id,
+  topic: row.topic,
+  lessonId: row.lesson_id,
+  quizScore: row.quiz_score,
+  quizTotal: row.quiz_total,
+  completedAt: row.completed_at,
+  createdAt: row.created_at,
+  updatedAt: row.updated_at,
+})
+
+const mapUserBadge = (row: UserBadgeRow): UserBadge => ({
+  id: row.id,
+  userId: row.user_id,
+  badgeId: row.badge_id,
+  earnedAt: row.earned_at,
 })
 
 export interface CompanySnapshotRecord {
@@ -653,6 +693,104 @@ export const softDeleteLearnResource = async (db: D1Database, topic: string, id:
     .prepare('UPDATE learn_resources SET is_active = 0, updated_at = ? WHERE topic = ? AND id = ?')
     .bind(nowIso(), topic, id)
     .run()
+
+export const getLessonProgress = async (
+  db: D1Database,
+  userId: string,
+  topic: string,
+  lessonId: string,
+) => {
+  const row = await db
+    .prepare(
+      'SELECT * FROM lesson_progress WHERE user_id = ? AND topic = ? AND lesson_id = ?',
+    )
+    .bind(userId, topic, lessonId)
+    .first<LessonProgressRow>()
+  return row ? mapLessonProgress(row) : null
+}
+
+export const upsertLessonProgress = async (
+  db: D1Database,
+  input: {
+    userId: string
+    topic: string
+    lessonId: string
+    quizScore: number | null
+    quizTotal: number | null
+  },
+) => {
+  const id = crypto.randomUUID()
+  const createdAt = nowIso()
+
+  await db
+    .prepare(
+      [
+        'INSERT INTO lesson_progress (id, user_id, topic, lesson_id, quiz_score, quiz_total, completed_at, created_at, updated_at)',
+        'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+        'ON CONFLICT(user_id, topic, lesson_id) DO UPDATE SET',
+        'quiz_score = CASE',
+        'WHEN excluded.quiz_score IS NULL THEN lesson_progress.quiz_score',
+        'WHEN lesson_progress.quiz_score IS NULL THEN excluded.quiz_score',
+        'WHEN excluded.quiz_score > lesson_progress.quiz_score THEN excluded.quiz_score',
+        'ELSE lesson_progress.quiz_score',
+        'END,',
+        'quiz_total = CASE',
+        'WHEN excluded.quiz_score IS NULL THEN lesson_progress.quiz_total',
+        'WHEN lesson_progress.quiz_score IS NULL THEN excluded.quiz_total',
+        'WHEN excluded.quiz_score > lesson_progress.quiz_score THEN excluded.quiz_total',
+        'ELSE lesson_progress.quiz_total',
+        'END,',
+        'updated_at = excluded.updated_at',
+      ].join(' '),
+    )
+    .bind(
+      id,
+      input.userId,
+      input.topic,
+      input.lessonId,
+      input.quizScore,
+      input.quizTotal,
+      createdAt,
+      createdAt,
+      createdAt,
+    )
+    .run()
+
+  const progress = await getLessonProgress(db, input.userId, input.topic, input.lessonId)
+  if (!progress) {
+    throw new Error('Lesson progress upsert failed')
+  }
+  return progress
+}
+
+export const listLessonProgress = async (db: D1Database, userId: string, topic: string) => {
+  const result = await db
+    .prepare(
+      'SELECT * FROM lesson_progress WHERE user_id = ? AND topic = ? ORDER BY completed_at ASC',
+    )
+    .bind(userId, topic)
+    .all<LessonProgressRow>()
+  return result.results.map(mapLessonProgress)
+}
+
+export const listUserBadges = async (db: D1Database, userId: string) => {
+  const result = await db
+    .prepare('SELECT * FROM user_badges WHERE user_id = ? ORDER BY earned_at ASC')
+    .bind(userId)
+    .all<UserBadgeRow>()
+  return result.results.map(mapUserBadge)
+}
+
+export const insertUserBadge = async (db: D1Database, userId: string, badgeId: string) => {
+  const id = crypto.randomUUID()
+  const earnedAt = nowIso()
+  await db
+    .prepare(
+      'INSERT OR IGNORE INTO user_badges (id, user_id, badge_id, earned_at) VALUES (?, ?, ?, ?)',
+    )
+    .bind(id, userId, badgeId, earnedAt)
+    .run()
+}
 
 export const logToolUsage = async (
   db: D1Database,

@@ -6,7 +6,8 @@
     "learn": "Apprendre",
     "tools": "Outils",
     "pricing": "Tarifs",
-    "dashboard": "Tableau de bord"
+    "dashboard": "Tableau de bord",
+    "profile": "Profil"
   },
   "buttons": {
     "login": "Connexion",
@@ -1399,206 +1400,750 @@
           "foundation": {
             "title": "Préparer la base financière",
             "text": "Avant les actions, il faut une réserve d'urgence, des dettes maîtrisées et une vision claire du cash-flow mensuel. Sinon le marché peut vous forcer à vendre au pire moment.",
-            "details": "Les actions fluctuent. Même une entreprise solide peut perdre 20 à 40% à cause du marché, des taux, d'un résultat trimestriel ou de la peur des investisseurs. Sans réserve, un problème de vie ordinaire peut vous obliger à vendre pour obtenir du cash, et non parce que la thèse d'investissement a changé. La base financière n'est donc pas une formalité : elle protège contre les décisions forcées.",
-            "example": "Imaginez une personne qui investit 1000 dollars dans une action, puis perd une partie de son revenu ou doit remplacer son ordinateur deux mois plus tard. Sans réserve, elle peut vendre avec une perte alors que l'entreprise va toujours bien. Avec une réserve, elle peut séparer le problème personnel de la décision d'investissement.",
-            "caseStudy": "Mia gagne 1800 dollars par mois et dépense environ 1200. Elle veut investir toute son épargne de 3000 dollars parce qu'elle a peur de rater la hausse. Une voie plus saine consiste à garder 3 à 6 mois de dépenses en réserve, traiter les dettes chères et investir ensuite depuis le cash-flow mensuel futur.",
+            "details": "Les actions fluctuent. Même une entreprise solide peut perdre 20 à 40% à cause du marché, des taux, d'un résultat trimestriel ou de la peur des investisseurs. Sans réserve, un problème de vie ordinaire peut vous obliger à vendre pour obtenir du cash, et non parce que la thèse d'investissement a changé. La base financière n'est donc pas une formalité : elle protège contre les décisions forcées. Repère pratique : Gardez 3 à 6 mois de dépenses hors actions avant d’investir agressivement.",
+            "example": "Imaginez une personne qui investit 1000 dollars dans une action, puis perd une partie de son revenu ou doit remplacer son ordinateur deux mois plus tard. Sans réserve, elle peut vendre avec une perte alors que l'entreprise va toujours bien. Avec une réserve, elle peut séparer le problème personnel de la décision d'investissement. Repère pratique : Gardez 3 à 6 mois de dépenses hors actions avant d’investir agressivement.",
+            "caseStudy": "Mia gagne 1800 dollars par mois et dépense environ 1200. Elle veut investir toute son épargne de 3000 dollars parce qu'elle a peur de rater la hausse. Une voie plus saine consiste à garder 3 à 6 mois de dépenses en réserve, traiter les dettes chères et investir ensuite depuis le cash-flow mensuel futur. Contrôle de décision : Investir l’argent nécessaire bientôt peut forcer une vente pendant une baisse normale de 20 à 40%.",
             "action": "Constituez une réserve de 3 à 6 mois de dépenses, listez les dettes à taux élevé et calculez le montant que vous pouvez réellement investir chaque mois.",
             "checkOne": "La réserve d'urgence n'est pas placée en actions.",
             "checkTwo": "Les dettes chères ne mangent pas plus que ce que les investissements peuvent raisonnablement rapporter.",
             "checkThree": "Le montant mensuel investi ne casse pas le budget et ne crée pas de stress.",
-            "warning": "N'investissez pas l'argent qui peut être nécessaire bientôt pour le loyer, la santé, les études, les impôts ou d'autres paiements obligatoires."
+            "warning": "N'investissez pas l'argent qui peut être nécessaire bientôt pour le loyer, la santé, les études, les impôts ou d'autres paiements obligatoires.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "La réserve et le contrôle des dettes passent avant le choix d’une action.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La réserve et le contrôle des dettes passent avant le choix d’une action. Le repère pratique est : Gardez 3 à 6 mois de dépenses hors actions avant d’investir agressivement. Le principal piège est : Investir l’argent nécessaire bientôt peut forcer une vente pendant une baisse normale de 20 à 40%."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Gardez 3 à 6 mois de dépenses hors actions avant d’investir agressivement.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La réserve et le contrôle des dettes passent avant le choix d’une action. Le repère pratique est : Gardez 3 à 6 mois de dépenses hors actions avant d’investir agressivement. Le principal piège est : Investir l’argent nécessaire bientôt peut forcer une vente pendant une baisse normale de 20 à 40%."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Investir l’argent nécessaire bientôt peut forcer une vente pendant une baisse normale de 20 à 40%.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "La réserve et le contrôle des dettes passent avant le choix d’une action. Le repère pratique est : Gardez 3 à 6 mois de dépenses hors actions avant d’investir agressivement. Le principal piège est : Investir l’argent nécessaire bientôt peut forcer une vente pendant une baisse normale de 20 à 40%."
+              }
+            ]
           },
           "plan": {
             "title": "Écrire un plan personnel",
             "text": "Un plan d'investissement répond à trois questions : pourquoi l'argent est investi, quand il sera nécessaire et quelle baisse vous pouvez vraiment supporter.",
-            "details": "Sans plan, l'investisseur réagit au bruit : actualités, discussions, journées rouges et gains des autres. Un plan doit définir l'objectif, l'horizon, le rythme des versements, la taille maximale d'une action et les règles de vente. Il ne garantit pas le profit, mais il réduit le chaos. Un bon plan est assez court pour être relu en une minute quand le marché devient émotionnel.",
-            "example": "Un plan peut dire : j'investis sur 10 ans, j'ajoute 300 dollars par mois, une action ne dépasse pas 8% du portefeuille, j'achète seulement des entreprises rentables et compréhensibles, et je vends si la thèse se casse, pas seulement parce que le prix baisse.",
-            "caseStudy": "Owen a acheté trois actions populaires après une vidéo. L'une baisse de 18%, et il ne sait pas s'il faut renforcer, vendre ou attendre. Avec un plan, la décision serait plus claire : position sous 5%, renforcement seulement après lecture du rapport, vente seulement si la croissance ou l'avantage se dégrade.",
+            "details": "Sans plan, l'investisseur réagit au bruit : actualités, discussions, journées rouges et gains des autres. Un plan doit définir l'objectif, l'horizon, le rythme des versements, la taille maximale d'une action et les règles de vente. Il ne garantit pas le profit, mais il réduit le chaos. Un bon plan est assez court pour être relu en une minute quand le marché devient émotionnel. Repère pratique : Définissez un horizon, une contribution mensuelle et un poids maximal par action, par exemple 5 à 8%.",
+            "example": "Un plan peut dire : j'investis sur 10 ans, j'ajoute 300 dollars par mois, une action ne dépasse pas 8% du portefeuille, j'achète seulement des entreprises rentables et compréhensibles, et je vends si la thèse se casse, pas seulement parce que le prix baisse. Repère pratique : Définissez un horizon, une contribution mensuelle et un poids maximal par action, par exemple 5 à 8%.",
+            "caseStudy": "Owen a acheté trois actions populaires après une vidéo. L'une baisse de 18%, et il ne sait pas s'il faut renforcer, vendre ou attendre. Avec un plan, la décision serait plus claire : position sous 5%, renforcement seulement après lecture du rapport, vente seulement si la croissance ou l'avantage se dégrade. Contrôle de décision : Changer de stratégie après chaque vidéo n’est pas de la discipline.",
             "action": "Notez votre objectif, votre horizon, votre versement régulier, la taille maximale d'une position et votre règle de vente.",
             "checkOne": "L'objectif a un horizon, pas seulement l'idée de gagner de l'argent.",
             "checkTwo": "Chaque position a une raison autre qu'un joli graphique.",
             "checkThree": "La règle de vente est écrite avant l'achat.",
-            "warning": "Un plan qui change après chaque vidéo ou publication n'est pas un plan. C'est une réaction émotionnelle avec un meilleur nom."
+            "warning": "Un plan qui change après chaque vidéo ou publication n'est pas un plan. C'est une réaction émotionnelle avec un meilleur nom.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Un plan écrit transforme le bruit du marché en règles préparées.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Un plan écrit transforme le bruit du marché en règles préparées. Le repère pratique est : Définissez un horizon, une contribution mensuelle et un poids maximal par action, par exemple 5 à 8%. Le principal piège est : Changer de stratégie après chaque vidéo n’est pas de la discipline."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Définissez un horizon, une contribution mensuelle et un poids maximal par action, par exemple 5 à 8%.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Un plan écrit transforme le bruit du marché en règles préparées. Le repère pratique est : Définissez un horizon, une contribution mensuelle et un poids maximal par action, par exemple 5 à 8%. Le principal piège est : Changer de stratégie après chaque vidéo n’est pas de la discipline."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Changer de stratégie après chaque vidéo n’est pas de la discipline.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Un plan écrit transforme le bruit du marché en règles préparées. Le repère pratique est : Définissez un horizon, une contribution mensuelle et un poids maximal par action, par exemple 5 à 8%. Le principal piège est : Changer de stratégie après chaque vidéo n’est pas de la discipline."
+              }
+            ]
           },
           "truthsMyths": {
             "title": "Vérités et mythes sur l'investissement",
             "text": "Investir n'est pas un bouton pour devenir riche vite. C'est un système de décisions où patience, gestion du risque et prix d'entrée comptent plus que les promesses bruyantes.",
-            "details": "Le mythe agréable dit qu'il suffit de trouver une action qui rendra riche. La vérité est moins spectaculaire : les résultats viennent surtout de la discipline, de la diversification, du contrôle du risque, d'un horizon long et de la capacité à garder un plan quand le marché vous fait douter. Le marché ne paie pas l'émotion, la popularité d'un ticker ou la confiance d'un chat.",
-            "example": "Une action peut monter de 80% en un an et rester un mauvais achat aujourd'hui si le prix suppose déjà un scénario parfait. Un ETF large peut sembler moins excitant, mais mieux convenir à une personne qui construit un capital sur 10 à 20 ans.",
-            "caseStudy": "Den voit l'histoire de quelqu'un qui a acheté au plus bas et fait x5. Il ne voit pas les nombreuses histoires similaires qui ont fini en perte. Le biais du survivant rend l'investissement plus simple qu'il ne l'est. Un bon processus demande aussi ce qui se passe si le scénario est moyen ou mauvais.",
+            "details": "Le mythe agréable dit qu'il suffit de trouver une action qui rendra riche. La vérité est moins spectaculaire : les résultats viennent surtout de la discipline, de la diversification, du contrôle du risque, d'un horizon long et de la capacité à garder un plan quand le marché vous fait douter. Le marché ne paie pas l'émotion, la popularité d'un ticker ou la confiance d'un chat. Repère pratique : Une baisse de 30% ne rend pas automatiquement une action bon marché si les profits baissent aussi.",
+            "example": "Une action peut monter de 80% en un an et rester un mauvais achat aujourd'hui si le prix suppose déjà un scénario parfait. Un ETF large peut sembler moins excitant, mais mieux convenir à une personne qui construit un capital sur 10 à 20 ans. Repère pratique : Une baisse de 30% ne rend pas automatiquement une action bon marché si les profits baissent aussi.",
+            "caseStudy": "Den voit l'histoire de quelqu'un qui a acheté au plus bas et fait x5. Il ne voit pas les nombreuses histoires similaires qui ont fini en perte. Le biais du survivant rend l'investissement plus simple qu'il ne l'est. Un bon processus demande aussi ce qui se passe si le scénario est moyen ou mauvais. Contrôle de décision : Confondre prix plus bas et risque plus bas mène à de mauvaises décisions.",
             "action": "Notez trois promesses d'investissement trop belles, puis écrivez le risque caché à côté de chacune.",
             "checkOne": "Vous distinguez investissement, spéculation et jeu.",
             "checkTwo": "Le rendement attendu est lié au risque, pas à l'espoir.",
             "checkThree": "Votre plan ne repose pas sur l'histoire de réussite de quelqu'un d'autre sans regarder les pertes.",
-            "warning": "Si une idée est vendue comme de l'argent facile sans risque, le risque est souvent simplement non nommé."
+            "warning": "Si une idée est vendue comme de l'argent facile sans risque, le risque est souvent simplement non nommé.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Les mythes de marché doivent être vérifiés avec des faits.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les mythes de marché doivent être vérifiés avec des faits. Le repère pratique est : Une baisse de 30% ne rend pas automatiquement une action bon marché si les profits baissent aussi. Le principal piège est : Confondre prix plus bas et risque plus bas mène à de mauvaises décisions."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Une baisse de 30% ne rend pas automatiquement une action bon marché si les profits baissent aussi.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les mythes de marché doivent être vérifiés avec des faits. Le repère pratique est : Une baisse de 30% ne rend pas automatiquement une action bon marché si les profits baissent aussi. Le principal piège est : Confondre prix plus bas et risque plus bas mène à de mauvaises décisions."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Confondre prix plus bas et risque plus bas mène à de mauvaises décisions.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les mythes de marché doivent être vérifiés avec des faits. Le repère pratique est : Une baisse de 30% ne rend pas automatiquement une action bon marché si les profits baissent aussi. Le principal piège est : Confondre prix plus bas et risque plus bas mène à de mauvaises décisions."
+              }
+            ]
           },
           "riskProfile": {
             "title": "Définir votre profil de risque",
             "text": "Le risque n'est pas seulement la baisse du prix. Il inclut aussi les chocs de revenu, la panique, la concentration, la devise, le secteur et les erreurs d'hypothèse.",
-            "details": "Le profil de risque ne mesure pas votre courage verbal. Il montre comment vous réagissez quand le portefeuille baisse vraiment. Pour les actions, pensez à la volatilité, la concentration, le risque de devise, la dépendance sectorielle et le confort psychologique. Les débutants surestiment souvent leur tolérance dans les bons marchés et découvrent leur vrai niveau pendant une baisse.",
-            "example": "Deux personnes peuvent avoir la même somme mais des profils différents. L'une a un revenu stable, une réserve et un horizon de 15 ans. L'autre a besoin d'un apport immobilier l'an prochain. La même baisse peut être supportable pour la première et dangereuse pour la seconde.",
-            "caseStudy": "Le portefeuille d'Ira est composé à 80% d'actions technologiques. Sur le papier, il y a plusieurs tickers, mais le risque est proche : taux, valorisations de croissance et sentiment envers la tech. Si le secteur baisse, presque tout baisse ensemble. Le risque réel est plus élevé que le nombre de lignes ne le suggère.",
+            "details": "Le profil de risque ne mesure pas votre courage verbal. Il montre comment vous réagissez quand le portefeuille baisse vraiment. Pour les actions, pensez à la volatilité, la concentration, le risque de devise, la dépendance sectorielle et le confort psychologique. Les débutants surestiment souvent leur tolérance dans les bons marchés et découvrent leur vrai niveau pendant une baisse. Repère pratique : L’argent nécessaire dans moins de 3 ans ne devrait pas dépendre d’actions volatiles.",
+            "example": "Deux personnes peuvent avoir la même somme mais des profils différents. L'une a un revenu stable, une réserve et un horizon de 15 ans. L'autre a besoin d'un apport immobilier l'an prochain. La même baisse peut être supportable pour la première et dangereuse pour la seconde. Repère pratique : L’argent nécessaire dans moins de 3 ans ne devrait pas dépendre d’actions volatiles.",
+            "caseStudy": "Le portefeuille d'Ira est composé à 80% d'actions technologiques. Sur le papier, il y a plusieurs tickers, mais le risque est proche : taux, valorisations de croissance et sentiment envers la tech. Si le secteur baisse, presque tout baisse ensemble. Le risque réel est plus élevé que le nombre de lignes ne le suggère. Contrôle de décision : Prendre du risque actions sans temps de récupération crée des ventes forcées.",
             "action": "Fixez des poids maximums pour une action, un secteur et l'ensemble des actifs risqués du portefeuille.",
             "checkOne": "Une seule action ne peut pas détruire le plan à elle seule.",
             "checkTwo": "Les différents tickers ne portent pas tous le même risque sectoriel.",
             "checkThree": "Vous savez quoi faire si le portefeuille baisse de 20%, 30% ou 40%.",
-            "warning": "Si une baisse de 10% vous empêche de dormir, ne construisez pas un portefeuille comme si une baisse de 50% était facile."
+            "warning": "Si une baisse de 10% vous empêche de dormir, ne construisez pas un portefeuille comme si une baisse de 50% était facile.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "La tolérance au risque doit correspondre à l’horizon et à la stabilité des revenus.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La tolérance au risque doit correspondre à l’horizon et à la stabilité des revenus. Le repère pratique est : L’argent nécessaire dans moins de 3 ans ne devrait pas dépendre d’actions volatiles. Le principal piège est : Prendre du risque actions sans temps de récupération crée des ventes forcées."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "L’argent nécessaire dans moins de 3 ans ne devrait pas dépendre d’actions volatiles.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La tolérance au risque doit correspondre à l’horizon et à la stabilité des revenus. Le repère pratique est : L’argent nécessaire dans moins de 3 ans ne devrait pas dépendre d’actions volatiles. Le principal piège est : Prendre du risque actions sans temps de récupération crée des ventes forcées."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Prendre du risque actions sans temps de récupération crée des ventes forcées.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "La tolérance au risque doit correspondre à l’horizon et à la stabilité des revenus. Le repère pratique est : L’argent nécessaire dans moins de 3 ans ne devrait pas dépendre d’actions volatiles. Le principal piège est : Prendre du risque actions sans temps de récupération crée des ventes forcées."
+              }
+            ]
           },
           "assetMap": {
             "title": "Comparer les classes d'actifs",
             "text": "Les actions donnent une part d'entreprise, les obligations ressemblent davantage à un prêt, les ETF offrent un panier et le cash donne de la flexibilité. Chaque outil a un rôle.",
-            "details": "Une seule action ne doit pas remplacer toute la boîte à outils de l'investisseur. Les actions peuvent apporter de la croissance, mais elles la paient par la volatilité. Les obligations peuvent stabiliser une partie du portefeuille. Les ETF offrent une diversification large. Le cash ou les instruments courts donnent de la flexibilité. Comprendre le rôle de chaque actif évite d'attendre de lui ce pour quoi il n'est pas fait.",
-            "example": "Si votre objectif est la croissance long terme, les actions ou les ETF peuvent former le coeur. Si l'objectif est dans 18 mois, comme un apport immobilier, une action volatile peut être le mauvais outil même si l'entreprise vous plaît.",
-            "caseStudy": "Andrew a 10 000 dollars et veut apprendre à choisir des actions sans transformer tout le portefeuille en pari. Une structure possible : 70% ETF large, 20% obligations ou cash, 10% actions individuelles. Il apprend, mais le résultat ne dépend pas de quelques décisions.",
+            "details": "Une seule action ne doit pas remplacer toute la boîte à outils de l'investisseur. Les actions peuvent apporter de la croissance, mais elles la paient par la volatilité. Les obligations peuvent stabiliser une partie du portefeuille. Les ETF offrent une diversification large. Le cash ou les instruments courts donnent de la flexibilité. Comprendre le rôle de chaque actif évite d'attendre de lui ce pour quoi il n'est pas fait. Repère pratique : Une carte simple peut limiter une action à 5% et garder du cash pour les besoins proches.",
+            "example": "Si votre objectif est la croissance long terme, les actions ou les ETF peuvent former le coeur. Si l'objectif est dans 18 mois, comme un apport immobilier, une action volatile peut être le mauvais outil même si l'entreprise vous plaît. Repère pratique : Une carte simple peut limiter une action à 5% et garder du cash pour les besoins proches.",
+            "caseStudy": "Andrew a 10 000 dollars et veut apprendre à choisir des actions sans transformer tout le portefeuille en pari. Une structure possible : 70% ETF large, 20% obligations ou cash, 10% actions individuelles. Il apprend, mais le résultat ne dépend pas de quelques décisions. Contrôle de décision : Posséder dix sociétés du même secteur reste un risque concentré.",
             "action": "Décidez si les actions sont le coeur du portefeuille, une petite partie active ou une position d'apprentissage.",
             "checkOne": "Les objectifs courts ne sont pas financés avec des actifs qui peuvent chuter avant la date de dépense.",
             "checkTwo": "Le portefeuille contient aussi quelque chose pour la stabilité.",
             "checkThree": "Les actions individuelles ont un rôle défini et ne sont pas achetées par ennui.",
-            "warning": "N'appelez pas un pari risqué un investissement seulement parce qu'il passe par une application de courtage."
+            "warning": "N'appelez pas un pari risqué un investissement seulement parce qu'il passe par une application de courtage.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Diversifier consiste à donner un rôle à plusieurs types d’actifs.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Diversifier consiste à donner un rôle à plusieurs types d’actifs. Le repère pratique est : Une carte simple peut limiter une action à 5% et garder du cash pour les besoins proches. Le principal piège est : Posséder dix sociétés du même secteur reste un risque concentré."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Une carte simple peut limiter une action à 5% et garder du cash pour les besoins proches.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Diversifier consiste à donner un rôle à plusieurs types d’actifs. Le repère pratique est : Une carte simple peut limiter une action à 5% et garder du cash pour les besoins proches. Le principal piège est : Posséder dix sociétés du même secteur reste un risque concentré."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Posséder dix sociétés du même secteur reste un risque concentré.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Diversifier consiste à donner un rôle à plusieurs types d’actifs. Le repère pratique est : Une carte simple peut limiter une action à 5% et garder du cash pour les besoins proches. Le principal piège est : Posséder dix sociétés du même secteur reste un risque concentré."
+              }
+            ]
           },
           "compound": {
             "title": "Comprendre les intérêts composés",
             "text": "Les rendements à long terme viennent du temps, du réinvestissement et de la régularité. Les grands résultats paraissent souvent modestes au début.",
-            "details": "Les intérêts composés ne sont pas de la magie, mais de la répétition. Les gains commencent à produire d'autres gains. La difficulté est que les premières années peuvent sembler lentes, donc les débutants abandonnent parfois une stratégie régulière pour chercher un bond rapide. Le temps, les versements réguliers, le réinvestissement des dividendes et le contrôle des frais comptent souvent plus qu'un achat génial.",
-            "example": "Quand vous investissez le même montant chaque mois, les premiers résultats dépendent plus des versements que du rendement. Plus tard, la base accumulée fait bouger le portefeuille plus fortement. C'est pourquoi l'horizon et la discipline comptent autant.",
-            "caseStudy": "Deux investisseurs commencent différemment. Le premier investit 200 dollars chaque mois pendant 15 ans. Le second attend cinq ans le moment parfait puis investit plus. Souvent, le premier garde l'avantage non par génie, mais grâce au temps passé sur le marché.",
+            "details": "Les intérêts composés ne sont pas de la magie, mais de la répétition. Les gains commencent à produire d'autres gains. La difficulté est que les premières années peuvent sembler lentes, donc les débutants abandonnent parfois une stratégie régulière pour chercher un bond rapide. Le temps, les versements réguliers, le réinvestissement des dividendes et le contrôle des frais comptent souvent plus qu'un achat génial. Repère pratique : À 8% par an, 1000 dollars peuvent devenir environ 4660 dollars en 20 ans avant taxes et frais.",
+            "example": "Quand vous investissez le même montant chaque mois, les premiers résultats dépendent plus des versements que du rendement. Plus tard, la base accumulée fait bouger le portefeuille plus fortement. C'est pourquoi l'horizon et la discipline comptent autant. Repère pratique : À 8% par an, 1000 dollars peuvent devenir environ 4660 dollars en 20 ans avant taxes et frais.",
+            "caseStudy": "Deux investisseurs commencent différemment. Le premier investit 200 dollars chaque mois pendant 15 ans. Le second attend cinq ans le moment parfait puis investit plus. Souvent, le premier garde l'avantage non par génie, mais grâce au temps passé sur le marché. Contrôle de décision : Interrompre trop souvent la capitalisation affaiblit le moteur principal.",
             "action": "Comparez 5, 10 et 20 ans dans le calculateur d'investissement avec différents versements et rendements attendus.",
             "checkOne": "Les dividendes et gains ont une règle de réinvestissement.",
             "checkTwo": "Le rendement attendu ne remplace pas un plan de versements réaliste.",
             "checkThree": "Frais, impôts et devise sont au moins approximativement pris en compte.",
-            "warning": "N'utilisez pas 30 à 50% de rendement annuel comme scénario de base. Ces hypothèses peuvent rendre une mauvaise idée très belle à l'écran."
+            "warning": "N'utilisez pas 30 à 50% de rendement annuel comme scénario de base. Ces hypothèses peuvent rendre une mauvaise idée très belle à l'écran.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "La capitalisation fonctionne quand les gains restent investis assez longtemps.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La capitalisation fonctionne quand les gains restent investis assez longtemps. Le repère pratique est : À 8% par an, 1000 dollars peuvent devenir environ 4660 dollars en 20 ans avant taxes et frais. Le principal piège est : Interrompre trop souvent la capitalisation affaiblit le moteur principal."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "À 8% par an, 1000 dollars peuvent devenir environ 4660 dollars en 20 ans avant taxes et frais.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La capitalisation fonctionne quand les gains restent investis assez longtemps. Le repère pratique est : À 8% par an, 1000 dollars peuvent devenir environ 4660 dollars en 20 ans avant taxes et frais. Le principal piège est : Interrompre trop souvent la capitalisation affaiblit le moteur principal."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Interrompre trop souvent la capitalisation affaiblit le moteur principal.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "La capitalisation fonctionne quand les gains restent investis assez longtemps. Le repère pratique est : À 8% par an, 1000 dollars peuvent devenir environ 4660 dollars en 20 ans avant taxes et frais. Le principal piège est : Interrompre trop souvent la capitalisation affaiblit le moteur principal."
+              }
+            ]
           },
           "analysisTypes": {
             "title": "Séparer analyse fondamentale et technique",
             "text": "L'analyse fondamentale demande ce qu'est l'entreprise et ce qu'elle peut valoir. L'analyse technique regarde davantage le prix, la tendance et le comportement du marché.",
-            "details": "L'analyse fondamentale commence par l'entreprise : ce qu'elle vend, à qui, avec quelle marge, comment elle croît, combien de dette elle porte et quel prix le marché demande. L'analyse technique peut aider pour le timing ou le sentiment, mais elle ne dit pas si l'entreprise est bonne. Pour un investisseur long terme, un graphique sans compréhension du business devient vite une devinette.",
-            "example": "Une action peut atteindre un nouveau sommet alors que les marges baissent et que la dette coûte cher. Une autre peut paraître faible après une baisse générale du marché alors que l'entreprise génère toujours du cash-flow et garde son avantage concurrentiel.",
-            "caseStudy": "Peter achète parce qu'une action sort d'un range. Une semaine plus tard, l'entreprise annonce une croissance plus lente, des marges plus faibles et des prévisions réduites. Le graphique montrait le comportement du prix, mais ne remplaçait pas l'analyse du business.",
+            "details": "L'analyse fondamentale commence par l'entreprise : ce qu'elle vend, à qui, avec quelle marge, comment elle croît, combien de dette elle porte et quel prix le marché demande. L'analyse technique peut aider pour le timing ou le sentiment, mais elle ne dit pas si l'entreprise est bonne. Pour un investisseur long terme, un graphique sans compréhension du business devient vite une devinette. Repère pratique : Utilisez les fondamentaux pour la qualité du business et la technique surtout pour le timing ou le risque.",
+            "example": "Une action peut atteindre un nouveau sommet alors que les marges baissent et que la dette coûte cher. Une autre peut paraître faible après une baisse générale du marché alors que l'entreprise génère toujours du cash-flow et garde son avantage concurrentiel. Repère pratique : Utilisez les fondamentaux pour la qualité du business et la technique surtout pour le timing ou le risque.",
+            "caseStudy": "Peter achète parce qu'une action sort d'un range. Une semaine plus tard, l'entreprise annonce une croissance plus lente, des marges plus faibles et des prévisions réduites. Le graphique montrait le comportement du prix, mais ne remplaçait pas l'analyse du business. Contrôle de décision : Une figure graphique ne remplace pas la compréhension du chiffre d’affaires, des marges et du cash-flow.",
             "action": "Expliquez d'abord l'entreprise et ses sources de profit, puis regardez le graphique et le point d'entrée.",
             "checkOne": "Vous pouvez décrire l'entreprise sans ouvrir le graphique.",
             "checkTwo": "Un signal technique n'est pas la seule raison d'acheter.",
             "checkThree": "La thèse fondamentale a des indicateurs à suivre.",
-            "warning": "N'utilisez pas un signal technique comme excuse pour acheter une entreprise que vous ne comprenez pas."
+            "warning": "N'utilisez pas un signal technique comme excuse pour acheter une entreprise que vous ne comprenez pas.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "L’analyse fondamentale, technique et de sentiment répondent à des questions différentes.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’analyse fondamentale, technique et de sentiment répondent à des questions différentes. Le repère pratique est : Utilisez les fondamentaux pour la qualité du business et la technique surtout pour le timing ou le risque. Le principal piège est : Une figure graphique ne remplace pas la compréhension du chiffre d’affaires, des marges et du cash-flow."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Utilisez les fondamentaux pour la qualité du business et la technique surtout pour le timing ou le risque.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’analyse fondamentale, technique et de sentiment répondent à des questions différentes. Le repère pratique est : Utilisez les fondamentaux pour la qualité du business et la technique surtout pour le timing ou le risque. Le principal piège est : Une figure graphique ne remplace pas la compréhension du chiffre d’affaires, des marges et du cash-flow."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Une figure graphique ne remplace pas la compréhension du chiffre d’affaires, des marges et du cash-flow.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’analyse fondamentale, technique et de sentiment répondent à des questions différentes. Le repère pratique est : Utilisez les fondamentaux pour la qualité du business et la technique surtout pour le timing ou le risque. Le principal piège est : Une figure graphique ne remplace pas la compréhension du chiffre d’affaires, des marges et du cash-flow."
+              }
+            ]
           },
           "etfBridge": {
             "title": "Comparer l'action à un ETF",
             "text": "Si vous ne pouvez pas expliquer pourquoi une entreprise est meilleure qu'un ETF large, un fonds indiciel peut être le choix le plus simple et le plus honnête.",
-            "details": "Chaque action individuelle doit répondre à une question simple : pourquoi prendre le risque d'une seule entreprise quand on peut acheter un panier ? Un ETF ne fait pas de vous un investisseur paresseux. Il donne une alternative de base que votre idée doit battre. Si l'avantage attendu est flou et que le risque est plus élevé, un indice large peut être la meilleure décision.",
-            "example": "Si vous voulez acheter une seule entreprise technologique, comparez-la à un ETF technologique ou au S&P 500. La croissance est-elle plus rapide ? Les marges sont-elles meilleures ? La valorisation est-elle raisonnable ? Tout dépend-il d'un seul produit ? Si la réponse est vague, l'ETF peut être plus serein.",
-            "caseStudy": "Sofia hésite entre une entreprise de semi-conducteurs et un ETF sectoriel. L'entreprise peut monter davantage, mais dépend de quelques grands clients et du cycle d'investissement. L'ETF est moins explosif, mais répartit le risque entre plusieurs sociétés.",
+            "details": "Chaque action individuelle doit répondre à une question simple : pourquoi prendre le risque d'une seule entreprise quand on peut acheter un panier ? Un ETF ne fait pas de vous un investisseur paresseux. Il donne une alternative de base que votre idée doit battre. Si l'avantage attendu est flou et que le risque est plus élevé, un indice large peut être la meilleure décision. Repère pratique : Un ETF large peut contenir des centaines de sociétés pour des frais comme 0,03 à 0,20% par an.",
+            "example": "Si vous voulez acheter une seule entreprise technologique, comparez-la à un ETF technologique ou au S&P 500. La croissance est-elle plus rapide ? Les marges sont-elles meilleures ? La valorisation est-elle raisonnable ? Tout dépend-il d'un seul produit ? Si la réponse est vague, l'ETF peut être plus serein. Repère pratique : Un ETF large peut contenir des centaines de sociétés pour des frais comme 0,03 à 0,20% par an.",
+            "caseStudy": "Sofia hésite entre une entreprise de semi-conducteurs et un ETF sectoriel. L'entreprise peut monter davantage, mais dépend de quelques grands clients et du cycle d'investissement. L'ETF est moins explosif, mais répartit le risque entre plusieurs sociétés. Contrôle de décision : Acheter seulement des actions individuelles trop tôt peut rendre les erreurs coûteuses.",
             "action": "Comparez l'entreprise à son ETF sectoriel ou au S&P 500 sur la croissance, les marges, la valorisation et les risques.",
             "checkOne": "Il existe une raison claire pour laquelle cette entreprise peut battre le panier.",
             "checkTwo": "Le risque de concentration est comparé, pas seulement le rendement passé.",
             "checkThree": "Si l'avantage est flou, l'ETF reste une alternative normale.",
-            "warning": "N'achetez pas une action seulement parce qu'elle semble plus intéressante qu'un ETF. Plus intéressant ne veut pas toujours dire meilleur."
+            "warning": "N'achetez pas une action seulement parce qu'elle semble plus intéressante qu'un ETF. Plus intéressant ne veut pas toujours dire meilleur.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Les ETF peuvent diversifier pendant que vous apprenez l’analyse d’actions.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les ETF peuvent diversifier pendant que vous apprenez l’analyse d’actions. Le repère pratique est : Un ETF large peut contenir des centaines de sociétés pour des frais comme 0,03 à 0,20% par an. Le principal piège est : Acheter seulement des actions individuelles trop tôt peut rendre les erreurs coûteuses."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Un ETF large peut contenir des centaines de sociétés pour des frais comme 0,03 à 0,20% par an.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les ETF peuvent diversifier pendant que vous apprenez l’analyse d’actions. Le repère pratique est : Un ETF large peut contenir des centaines de sociétés pour des frais comme 0,03 à 0,20% par an. Le principal piège est : Acheter seulement des actions individuelles trop tôt peut rendre les erreurs coûteuses."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Acheter seulement des actions individuelles trop tôt peut rendre les erreurs coûteuses.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les ETF peuvent diversifier pendant que vous apprenez l’analyse d’actions. Le repère pratique est : Un ETF large peut contenir des centaines de sociétés pour des frais comme 0,03 à 0,20% par an. Le principal piège est : Acheter seulement des actions individuelles trop tôt peut rendre les erreurs coûteuses."
+              }
+            ]
           },
           "qualityCompany": {
             "title": "Chercher une entreprise de qualité",
             "text": "Une entreprise solide a un produit compréhensible, un avantage concurrentiel, des marges saines, une discipline du capital et une direction qui ne détruit pas la confiance.",
-            "details": "La qualité d'une entreprise ne se trouve pas dans une belle présentation. Elle apparaît dans des signes répétables : l'entreprise gagne de l'argent, garde ses clients, possède un avantage face aux concurrents, ne brûle pas du capital sans plan et peut survivre aux cycles faibles. Pour débuter, un business compréhensible et stable vaut souvent mieux qu'une histoire complexe dépendant d'une seule percée future.",
-            "example": "Une entreprise de qualité peut avoir un produit acheté régulièrement, une marque forte, un effet réseau, des coûts plus bas ou des coûts de changement élevés pour les clients. Mais chaque avantage doit être confirmé par les chiffres : marges, rétention du chiffre d'affaires, cash-flow et comportement des concurrents.",
-            "caseStudy": "Une marque populaire n'est pas automatiquement un bon investissement. Si les ventes montent seulement parce que les dépenses marketing explosent et que les marges baissent, la marque est peut-être plus faible qu'elle ne paraît.",
+            "details": "La qualité d'une entreprise ne se trouve pas dans une belle présentation. Elle apparaît dans des signes répétables : l'entreprise gagne de l'argent, garde ses clients, possède un avantage face aux concurrents, ne brûle pas du capital sans plan et peut survivre aux cycles faibles. Pour débuter, un business compréhensible et stable vaut souvent mieux qu'une histoire complexe dépendant d'une seule percée future. Repère pratique : Cherchez plusieurs années de croissance du chiffre d’affaires, du free cash-flow positif et une dette maîtrisée.",
+            "example": "Une entreprise de qualité peut avoir un produit acheté régulièrement, une marque forte, un effet réseau, des coûts plus bas ou des coûts de changement élevés pour les clients. Mais chaque avantage doit être confirmé par les chiffres : marges, rétention du chiffre d'affaires, cash-flow et comportement des concurrents. Repère pratique : Cherchez plusieurs années de croissance du chiffre d’affaires, du free cash-flow positif et une dette maîtrisée.",
+            "caseStudy": "Une marque populaire n'est pas automatiquement un bon investissement. Si les ventes montent seulement parce que les dépenses marketing explosent et que les marges baissent, la marque est peut-être plus faible qu'elle ne paraît. Contrôle de décision : Une marque connue ne suffit pas si l’économie du business se détériore.",
             "action": "Décrivez l'avantage de l'entreprise en une phrase et trouvez au moins deux chiffres qui le confirment.",
             "checkOne": "L'avantage est clair et ne se limite pas à l'entreprise est connue.",
             "checkTwo": "Les marges, le cash-flow ou la rétention confirment la qualité.",
             "checkThree": "La direction ne dilue pas les actionnaires et n'achète pas la croissance à n'importe quel prix.",
-            "warning": "Si l'avantage ressemble à un slogan publicitaire et n'apparaît pas dans les comptes, ce peut être une histoire plutôt qu'un vrai avantage."
+            "warning": "Si l'avantage ressemble à un slogan publicitaire et n'apparaît pas dans les comptes, ce peut être une histoire plutôt qu'un vrai avantage.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Une entreprise de qualité a une demande durable, des marges, du cash-flow et une bonne exécution.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Une entreprise de qualité a une demande durable, des marges, du cash-flow et une bonne exécution. Le repère pratique est : Cherchez plusieurs années de croissance du chiffre d’affaires, du free cash-flow positif et une dette maîtrisée. Le principal piège est : Une marque connue ne suffit pas si l’économie du business se détériore."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Cherchez plusieurs années de croissance du chiffre d’affaires, du free cash-flow positif et une dette maîtrisée.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Une entreprise de qualité a une demande durable, des marges, du cash-flow et une bonne exécution. Le repère pratique est : Cherchez plusieurs années de croissance du chiffre d’affaires, du free cash-flow positif et une dette maîtrisée. Le principal piège est : Une marque connue ne suffit pas si l’économie du business se détériore."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Une marque connue ne suffit pas si l’économie du business se détériore.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Une entreprise de qualité a une demande durable, des marges, du cash-flow et une bonne exécution. Le repère pratique est : Cherchez plusieurs années de croissance du chiffre d’affaires, du free cash-flow positif et une dette maîtrisée. Le principal piège est : Une marque connue ne suffit pas si l’économie du business se détériore."
+              }
+            ]
           },
           "profile": {
             "title": "Lire le profil de l'entreprise",
             "text": "Commencez par le secteur, la géographie, les sources de chiffre d'affaires, les clients et les dépendances. Si l'activité est floue, les chiffres se lisent mal.",
-            "details": "Le profil de l'entreprise est le premier filtre. Vous devez savoir ce qu'elle vend, où elle opère, qui sont les clients, de quoi dépend la demande et quels risques réglementaires ou de devise existent. Sans cela, même de bons chiffres peuvent tromper : le chiffre d'affaires peut monter grâce à un facteur ponctuel, les marges grâce à des coupes temporaires et le profit grâce à du bruit comptable.",
-            "example": "Une entreprise peut sembler fabriquer des appareils alors qu'une grande partie du profit vient des services. Une autre peut être appelée fintech mais dépendre fortement des taux et des pertes de crédit. Le profil indique quels indicateurs comptent vraiment.",
-            "caseStudy": "Netflix et un fabricant d'équipements industriels peuvent afficher la même croissance, mais les moteurs sont très différents. L'un dépend des abonnés, du churn, des coûts de contenu et de l'attention. L'autre dépend des cycles de commandes, du capex client et du carnet de commandes.",
+            "details": "Le profil de l'entreprise est le premier filtre. Vous devez savoir ce qu'elle vend, où elle opère, qui sont les clients, de quoi dépend la demande et quels risques réglementaires ou de devise existent. Sans cela, même de bons chiffres peuvent tromper : le chiffre d'affaires peut monter grâce à un facteur ponctuel, les marges grâce à des coupes temporaires et le profit grâce à du bruit comptable. Repère pratique : Avant d’acheter, nommez le segment qui génère le plus de revenus et son principal client.",
+            "example": "Une entreprise peut sembler fabriquer des appareils alors qu'une grande partie du profit vient des services. Une autre peut être appelée fintech mais dépendre fortement des taux et des pertes de crédit. Le profil indique quels indicateurs comptent vraiment. Repère pratique : Avant d’acheter, nommez le segment qui génère le plus de revenus et son principal client.",
+            "caseStudy": "Netflix et un fabricant d'équipements industriels peuvent afficher la même croissance, mais les moteurs sont très différents. L'un dépend des abonnés, du churn, des coûts de contenu et de l'attention. L'autre dépend des cycles de commandes, du capex client et du carnet de commandes. Contrôle de décision : Acheter un ticker sans comprendre le modèle économique reste de la spéculation.",
             "action": "Écrivez comment l'entreprise gagne de l'argent, qui est le client et quels trois facteurs influencent le plus les résultats.",
             "checkOne": "Vous savez quels produits ou segments génèrent l'essentiel du chiffre d'affaires.",
             "checkTwo": "Les dépendances clés sont identifiées : taux, matières premières, régulation, cycle, clients ou devise.",
             "checkThree": "Vous savez quel indicateur compte plus que le chiffre d'affaires global pour ce business.",
-            "warning": "N'achetez pas une entreprise que vous ne pouvez pas expliquer simplement à quelqu'un hors du marché."
+            "warning": "N'achetez pas une entreprise que vous ne pouvez pas expliquer simplement à quelqu'un hors du marché.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Le profil d’entreprise explique comment le business gagne vraiment de l’argent.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le profil d’entreprise explique comment le business gagne vraiment de l’argent. Le repère pratique est : Avant d’acheter, nommez le segment qui génère le plus de revenus et son principal client. Le principal piège est : Acheter un ticker sans comprendre le modèle économique reste de la spéculation."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Avant d’acheter, nommez le segment qui génère le plus de revenus et son principal client.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le profil d’entreprise explique comment le business gagne vraiment de l’argent. Le repère pratique est : Avant d’acheter, nommez le segment qui génère le plus de revenus et son principal client. Le principal piège est : Acheter un ticker sans comprendre le modèle économique reste de la spéculation."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Acheter un ticker sans comprendre le modèle économique reste de la spéculation.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le profil d’entreprise explique comment le business gagne vraiment de l’argent. Le repère pratique est : Avant d’acheter, nommez le segment qui génère le plus de revenus et son principal client. Le principal piège est : Acheter un ticker sans comprendre le modèle économique reste de la spéculation."
+              }
+            ]
           },
           "statements": {
             "title": "Examiner les états financiers",
             "text": "Le chiffre d'affaires montre l'échelle, le profit montre l'efficacité, le cash-flow montre la vraie puissance financière et le bilan montre la résistance et la dette.",
-            "details": "Les états financiers se lisent comme l'histoire du business. Le compte de résultat montre le chiffre d'affaires, les coûts et la rentabilité. Le cash-flow montre si le profit devient de l'argent réel. Le bilan montre la dette, la liquidité et la résistance. Un seul chiffre suffit rarement : la tendance sur plusieurs années et le lien entre les indicateurs comptent.",
-            "example": "Si le chiffre d'affaires progresse mais que le résultat net baisse, cherchez la cause : marges, coûts, concurrence ou charges ponctuelles. Si le profit existe mais que le free cash-flow est faible, l'activité demande peut-être beaucoup d'investissements ou a un problème de besoin en fonds de roulement.",
-            "caseStudy": "Une entreprise annonce un profit record, mais le free cash-flow est presque nul. L'argent peut être bloqué dans les stocks ou les créances, ou l'activité peut demander beaucoup d'investissements. Le profit existe sur le papier, mais l'actionnaire doit regarder le cash restant.",
+            "details": "Les états financiers se lisent comme l'histoire du business. Le compte de résultat montre le chiffre d'affaires, les coûts et la rentabilité. Le cash-flow montre si le profit devient de l'argent réel. Le bilan montre la dette, la liquidité et la résistance. Un seul chiffre suffit rarement : la tendance sur plusieurs années et le lien entre les indicateurs comptent. Repère pratique : Chiffre d’affaires, résultat net, actifs, dettes et cash-flow doivent raconter une histoire cohérente.",
+            "example": "Si le chiffre d'affaires progresse mais que le résultat net baisse, cherchez la cause : marges, coûts, concurrence ou charges ponctuelles. Si le profit existe mais que le free cash-flow est faible, l'activité demande peut-être beaucoup d'investissements ou a un problème de besoin en fonds de roulement. Repère pratique : Chiffre d’affaires, résultat net, actifs, dettes et cash-flow doivent raconter une histoire cohérente.",
+            "caseStudy": "Une entreprise annonce un profit record, mais le free cash-flow est presque nul. L'argent peut être bloqué dans les stocks ou les créances, ou l'activité peut demander beaucoup d'investissements. Le profit existe sur le papier, mais l'actionnaire doit regarder le cash restant. Contrôle de décision : Lire un seul chiffre en une peut cacher une faible conversion en cash ou une dette qui monte.",
             "action": "Vérifiez 5 ans de chiffre d'affaires, résultat net, free cash-flow, dette et marges.",
             "checkOne": "Chiffre d'affaires, profit et cash-flow sont lus ensemble.",
             "checkTwo": "La dette est comparée au profit, au cash-flow et aux taux.",
             "checkThree": "Les événements ponctuels sont séparés de l'activité normale.",
-            "warning": "Ne construisez pas une thèse sur un seul trimestre. Un trimestre peut être du bruit, pas une nouvelle tendance."
+            "warning": "Ne construisez pas une thèse sur un seul trimestre. Un trimestre peut être du bruit, pas une nouvelle tendance.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Les trois états financiers montrent la performance sous des angles différents.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les trois états financiers montrent la performance sous des angles différents. Le repère pratique est : Chiffre d’affaires, résultat net, actifs, dettes et cash-flow doivent raconter une histoire cohérente. Le principal piège est : Lire un seul chiffre en une peut cacher une faible conversion en cash ou une dette qui monte."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Chiffre d’affaires, résultat net, actifs, dettes et cash-flow doivent raconter une histoire cohérente.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les trois états financiers montrent la performance sous des angles différents. Le repère pratique est : Chiffre d’affaires, résultat net, actifs, dettes et cash-flow doivent raconter une histoire cohérente. Le principal piège est : Lire un seul chiffre en une peut cacher une faible conversion en cash ou une dette qui monte."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Lire un seul chiffre en une peut cacher une faible conversion en cash ou une dette qui monte.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les trois états financiers montrent la performance sous des angles différents. Le repère pratique est : Chiffre d’affaires, résultat net, actifs, dettes et cash-flow doivent raconter une histoire cohérente. Le principal piège est : Lire un seul chiffre en une peut cacher une faible conversion en cash ou une dette qui monte."
+              }
+            ]
           },
           "balanceSheet": {
             "title": "Décomposer le bilan",
             "text": "Le bilan montre ce que l'entreprise possède, ce qu'elle doit et la résistance qu'elle a avant une période difficile.",
-            "details": "Le bilan est souvent négligé car il paraît moins vivant que le chiffre d'affaires ou le profit. Pourtant, il montre la dette, la trésorerie, les stocks, les créances, les passifs et les capitaux propres. Une entreprise peut afficher un beau profit mais avoir un bilan fragile : trop de dette courte, trop peu de cash, des stocks bloqués ou des clients qui paient lentement.",
-            "example": "Deux entreprises ont le même profit. La première a beaucoup de cash et peu de dette. La seconde a une dette importante à refinancer avec des taux élevés. En période normale elles se ressemblent, mais en période difficile la seconde a beaucoup moins de liberté.",
-            "caseStudy": "Un détaillant ouvre vite de nouveaux magasins, mais les stocks et passifs courts montent plus vite que les ventes. La croissance peut être de faible qualité : l'argent est bloqué dans les produits, tandis que les fournisseurs doivent être payés rapidement.",
+            "details": "Le bilan est souvent négligé car il paraît moins vivant que le chiffre d'affaires ou le profit. Pourtant, il montre la dette, la trésorerie, les stocks, les créances, les passifs et les capitaux propres. Une entreprise peut afficher un beau profit mais avoir un bilan fragile : trop de dette courte, trop peu de cash, des stocks bloqués ou des clients qui paient lentement. Repère pratique : Comparez le cash et les actifs courants avec la dette et les passifs proches.",
+            "example": "Deux entreprises ont le même profit. La première a beaucoup de cash et peu de dette. La seconde a une dette importante à refinancer avec des taux élevés. En période normale elles se ressemblent, mais en période difficile la seconde a beaucoup moins de liberté. Repère pratique : Comparez le cash et les actifs courants avec la dette et les passifs proches.",
+            "caseStudy": "Un détaillant ouvre vite de nouveaux magasins, mais les stocks et passifs courts montent plus vite que les ventes. La croissance peut être de faible qualité : l'argent est bloqué dans les produits, tandis que les fournisseurs doivent être payés rapidement. Contrôle de décision : Un fort levier peut transformer un petit raté de résultat en vrai problème.",
             "action": "Vérifiez la trésorerie, la dette totale, les passifs courts, les stocks et les créances sur plusieurs années.",
             "checkOne": "La dette est comprise par taille, échéance et coût.",
             "checkTwo": "La trésorerie et la liquidité suffisent pour une période faible.",
             "checkThree": "Stocks et créances ne croissent pas beaucoup plus vite que le chiffre d'affaires sans raison.",
-            "warning": "Un bon profit avec un bilan fragile peut devenir un problème quand les taux montent ou que les ventes baissent."
+            "warning": "Un bon profit avec un bilan fragile peut devenir un problème quand les taux montent ou que les ventes baissent.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Le bilan montre la résilience financière et les obligations.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le bilan montre la résilience financière et les obligations. Le repère pratique est : Comparez le cash et les actifs courants avec la dette et les passifs proches. Le principal piège est : Un fort levier peut transformer un petit raté de résultat en vrai problème."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Comparez le cash et les actifs courants avec la dette et les passifs proches.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le bilan montre la résilience financière et les obligations. Le repère pratique est : Comparez le cash et les actifs courants avec la dette et les passifs proches. Le principal piège est : Un fort levier peut transformer un petit raté de résultat en vrai problème."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Un fort levier peut transformer un petit raté de résultat en vrai problème.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le bilan montre la résilience financière et les obligations. Le repère pratique est : Comparez le cash et les actifs courants avec la dette et les passifs proches. Le principal piège est : Un fort levier peut transformer un petit raté de résultat en vrai problème."
+              }
+            ]
           },
           "cashFlow": {
             "title": "Comprendre le cash-flow",
             "text": "Le cash-flow montre si le profit comptable devient de l'argent réel, utilisable pour réinvestir, protéger l'entreprise ou rémunérer les actionnaires.",
-            "details": "Le profit peut être beau sur le papier, mais une entreprise vit de cash. Le cash-flow opérationnel montre ce que l'activité génère. Le capex montre ce qu'il faut investir pour maintenir ou développer le business. Le free cash-flow est ce qui reste après les dépenses importantes.",
-            "example": "Une entreprise peut gagner 1 milliard de dollars, mais devoir dépenser 900 millions en équipements chaque année. Sa liberté financière est alors limitée. Une autre avec le même profit et peu de capex peut générer beaucoup plus de free cash-flow.",
-            "caseStudy": "Une entreprise SaaS peut afficher une perte comptable tout en produisant du cash-flow opérationnel. Un industriel peut afficher un profit mais réinvestir énormément dans des usines. Chaque cas demande du contexte.",
+            "details": "Le profit peut être beau sur le papier, mais une entreprise vit de cash. Le cash-flow opérationnel montre ce que l'activité génère. Le capex montre ce qu'il faut investir pour maintenir ou développer le business. Le free cash-flow est ce qui reste après les dépenses importantes. Repère pratique : Une société qui gagne 100 millions mais brûle du cash doit être expliquée clairement.",
+            "example": "Une entreprise peut gagner 1 milliard de dollars, mais devoir dépenser 900 millions en équipements chaque année. Sa liberté financière est alors limitée. Une autre avec le même profit et peu de capex peut générer beaucoup plus de free cash-flow. Repère pratique : Une société qui gagne 100 millions mais brûle du cash doit être expliquée clairement.",
+            "caseStudy": "Une entreprise SaaS peut afficher une perte comptable tout en produisant du cash-flow opérationnel. Un industriel peut afficher un profit mais réinvestir énormément dans des usines. Chaque cas demande du contexte. Contrôle de décision : Ignorer le free cash-flow peut faire paraître une entreprise chère comme bon marché.",
             "action": "Comparez résultat net, cash-flow opérationnel, capex et free cash-flow sur au moins 5 ans.",
             "checkOne": "Le free cash-flow n'est pas positif par accident une seule année.",
             "checkTwo": "Le capex est compris : maintenance ou croissance.",
             "checkThree": "Le cash-flow ne diverge pas du profit sans explication.",
-            "warning": "Ne confondez pas une entreprise profitable avec une entreprise qui génère vraiment du cash libre."
+            "warning": "Ne confondez pas une entreprise profitable avec une entreprise qui génère vraiment du cash libre.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Le cash-flow montre si le profit comptable devient de l’argent utilisable.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cash-flow montre si le profit comptable devient de l’argent utilisable. Le repère pratique est : Une société qui gagne 100 millions mais brûle du cash doit être expliquée clairement. Le principal piège est : Ignorer le free cash-flow peut faire paraître une entreprise chère comme bon marché."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Une société qui gagne 100 millions mais brûle du cash doit être expliquée clairement.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cash-flow montre si le profit comptable devient de l’argent utilisable. Le repère pratique est : Une société qui gagne 100 millions mais brûle du cash doit être expliquée clairement. Le principal piège est : Ignorer le free cash-flow peut faire paraître une entreprise chère comme bon marché."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Ignorer le free cash-flow peut faire paraître une entreprise chère comme bon marché.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cash-flow montre si le profit comptable devient de l’argent utilisable. Le repère pratique est : Une société qui gagne 100 millions mais brûle du cash doit être expliquée clairement. Le principal piège est : Ignorer le free cash-flow peut faire paraître une entreprise chère comme bon marché."
+              }
+            ]
           },
           "profitability": {
             "title": "Évaluer marges et efficacité",
             "text": "Les marges, le ROE, le ROA et l'efficacité opérationnelle montrent comment l'entreprise transforme chiffre d'affaires, actifs et capital en profit.",
-            "details": "Le chiffre d'affaires sans marge peut être une manière coûteuse de paraître grand. La marge brute montre l'économie du produit, la marge opérationnelle montre la discipline des coûts, la marge nette montre le résultat final, le ROE mesure l'efficacité du capital et le ROA celle des actifs. Les niveaux normaux varient selon les secteurs.",
-            "example": "Une entreprise peut augmenter ses ventes de 30%, mais si la marge passe de 20% à 5%, il faut demander si c'est un investissement utile ou une croissance achetée trop cher.",
-            "caseStudy": "Deux entreprises vendent un produit proche. L'une a 25% de marge opérationnelle, l'autre 8%. Si la première garde ses clients et ses parts de marché, son modèle peut être plus fort. Si sa marge baisse chaque année, l'avantage peut disparaître.",
+            "details": "Le chiffre d'affaires sans marge peut être une manière coûteuse de paraître grand. La marge brute montre l'économie du produit, la marge opérationnelle montre la discipline des coûts, la marge nette montre le résultat final, le ROE mesure l'efficacité du capital et le ROA celle des actifs. Les niveaux normaux varient selon les secteurs. Repère pratique : Suivez marge brute, marge opérationnelle, marge nette, ROE et ROIC sur plusieurs années.",
+            "example": "Une entreprise peut augmenter ses ventes de 30%, mais si la marge passe de 20% à 5%, il faut demander si c'est un investissement utile ou une croissance achetée trop cher. Repère pratique : Suivez marge brute, marge opérationnelle, marge nette, ROE et ROIC sur plusieurs années.",
+            "caseStudy": "Deux entreprises vendent un produit proche. L'une a 25% de marge opérationnelle, l'autre 8%. Si la première garde ses clients et ses parts de marché, son modèle peut être plus fort. Si sa marge baisse chaque année, l'avantage peut disparaître. Contrôle de décision : Un pic de marge sur un an peut être temporaire et non une nouvelle norme.",
             "action": "Comparez marges brute, opérationnelle et nette sur 5 ans, puis ROE/ROA avec les concurrents.",
             "checkOne": "Les marges sont stables ou leur changement est expliqué.",
             "checkTwo": "La croissance ne détruit pas la rentabilité.",
             "checkThree": "Le ROE n'est pas élevé seulement grâce à une dette excessive.",
-            "warning": "Un ROE élevé peut être un piège s'il vient de l'effet de levier plutôt que de la qualité du business."
+            "warning": "Un ROE élevé peut être un piège s'il vient de l'effet de levier plutôt que de la qualité du business.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "La rentabilité mesure l’efficacité avec laquelle le revenu devient profit.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La rentabilité mesure l’efficacité avec laquelle le revenu devient profit. Le repère pratique est : Suivez marge brute, marge opérationnelle, marge nette, ROE et ROIC sur plusieurs années. Le principal piège est : Un pic de marge sur un an peut être temporaire et non une nouvelle norme."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Suivez marge brute, marge opérationnelle, marge nette, ROE et ROIC sur plusieurs années.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La rentabilité mesure l’efficacité avec laquelle le revenu devient profit. Le repère pratique est : Suivez marge brute, marge opérationnelle, marge nette, ROE et ROIC sur plusieurs années. Le principal piège est : Un pic de marge sur un an peut être temporaire et non une nouvelle norme."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Un pic de marge sur un an peut être temporaire et non une nouvelle norme.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "La rentabilité mesure l’efficacité avec laquelle le revenu devient profit. Le repère pratique est : Suivez marge brute, marge opérationnelle, marge nette, ROE et ROIC sur plusieurs années. Le principal piège est : Un pic de marge sur un an peut être temporaire et non une nouvelle norme."
+              }
+            ]
           },
           "valuation": {
             "title": "Ne pas ignorer la valorisation",
             "text": "Même une excellente entreprise peut être un mauvais investissement si le prix est trop élevé. Regardez P/E, P/S, marges, croissance et alternatives.",
-            "details": "La valorisation demande combien vous payez pour la qualité et la croissance future. Le P/E compare le prix au profit, le P/S au chiffre d'affaires, le P/B à la valeur comptable, et le DCF oblige à écrire clairement les hypothèses de cash-flow. Aucun multiple ne fonctionne seul : une valorisation élevée peut être justifiée par une forte croissance, mais dangereuse si les attentes sont déjà trop optimistes.",
-            "example": "Une entreprise avec un P/E de 45 n'est pas forcément mauvaise si elle croît vite, a de fortes marges et un long potentiel. Mais si la croissance ralentit et que les marges sont déjà au sommet, ce P/E peut signifier que beaucoup de bonnes nouvelles sont déjà dans le prix.",
-            "caseStudy": "Deux entreprises peuvent avoir un P/E de 25. La première croît de 5% avec des marges cycliques. La seconde croît de 18%, génère un free cash-flow stable et a peu de dette. Le même multiple ne signifie pas la même valeur.",
+            "details": "La valorisation demande combien vous payez pour la qualité et la croissance future. Le P/E compare le prix au profit, le P/S au chiffre d'affaires, le P/B à la valeur comptable, et le DCF oblige à écrire clairement les hypothèses de cash-flow. Aucun multiple ne fonctionne seul : une valorisation élevée peut être justifiée par une forte croissance, mais dangereuse si les attentes sont déjà trop optimistes. Repère pratique : Comparez P/E, P/S, rendement du free cash-flow, croissance et votre scénario central.",
+            "example": "Une entreprise avec un P/E de 45 n'est pas forcément mauvaise si elle croît vite, a de fortes marges et un long potentiel. Mais si la croissance ralentit et que les marges sont déjà au sommet, ce P/E peut signifier que beaucoup de bonnes nouvelles sont déjà dans le prix. Repère pratique : Comparez P/E, P/S, rendement du free cash-flow, croissance et votre scénario central.",
+            "caseStudy": "Deux entreprises peuvent avoir un P/E de 25. La première croît de 5% avec des marges cycliques. La seconde croît de 18%, génère un free cash-flow stable et a peu de dette. Le même multiple ne signifie pas la même valeur. Contrôle de décision : Un multiple bas peut être un avertissement si le business rétrécit.",
             "action": "Comparez les multiples avec l'historique de l'entreprise, ses concurrents et votre propre scénario de croissance future.",
             "checkOne": "P/E, P/S ou P/B sont comparés à la croissance et aux marges.",
             "checkTwo": "Vous avez un scénario central, optimiste et défavorable.",
             "checkThree": "Vous comprenez quelles attentes sont déjà intégrées dans le prix.",
-            "warning": "Une action qui semble bon marché n'est pas toujours une affaire. Parfois un faible P/E est un signal d'alerte, pas un cadeau du marché."
+            "warning": "Une action qui semble bon marché n'est pas toujours une affaire. Parfois un faible P/E est un signal d'alerte, pas un cadeau du marché.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "La valorisation relie la qualité du business au prix payé.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La valorisation relie la qualité du business au prix payé. Le repère pratique est : Comparez P/E, P/S, rendement du free cash-flow, croissance et votre scénario central. Le principal piège est : Un multiple bas peut être un avertissement si le business rétrécit."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Comparez P/E, P/S, rendement du free cash-flow, croissance et votre scénario central.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La valorisation relie la qualité du business au prix payé. Le repère pratique est : Comparez P/E, P/S, rendement du free cash-flow, croissance et votre scénario central. Le principal piège est : Un multiple bas peut être un avertissement si le business rétrécit."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Un multiple bas peut être un avertissement si le business rétrécit.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "La valorisation relie la qualité du business au prix payé. Le repère pratique est : Comparez P/E, P/S, rendement du free cash-flow, croissance et votre scénario central. Le principal piège est : Un multiple bas peut être un avertissement si le business rétrécit."
+              }
+            ]
           },
           "entry": {
             "title": "Définir une règle d'entrée",
             "text": "Le DCA réduit le risque d'un mauvais timing, acheter les baisses demande de la discipline et le lump sum ne convient pas à tout le monde. La règle doit être écrite avant l'achat.",
-            "details": "Le point d'entrée ne doit pas être une impulsion. Plusieurs approches existent : le DCA étale l'achat dans le temps, un prix limite attend la valorisation voulue, l'achat après baisse exige des conditions définies à l'avance, et le lump sum peut convenir si l'horizon est long et que l'argent n'est pas vital. L'essentiel est de connaître la règle avant que les émotions décident.",
-            "example": "Au lieu de tout acheter aujourd'hui, vous pouvez décider : 25% maintenant, 25% après les résultats, 25% si le prix atteint votre valorisation, et 25% gardés pour une meilleure occasion. Cela ne garantit pas le plus bas prix, mais évite les clics chaotiques.",
-            "caseStudy": "Nazar veut acheter après une baisse de 15%. S'il ne sait pas pourquoi le prix a chuté, c'est peut-être un piège. Si la baisse vient du marché et que le business reste intact, un achat partiel peut se défendre. Si elle vient de clients perdus, de prévisions réduites ou de dettes, le prix plus bas ne rend pas l'idée meilleure.",
+            "details": "Le point d'entrée ne doit pas être une impulsion. Plusieurs approches existent : le DCA étale l'achat dans le temps, un prix limite attend la valorisation voulue, l'achat après baisse exige des conditions définies à l'avance, et le lump sum peut convenir si l'horizon est long et que l'argent n'est pas vital. L'essentiel est de connaître la règle avant que les émotions décident. Repère pratique : Diviser un achat prévu de 1200 dollars en 3 ou 4 parties peut réduire le regret et la pression.",
+            "example": "Au lieu de tout acheter aujourd'hui, vous pouvez décider : 25% maintenant, 25% après les résultats, 25% si le prix atteint votre valorisation, et 25% gardés pour une meilleure occasion. Cela ne garantit pas le plus bas prix, mais évite les clics chaotiques. Repère pratique : Diviser un achat prévu de 1200 dollars en 3 ou 4 parties peut réduire le regret et la pression.",
+            "caseStudy": "Nazar veut acheter après une baisse de 15%. S'il ne sait pas pourquoi le prix a chuté, c'est peut-être un piège. Si la baisse vient du marché et que le business reste intact, un achat partiel peut se défendre. Si elle vient de clients perdus, de prévisions réduites ou de dettes, le prix plus bas ne rend pas l'idée meilleure. Contrôle de décision : Tout investir sur la première idée laisse peu de place aux erreurs.",
             "action": "Choisissez le DCA, un prix limite ou un autre scénario d'entrée clair, ainsi que la condition où vous n'achetez pas.",
             "checkOne": "L'achat est étalé ou lié à la valorisation, pas au FOMO.",
             "checkTwo": "Vous savez ce qui vous ferait renforcer ou arrêter.",
             "checkThree": "La règle pour ne pas acheter est aussi claire que la règle pour acheter.",
-            "warning": "Ne renforcez pas automatiquement une position qui baisse. Ajoutez seulement si la thèse reste valide, pas parce que le rouge dans le portefeuille fait mal."
+            "warning": "Ne renforcez pas automatiquement une position qui baisse. Ajoutez seulement si la thèse reste valide, pas parce que le rouge dans le portefeuille fait mal.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "La stratégie d’entrée contrôle le risque de timing et la taille de position.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La stratégie d’entrée contrôle le risque de timing et la taille de position. Le repère pratique est : Diviser un achat prévu de 1200 dollars en 3 ou 4 parties peut réduire le regret et la pression. Le principal piège est : Tout investir sur la première idée laisse peu de place aux erreurs."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Diviser un achat prévu de 1200 dollars en 3 ou 4 parties peut réduire le regret et la pression.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "La stratégie d’entrée contrôle le risque de timing et la taille de position. Le repère pratique est : Diviser un achat prévu de 1200 dollars en 3 ou 4 parties peut réduire le regret et la pression. Le principal piège est : Tout investir sur la première idée laisse peu de place aux erreurs."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Tout investir sur la première idée laisse peu de place aux erreurs.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "La stratégie d’entrée contrôle le risque de timing et la taille de position. Le repère pratique est : Diviser un achat prévu de 1200 dollars en 3 ou 4 parties peut réduire le regret et la pression. Le principal piège est : Tout investir sur la première idée laisse peu de place aux erreurs."
+              }
+            ]
           },
           "technicalIndicators": {
             "title": "Ajouter les indicateurs techniques de base",
             "text": "Les indicateurs techniques ne remplacent pas l'analyse du business, mais peuvent aider à voir la tendance, le momentum, les zones de risque et le comportement du prix.",
-            "details": "Pour un investisseur, l'analyse technique doit rester une couche d'aide, pas le centre de la décision. Les moyennes mobiles montrent la tendance, le RSI peut montrer un momentum extrême, le volume montre la participation du marché, et les supports/résistances marquent des zones où le prix a déjà réagi. Mais un indicateur ne sait pas si l'entreprise est chère ou si le modèle économique est cassé.",
-            "example": "Si une bonne entreprise revient vers une moyenne longue pendant une baisse générale, cela peut mériter une analyse plus poussée. Mais si le RSI est bas à cause d'un mauvais rapport et de prévisions réduites, le mot survendu ne rend pas l'achat intelligent.",
-            "caseStudy": "Anna voit un RSI sous 30 et pense que l'action doit rebondir. Puis elle découvre que l'entreprise a perdu un gros client. L'indicateur montrait un momentum faible, mais la cause était fondamentale. Le bon ordre est de comprendre la raison du mouvement, puis d'utiliser l'indicateur pour le timing.",
+            "details": "Pour un investisseur, l'analyse technique doit rester une couche d'aide, pas le centre de la décision. Les moyennes mobiles montrent la tendance, le RSI peut montrer un momentum extrême, le volume montre la participation du marché, et les supports/résistances marquent des zones où le prix a déjà réagi. Mais un indicateur ne sait pas si l'entreprise est chère ou si le modèle économique est cassé. Repère pratique : Utilisez moyennes mobiles, RSI ou zones de support comme contrôles secondaires après l’analyse du business.",
+            "example": "Si une bonne entreprise revient vers une moyenne longue pendant une baisse générale, cela peut mériter une analyse plus poussée. Mais si le RSI est bas à cause d'un mauvais rapport et de prévisions réduites, le mot survendu ne rend pas l'achat intelligent. Repère pratique : Utilisez moyennes mobiles, RSI ou zones de support comme contrôles secondaires après l’analyse du business.",
+            "caseStudy": "Anna voit un RSI sous 30 et pense que l'action doit rebondir. Puis elle découvre que l'entreprise a perdu un gros client. L'indicateur montrait un momentum faible, mais la cause était fondamentale. Le bon ordre est de comprendre la raison du mouvement, puis d'utiliser l'indicateur pour le timing. Contrôle de décision : Un signal peut échouer vite si la thèse ou le régime de marché change.",
             "action": "Choisissez 2-3 indicateurs simples pour le timing, mais reliez chaque achat à une thèse fondamentale et à une valorisation.",
             "checkOne": "L'indicateur sert à l'entrée ou au risque, pas à justifier la possession du business.",
             "checkTwo": "Le volume et le contexte des nouvelles sont regardés, pas seulement une ligne.",
             "checkThree": "Un scénario de sortie existe si l'idée est plus courte qu'un investissement long terme.",
-            "warning": "Plus d'indicateurs sur un graphique ne rendent pas la décision professionnelle. Souvent, ils ajoutent seulement du bruit."
+            "warning": "Plus d'indicateurs sur un graphique ne rendent pas la décision professionnelle. Souvent, ils ajoutent seulement du bruit.",
+            "quiz": [
+              {
+                "question": "Quelle est l’idée principale de cette leçon ?",
+                "options": [
+                  "Les indicateurs techniques donnent du contexte, pas une thèse d’investissement.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les indicateurs techniques donnent du contexte, pas une thèse d’investissement. Le repère pratique est : Utilisez moyennes mobiles, RSI ou zones de support comme contrôles secondaires après l’analyse du business. Le principal piège est : Un signal peut échouer vite si la thèse ou le régime de marché change."
+              },
+              {
+                "question": "Quel contrôle pratique correspond le mieux à cette leçon ?",
+                "options": [
+                  "Utilisez moyennes mobiles, RSI ou zones de support comme contrôles secondaires après l’analyse du business.",
+                  "Penser que le mouvement du prix explique tout l’investissement.",
+                  "Ignorer le plan quand le marché paraît excitant."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les indicateurs techniques donnent du contexte, pas une thèse d’investissement. Le repère pratique est : Utilisez moyennes mobiles, RSI ou zones de support comme contrôles secondaires après l’analyse du business. Le principal piège est : Un signal peut échouer vite si la thèse ou le régime de marché change."
+              },
+              {
+                "question": "Quelle erreur un débutant doit-il éviter ici ?",
+                "options": [
+                  "Un signal peut échouer vite si la thèse ou le régime de marché change.",
+                  "Acheter ce qui est populaire avant de vérifier les chiffres.",
+                  "Penser que le mouvement du prix explique tout l’investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les indicateurs techniques donnent du contexte, pas une thèse d’investissement. Le repère pratique est : Utilisez moyennes mobiles, RSI ou zones de support comme contrôles secondaires après l’analyse du business. Le principal piège est : Un signal peut échouer vite si la thèse ou le régime de marché change."
+              }
+            ]
           }
         },
         "risks": {
@@ -1823,6 +2368,28 @@
           }
         }
       }
+    },
+    "progress": {
+      "short": "{{completed}}/{{total}} faits",
+      "title": "{{completed}} leçons sur {{total}} terminées",
+      "syncing": "Synchronisation",
+      "guestBanner": "Connectez-vous pour sauvegarder la progression sur plusieurs appareils et gagner des badges. Vous pouvez quand même faire tous les quiz en invité.",
+      "completed": "Terminé",
+      "doneMark": "Fait",
+      "ariaLabel": "Progression du cours"
+    },
+    "quiz": {
+      "kicker": "Vérification",
+      "title": "Quiz de la leçon",
+      "questionCount": "Question {{current}} sur {{total}}",
+      "correct": "Correct",
+      "incorrect": "Pas tout à fait",
+      "next": "Question suivante",
+      "finish": "Terminer le quiz",
+      "score": "Score : {{score}}/{{total}}",
+      "bestScore": "Meilleur : {{score}}/{{total}}",
+      "notCompleted": "Pas encore terminé",
+      "completed": "Quiz terminé : {{score}} bonnes réponses sur {{total}}."
     }
   },
   "auth": {
@@ -2049,5 +2616,44 @@
     "description": "Le lien est peut-être ancien ou mal saisi. Retournez aux outils ou continuez dans l'Académie.",
     "toolsCta": "Ouvrir les outils",
     "learnCta": "Ouvrir l'Académie"
+  },
+  "profile": {
+    "fallbackName": "Investisseur",
+    "backToCourse": "Retour au cours",
+    "kicker": "Profil",
+    "title": "{{name}}",
+    "courseProgress": {
+      "kicker": "Progression",
+      "title": "{{completed}} leçons actions sur {{total}} terminées",
+      "ariaLabel": "Progression du mini-cours actions"
+    },
+    "badges": {
+      "kicker": "Badges",
+      "title": "Réussites du cours",
+      "earned": "Obtenu",
+      "locked": "Verrouillé",
+      "items": {
+        "first_lesson": {
+          "mark": "1",
+          "title": "Première leçon",
+          "description": "Terminer votre première leçon du mini-cours actions."
+        },
+        "half_course": {
+          "mark": "50",
+          "title": "À mi-parcours",
+          "description": "Terminer au moins la moitié du cours de 17 leçons."
+        },
+        "course_complete": {
+          "mark": "17",
+          "title": "Cours terminé",
+          "description": "Terminer les 17 leçons du mini-cours actions."
+        },
+        "quiz_master": {
+          "mark": "A+",
+          "title": "Maître des quiz",
+          "description": "Réussir chaque quiz de leçon avec un score parfait."
+        }
+      }
+    }
   }
 }

@@ -6,7 +6,8 @@
     "learn": "Learn",
     "tools": "Tools",
     "pricing": "Pricing",
-    "dashboard": "Dashboard"
+    "dashboard": "Dashboard",
+    "profile": "Profile"
   },
   "buttons": {
     "login": "Log in",
@@ -1399,206 +1400,750 @@
           "foundation": {
             "title": "Prepare your financial base",
             "text": "Before stocks, you need an emergency fund, debt control, and a clear view of monthly cash flow. Otherwise the market can force you to sell at the worst time.",
-            "details": "Stocks move around. Even a strong company can fall 20-40% because of the market, rates, an earnings report, or investor fear. If you do not have a reserve, an ordinary life problem can force you to sell for cash instead of because the investment thesis changed. The financial base is not boring paperwork; it protects you from forced decisions.",
-            "example": "Imagine someone invests $1,000 in a stock and two months later loses part of their income or needs to replace a laptop. Without a reserve, they may sell at a loss even if the business is still healthy. Someone with a reserve can separate a life problem from an investing decision.",
-            "caseStudy": "Mia earns $1,800 a month and spends about $1,200. She wants to invest all $3,000 of savings at once because she fears missing the next rally. A steadier path is to keep 3-6 months of expenses as a reserve, remove expensive debt, and invest from future monthly cash flow. Then stocks do not compete with basic safety.",
+            "details": "Stocks move around. Even a strong company can fall 20-40% because of the market, rates, an earnings report, or investor fear. If you do not have a reserve, an ordinary life problem can force you to sell for cash instead of because the investment thesis changed. The financial base is not boring paperwork; it protects you from forced decisions. Practical anchor: Keep 3-6 months of expenses outside stocks before investing aggressively.",
+            "example": "Imagine someone invests $1,000 in a stock and two months later loses part of their income or needs to replace a laptop. Without a reserve, they may sell at a loss even if the business is still healthy. Someone with a reserve can separate a life problem from an investing decision. Practical anchor: Keep 3-6 months of expenses outside stocks before investing aggressively.",
+            "caseStudy": "Mia earns $1,800 a month and spends about $1,200. She wants to invest all $3,000 of savings at once because she fears missing the next rally. A steadier path is to keep 3-6 months of expenses as a reserve, remove expensive debt, and invest from future monthly cash flow. Then stocks do not compete with basic safety. Decision check: Investing money needed soon can force a sale during a normal 20-40% decline.",
             "action": "Build a reserve for 3-6 months of expenses, list high-interest debts, and calculate the amount you can realistically invest each month.",
             "checkOne": "The emergency reserve is not stored in stocks.",
             "checkTwo": "High-interest debt is not eating more than investments can reasonably earn.",
             "checkThree": "The monthly investing amount does not break the budget or create stress.",
-            "warning": "Do not invest money that may be needed soon for rent, healthcare, education, taxes, or other required payments."
+            "warning": "Do not invest money that may be needed soon for rent, healthcare, education, taxes, or other required payments.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "A reserve and debt control come before stock selection.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A reserve and debt control come before stock selection. The practical anchor is: Keep 3-6 months of expenses outside stocks before investing aggressively. The main trap is: Investing money needed soon can force a sale during a normal 20-40% decline."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Keep 3-6 months of expenses outside stocks before investing aggressively.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A reserve and debt control come before stock selection. The practical anchor is: Keep 3-6 months of expenses outside stocks before investing aggressively. The main trap is: Investing money needed soon can force a sale during a normal 20-40% decline."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Investing money needed soon can force a sale during a normal 20-40% decline.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "A reserve and debt control come before stock selection. The practical anchor is: Keep 3-6 months of expenses outside stocks before investing aggressively. The main trap is: Investing money needed soon can force a sale during a normal 20-40% decline."
+              }
+            ]
           },
           "plan": {
             "title": "Write a personal plan",
             "text": "An investing plan answers three questions: why the money is invested, when it is needed, and how much drawdown you can realistically tolerate.",
-            "details": "Without a plan, an investor keeps reacting to noise: news, chats, red days, and other people's gains. A plan should define the goal, horizon, contribution rhythm, maximum size of one stock, and selling rules. It does not guarantee profit, but it reduces chaos. A good plan is short enough to read in a minute when the market feels emotional.",
-            "example": "A plan can say: I invest for 10 years, add $300 each month, keep one stock below 8% of the portfolio, buy only profitable and understandable businesses, and sell because the thesis breaks rather than because the price fell.",
-            "caseStudy": "Owen bought three popular stocks after a video. One dropped 18%, and he did not know whether to buy more, sell, or wait. With a plan, the decision would be clearer: position below 5%, add only after checking the report, sell only if revenue weakens or the company loses its edge.",
+            "details": "Without a plan, an investor keeps reacting to noise: news, chats, red days, and other people's gains. A plan should define the goal, horizon, contribution rhythm, maximum size of one stock, and selling rules. It does not guarantee profit, but it reduces chaos. A good plan is short enough to read in a minute when the market feels emotional. Practical anchor: Set a horizon, monthly contribution, and maximum single-stock weight such as 5-8%.",
+            "example": "A plan can say: I invest for 10 years, add $300 each month, keep one stock below 8% of the portfolio, buy only profitable and understandable businesses, and sell because the thesis breaks rather than because the price fell. Practical anchor: Set a horizon, monthly contribution, and maximum single-stock weight such as 5-8%.",
+            "caseStudy": "Owen bought three popular stocks after a video. One dropped 18%, and he did not know whether to buy more, sell, or wait. With a plan, the decision would be clearer: position below 5%, add only after checking the report, sell only if revenue weakens or the company loses its edge. Decision check: Changing strategy after every video is not discipline.",
             "action": "Write your goal, horizon, recurring contribution, maximum position size, and selling rule.",
             "checkOne": "The goal has a horizon, not just the phrase make money.",
             "checkTwo": "Each position has a reason beyond a good-looking chart.",
             "checkThree": "The selling rule is written before the purchase.",
-            "warning": "A plan that changes after every video or post is not a plan. It is an emotional reaction with a better name."
+            "warning": "A plan that changes after every video or post is not a plan. It is an emotional reaction with a better name.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "A written plan turns market noise into pre-made rules.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A written plan turns market noise into pre-made rules. The practical anchor is: Set a horizon, monthly contribution, and maximum single-stock weight such as 5-8%. The main trap is: Changing strategy after every video is not discipline."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Set a horizon, monthly contribution, and maximum single-stock weight such as 5-8%.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A written plan turns market noise into pre-made rules. The practical anchor is: Set a horizon, monthly contribution, and maximum single-stock weight such as 5-8%. The main trap is: Changing strategy after every video is not discipline."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Changing strategy after every video is not discipline.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "A written plan turns market noise into pre-made rules. The practical anchor is: Set a horizon, monthly contribution, and maximum single-stock weight such as 5-8%. The main trap is: Changing strategy after every video is not discipline."
+              }
+            ]
           },
           "truthsMyths": {
             "title": "Truths and myths about investing",
             "text": "Investing is not a quick-rich button. It is a system of decisions where patience, risk control, and entry price matter more than loud promises.",
-            "details": "The sweet myth says you only need to find one stock that will make you rich. The harder truth is less glamorous: most results come from discipline, diversification, risk control, a long horizon, and the ability to keep a plan when the market makes you look wrong. The market does not pay for emotions, ticker popularity, or confidence in a chat. It rewards buying quality assets at reasonable prices and surviving uncomfortable periods.",
-            "example": "A stock can rise 80% in one year and still be a poor buy today if the price already assumes a perfect scenario. A broad ETF may look less exciting, but it can be a better fit for someone building capital over 10-20 years.",
-            "caseStudy": "Den sees a story about someone buying the bottom and making 5x. He does not see the many similar stories that ended badly. Survivorship bias makes investing look easier than it is. A healthy process asks not only how much can I make, but what happens if the outcome is average or bad.",
+            "details": "The sweet myth says you only need to find one stock that will make you rich. The harder truth is less glamorous: most results come from discipline, diversification, risk control, a long horizon, and the ability to keep a plan when the market makes you look wrong. The market does not pay for emotions, ticker popularity, or confidence in a chat. It rewards buying quality assets at reasonable prices and surviving uncomfortable periods. Practical anchor: A 30% fall does not automatically make a stock cheap if profits fall too.",
+            "example": "A stock can rise 80% in one year and still be a poor buy today if the price already assumes a perfect scenario. A broad ETF may look less exciting, but it can be a better fit for someone building capital over 10-20 years. Practical anchor: A 30% fall does not automatically make a stock cheap if profits fall too.",
+            "caseStudy": "Den sees a story about someone buying the bottom and making 5x. He does not see the many similar stories that ended badly. Survivorship bias makes investing look easier than it is. A healthy process asks not only how much can I make, but what happens if the outcome is average or bad. Decision check: Confusing a lower price with lower risk leads to weak decisions.",
             "action": "Write down three investment promises that sound too good, then write the hidden risk next to each one.",
             "checkOne": "You can separate investing from speculation and gambling.",
             "checkTwo": "Expected return is connected to risk, not invented from hope.",
             "checkThree": "Your plan is not built on someone else's success story without looking at losses.",
-            "warning": "If an idea is sold as easy money without risk, the risk is usually just unnamed."
+            "warning": "If an idea is sold as easy money without risk, the risk is usually just unnamed.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Common market myths must be checked against evidence.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Common market myths must be checked against evidence. The practical anchor is: A 30% fall does not automatically make a stock cheap if profits fall too. The main trap is: Confusing a lower price with lower risk leads to weak decisions."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "A 30% fall does not automatically make a stock cheap if profits fall too.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Common market myths must be checked against evidence. The practical anchor is: A 30% fall does not automatically make a stock cheap if profits fall too. The main trap is: Confusing a lower price with lower risk leads to weak decisions."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Confusing a lower price with lower risk leads to weak decisions.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Common market myths must be checked against evidence. The practical anchor is: A 30% fall does not automatically make a stock cheap if profits fall too. The main trap is: Confusing a lower price with lower risk leads to weak decisions."
+              }
+            ]
           },
           "riskProfile": {
             "title": "Define your risk profile",
             "text": "Risk is not only price decline. It also includes income shocks, panic, concentration, currency, sector exposure, and mistakes in your assumptions.",
-            "details": "A risk profile is not about how brave you sound. It is about how you behave when the portfolio really falls. For stocks, think about volatility, concentration, currency exposure, sector dependence, and emotional comfort. Beginners often overestimate their tolerance during good markets and discover their real risk level only in a drawdown.",
-            "example": "Two people may have the same amount of money but different risk profiles. One has stable income, a reserve, and a 15-year horizon. The other needs a home deposit next year. The same market drop may be tolerable for the first person and damaging for the second.",
-            "caseStudy": "Ira's portfolio is 80% technology stocks. On paper there are many tickers, but the risk is similar: rates, growth valuations, and sentiment toward tech. If the sector falls, almost everything falls together. Her real risk is higher than the number of companies suggests.",
+            "details": "A risk profile is not about how brave you sound. It is about how you behave when the portfolio really falls. For stocks, think about volatility, concentration, currency exposure, sector dependence, and emotional comfort. Beginners often overestimate their tolerance during good markets and discover their real risk level only in a drawdown. Practical anchor: Money needed in under 3 years should not rely on volatile stocks.",
+            "example": "Two people may have the same amount of money but different risk profiles. One has stable income, a reserve, and a 15-year horizon. The other needs a home deposit next year. The same market drop may be tolerable for the first person and damaging for the second. Practical anchor: Money needed in under 3 years should not rely on volatile stocks.",
+            "caseStudy": "Ira's portfolio is 80% technology stocks. On paper there are many tickers, but the risk is similar: rates, growth valuations, and sentiment toward tech. If the sector falls, almost everything falls together. Her real risk is higher than the number of companies suggests. Decision check: Taking equity risk without time to recover creates forced selling.",
             "action": "Set maximum weights for one stock, one sector, and all risky assets in your portfolio.",
             "checkOne": "One stock cannot damage the whole plan by itself.",
             "checkTwo": "Different tickers are not all exposed to the same sector risk.",
             "checkThree": "You know what you would do if the portfolio fell 20%, 30%, or 40%.",
-            "warning": "If a 10% fall keeps you awake, do not build a portfolio as if a 50% fall would be easy."
+            "warning": "If a 10% fall keeps you awake, do not build a portfolio as if a 50% fall would be easy.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Risk tolerance must match time horizon and income stability.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Risk tolerance must match time horizon and income stability. The practical anchor is: Money needed in under 3 years should not rely on volatile stocks. The main trap is: Taking equity risk without time to recover creates forced selling."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Money needed in under 3 years should not rely on volatile stocks.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Risk tolerance must match time horizon and income stability. The practical anchor is: Money needed in under 3 years should not rely on volatile stocks. The main trap is: Taking equity risk without time to recover creates forced selling."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Taking equity risk without time to recover creates forced selling.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Risk tolerance must match time horizon and income stability. The practical anchor is: Money needed in under 3 years should not rely on volatile stocks. The main trap is: Taking equity risk without time to recover creates forced selling."
+              }
+            ]
           },
           "assetMap": {
             "title": "Compare asset classes",
             "text": "Stocks give business ownership, bonds behave more like loans, ETFs give a basket, and cash gives flexibility. Each tool has a different job.",
-            "details": "One stock should not replace the whole investing toolkit. Stocks can provide growth, but they charge for it with volatility. Bonds can stabilize part of the portfolio. ETFs offer broad diversification. Cash or short-term instruments provide flexibility. When you understand each asset's job, you are less likely to expect the wrong thing from it.",
-            "example": "If your goal is long-term growth, stocks or ETFs can be the core. If your goal is 18 months away, such as a home deposit, a volatile single stock may be the wrong tool even if you like the company.",
-            "caseStudy": "Andrew has $10,000 and wants to learn stock picking without turning the whole portfolio into a bet. One structure could be 70% broad ETF, 20% bonds or cash, and 10% individual stocks. He gets practice, but the result does not depend on a few decisions.",
+            "details": "One stock should not replace the whole investing toolkit. Stocks can provide growth, but they charge for it with volatility. Bonds can stabilize part of the portfolio. ETFs offer broad diversification. Cash or short-term instruments provide flexibility. When you understand each asset's job, you are less likely to expect the wrong thing from it. Practical anchor: A simple starter map can cap one stock at 5% and keep cash for near-term needs.",
+            "example": "If your goal is long-term growth, stocks or ETFs can be the core. If your goal is 18 months away, such as a home deposit, a volatile single stock may be the wrong tool even if you like the company. Practical anchor: A simple starter map can cap one stock at 5% and keep cash for near-term needs.",
+            "caseStudy": "Andrew has $10,000 and wants to learn stock picking without turning the whole portfolio into a bet. One structure could be 70% broad ETF, 20% bonds or cash, and 10% individual stocks. He gets practice, but the result does not depend on a few decisions. Decision check: Owning ten companies from one sector is still concentrated risk.",
             "action": "Decide whether stocks are your portfolio core, a small active sleeve, or a learning position.",
             "checkOne": "Short-term goals are not funded with assets that can fall sharply before the spending date.",
             "checkTwo": "The portfolio has something for stability, not only for growth.",
             "checkThree": "Individual stocks have a defined role instead of being bought out of boredom.",
-            "warning": "Do not call a risky bet an investment only because it was made through a brokerage app."
+            "warning": "Do not call a risky bet an investment only because it was made through a brokerage app.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Diversification means assigning jobs to several asset types.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Diversification means assigning jobs to several asset types. The practical anchor is: A simple starter map can cap one stock at 5% and keep cash for near-term needs. The main trap is: Owning ten companies from one sector is still concentrated risk."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "A simple starter map can cap one stock at 5% and keep cash for near-term needs.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Diversification means assigning jobs to several asset types. The practical anchor is: A simple starter map can cap one stock at 5% and keep cash for near-term needs. The main trap is: Owning ten companies from one sector is still concentrated risk."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Owning ten companies from one sector is still concentrated risk.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Diversification means assigning jobs to several asset types. The practical anchor is: A simple starter map can cap one stock at 5% and keep cash for near-term needs. The main trap is: Owning ten companies from one sector is still concentrated risk."
+              }
+            ]
           },
           "compound": {
             "title": "Understand compounding",
             "text": "Long-term returns come from time, reinvestment, and consistency. Large outcomes often look boring at the beginning.",
-            "details": "Compounding is not magic; it is repetition. Returns start earning future returns. The hard part is that the first years can look slow, so beginners often abandon a systematic strategy and chase a quick jump. Time, regular contributions, dividend reinvestment, and fee control often matter more than one brilliant purchase.",
-            "example": "When you invest the same amount every month, early results depend more on contributions than returns. Later, the accumulated base starts moving the portfolio more strongly. That is why horizon and discipline matter so much.",
-            "caseStudy": "Two investors start differently. The first invests $200 every month for 15 years. The second waits five years for the perfect moment and then invests more. Often the first has the edge not because of genius, but because of time in the market. Compounding likes early starts and repetition.",
+            "details": "Compounding is not magic; it is repetition. Returns start earning future returns. The hard part is that the first years can look slow, so beginners often abandon a systematic strategy and chase a quick jump. Time, regular contributions, dividend reinvestment, and fee control often matter more than one brilliant purchase. Practical anchor: At 8% annual growth, $1,000 can become about $4,660 in 20 years before taxes and fees.",
+            "example": "When you invest the same amount every month, early results depend more on contributions than returns. Later, the accumulated base starts moving the portfolio more strongly. That is why horizon and discipline matter so much. Practical anchor: At 8% annual growth, $1,000 can become about $4,660 in 20 years before taxes and fees.",
+            "caseStudy": "Two investors start differently. The first invests $200 every month for 15 years. The second waits five years for the perfect moment and then invests more. Often the first has the edge not because of genius, but because of time in the market. Compounding likes early starts and repetition. Decision check: Interrupting compounding too often weakens the main engine.",
             "action": "Compare 5, 10, and 20 years in the investment calculator with different contributions and expected returns.",
             "checkOne": "Dividends and gains have a reinvestment rule.",
             "checkTwo": "Expected return does not replace a realistic contribution plan.",
             "checkThree": "Fees, taxes, and currency are at least roughly considered.",
-            "warning": "Do not use unrealistic 30-50% annual returns as your base case. They can make a weak idea look beautiful on a screen."
+            "warning": "Do not use unrealistic 30-50% annual returns as your base case. They can make a weak idea look beautiful on a screen.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Compounding works when gains stay invested long enough.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Compounding works when gains stay invested long enough. The practical anchor is: At 8% annual growth, $1,000 can become about $4,660 in 20 years before taxes and fees. The main trap is: Interrupting compounding too often weakens the main engine."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "At 8% annual growth, $1,000 can become about $4,660 in 20 years before taxes and fees.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Compounding works when gains stay invested long enough. The practical anchor is: At 8% annual growth, $1,000 can become about $4,660 in 20 years before taxes and fees. The main trap is: Interrupting compounding too often weakens the main engine."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Interrupting compounding too often weakens the main engine.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Compounding works when gains stay invested long enough. The practical anchor is: At 8% annual growth, $1,000 can become about $4,660 in 20 years before taxes and fees. The main trap is: Interrupting compounding too often weakens the main engine."
+              }
+            ]
           },
           "analysisTypes": {
             "title": "Separate fundamental and technical analysis",
             "text": "Fundamental analysis asks what the business is and what it may be worth. Technical analysis focuses more on price, trend, and market behavior.",
-            "details": "Fundamental analysis starts with the business: what it sells, to whom, at what margin, how it grows, how much debt it carries, and what price the market asks for it. Technical analysis may help with timing or sentiment, but it does not tell you whether the business is good. For a long-term investor, a chart without business understanding becomes guesswork.",
-            "example": "A stock may break out to a new high while margins are falling and debt is expensive. Another stock may look weak after a broad market selloff while the company still produces steady cash flow and keeps its competitive advantage.",
-            "caseStudy": "Peter buys because a stock breaks out of a range. A week later the company reports slower revenue, lower margins, and weaker guidance. The chart showed price behavior, but it did not replace business analysis. For an investor, those are different jobs.",
+            "details": "Fundamental analysis starts with the business: what it sells, to whom, at what margin, how it grows, how much debt it carries, and what price the market asks for it. Technical analysis may help with timing or sentiment, but it does not tell you whether the business is good. For a long-term investor, a chart without business understanding becomes guesswork. Practical anchor: Use fundamentals for business quality and technicals mainly for timing or risk control.",
+            "example": "A stock may break out to a new high while margins are falling and debt is expensive. Another stock may look weak after a broad market selloff while the company still produces steady cash flow and keeps its competitive advantage. Practical anchor: Use fundamentals for business quality and technicals mainly for timing or risk control.",
+            "caseStudy": "Peter buys because a stock breaks out of a range. A week later the company reports slower revenue, lower margins, and weaker guidance. The chart showed price behavior, but it did not replace business analysis. For an investor, those are different jobs. Decision check: A chart pattern cannot replace understanding revenue, margins, and cash flow.",
             "action": "Explain the business and profit sources first, then look at the chart and entry point.",
             "checkOne": "You can describe the business without opening the price chart.",
             "checkTwo": "A technical signal is not the only reason to buy.",
             "checkThree": "The fundamental thesis has metrics you can monitor.",
-            "warning": "Do not use a technical signal as an excuse to buy a company you do not understand."
+            "warning": "Do not use a technical signal as an excuse to buy a company you do not understand.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Fundamental, technical, and sentiment analysis answer different questions.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Fundamental, technical, and sentiment analysis answer different questions. The practical anchor is: Use fundamentals for business quality and technicals mainly for timing or risk control. The main trap is: A chart pattern cannot replace understanding revenue, margins, and cash flow."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Use fundamentals for business quality and technicals mainly for timing or risk control.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Fundamental, technical, and sentiment analysis answer different questions. The practical anchor is: Use fundamentals for business quality and technicals mainly for timing or risk control. The main trap is: A chart pattern cannot replace understanding revenue, margins, and cash flow."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "A chart pattern cannot replace understanding revenue, margins, and cash flow.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Fundamental, technical, and sentiment analysis answer different questions. The practical anchor is: Use fundamentals for business quality and technicals mainly for timing or risk control. The main trap is: A chart pattern cannot replace understanding revenue, margins, and cash flow."
+              }
+            ]
           },
           "etfBridge": {
             "title": "Compare the stock with an ETF",
             "text": "If you cannot explain why one company is better than a broad ETF, an index fund may be the simpler and more honest choice.",
-            "details": "Every single stock has to answer a simple question: why take company-specific risk when you can buy a basket? An ETF does not make you lazy. It gives you a baseline alternative that your idea must beat. If the expected advantage is unclear and the risk is higher, a broad index may be the better decision.",
-            "example": "If you want one technology company, compare it with a technology ETF or the S&P 500. Is revenue growing faster? Are margins better? Is valuation reasonable? Does everything depend on one product? If the answer is vague, an ETF may be calmer.",
-            "caseStudy": "Sofia is choosing between one semiconductor company and a sector ETF. The company may rise more, but it depends on a few large customers and the capital-spending cycle. The ETF may be less explosive, but spreads the risk across many businesses. The choice is about risk-adjusted advantage, not excitement.",
+            "details": "Every single stock has to answer a simple question: why take company-specific risk when you can buy a basket? An ETF does not make you lazy. It gives you a baseline alternative that your idea must beat. If the expected advantage is unclear and the risk is higher, a broad index may be the better decision. Practical anchor: A broad ETF may hold hundreds of companies for one fee such as 0.03-0.20% per year.",
+            "example": "If you want one technology company, compare it with a technology ETF or the S&P 500. Is revenue growing faster? Are margins better? Is valuation reasonable? Does everything depend on one product? If the answer is vague, an ETF may be calmer. Practical anchor: A broad ETF may hold hundreds of companies for one fee such as 0.03-0.20% per year.",
+            "caseStudy": "Sofia is choosing between one semiconductor company and a sector ETF. The company may rise more, but it depends on a few large customers and the capital-spending cycle. The ETF may be less explosive, but spreads the risk across many businesses. The choice is about risk-adjusted advantage, not excitement. Decision check: Buying only single stocks too early can make learning mistakes expensive.",
             "action": "Compare the company with its sector ETF or the S&P 500 on growth, margins, valuation, and risks.",
             "checkOne": "There is a clear reason why this company may beat the basket.",
             "checkTwo": "You compared concentration risk, not only past returns.",
             "checkThree": "If the edge is unclear, the ETF is treated as a valid alternative.",
-            "warning": "Do not buy one stock only because it feels more exciting than an ETF. More exciting does not always mean better."
+            "warning": "Do not buy one stock only because it feels more exciting than an ETF. More exciting does not always mean better.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "ETFs can provide diversification while you learn individual stock analysis.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "ETFs can provide diversification while you learn individual stock analysis. The practical anchor is: A broad ETF may hold hundreds of companies for one fee such as 0.03-0.20% per year. The main trap is: Buying only single stocks too early can make learning mistakes expensive."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "A broad ETF may hold hundreds of companies for one fee such as 0.03-0.20% per year.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "ETFs can provide diversification while you learn individual stock analysis. The practical anchor is: A broad ETF may hold hundreds of companies for one fee such as 0.03-0.20% per year. The main trap is: Buying only single stocks too early can make learning mistakes expensive."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Buying only single stocks too early can make learning mistakes expensive.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "ETFs can provide diversification while you learn individual stock analysis. The practical anchor is: A broad ETF may hold hundreds of companies for one fee such as 0.03-0.20% per year. The main trap is: Buying only single stocks too early can make learning mistakes expensive."
+              }
+            ]
           },
           "qualityCompany": {
             "title": "Look for a quality business",
             "text": "A strong company has an understandable product, competitive advantage, healthy margins, capital discipline, and management that does not destroy trust.",
-            "details": "Business quality is not found in a glossy presentation. It shows up in repeatable signs: the company earns money, keeps customers, has an edge over competitors, does not burn capital without a plan, and can survive weaker cycles. For beginners, an understandable business with stable economics is usually better than a complex story where success depends on one future breakthrough.",
-            "example": "A quality business may have a product people buy repeatedly, a strong brand, network effects, lower costs, or high switching costs. But each advantage needs evidence in the numbers: margins, revenue retention, cash flow, and competitor behavior.",
-            "caseStudy": "A popular brand is not automatically a quality investment. If sales grow only because marketing expenses explode and margins fall, the brand may be weaker than it looks. Quality appears when the business can earn without endlessly burning money.",
+            "details": "Business quality is not found in a glossy presentation. It shows up in repeatable signs: the company earns money, keeps customers, has an edge over competitors, does not burn capital without a plan, and can survive weaker cycles. For beginners, an understandable business with stable economics is usually better than a complex story where success depends on one future breakthrough. Practical anchor: Look for several years of revenue growth, positive free cash flow, and manageable debt.",
+            "example": "A quality business may have a product people buy repeatedly, a strong brand, network effects, lower costs, or high switching costs. But each advantage needs evidence in the numbers: margins, revenue retention, cash flow, and competitor behavior. Practical anchor: Look for several years of revenue growth, positive free cash flow, and manageable debt.",
+            "caseStudy": "A popular brand is not automatically a quality investment. If sales grow only because marketing expenses explode and margins fall, the brand may be weaker than it looks. Quality appears when the business can earn without endlessly burning money. Decision check: A famous brand is not enough if the economics are deteriorating.",
             "action": "Describe the company's advantage in one sentence and find at least two numbers that support it.",
             "checkOne": "The advantage is clear and not just the company is popular.",
             "checkTwo": "Margins, cash flow, or customer retention support the quality claim.",
             "checkThree": "Management is not diluting shareholders or buying growth at any price.",
-            "warning": "If the advantage sounds like an ad slogan and does not appear in the financials, it may be a story rather than an edge."
+            "warning": "If the advantage sounds like an ad slogan and does not appear in the financials, it may be a story rather than an edge.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "A quality company has durable demand, margins, cash flow, and execution.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A quality company has durable demand, margins, cash flow, and execution. The practical anchor is: Look for several years of revenue growth, positive free cash flow, and manageable debt. The main trap is: A famous brand is not enough if the economics are deteriorating."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Look for several years of revenue growth, positive free cash flow, and manageable debt.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A quality company has durable demand, margins, cash flow, and execution. The practical anchor is: Look for several years of revenue growth, positive free cash flow, and manageable debt. The main trap is: A famous brand is not enough if the economics are deteriorating."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "A famous brand is not enough if the economics are deteriorating.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "A quality company has durable demand, margins, cash flow, and execution. The practical anchor is: Look for several years of revenue growth, positive free cash flow, and manageable debt. The main trap is: A famous brand is not enough if the economics are deteriorating."
+              }
+            ]
           },
           "profile": {
             "title": "Read the company profile",
             "text": "Start with sector, geography, revenue sources, customers, and dependencies. If the business is unclear, the numbers are easy to misread.",
-            "details": "The company profile is the first filter. You should know what the company sells, where it operates, who the customers are, what demand depends on, and what regulatory or currency risks exist. Without that, even good numbers can mislead you: revenue may grow because of a one-off factor, margins may rise because of temporary cost cuts, and profit may improve because of accounting noise.",
-            "example": "A company may look like a device maker while a major part of profit comes from services. Another may be called fintech but depend heavily on interest rates and credit losses. The profile tells you which metrics actually matter.",
-            "caseStudy": "Netflix and an industrial equipment maker can both show the same revenue growth, but the business drivers are different. One depends on subscribers, churn, content costs, and attention. The other depends on order cycles, customer capex, and backlog. The same growth number does not mean the same analysis.",
+            "details": "The company profile is the first filter. You should know what the company sells, where it operates, who the customers are, what demand depends on, and what regulatory or currency risks exist. Without that, even good numbers can mislead you: revenue may grow because of a one-off factor, margins may rise because of temporary cost cuts, and profit may improve because of accounting noise. Practical anchor: Before buying, name the segment that drives most revenue and its main customer group.",
+            "example": "A company may look like a device maker while a major part of profit comes from services. Another may be called fintech but depend heavily on interest rates and credit losses. The profile tells you which metrics actually matter. Practical anchor: Before buying, name the segment that drives most revenue and its main customer group.",
+            "caseStudy": "Netflix and an industrial equipment maker can both show the same revenue growth, but the business drivers are different. One depends on subscribers, churn, content costs, and attention. The other depends on order cycles, customer capex, and backlog. The same growth number does not mean the same analysis. Decision check: Buying a ticker without understanding the business model is speculation.",
             "action": "Write how the company makes money, who the customer is, and the three factors that most affect results.",
             "checkOne": "You know which products or segments generate most revenue.",
             "checkTwo": "Main dependencies are identified: rates, commodities, regulation, cycle, customers, or currency.",
             "checkThree": "You know which metric matters more than headline revenue for this business.",
-            "warning": "Do not buy a business you cannot explain in plain language to someone outside the market."
+            "warning": "Do not buy a business you cannot explain in plain language to someone outside the market.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "A company profile explains how the business actually makes money.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A company profile explains how the business actually makes money. The practical anchor is: Before buying, name the segment that drives most revenue and its main customer group. The main trap is: Buying a ticker without understanding the business model is speculation."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Before buying, name the segment that drives most revenue and its main customer group.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "A company profile explains how the business actually makes money. The practical anchor is: Before buying, name the segment that drives most revenue and its main customer group. The main trap is: Buying a ticker without understanding the business model is speculation."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Buying a ticker without understanding the business model is speculation.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "A company profile explains how the business actually makes money. The practical anchor is: Before buying, name the segment that drives most revenue and its main customer group. The main trap is: Buying a ticker without understanding the business model is speculation."
+              }
+            ]
           },
           "statements": {
             "title": "Review the statements",
             "text": "Revenue shows scale, profit shows efficiency, cash flow shows real money power, and the balance sheet shows resilience and debt load.",
-            "details": "Financial statements should be read as the story of the business. The income statement shows revenue, costs, and profitability. Cash flow shows whether profit turns into real money. The balance sheet shows debt, liquidity, and resilience. One number is rarely enough; the trend over several years and the connection between metrics matter.",
-            "example": "If revenue grows but net income falls, look for the reason: margins, costs, competition, or one-off charges. If profit exists but free cash flow is weak, the business may need heavy capital spending or have working-capital problems.",
-            "caseStudy": "A company reports record profit, but free cash flow is close to zero. Money may be stuck in inventory or receivables, or the business may need heavy equipment spending. Profit exists on paper, but owners should care about cash left after maintaining and growing the business.",
+            "details": "Financial statements should be read as the story of the business. The income statement shows revenue, costs, and profitability. Cash flow shows whether profit turns into real money. The balance sheet shows debt, liquidity, and resilience. One number is rarely enough; the trend over several years and the connection between metrics matter. Practical anchor: Revenue, net income, assets, liabilities, and cash flow should tell a consistent story.",
+            "example": "If revenue grows but net income falls, look for the reason: margins, costs, competition, or one-off charges. If profit exists but free cash flow is weak, the business may need heavy capital spending or have working-capital problems. Practical anchor: Revenue, net income, assets, liabilities, and cash flow should tell a consistent story.",
+            "caseStudy": "A company reports record profit, but free cash flow is close to zero. Money may be stuck in inventory or receivables, or the business may need heavy equipment spending. Profit exists on paper, but owners should care about cash left after maintaining and growing the business. Decision check: Reading only one headline number can hide weak cash conversion or rising debt.",
             "action": "Check 5 years of revenue, net income, free cash flow, debt, and margins.",
             "checkOne": "Revenue, profit, and cash flow are reviewed together.",
             "checkTwo": "Debt is compared with profit, cash flow, and rates.",
             "checkThree": "One-off events are separated from normal operations.",
-            "warning": "Do not build a thesis from one quarter. A quarter can be noise rather than a new trend."
+            "warning": "Do not build a thesis from one quarter. A quarter can be noise rather than a new trend.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "The three financial statements show performance from different angles.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "The three financial statements show performance from different angles. The practical anchor is: Revenue, net income, assets, liabilities, and cash flow should tell a consistent story. The main trap is: Reading only one headline number can hide weak cash conversion or rising debt."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Revenue, net income, assets, liabilities, and cash flow should tell a consistent story.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "The three financial statements show performance from different angles. The practical anchor is: Revenue, net income, assets, liabilities, and cash flow should tell a consistent story. The main trap is: Reading only one headline number can hide weak cash conversion or rising debt."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Reading only one headline number can hide weak cash conversion or rising debt.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "The three financial statements show performance from different angles. The practical anchor is: Revenue, net income, assets, liabilities, and cash flow should tell a consistent story. The main trap is: Reading only one headline number can hide weak cash conversion or rising debt."
+              }
+            ]
           },
           "balanceSheet": {
             "title": "Break down the balance sheet",
             "text": "The balance sheet shows what a company owns, what it owes, and how much resilience it has before a difficult period.",
-            "details": "The balance sheet is often ignored because it is less exciting than revenue or earnings. But it shows debt, cash, inventory, receivables, liabilities, and equity. A company can report attractive profit while having a weak balance sheet: too much short-term debt, too little cash, stuck inventory, or customers that pay slowly. For investors, the balance sheet asks whether the business can survive a bad year without panic moves.",
-            "example": "Two companies have the same profit. One has plenty of cash and little debt. The other has large debt that must be refinanced at higher rates. In normal times they may look similar, but in stress the second company has much less freedom.",
-            "caseStudy": "A retailer grows quickly and opens stores, but inventory and short-term liabilities rise faster than sales. Growth may be lower quality than it looks: cash is stuck in goods, while suppliers need to be paid before customers bring enough cash back.",
+            "details": "The balance sheet is often ignored because it is less exciting than revenue or earnings. But it shows debt, cash, inventory, receivables, liabilities, and equity. A company can report attractive profit while having a weak balance sheet: too much short-term debt, too little cash, stuck inventory, or customers that pay slowly. For investors, the balance sheet asks whether the business can survive a bad year without panic moves. Practical anchor: Compare cash and current assets with debt and near-term liabilities.",
+            "example": "Two companies have the same profit. One has plenty of cash and little debt. The other has large debt that must be refinanced at higher rates. In normal times they may look similar, but in stress the second company has much less freedom. Practical anchor: Compare cash and current assets with debt and near-term liabilities.",
+            "caseStudy": "A retailer grows quickly and opens stores, but inventory and short-term liabilities rise faster than sales. Growth may be lower quality than it looks: cash is stuck in goods, while suppliers need to be paid before customers bring enough cash back. Decision check: High leverage can turn a small earnings miss into a serious problem.",
             "action": "Review cash, total debt, short-term liabilities, inventory, and receivables over several years.",
             "checkOne": "Debt is understood by size, maturity, and cost.",
             "checkTwo": "Cash and liquidity are enough for a weaker period.",
             "checkThree": "Inventory and receivables are not growing much faster than revenue without a reason.",
-            "warning": "Strong earnings with a weak balance sheet can become a problem quickly when rates rise or sales fall."
+            "warning": "Strong earnings with a weak balance sheet can become a problem quickly when rates rise or sales fall.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "The balance sheet shows financial resilience and obligations.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "The balance sheet shows financial resilience and obligations. The practical anchor is: Compare cash and current assets with debt and near-term liabilities. The main trap is: High leverage can turn a small earnings miss into a serious problem."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Compare cash and current assets with debt and near-term liabilities.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "The balance sheet shows financial resilience and obligations. The practical anchor is: Compare cash and current assets with debt and near-term liabilities. The main trap is: High leverage can turn a small earnings miss into a serious problem."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "High leverage can turn a small earnings miss into a serious problem.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "The balance sheet shows financial resilience and obligations. The practical anchor is: Compare cash and current assets with debt and near-term liabilities. The main trap is: High leverage can turn a small earnings miss into a serious problem."
+              }
+            ]
           },
           "cashFlow": {
             "title": "Understand cash flow",
             "text": "Cash flow shows whether accounting profit turns into real money that can be reinvested, returned to shareholders, or used to protect the business.",
-            "details": "Profit can look good on paper, but companies live on cash. Operating cash flow shows what the business generates from operations. Capital expenditures show what must be invested to maintain or grow the business. Free cash flow is what remains after important spending. It often shows the real strength of a business for shareholders.",
-            "example": "A company may earn $1B in net income, but if it needs $900M of equipment spending every year, financial freedom is limited. Another company with the same profit and low capital needs may have much stronger free cash flow.",
-            "caseStudy": "A SaaS company may show accounting losses while producing decent operating cash flow. A manufacturer may show profit but constantly reinvest huge amounts into factories. Each case needs context instead of one-line judgment.",
+            "details": "Profit can look good on paper, but companies live on cash. Operating cash flow shows what the business generates from operations. Capital expenditures show what must be invested to maintain or grow the business. Free cash flow is what remains after important spending. It often shows the real strength of a business for shareholders. Practical anchor: A company earning $100 million but burning cash needs a stronger explanation.",
+            "example": "A company may earn $1B in net income, but if it needs $900M of equipment spending every year, financial freedom is limited. Another company with the same profit and low capital needs may have much stronger free cash flow. Practical anchor: A company earning $100 million but burning cash needs a stronger explanation.",
+            "caseStudy": "A SaaS company may show accounting losses while producing decent operating cash flow. A manufacturer may show profit but constantly reinvest huge amounts into factories. Each case needs context instead of one-line judgment. Decision check: Ignoring free cash flow can make an expensive business look cheap.",
             "action": "Compare net income, operating cash flow, capex, and free cash flow over at least 5 years.",
             "checkOne": "Free cash flow is not positive only by accident for one year.",
             "checkTwo": "Capex is understood as maintenance or growth spending.",
             "checkThree": "Cash flow does not diverge from profit without explanation.",
-            "warning": "Do not confuse a profitable company with a company that truly generates free cash."
+            "warning": "Do not confuse a profitable company with a company that truly generates free cash.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Cash flow shows whether accounting profit becomes usable money.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Cash flow shows whether accounting profit becomes usable money. The practical anchor is: A company earning $100 million but burning cash needs a stronger explanation. The main trap is: Ignoring free cash flow can make an expensive business look cheap."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "A company earning $100 million but burning cash needs a stronger explanation.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Cash flow shows whether accounting profit becomes usable money. The practical anchor is: A company earning $100 million but burning cash needs a stronger explanation. The main trap is: Ignoring free cash flow can make an expensive business look cheap."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Ignoring free cash flow can make an expensive business look cheap.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Cash flow shows whether accounting profit becomes usable money. The practical anchor is: A company earning $100 million but burning cash needs a stronger explanation. The main trap is: Ignoring free cash flow can make an expensive business look cheap."
+              }
+            ]
           },
           "profitability": {
             "title": "Judge margins and efficiency",
             "text": "Margins, ROE, ROA, and operating efficiency show how well the business turns revenue, assets, and capital into profit.",
-            "details": "Revenue without margin can be an expensive way to look large. Gross profit shows product economics, operating margin shows expense discipline, net margin shows the result after all costs, ROE shows capital efficiency, and ROA shows asset efficiency. Normal levels differ by sector, so compare margins with the company's history and peers.",
-            "example": "A company can grow sales 30%, but if margin falls from 20% to 5%, shareholders should ask whether this is investment in the future or buying revenue too expensively. Growth without economics does not always create value.",
-            "caseStudy": "Two companies sell similar products. One has a 25% operating margin, the other 8%. If the first keeps customers and market share, the business model may be stronger. But if the high margin falls every year, the competitive advantage may be fading.",
+            "details": "Revenue without margin can be an expensive way to look large. Gross profit shows product economics, operating margin shows expense discipline, net margin shows the result after all costs, ROE shows capital efficiency, and ROA shows asset efficiency. Normal levels differ by sector, so compare margins with the company's history and peers. Practical anchor: Track gross margin, operating margin, net margin, ROE, and ROIC over several years.",
+            "example": "A company can grow sales 30%, but if margin falls from 20% to 5%, shareholders should ask whether this is investment in the future or buying revenue too expensively. Growth without economics does not always create value. Practical anchor: Track gross margin, operating margin, net margin, ROE, and ROIC over several years.",
+            "caseStudy": "Two companies sell similar products. One has a 25% operating margin, the other 8%. If the first keeps customers and market share, the business model may be stronger. But if the high margin falls every year, the competitive advantage may be fading. Decision check: A one-year margin spike may be temporary rather than a new normal.",
             "action": "Compare gross, operating, and net margins over 5 years, plus ROE/ROA against peers.",
             "checkOne": "Margins are stable or the change has a clear reason.",
             "checkTwo": "Revenue growth is not destroying profitability.",
             "checkThree": "ROE is not high only because of excessive debt.",
-            "warning": "High ROE can be a trap if it comes from leverage rather than business quality."
+            "warning": "High ROE can be a trap if it comes from leverage rather than business quality.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Profitability measures how efficiently revenue becomes profit.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Profitability measures how efficiently revenue becomes profit. The practical anchor is: Track gross margin, operating margin, net margin, ROE, and ROIC over several years. The main trap is: A one-year margin spike may be temporary rather than a new normal."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Track gross margin, operating margin, net margin, ROE, and ROIC over several years.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Profitability measures how efficiently revenue becomes profit. The practical anchor is: Track gross margin, operating margin, net margin, ROE, and ROIC over several years. The main trap is: A one-year margin spike may be temporary rather than a new normal."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "A one-year margin spike may be temporary rather than a new normal.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Profitability measures how efficiently revenue becomes profit. The practical anchor is: Track gross margin, operating margin, net margin, ROE, and ROIC over several years. The main trap is: A one-year margin spike may be temporary rather than a new normal."
+              }
+            ]
           },
           "valuation": {
             "title": "Do not ignore valuation",
             "text": "Even a great business can be a poor investment at too high a price. Look at P/E, P/S, margins, growth, and alternatives.",
-            "details": "Valuation asks how much you pay for quality and future growth. P/E compares price with profit, P/S compares price with revenue, P/B compares price with book value, and DCF forces you to write explicit assumptions about cash flow. No multiple works alone: a high valuation may be justified by strong growth, but dangerous if expectations are already too optimistic.",
-            "example": "A company with a P/E of 45 is not automatically bad if it grows quickly, has high margins, and a long runway. But if growth slows and margins are already near a peak, that P/E may mean most good news is already priced in.",
-            "caseStudy": "Two companies can both trade at P/E 25. One grows 5% with cyclical margins. The other grows 18%, has stable free cash flow, and low debt. The same multiple does not mean the same value. Valuation must be read with quality, growth, and risk.",
+            "details": "Valuation asks how much you pay for quality and future growth. P/E compares price with profit, P/S compares price with revenue, P/B compares price with book value, and DCF forces you to write explicit assumptions about cash flow. No multiple works alone: a high valuation may be justified by strong growth, but dangerous if expectations are already too optimistic. Practical anchor: Compare P/E, P/S, free cash flow yield, growth, and your base-case scenario.",
+            "example": "A company with a P/E of 45 is not automatically bad if it grows quickly, has high margins, and a long runway. But if growth slows and margins are already near a peak, that P/E may mean most good news is already priced in. Practical anchor: Compare P/E, P/S, free cash flow yield, growth, and your base-case scenario.",
+            "caseStudy": "Two companies can both trade at P/E 25. One grows 5% with cyclical margins. The other grows 18%, has stable free cash flow, and low debt. The same multiple does not mean the same value. Valuation must be read with quality, growth, and risk. Decision check: A cheap multiple can be a warning if the business is shrinking.",
             "action": "Compare multiples with the company's history, competitors, and your own future growth scenario.",
             "checkOne": "P/E, P/S, or P/B are compared with growth and margins.",
             "checkTwo": "You have base, optimistic, and bad scenarios.",
             "checkThree": "You understand which expectations are already in the current price.",
-            "warning": "A cheap-looking stock is not always a bargain. Sometimes a low P/E is a warning sign, not a market gift."
+            "warning": "A cheap-looking stock is not always a bargain. Sometimes a low P/E is a warning sign, not a market gift.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Valuation connects business quality with the price you pay.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Valuation connects business quality with the price you pay. The practical anchor is: Compare P/E, P/S, free cash flow yield, growth, and your base-case scenario. The main trap is: A cheap multiple can be a warning if the business is shrinking."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Compare P/E, P/S, free cash flow yield, growth, and your base-case scenario.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Valuation connects business quality with the price you pay. The practical anchor is: Compare P/E, P/S, free cash flow yield, growth, and your base-case scenario. The main trap is: A cheap multiple can be a warning if the business is shrinking."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "A cheap multiple can be a warning if the business is shrinking.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Valuation connects business quality with the price you pay. The practical anchor is: Compare P/E, P/S, free cash flow yield, growth, and your base-case scenario. The main trap is: A cheap multiple can be a warning if the business is shrinking."
+              }
+            ]
           },
           "entry": {
             "title": "Define an entry rule",
             "text": "DCA reduces one-bad-timing risk, buying dips requires discipline, and lump sum does not fit everyone. Write the rule before buying.",
-            "details": "The entry point should not be an impulse. Different approaches exist: DCA spreads the buy over time, a limit price waits for the valuation you want, buying a dip requires predefined conditions, and lump sum can fit when the horizon is long and the money is not critical for life. The key is to know the rule before emotions start steering the action.",
-            "example": "Instead of buying everything today, you can decide: buy 25% now, 25% after earnings, 25% if the price reaches your valuation, and keep 25% for a better opportunity. This does not guarantee the lowest price, but it removes chaotic clicking.",
-            "caseStudy": "Nazar wants to buy after a 15% drop. If he does not know why it fell, this may be a trap. If the drop came from the whole market and the business is unchanged, a partial buy can make sense. If it came from lost customers, weaker guidance, or debt stress, the lower price does not make the idea better.",
+            "details": "The entry point should not be an impulse. Different approaches exist: DCA spreads the buy over time, a limit price waits for the valuation you want, buying a dip requires predefined conditions, and lump sum can fit when the horizon is long and the money is not critical for life. The key is to know the rule before emotions start steering the action. Practical anchor: Splitting a planned $1,200 purchase into 3-4 parts can reduce regret and timing pressure.",
+            "example": "Instead of buying everything today, you can decide: buy 25% now, 25% after earnings, 25% if the price reaches your valuation, and keep 25% for a better opportunity. This does not guarantee the lowest price, but it removes chaotic clicking. Practical anchor: Splitting a planned $1,200 purchase into 3-4 parts can reduce regret and timing pressure.",
+            "caseStudy": "Nazar wants to buy after a 15% drop. If he does not know why it fell, this may be a trap. If the drop came from the whole market and the business is unchanged, a partial buy can make sense. If it came from lost customers, weaker guidance, or debt stress, the lower price does not make the idea better. Decision check: Going all-in on the first idea leaves little room for mistakes.",
             "action": "Choose DCA, a limit price, or another clear entry scenario, plus the condition under which you will not buy.",
             "checkOne": "The buy is staged or tied to valuation, not FOMO.",
             "checkTwo": "You know what would make you add or stop.",
             "checkThree": "The rule for not buying is as clear as the rule for buying.",
-            "warning": "Do not average down automatically. Add only when the thesis is alive, not because the red number in the portfolio feels uncomfortable."
+            "warning": "Do not average down automatically. Add only when the thesis is alive, not because the red number in the portfolio feels uncomfortable.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Entry strategy controls timing risk and position size.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Entry strategy controls timing risk and position size. The practical anchor is: Splitting a planned $1,200 purchase into 3-4 parts can reduce regret and timing pressure. The main trap is: Going all-in on the first idea leaves little room for mistakes."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Splitting a planned $1,200 purchase into 3-4 parts can reduce regret and timing pressure.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Entry strategy controls timing risk and position size. The practical anchor is: Splitting a planned $1,200 purchase into 3-4 parts can reduce regret and timing pressure. The main trap is: Going all-in on the first idea leaves little room for mistakes."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "Going all-in on the first idea leaves little room for mistakes.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Entry strategy controls timing risk and position size. The practical anchor is: Splitting a planned $1,200 purchase into 3-4 parts can reduce regret and timing pressure. The main trap is: Going all-in on the first idea leaves little room for mistakes."
+              }
+            ]
           },
           "technicalIndicators": {
             "title": "Add basic technical indicators",
             "text": "Technical indicators do not replace business analysis, but they can help show trend, momentum, risk zones, and price behavior.",
-            "details": "For investors, technical analysis should be a supporting layer, not the center of the decision. Moving averages can show trend, RSI can show stretched momentum, volume can show market participation, and support/resistance can mark zones where price reacted before. But an indicator does not know whether the company is expensive, whether earnings are growing, or whether the business model is broken.",
-            "example": "If a quality company falls to a long-term moving average during a broad selloff, it may be worth deeper research. But if RSI is low because of a bad report and weaker guidance, oversold does not automatically mean attractive.",
-            "caseStudy": "Anna sees RSI below 30 and assumes the stock must bounce. Then she learns the company lost a major customer. The indicator showed weak momentum, but the reason was fundamental. The better order is: understand the reason for the move, then use indicators for timing.",
+            "details": "For investors, technical analysis should be a supporting layer, not the center of the decision. Moving averages can show trend, RSI can show stretched momentum, volume can show market participation, and support/resistance can mark zones where price reacted before. But an indicator does not know whether the company is expensive, whether earnings are growing, or whether the business model is broken. Practical anchor: Use moving averages, RSI, or support zones as secondary checks after business analysis.",
+            "example": "If a quality company falls to a long-term moving average during a broad selloff, it may be worth deeper research. But if RSI is low because of a bad report and weaker guidance, oversold does not automatically mean attractive. Practical anchor: Use moving averages, RSI, or support zones as secondary checks after business analysis.",
+            "caseStudy": "Anna sees RSI below 30 and assumes the stock must bounce. Then she learns the company lost a major customer. The indicator showed weak momentum, but the reason was fundamental. The better order is: understand the reason for the move, then use indicators for timing. Decision check: A signal can fail quickly when the company thesis or market regime changes.",
             "action": "Choose 2-3 simple indicators for timing, but connect every buy to a fundamental thesis and valuation.",
             "checkOne": "The indicator supports entry or risk control, not the reason to own the business.",
             "checkTwo": "Volume and news context are reviewed, not only one line on a chart.",
             "checkThree": "A stop or exit scenario exists if the idea is shorter than a long-term investment.",
-            "warning": "More indicators on a chart do not make the decision professional. Often they just create more noise."
+            "warning": "More indicators on a chart do not make the decision professional. Often they just create more noise.",
+            "quiz": [
+              {
+                "question": "What is the main idea of this lesson?",
+                "options": [
+                  "Technical indicators are tools for context, not investment theses.",
+                  "Buy what is popular before checking the numbers.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Technical indicators are tools for context, not investment theses. The practical anchor is: Use moving averages, RSI, or support zones as secondary checks after business analysis. The main trap is: A signal can fail quickly when the company thesis or market regime changes."
+              },
+              {
+                "question": "Which practical check fits this lesson best?",
+                "options": [
+                  "Use moving averages, RSI, or support zones as secondary checks after business analysis.",
+                  "Assume price movement alone explains the whole investment.",
+                  "Ignore the plan if the market feels exciting."
+                ],
+                "correctIndex": 0,
+                "explanation": "Technical indicators are tools for context, not investment theses. The practical anchor is: Use moving averages, RSI, or support zones as secondary checks after business analysis. The main trap is: A signal can fail quickly when the company thesis or market regime changes."
+              },
+              {
+                "question": "What mistake should a beginner avoid here?",
+                "options": [
+                  "A signal can fail quickly when the company thesis or market regime changes.",
+                  "Buy what is popular before checking the numbers.",
+                  "Assume price movement alone explains the whole investment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Technical indicators are tools for context, not investment theses. The practical anchor is: Use moving averages, RSI, or support zones as secondary checks after business analysis. The main trap is: A signal can fail quickly when the company thesis or market regime changes."
+              }
+            ]
           }
         },
         "risks": {
@@ -1823,6 +2368,28 @@
           }
         }
       }
+    },
+    "progress": {
+      "short": "{{completed}}/{{total}} done",
+      "title": "{{completed}} of {{total}} lessons completed",
+      "syncing": "Syncing",
+      "guestBanner": "Sign in to save progress across devices and earn course badges. You can still take every quiz as a guest.",
+      "completed": "Completed",
+      "doneMark": "Done",
+      "ariaLabel": "Course progress"
+    },
+    "quiz": {
+      "kicker": "Knowledge check",
+      "title": "Lesson quiz",
+      "questionCount": "Question {{current}} of {{total}}",
+      "correct": "Correct",
+      "incorrect": "Not quite",
+      "next": "Next question",
+      "finish": "Finish quiz",
+      "score": "Score: {{score}}/{{total}}",
+      "bestScore": "Best: {{score}}/{{total}}",
+      "notCompleted": "Not completed yet",
+      "completed": "Quiz complete: {{score}} of {{total}} correct."
     }
   },
   "auth": {
@@ -2049,5 +2616,44 @@
     "description": "The link may be old or mistyped. You can return to the tools or continue learning from the Academy.",
     "toolsCta": "Open tools",
     "learnCta": "Open Academy"
+  },
+  "profile": {
+    "fallbackName": "Investor",
+    "backToCourse": "Back to course",
+    "kicker": "Profile",
+    "title": "{{name}}",
+    "courseProgress": {
+      "kicker": "Learning progress",
+      "title": "{{completed}} of {{total}} stock lessons complete",
+      "ariaLabel": "Stock mini-course progress"
+    },
+    "badges": {
+      "kicker": "Badges",
+      "title": "Course achievements",
+      "earned": "Earned",
+      "locked": "Locked",
+      "items": {
+        "first_lesson": {
+          "mark": "1",
+          "title": "First lesson",
+          "description": "Complete your first stock mini-course lesson."
+        },
+        "half_course": {
+          "mark": "50",
+          "title": "Halfway there",
+          "description": "Complete at least half of the 17-lesson course."
+        },
+        "course_complete": {
+          "mark": "17",
+          "title": "Course complete",
+          "description": "Complete all 17 stock mini-course lessons."
+        },
+        "quiz_master": {
+          "mark": "A+",
+          "title": "Quiz master",
+          "description": "Finish every lesson quiz with a perfect score."
+        }
+      }
+    }
   }
 }

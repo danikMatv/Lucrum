@@ -82,6 +82,27 @@ CREATE TABLE IF NOT EXISTS learn_resources (
   updated_at TEXT
 );
 
+CREATE TABLE IF NOT EXISTS lesson_progress (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id),
+  topic TEXT NOT NULL,
+  lesson_id TEXT NOT NULL,
+  quiz_score INTEGER,
+  quiz_total INTEGER,
+  completed_at TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  UNIQUE(user_id, topic, lesson_id)
+);
+
+CREATE TABLE IF NOT EXISTS user_badges (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL REFERENCES users(id),
+  badge_id TEXT NOT NULL,
+  earned_at TEXT NOT NULL,
+  UNIQUE(user_id, badge_id)
+);
+
 CREATE TABLE IF NOT EXISTS tool_usage_events (
   id TEXT PRIMARY KEY,
   user_id TEXT,

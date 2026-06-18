@@ -130,3 +130,22 @@ export interface LearnResource {
   createdAt: string
   updatedAt: string
 }
+
+export interface LessonProgress {
+  id: string
+  userId: string
+  topic: string
+  lessonId: string
+  quizScore: number | null
+  quizTotal: number | null
+  completedAt: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface UserBadge {
+  id: string
+  userId: string
+  badgeId: string
+  earnedAt: string
+}

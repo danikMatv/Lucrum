@@ -12,6 +12,7 @@ import { LearnPage } from '../pages/LearnPage.tsx'
 import { LearnTopicPage } from '../pages/LearnTopicPage.tsx'
 import { NotFoundPage } from '../pages/NotFoundPage.tsx'
 import { PlaceholderPage } from '../pages/PlaceholderPage.tsx'
+import { ProfilePage } from '../pages/ProfilePage.tsx'
 import { PricingPage } from '../pages/PricingPage.tsx'
 import { ReverseDcfPage } from '../pages/ReverseDcfPage.tsx'
 import { StockPage } from '../pages/StockPage.tsx'
@@ -135,6 +136,14 @@ export const App = ({ locale }: AppProps) => {
           element={
             <ProtectedRoute requireAdmin>
               <AdminPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
             </ProtectedRoute>
           }
         />
