@@ -129,10 +129,13 @@ export const ReverseDcfPage = () => {
     discount: discountRate,
     terminal: terminalGrowth,
   }
+  const hasSolvedResult = result.impliedGrowthPercent !== null
   const unavailableValue = t('tools.reverseDcf.unavailable.value')
   const impliedGrowthValue =
     result.impliedGrowthPercent === null
-      ? unavailableValue
+      ? result.unavailableReason === 'above_range' || result.unavailableReason === 'below_range'
+        ? t('tools.reverseDcf.unavailable.outOfRangeValue')
+        : unavailableValue
       : `${percent.format(result.impliedGrowthPercent)}%`
   const yearFiveEpsValue =
     result.yearFiveEps === null ? unavailableValue : currency.format(result.yearFiveEps)
@@ -312,7 +315,7 @@ export const ReverseDcfPage = () => {
         <CalculatorActions
           onReset={handleReset}
           params={shareParams}
-          onSave={() => saveMutation.mutate()}
+          onSave={hasSolvedResult ? () => saveMutation.mutate() : undefined}
           isSaving={saveMutation.isPending}
           saveLabel={t('tools.common.saveScenario')}
         />
@@ -354,61 +357,63 @@ export const ReverseDcfPage = () => {
           </Panel>
         </div>
 
-        <StatGrid>
-          <StatCard
-            label={t('tools.reverseDcf.stats.marketPrice')}
-            value={currency.format(marketPrice)}
-            helper={t('tools.reverseDcf.explain.marketPrice')}
-          />
-          <StatCard
-            label={t('tools.reverseDcf.stats.modeledPrice')}
-            value={modeledPriceValue}
-            tone="primary"
-            helper={t('tools.reverseDcf.explain.modeledPrice')}
-          />
-          <StatCard
-            label={t('tools.reverseDcf.stats.yearFiveEps')}
-            value={yearFiveEpsValue}
-            helper={t('tools.reverseDcf.explain.yearFiveEps')}
-          />
-          <StatCard
-            label={t('tools.reverseDcf.stats.terminalValue')}
-            value={terminalValue}
-            helper={t('tools.reverseDcf.explain.terminalValue')}
-          />
-        </StatGrid>
+        {hasSolvedResult ? (
+          <StatGrid>
+            <StatCard
+              label={t('tools.reverseDcf.stats.marketPrice')}
+              value={currency.format(marketPrice)}
+              helper={t('tools.reverseDcf.explain.marketPrice')}
+            />
+            <StatCard
+              label={t('tools.reverseDcf.stats.modeledPrice')}
+              value={modeledPriceValue}
+              tone="primary"
+              helper={t('tools.reverseDcf.explain.modeledPrice')}
+            />
+            <StatCard
+              label={t('tools.reverseDcf.stats.yearFiveEps')}
+              value={yearFiveEpsValue}
+              helper={t('tools.reverseDcf.explain.yearFiveEps')}
+            />
+            <StatCard
+              label={t('tools.reverseDcf.stats.terminalValue')}
+              value={terminalValue}
+              helper={t('tools.reverseDcf.explain.terminalValue')}
+            />
+          </StatGrid>
+        ) : null}
 
         <Panel>
           <h2 className="text-lg font-bold text-text-primary">{t('tools.reverseDcf.guide.title')}</h2>
           <p className="mt-3 text-sm leading-6 text-text-muted">{t('tools.reverseDcf.guide.text')}</p>
         </Panel>
 
-        <div className="grid gap-5 xl:grid-cols-[0.8fr_1.2fr]">
-          <Panel>
-            <h2 className="text-lg font-bold text-text-primary">
-              {t('tools.reverseDcf.breakdown.title')}
-            </h2>
-            <dl className="mt-5 grid gap-4 text-sm">
-              <div className="flex items-center justify-between gap-4 border-b-[0.5px] border-border pb-3">
-                <dt className="text-text-muted">{t('tools.reverseDcf.breakdown.forecastPv')}</dt>
-                <dd className="font-bold text-text-primary">{forecastPvValue}</dd>
-              </div>
-              <div className="flex items-center justify-between gap-4 border-b-[0.5px] border-border pb-3">
-                <dt className="text-text-muted">{t('tools.reverseDcf.breakdown.terminalPv')}</dt>
-                <dd className="font-bold text-text-primary">{terminalPvValue}</dd>
-              </div>
-              <div className="flex items-center justify-between gap-4">
-                <dt className="text-text-muted">{t('tools.reverseDcf.breakdown.forecastYears')}</dt>
-                <dd className="font-bold text-text-primary">5</dd>
-              </div>
-            </dl>
-          </Panel>
+        {hasSolvedResult ? (
+          <div className="grid gap-5 xl:grid-cols-[0.8fr_1.2fr]">
+            <Panel>
+              <h2 className="text-lg font-bold text-text-primary">
+                {t('tools.reverseDcf.breakdown.title')}
+              </h2>
+              <dl className="mt-5 grid gap-4 text-sm">
+                <div className="flex items-center justify-between gap-4 border-b-[0.5px] border-border pb-3">
+                  <dt className="text-text-muted">{t('tools.reverseDcf.breakdown.forecastPv')}</dt>
+                  <dd className="font-bold text-text-primary">{forecastPvValue}</dd>
+                </div>
+                <div className="flex items-center justify-between gap-4 border-b-[0.5px] border-border pb-3">
+                  <dt className="text-text-muted">{t('tools.reverseDcf.breakdown.terminalPv')}</dt>
+                  <dd className="font-bold text-text-primary">{terminalPvValue}</dd>
+                </div>
+                <div className="flex items-center justify-between gap-4">
+                  <dt className="text-text-muted">{t('tools.reverseDcf.breakdown.forecastYears')}</dt>
+                  <dd className="font-bold text-text-primary">5</dd>
+                </div>
+              </dl>
+            </Panel>
 
-          <Panel>
-            <h2 className="mb-4 text-lg font-bold text-text-primary">
-              {t('tools.reverseDcf.table.title')}
-            </h2>
-            {result.rows.length > 0 ? (
+            <Panel>
+              <h2 className="mb-4 text-lg font-bold text-text-primary">
+                {t('tools.reverseDcf.table.title')}
+              </h2>
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[560px] text-left text-sm">
                   <thead className="text-text-subtle">
@@ -431,13 +436,9 @@ export const ReverseDcfPage = () => {
                   </tbody>
                 </table>
               </div>
-            ) : (
-              <p className="text-sm leading-6 text-text-muted">
-                {t('tools.reverseDcf.table.unavailable')}
-              </p>
-            )}
-          </Panel>
-        </div>
+            </Panel>
+          </div>
+        ) : null}
       </div>
     </SidebarLayout>
   )

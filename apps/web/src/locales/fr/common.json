@@ -478,7 +478,8 @@
           "invalid_rates": "Le taux d'actualisation doit être supérieur à la croissance terminale.",
           "below_range": "Le prix de marché exige une croissance sous la plage modélisée ; aucune trajectoire EPS exacte n’est affichée.",
           "above_range": "Le prix de marché exige une croissance au-dessus de la plage modélisée ; aucune trajectoire EPS exacte n’est affichée."
-        }
+        },
+        "outOfRangeValue": "Hors plage"
       },
       "stats": {
         "marketPrice": "Prix de marché",
@@ -827,7 +828,8 @@
           "invalid_rates": "Le taux d'actualisation doit être supérieur à la croissance terminale.",
           "below_range": "Le prix de marché exige une croissance sous la plage modélisée ; aucune trajectoire EPS exacte n’est affichée.",
           "above_range": "Le prix de marché exige une croissance au-dessus de la plage modélisée ; aucune trajectoire EPS exacte n’est affichée."
-        }
+        },
+        "outOfRangeValue": "Hors plage"
       },
       "stats": {
         "marketPrice": "Prix de marché",

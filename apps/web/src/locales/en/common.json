@@ -478,7 +478,8 @@
           "invalid_rates": "The discount rate must be higher than terminal growth.",
           "below_range": "The market price needs growth below the modeled range, so no exact EPS trajectory is shown.",
           "above_range": "The market price needs growth above the modeled range, so no exact EPS trajectory is shown."
-        }
+        },
+        "outOfRangeValue": "Out of range"
       },
       "stats": {
         "marketPrice": "Market price",
@@ -827,7 +828,8 @@
           "invalid_rates": "The discount rate must be higher than terminal growth.",
           "below_range": "The market price needs growth below the modeled range, so no exact EPS trajectory is shown.",
           "above_range": "The market price needs growth above the modeled range, so no exact EPS trajectory is shown."
-        }
+        },
+        "outOfRangeValue": "Out of range"
       },
       "stats": {
         "marketPrice": "Market price",
