@@ -29,4 +29,8 @@ export const learnProgressService = {
     const response = await apiClient.get<ApiResponse<UserBadge[]>>('/api/learn/badges')
     return unwrapApiResponse(response.data)
   },
+  getBadgeDefinitions: async () => {
+    const response = await apiClient.get<ApiResponse<string[]>>('/api/learn/badge-definitions')
+    return unwrapApiResponse(response.data)
+  },
 }

@@ -781,6 +781,21 @@ export const listUserBadges = async (db: D1Database, userId: string) => {
   return result.results.map(mapUserBadge)
 }
 
+export const countTopicsWithOverviewComplete = async (
+  db: D1Database,
+  userId: string,
+  topics: string[],
+) => {
+  const placeholders = topics.map(() => '?').join(', ')
+  const row = await db
+    .prepare(
+      `SELECT COUNT(DISTINCT topic) AS count FROM lesson_progress WHERE user_id = ? AND lesson_id = 'overview' AND topic IN (${placeholders})`,
+    )
+    .bind(userId, ...topics)
+    .first<CountRow>()
+  return row?.count ?? 0
+}
+
 export const insertUserBadge = async (db: D1Database, userId: string, badgeId: string) => {
   const id = crypto.randomUUID()
   const earnedAt = nowIso()

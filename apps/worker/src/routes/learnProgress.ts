@@ -3,6 +3,7 @@ import { Hono } from 'hono'
 import type { Context } from 'hono'
 import { z } from 'zod'
 import {
+  countTopicsWithOverviewComplete,
   insertUserBadge,
   listLessonProgress,
   listUserBadges,
@@ -34,7 +35,16 @@ const stockLessons = [
   'technicalIndicators',
 ] as const
 
-const badgeIds = ['first_lesson', 'half_course', 'course_complete', 'quiz_master'] as const
+const overviewTopics = ['bonds', 'etfs-funds', 'crypto', 'venture', 'cash-risk'] as const
+const topicCompleteBadgeIds = overviewTopics.map((topic) => `topic_complete:${topic}` as const)
+const badgeIds = [
+  'first_lesson',
+  'half_course',
+  'course_complete',
+  'quiz_master',
+  ...topicCompleteBadgeIds,
+  'explorer',
+] as const
 
 const topicSchema = z.enum(['bonds', 'stocks', 'etfs-funds', 'crypto', 'venture', 'cash-risk'])
 const stockLessonSchema = z.enum(stockLessons)
@@ -84,11 +94,7 @@ const isPerfectCourse = (progress: LessonProgress[]) => {
   return stockLessons.every((lesson) => perfectLessons.has(lesson))
 }
 
-const calculateBadges = (topic: string, progress: LessonProgress[]) => {
-  if (topic !== 'stocks') {
-    return []
-  }
-
+const calculateStockBadges = (progress: LessonProgress[]) => {
   const completedCount = new Set(progress.map((item) => item.lessonId)).size
   const earned: Array<(typeof badgeIds)[number]> = []
 
@@ -107,6 +113,23 @@ const calculateBadges = (topic: string, progress: LessonProgress[]) => {
 
   return earned
 }
+
+const calculateTopicBadges = (topic: string, progress: LessonProgress[], overviewCount: number) => {
+  if (!overviewTopics.includes(topic as (typeof overviewTopics)[number])) {
+    return []
+  }
+
+  const earned: Array<(typeof badgeIds)[number]> = []
+  if (progress.some((item) => item.lessonId === 'overview')) {
+    earned.push(`topic_complete:${topic}` as (typeof badgeIds)[number])
+  }
+  if (overviewCount >= 3) {
+    earned.push('explorer')
+  }
+  return earned
+}
+
+learnProgress.get('/badge-definitions', (c) => c.json(createSuccess([...badgeIds])))
 
 learnProgress.get('/badges', authMiddleware, async (c) => {
   const user = c.get('user')
@@ -138,8 +161,8 @@ learnProgress.post(
       return c.json(createError('VALIDATION_ERROR', 'Unknown stock lesson'), 400)
     }
 
-    if (topic !== 'stocks') {
-      return c.json(createError('VALIDATION_ERROR', 'Progress is only available for stocks'), 400)
+    if (topic !== 'stocks' && lesson !== 'overview') {
+      return c.json(createError('VALIDATION_ERROR', 'Unknown topic lesson'), 400)
     }
 
     const progress = await upsertLessonProgress(c.env.DB, {
@@ -152,7 +175,14 @@ learnProgress.post(
 
     const allProgress = await listLessonProgress(c.env.DB, user.id, topic)
     const existingBadges = new Set((await listUserBadges(c.env.DB, user.id)).map((badge) => badge.badgeId))
-    const earnedBadges = calculateBadges(topic, allProgress)
+    const overviewCount =
+      topic === 'stocks'
+        ? 0
+        : await countTopicsWithOverviewComplete(c.env.DB, user.id, [...overviewTopics])
+    const earnedBadges =
+      topic === 'stocks'
+        ? calculateStockBadges(allProgress)
+        : calculateTopicBadges(topic, allProgress, overviewCount)
     const newBadges = earnedBadges.filter((badgeId) => !existingBadges.has(badgeId))
 
     await Promise.all(newBadges.map((badgeId) => insertUserBadge(c.env.DB, user.id, badgeId)))

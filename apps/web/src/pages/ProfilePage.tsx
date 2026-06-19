@@ -5,9 +5,10 @@ import { learnProgressService } from '../services/learnProgressService.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
 import { useLessonProgress } from '../hooks/useLessonProgress.ts'
 import { stockMiniCourseLessons } from '../data/stockMiniCourse.ts'
+import { learnTopics } from '../data/learnTopics.ts'
 import { parseApiError } from '../utils/errorHandler.ts'
 
-const badgeIds = ['first_lesson', 'half_course', 'course_complete', 'quiz_master'] as const
+const overviewTopics = learnTopics.filter((topic) => topic.id !== 'stocks')
 
 export const ProfilePage = () => {
   const { t } = useTranslation('common')
@@ -20,15 +21,25 @@ export const ProfilePage = () => {
     queryFn: learnProgressService.getBadges,
   })
 
+  const badgeDefinitionsQuery = useQuery({
+    queryKey: ['learn', 'badge-definitions'],
+    queryFn: learnProgressService.getBadgeDefinitions,
+  })
+
   const earnedBadges = new Set((badgesQuery.data ?? []).map((badge) => badge.badgeId))
   const displayName =
     [user?.firstName, user?.lastName].filter(Boolean).join(' ').trim() ||
     user?.email ||
     t('profile.fallbackName')
   const progressPercent = Math.round((completedCount / totalLessons) * 100)
-  const errorMessage = badgesQuery.error
-    ? parseApiError(badgesQuery.error, t('errors.generic'), t('errors.validation'))
+  const errorMessage = badgesQuery.error ?? badgeDefinitionsQuery.error
+    ? parseApiError(
+        badgesQuery.error ?? badgeDefinitionsQuery.error,
+        t('errors.generic'),
+        t('errors.validation'),
+      )
     : ''
+  const badgeIds = badgeDefinitionsQuery.data ?? []
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
@@ -90,10 +101,45 @@ export const ProfilePage = () => {
         </section>
 
         <section className="rounded-lg border-[0.5px] border-border bg-surface p-6">
+          <p className="text-sm font-semibold uppercase text-primary">
+            {t('profile.topicProgress.kicker')}
+          </p>
+          <h2 className="mt-2 text-2xl font-bold text-text-primary">
+            {t('profile.topicProgress.title')}
+          </h2>
+          <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-5">
+            {overviewTopics.map((topic) => {
+              const badgeId = `topic_complete:${topic.id}`
+              const isComplete = earnedBadges.has(badgeId)
+
+              return (
+                <article
+                  key={topic.id}
+                  className={`rounded-lg border-[0.5px] p-4 ${
+                    isComplete
+                      ? 'border-primary/40 bg-primary-dim'
+                      : 'border-border bg-background/40 opacity-70'
+                  }`}
+                >
+                  <p className="text-base font-bold text-text-primary">
+                    {t(`learnAcademy.topics.${topic.id}.title`)}
+                  </p>
+                  <p className="mt-3 text-xs font-semibold uppercase text-primary">
+                    {isComplete
+                      ? t('profile.topicProgress.completed')
+                      : t('profile.topicProgress.notCompleted')}
+                  </p>
+                </article>
+              )
+            })}
+          </div>
+        </section>
+
+        <section className="rounded-lg border-[0.5px] border-border bg-surface p-6">
           <p className="text-sm font-semibold uppercase text-primary">{t('profile.badges.kicker')}</p>
           <h2 className="mt-2 text-2xl font-bold text-text-primary">{t('profile.badges.title')}</h2>
 
-          {badgesQuery.isLoading ? (
+          {badgesQuery.isLoading || badgeDefinitionsQuery.isLoading ? (
             <p className="mt-5 text-sm text-text-muted">{t('common.loading')}</p>
           ) : (
             <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
@@ -110,13 +156,13 @@ export const ProfilePage = () => {
                     }`}
                   >
                     <div className="grid h-12 w-12 place-items-center rounded-md border-[0.5px] border-border bg-surface text-sm font-black uppercase text-primary">
-                      {t(`profile.badges.items.${badgeId}.mark`)}
+                      {t(`profile.badges.items.${badgeId}.mark`, { nsSeparator: false })}
                     </div>
                     <h3 className="mt-4 text-lg font-bold text-text-primary">
-                      {t(`profile.badges.items.${badgeId}.title`)}
+                      {t(`profile.badges.items.${badgeId}.title`, { nsSeparator: false })}
                     </h3>
                     <p className="mt-2 text-sm leading-6 text-text-muted">
-                      {t(`profile.badges.items.${badgeId}.description`)}
+                      {t(`profile.badges.items.${badgeId}.description`, { nsSeparator: false })}
                     </p>
                     <p className="mt-4 text-xs font-semibold uppercase text-primary">
                       {isEarned ? t('profile.badges.earned') : t('profile.badges.locked')}

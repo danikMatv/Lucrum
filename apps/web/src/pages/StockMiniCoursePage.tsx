@@ -1,40 +1,17 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
-import { LessonQuiz, type LessonQuizQuestion } from '../components/learn/LessonQuiz.tsx'
+import { LessonQuiz } from '../components/learn/LessonQuiz.tsx'
 import {
   AssetAllocationDonut,
   CompoundGrowthChart,
   RiskProfileScale,
   ValuationGauge,
 } from '../components/learn/illustrations'
+import { getQuizQuestions } from '../components/learn/quizUtils.ts'
 import { stockMiniCourseLessons } from '../data/stockMiniCourse.ts'
 import { useLessonProgress } from '../hooks/useLessonProgress.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
-
-const isQuizQuestion = (value: unknown): value is LessonQuizQuestion => {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
-    return false
-  }
-
-  const candidate = value as {
-    question?: unknown
-    options?: unknown
-    correctIndex?: unknown
-    explanation?: unknown
-  }
-
-  return (
-    typeof candidate.question === 'string' &&
-    Array.isArray(candidate.options) &&
-    candidate.options.every((option) => typeof option === 'string') &&
-    typeof candidate.correctIndex === 'number' &&
-    typeof candidate.explanation === 'string'
-  )
-}
-
-const getQuizQuestions = (value: unknown) =>
-  Array.isArray(value) ? value.filter(isQuizQuestion) : []
 
 const lessonIllustrations: Partial<Record<(typeof stockMiniCourseLessons)[number], ReactNode>> = {
   riskProfile: <RiskProfileScale />,

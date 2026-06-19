@@ -1381,7 +1381,69 @@
             "term": "Duration",
             "definition": "A measure of how sensitive a bond or bond fund is to interest-rate changes."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "If you buy a bond, what role do you take?",
+            "options": [
+              "Lender to the issuer",
+              "Owner of the issuer",
+              "Manager of the issuer"
+            ],
+            "correctIndex": 0,
+            "explanation": "A bond is debt. The buyer lends money and expects interest plus repayment at maturity."
+          },
+          {
+            "question": "What usually happens to existing bond prices when market rates rise sharply?",
+            "options": [
+              "They often fall",
+              "They always rise",
+              "They become identical to cash"
+            ],
+            "correctIndex": 0,
+            "explanation": "New bonds may offer higher yields, so older lower-yield bonds usually need a lower price to compete."
+          },
+          {
+            "question": "Why can a high bond yield be a warning?",
+            "options": [
+              "It may reflect higher credit or duration risk",
+              "It guarantees a bargain",
+              "It removes default risk"
+            ],
+            "correctIndex": 0,
+            "explanation": "Yield is compensation for risk. A very high yield often means the market is worried about repayment, rates, or liquidity."
+          },
+          {
+            "question": "Which term measures sensitivity to interest-rate changes?",
+            "options": [
+              "Duration",
+              "Coupon",
+              "Maturity date only"
+            ],
+            "correctIndex": 0,
+            "explanation": "Duration estimates how much a bond or bond fund may move when rates change."
+          },
+          {
+            "question": "When can bonds fit better than stocks?",
+            "options": [
+              "For income or a goal with a clearer date",
+              "For money you want to double quickly",
+              "For avoiding all inflation risk"
+            ],
+            "correctIndex": 0,
+            "explanation": "Bonds can help stabilize part of a portfolio or match known future cash needs."
+          },
+          {
+            "question": "A user needs tuition money in two years. What is the better bond lesson?",
+            "options": [
+              "Avoid treating long-duration bond funds like cash",
+              "Buy only the highest-yield bond",
+              "Ignore issuer quality"
+            ],
+            "correctIndex": 0,
+            "explanation": "A near-term goal needs stability. Long duration can still fall when rates rise."
+          }
+        ]
       },
       "stocks": {
         "level": "Beginner",
@@ -2905,7 +2967,69 @@
             "term": "Distribution",
             "definition": "Income or gains paid out by a fund to investors."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "What is the main benefit of a broad ETF or index fund?",
+            "options": [
+              "Diversification through one instrument",
+              "Guaranteed positive return",
+              "No fees of any kind"
+            ],
+            "correctIndex": 0,
+            "explanation": "A broad fund can hold many securities, reducing dependence on one company."
+          },
+          {
+            "question": "What does expense ratio mean?",
+            "options": [
+              "The annual fund cost as a percentage of assets",
+              "The fund dividend rate",
+              "The broker account balance"
+            ],
+            "correctIndex": 0,
+            "explanation": "Expense ratio is the recurring cost investors pay for owning the fund."
+          },
+          {
+            "question": "What is overlap risk?",
+            "options": [
+              "Owning several funds that hold many of the same assets",
+              "Owning one diversified fund",
+              "Holding cash for emergencies"
+            ],
+            "correctIndex": 0,
+            "explanation": "Too many funds can still behave like one concentrated portfolio if their holdings overlap."
+          },
+          {
+            "question": "Why should an investor compare fees?",
+            "options": [
+              "Small annual fees compound over long horizons",
+              "Higher fees always mean better performance",
+              "Fees only matter for bonds"
+            ],
+            "correctIndex": 0,
+            "explanation": "A fee difference that looks tiny each year can become meaningful over decades."
+          },
+          {
+            "question": "When can ETFs fit a beginner well?",
+            "options": [
+              "For a simple monthly investing plan",
+              "Only for day trading",
+              "Only after analyzing 100 companies"
+            ],
+            "correctIndex": 0,
+            "explanation": "ETFs can be a practical base while the investor learns individual security analysis."
+          },
+          {
+            "question": "A user owns five US large-cap ETFs and thinks they are diversified. What should they check?",
+            "options": [
+              "Underlying holdings and sector overlap",
+              "Only the fund names",
+              "Only yesterday’s price change"
+            ],
+            "correctIndex": 0,
+            "explanation": "Fund names can differ while holdings are nearly identical."
+          }
+        ]
       },
       "crypto": {
         "level": "High risk",
@@ -2952,7 +3076,69 @@
             "term": "Stablecoin",
             "definition": "A token designed to track another asset, often the U.S. dollar, with its own reserve and issuer risks."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "What makes many crypto assets different from stocks or bonds?",
+            "options": [
+              "They often lack cash flows or ownership claims",
+              "They always pay dividends",
+              "They are insured like bank deposits"
+            ],
+            "correctIndex": 0,
+            "explanation": "Many tokens do not represent business ownership or contractual interest payments."
+          },
+          {
+            "question": "What is custody risk in crypto?",
+            "options": [
+              "Losing access to keys or relying on a weak platform",
+              "A company missing earnings",
+              "A bond issuer changing coupon dates"
+            ],
+            "correctIndex": 0,
+            "explanation": "Control of keys and platform reliability are central crypto risks."
+          },
+          {
+            "question": "Which mistake is most dangerous for a beginner?",
+            "options": [
+              "Going all-in because of hype",
+              "Using a small predefined risk budget",
+              "Learning how wallets work first"
+            ],
+            "correctIndex": 0,
+            "explanation": "Crypto volatility can be extreme, so position size matters."
+          },
+          {
+            "question": "What is a stablecoin supposed to do?",
+            "options": [
+              "Track a reference asset such as a currency",
+              "Guarantee profit",
+              "Remove all issuer and reserve risk"
+            ],
+            "correctIndex": 0,
+            "explanation": "Stablecoins aim to track a peg, but design, reserve, and platform risks still matter."
+          },
+          {
+            "question": "When might crypto fit a portfolio?",
+            "options": [
+              "As a small speculative allocation within a risk budget",
+              "As the emergency fund",
+              "As a replacement for all diversified investing"
+            ],
+            "correctIndex": 0,
+            "explanation": "A small allocation can express a technology view without threatening the whole plan."
+          },
+          {
+            "question": "A user cannot explain how they would recover a wallet. What is the best action?",
+            "options": [
+              "Pause and learn custody before buying",
+              "Buy first and learn later",
+              "Share the seed phrase with friends"
+            ],
+            "correctIndex": 0,
+            "explanation": "Operational mistakes can permanently destroy crypto value."
+          }
+        ]
       },
       "venture": {
         "level": "Advanced risk",
@@ -2999,7 +3185,69 @@
             "term": "Liquidity",
             "definition": "How easily an investment can be sold for cash."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "What is a core feature of venture investing?",
+            "options": [
+              "High failure risk with rare large winners",
+              "Daily liquidity",
+              "Guaranteed interest payments"
+            ],
+            "correctIndex": 0,
+            "explanation": "Many startups fail, so outcomes are usually uneven and uncertain."
+          },
+          {
+            "question": "What does dilution mean?",
+            "options": [
+              "Your ownership percentage can shrink after new financing",
+              "The company repays your principal",
+              "The investment becomes cash overnight"
+            ],
+            "correctIndex": 0,
+            "explanation": "New shares or instruments can reduce the investor’s share of future upside."
+          },
+          {
+            "question": "Why is illiquidity important?",
+            "options": [
+              "You may be unable to sell for years",
+              "It guarantees higher return",
+              "It removes valuation risk"
+            ],
+            "correctIndex": 0,
+            "explanation": "Private investments often lock capital until an exit event."
+          },
+          {
+            "question": "Which mistake should beginners avoid?",
+            "options": [
+              "Treating one startup as a lottery ticket with too much capital",
+              "Reading the terms",
+              "Asking about runway"
+            ],
+            "correctIndex": 0,
+            "explanation": "Venture risk should be sized carefully because total loss is plausible."
+          },
+          {
+            "question": "What does runway describe?",
+            "options": [
+              "How long a startup can operate before needing more funding",
+              "The stock exchange opening time",
+              "A bond maturity schedule"
+            ],
+            "correctIndex": 0,
+            "explanation": "Runway links cash, burn rate, and financing risk."
+          },
+          {
+            "question": "A startup looks exciting but the investor has no terms or exit path. What should happen?",
+            "options": [
+              "Do not invest until terms and risks are clear",
+              "Invest because the story is exciting",
+              "Ignore dilution risk"
+            ],
+            "correctIndex": 0,
+            "explanation": "Private deals require extra clarity because liquidity and information are limited."
+          }
+        ]
       },
       "cash-risk": {
         "level": "Foundation",
@@ -3046,7 +3294,69 @@
             "term": "Rebalancing",
             "definition": "Adjusting a portfolio back toward its target allocation."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "What is the job of an emergency fund?",
+            "options": [
+              "Cover required expenses without selling investments",
+              "Maximize long-term return",
+              "Replace all investing"
+            ],
+            "correctIndex": 0,
+            "explanation": "Emergency cash prevents forced selling during personal or market stress."
+          },
+          {
+            "question": "What is inflation risk for cash?",
+            "options": [
+              "Cash can lose purchasing power over time",
+              "Cash always beats stocks",
+              "Cash cannot be spent"
+            ],
+            "correctIndex": 0,
+            "explanation": "Stable nominal value does not guarantee stable real value."
+          },
+          {
+            "question": "What does rebalancing do?",
+            "options": [
+              "Returns a portfolio toward its target allocation",
+              "Guarantees profit",
+              "Eliminates all losses"
+            ],
+            "correctIndex": 0,
+            "explanation": "Rebalancing controls drift after markets move."
+          },
+          {
+            "question": "Which mistake weakens a financial base?",
+            "options": [
+              "Having no emergency reserve",
+              "Separating short-term and long-term money",
+              "Writing an allocation plan"
+            ],
+            "correctIndex": 0,
+            "explanation": "Without a reserve, normal expenses can disrupt long-term investing."
+          },
+          {
+            "question": "When does cash fit best?",
+            "options": [
+              "Short-term goals, emergencies, and peace of mind",
+              "All long-term growth needs",
+              "Speculating on volatile assets"
+            ],
+            "correctIndex": 0,
+            "explanation": "Cash has a role, but it is not a complete long-term growth strategy."
+          },
+          {
+            "question": "A user panics and sells stocks after every drop. What lesson applies?",
+            "options": [
+              "Choose an allocation they can actually hold",
+              "Increase risk until returns improve",
+              "Remove all cash immediately"
+            ],
+            "correctIndex": 0,
+            "explanation": "The best allocation is one the investor can maintain through stress."
+          }
+        ]
       }
     },
     "progress": {
@@ -3332,8 +3642,44 @@
           "mark": "A+",
           "title": "Quiz master",
           "description": "Finish every lesson quiz with a perfect score."
+        },
+        "topic_complete:bonds": {
+          "mark": "BD",
+          "title": "Bond basics",
+          "description": "Complete the bonds overview quiz."
+        },
+        "topic_complete:etfs-funds": {
+          "mark": "ETF",
+          "title": "Fund builder",
+          "description": "Complete the ETFs and funds overview quiz."
+        },
+        "topic_complete:crypto": {
+          "mark": "CR",
+          "title": "Crypto aware",
+          "description": "Complete the crypto overview quiz."
+        },
+        "topic_complete:venture": {
+          "mark": "VC",
+          "title": "Venture lens",
+          "description": "Complete the venture overview quiz."
+        },
+        "topic_complete:cash-risk": {
+          "mark": "CF",
+          "title": "Risk foundation",
+          "description": "Complete the cash and risk overview quiz."
+        },
+        "explorer": {
+          "mark": "EX",
+          "title": "Explorer",
+          "description": "Complete overview quizzes in at least three learning topics."
         }
       }
+    },
+    "topicProgress": {
+      "kicker": "Topic progress",
+      "title": "Overview topics",
+      "completed": "Completed",
+      "notCompleted": "Not completed"
     }
   }
 }

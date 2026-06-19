@@ -1381,7 +1381,69 @@
             "term": "Duration",
             "definition": "Une mesure de la sensibilité d'une obligation ou d'un fonds obligataire aux variations de taux."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "Quand vous achetez une obligation, quel rôle prenez-vous ?",
+            "options": [
+              "Prêteur de l’émetteur",
+              "Propriétaire de l’émetteur",
+              "Gestionnaire de l’émetteur"
+            ],
+            "correctIndex": 0,
+            "explanation": "Une obligation est une dette. L’acheteur prête de l’argent et attend des intérêts plus le remboursement à l’échéance."
+          },
+          {
+            "question": "Que se passe-t-il souvent avec les obligations existantes quand les taux montent fortement ?",
+            "options": [
+              "Leur prix baisse souvent",
+              "Elles montent toujours",
+              "Elles deviennent identiques au cash"
+            ],
+            "correctIndex": 0,
+            "explanation": "Les nouvelles obligations peuvent offrir de meilleurs rendements, donc les anciennes doivent souvent baisser pour rester compétitives."
+          },
+          {
+            "question": "Pourquoi un rendement élevé peut-il être un avertissement ?",
+            "options": [
+              "Il peut refléter plus de risque de crédit ou de duration",
+              "Il garantit une bonne affaire",
+              "Il supprime le risque de défaut"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le rendement rémunère le risque. Un rendement très élevé signale souvent une inquiétude du marché."
+          },
+          {
+            "question": "Quel terme mesure la sensibilité aux variations de taux ?",
+            "options": [
+              "Duration",
+              "Coupon",
+              "Seulement la date d’échéance"
+            ],
+            "correctIndex": 0,
+            "explanation": "La duration estime la variation possible d’une obligation ou d’un fonds obligataire quand les taux changent."
+          },
+          {
+            "question": "Quand les obligations peuvent-elles mieux convenir que les actions ?",
+            "options": [
+              "Pour du revenu ou un objectif avec une date plus claire",
+              "Pour doubler vite son argent",
+              "Pour éviter tout risque d’inflation"
+            ],
+            "correctIndex": 0,
+            "explanation": "Les obligations peuvent stabiliser une partie du portefeuille ou correspondre à un besoin futur connu."
+          },
+          {
+            "question": "Un utilisateur aura besoin d’argent pour des études dans deux ans. Quelle leçon est la plus utile ?",
+            "options": [
+              "Ne pas traiter un fonds obligataire long comme du cash",
+              "Acheter seulement le rendement le plus élevé",
+              "Ignorer la qualité de l’émetteur"
+            ],
+            "correctIndex": 0,
+            "explanation": "Un objectif proche demande de la stabilité. Une duration longue peut encore baisser si les taux montent."
+          }
+        ]
       },
       "stocks": {
         "level": "Débutant",
@@ -2905,7 +2967,69 @@
             "term": "Distribution",
             "definition": "Revenu ou gains versés par un fonds aux investisseurs."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "Quel est le principal avantage d’un ETF large ou d’un fonds indiciel ?",
+            "options": [
+              "Diversifier avec un seul instrument",
+              "Garantir un rendement positif",
+              "N’avoir aucun frais"
+            ],
+            "correctIndex": 0,
+            "explanation": "Un fonds large peut contenir de nombreux titres et réduire la dépendance à une seule entreprise."
+          },
+          {
+            "question": "Que signifie le ratio de frais ?",
+            "options": [
+              "Le coût annuel du fonds en pourcentage des actifs",
+              "Le taux de dividende du fonds",
+              "Le solde du compte de courtage"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le ratio de frais est le coût récurrent payé pour détenir le fonds."
+          },
+          {
+            "question": "Qu’est-ce que le risque de chevauchement ?",
+            "options": [
+              "Détenir plusieurs fonds avec beaucoup des mêmes actifs",
+              "Détenir un seul fonds diversifié",
+              "Garder du cash pour les urgences"
+            ],
+            "correctIndex": 0,
+            "explanation": "Trop de fonds peuvent se comporter comme un portefeuille concentré si leurs positions se répètent."
+          },
+          {
+            "question": "Pourquoi comparer les frais ?",
+            "options": [
+              "Les petits frais annuels se capitalisent sur de longues périodes",
+              "Des frais plus élevés garantissent une meilleure performance",
+              "Les frais ne comptent que pour les obligations"
+            ],
+            "correctIndex": 0,
+            "explanation": "Une petite différence annuelle peut devenir significative sur plusieurs décennies."
+          },
+          {
+            "question": "Quand les ETF conviennent-ils bien à un débutant ?",
+            "options": [
+              "Pour un plan d’investissement mensuel simple",
+              "Seulement pour le day trading",
+              "Seulement après avoir analysé 100 entreprises"
+            ],
+            "correctIndex": 0,
+            "explanation": "Les ETF peuvent servir de base pendant que l’investisseur apprend l’analyse individuelle."
+          },
+          {
+            "question": "Un utilisateur possède cinq ETF grandes capitalisations US et pense être diversifié. Que vérifier ?",
+            "options": [
+              "Les positions sous-jacentes et le chevauchement sectoriel",
+              "Seulement les noms des fonds",
+              "Seulement la variation d’hier"
+            ],
+            "correctIndex": 0,
+            "explanation": "Les noms peuvent différer alors que les positions sont presque identiques."
+          }
+        ]
       },
       "crypto": {
         "level": "Risque élevé",
@@ -2952,7 +3076,69 @@
             "term": "Stablecoin",
             "definition": "Token conçu pour suivre un autre actif, souvent le dollar, avec ses propres risques de réserves et d'émetteur."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "Qu’est-ce qui distingue beaucoup de crypto-actifs des actions ou obligations ?",
+            "options": [
+              "Ils manquent souvent de cash-flows ou de droits de propriété",
+              "Ils paient toujours des dividendes",
+              "Ils sont assurés comme les dépôts bancaires"
+            ],
+            "correctIndex": 0,
+            "explanation": "Beaucoup de tokens ne représentent ni propriété d’entreprise ni paiement contractuel d’intérêts."
+          },
+          {
+            "question": "Qu’est-ce que le risque de conservation en crypto ?",
+            "options": [
+              "Perdre l’accès aux clés ou dépendre d’une plateforme fragile",
+              "Une entreprise rate ses résultats",
+              "Un émetteur obligataire change les coupons"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le contrôle des clés et la fiabilité de la plateforme sont des risques centraux."
+          },
+          {
+            "question": "Quelle erreur est la plus dangereuse pour un débutant ?",
+            "options": [
+              "Tout investir à cause du buzz",
+              "Utiliser un petit budget de risque défini",
+              "Apprendre les wallets d’abord"
+            ],
+            "correctIndex": 0,
+            "explanation": "La volatilité crypto peut être extrême, donc la taille de position compte."
+          },
+          {
+            "question": "Que doit faire un stablecoin ?",
+            "options": [
+              "Suivre un actif de référence comme une devise",
+              "Garantir un profit",
+              "Supprimer tous les risques de réserve"
+            ],
+            "correctIndex": 0,
+            "explanation": "Un stablecoin vise un ancrage, mais les risques de conception, réserve et plateforme restent présents."
+          },
+          {
+            "question": "Quand la crypto peut-elle entrer dans un portefeuille ?",
+            "options": [
+              "Comme petite allocation spéculative dans un budget de risque",
+              "Comme fonds d’urgence",
+              "Comme remplacement de toute diversification"
+            ],
+            "correctIndex": 0,
+            "explanation": "Une petite allocation peut exprimer une thèse technologique sans menacer le plan entier."
+          },
+          {
+            "question": "Un utilisateur ne sait pas récupérer un wallet. Quelle est la meilleure action ?",
+            "options": [
+              "Faire une pause et apprendre la conservation avant d’acheter",
+              "Acheter d’abord et apprendre ensuite",
+              "Partager la seed phrase"
+            ],
+            "correctIndex": 0,
+            "explanation": "Les erreurs opérationnelles peuvent détruire définitivement la valeur crypto."
+          }
+        ]
       },
       "venture": {
         "level": "Risque avancé",
@@ -2999,7 +3185,69 @@
             "term": "Liquidité",
             "definition": "La facilité avec laquelle un investissement peut être vendu contre du cash."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "Quelle est une caractéristique clé du venture ?",
+            "options": [
+              "Risque élevé d’échec avec quelques grands gagnants",
+              "Liquidité quotidienne",
+              "Intérêts garantis"
+            ],
+            "correctIndex": 0,
+            "explanation": "Beaucoup de startups échouent, donc les résultats sont très inégaux."
+          },
+          {
+            "question": "Que signifie la dilution ?",
+            "options": [
+              "Votre pourcentage de propriété peut baisser après un financement",
+              "L’entreprise rembourse le principal",
+              "L’investissement devient liquide du jour au lendemain"
+            ],
+            "correctIndex": 0,
+            "explanation": "De nouvelles actions ou instruments peuvent réduire la part de l’investisseur."
+          },
+          {
+            "question": "Pourquoi l’illiquidité est-elle importante ?",
+            "options": [
+              "Vous pouvez être incapable de vendre pendant des années",
+              "Elle garantit un rendement plus élevé",
+              "Elle supprime le risque de valorisation"
+            ],
+            "correctIndex": 0,
+            "explanation": "Les investissements privés bloquent souvent le capital jusqu’à une sortie."
+          },
+          {
+            "question": "Quelle erreur éviter ?",
+            "options": [
+              "Traiter une startup comme un billet de loterie avec trop de capital",
+              "Lire les termes",
+              "Demander le runway"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le risque venture doit être dimensionné prudemment car une perte totale est possible."
+          },
+          {
+            "question": "Que décrit le runway ?",
+            "options": [
+              "Combien de temps une startup peut fonctionner avant un nouveau financement",
+              "L’heure d’ouverture de la bourse",
+              "Un calendrier d’échéance obligataire"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le runway relie cash, burn rate et risque de financement."
+          },
+          {
+            "question": "Une startup est attirante mais l’investisseur n’a ni termes ni chemin de sortie. Que faire ?",
+            "options": [
+              "Ne pas investir avant de clarifier termes et risques",
+              "Investir parce que l’histoire est excitante",
+              "Ignorer la dilution"
+            ],
+            "correctIndex": 0,
+            "explanation": "Les deals privés exigent plus de clarté car liquidité et information sont limitées."
+          }
+        ]
       },
       "cash-risk": {
         "level": "Fondation",
@@ -3046,7 +3294,69 @@
             "term": "Rééquilibrage",
             "definition": "Ajuster un portefeuille pour revenir vers son allocation cible."
           }
-        }
+        },
+        "quiz": [
+          {
+            "question": "Quel est le rôle du fonds d’urgence ?",
+            "options": [
+              "Couvrir les dépenses obligatoires sans vendre les investissements",
+              "Maximiser le rendement long terme",
+              "Remplacer tout investissement"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le cash d’urgence évite les ventes forcées pendant un stress personnel ou de marché."
+          },
+          {
+            "question": "Quel est le risque d’inflation pour le cash ?",
+            "options": [
+              "Le cash peut perdre du pouvoir d’achat",
+              "Le cash bat toujours les actions",
+              "Le cash ne peut pas être dépensé"
+            ],
+            "correctIndex": 0,
+            "explanation": "Une valeur nominale stable ne garantit pas une valeur réelle stable."
+          },
+          {
+            "question": "Que fait le rééquilibrage ?",
+            "options": [
+              "Ramener le portefeuille vers son allocation cible",
+              "Garantir un profit",
+              "Éliminer toutes les pertes"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le rééquilibrage contrôle la dérive après les mouvements de marché."
+          },
+          {
+            "question": "Quelle erreur affaiblit la base financière ?",
+            "options": [
+              "Ne pas avoir de réserve d’urgence",
+              "Séparer argent court terme et long terme",
+              "Écrire une allocation"
+            ],
+            "correctIndex": 0,
+            "explanation": "Sans réserve, les dépenses normales peuvent casser l’investissement long terme."
+          },
+          {
+            "question": "Quand le cash convient-il le mieux ?",
+            "options": [
+              "Objectifs courts, urgences et tranquillité",
+              "Tous les besoins de croissance longue",
+              "Spéculer sur des actifs volatils"
+            ],
+            "correctIndex": 0,
+            "explanation": "Le cash a un rôle, mais ce n’est pas une stratégie complète de croissance long terme."
+          },
+          {
+            "question": "Un utilisateur panique et vend ses actions à chaque baisse. Quelle leçon appliquer ?",
+            "options": [
+              "Choisir une allocation qu’il peut vraiment tenir",
+              "Augmenter le risque pour améliorer le rendement",
+              "Supprimer tout le cash immédiatement"
+            ],
+            "correctIndex": 0,
+            "explanation": "La meilleure allocation est celle que l’investisseur peut garder sous stress."
+          }
+        ]
       }
     },
     "progress": {
@@ -3332,8 +3642,44 @@
           "mark": "A+",
           "title": "Maître des quiz",
           "description": "Réussir chaque quiz de leçon avec un score parfait."
+        },
+        "topic_complete:bonds": {
+          "mark": "OB",
+          "title": "Bases des obligations",
+          "description": "Terminer le quiz d’aperçu des obligations."
+        },
+        "topic_complete:etfs-funds": {
+          "mark": "ETF",
+          "title": "Constructeur de fonds",
+          "description": "Terminer le quiz d’aperçu des ETF et fonds."
+        },
+        "topic_complete:crypto": {
+          "mark": "CR",
+          "title": "Crypto lucide",
+          "description": "Terminer le quiz d’aperçu crypto."
+        },
+        "topic_complete:venture": {
+          "mark": "VC",
+          "title": "Regard venture",
+          "description": "Terminer le quiz d’aperçu venture."
+        },
+        "topic_complete:cash-risk": {
+          "mark": "CF",
+          "title": "Base du risque",
+          "description": "Terminer le quiz d’aperçu cash et risque."
+        },
+        "explorer": {
+          "mark": "EX",
+          "title": "Explorateur",
+          "description": "Terminer les quiz d’aperçu dans au moins trois thèmes."
         }
       }
+    },
+    "topicProgress": {
+      "kicker": "Progression des thèmes",
+      "title": "Thèmes d’aperçu",
+      "completed": "Terminé",
+      "notCompleted": "Non terminé"
     }
   }
 }

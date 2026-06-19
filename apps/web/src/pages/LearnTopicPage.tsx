@@ -1,7 +1,11 @@
 import { Link, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { LessonQuiz } from '../components/learn/LessonQuiz.tsx'
 import { LearnResources } from '../components/learn/LearnResources.tsx'
-import { getLearnTopic, learnTopics } from '../data/learnTopics.ts'
+import { getQuizQuestions } from '../components/learn/quizUtils.ts'
+import { getLearnTopic, learnTopics, type LearnTopic } from '../data/learnTopics.ts'
+import { useLessonProgress } from '../hooks/useLessonProgress.ts'
+import { useAuthStore } from '../store/useAuthStore.ts'
 
 const sectionKeys = ['what', 'earn', 'risks', 'mistakes', 'fit'] as const
 
@@ -13,51 +17,19 @@ const getToolLabelKey = (path: string) => {
   return 'landing.tools.items.stock.title'
 }
 
-export const LearnTopicPage = () => {
-  const { topicId } = useParams()
+interface LearnTopicContentProps {
+  topic: LearnTopic
+}
+
+const LearnTopicContent = ({ topic }: LearnTopicContentProps) => {
   const { t } = useTranslation('common')
-  const topic = getLearnTopic(topicId)
-
-  if (!topic) {
-    return (
-      <main className="min-h-svh bg-background text-text-primary">
-        <header className="border-b-[0.5px] border-border">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-5 lg:px-8">
-            <Link
-              to="/"
-              className="font-heading text-2xl font-bold tracking-[0.28em] text-primary"
-            >
-              {t('brand.name')}
-            </Link>
-            <Link
-              to="/learn"
-              className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
-            >
-              {t('learnAcademy.topic.back')}
-            </Link>
-          </nav>
-        </header>
-
-        <section className="mx-auto grid max-w-3xl gap-6 px-6 py-16 lg:px-8">
-          <p className="text-sm font-semibold uppercase text-primary">
-            {t('learnAcademy.notFound.kicker')}
-          </p>
-          <h1 className="font-heading text-5xl font-bold leading-tight text-text-primary md:text-7xl">
-            {t('learnAcademy.notFound.title')}
-          </h1>
-          <p className="text-lg leading-8 text-text-muted">
-            {t('learnAcademy.notFound.description')}
-          </p>
-          <Link
-            to="/learn"
-            className="inline-flex w-fit rounded-md bg-primary px-5 py-3 text-sm font-bold text-background transition hover:bg-primary-hover"
-          >
-            {t('learnAcademy.notFound.cta')}
-          </Link>
-        </section>
-      </main>
-    )
-  }
+  const { isAuthenticated, isLoading } = useAuthStore()
+  const { progress, markLessonComplete } = useLessonProgress(topic.id)
+  const isStocksTopic = topic.id === 'stocks'
+  const isOverviewComplete = progress.overview?.completed
+  const quizQuestions = getQuizQuestions(
+    t(`learnAcademy.topics.${topic.id}.quiz`, { returnObjects: true }),
+  )
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
@@ -105,15 +77,29 @@ export const LearnTopicPage = () => {
             <p className="text-sm font-semibold uppercase text-primary">
               {t('learnAcademy.topic.kicker')}
             </p>
-            <h1 className="mt-4 font-heading text-5xl font-bold leading-tight text-text-primary md:text-7xl">
-              {t(`learnAcademy.topics.${topic.id}.title`)}
-            </h1>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <h1 className="font-heading text-5xl font-bold leading-tight text-text-primary md:text-7xl">
+                {t(`learnAcademy.topics.${topic.id}.title`)}
+              </h1>
+              {!isStocksTopic && isOverviewComplete ? (
+                <span className="rounded-md border-[0.5px] border-primary/40 bg-primary-dim px-3 py-2 text-xs font-bold uppercase text-primary">
+                  {t('learnAcademy.progress.completed')}
+                </span>
+              ) : null}
+            </div>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-text-muted">
               {t(`learnAcademy.topics.${topic.id}.intro`)}
             </p>
+            {!isStocksTopic && !isAuthenticated && !isLoading ? (
+              <div className="mt-5 rounded-lg border-[0.5px] border-primary/40 bg-primary-dim p-4">
+                <p className="text-sm font-semibold leading-6 text-text-primary">
+                  {t('learnAcademy.progress.guestBanner')}
+                </p>
+              </div>
+            ) : null}
           </section>
 
-          {topic.id === 'stocks' ? (
+          {isStocksTopic ? (
             <section className="rounded-lg border-[0.5px] border-primary/40 bg-primary-dim p-6">
               <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-end">
                 <div>
@@ -286,9 +272,67 @@ export const LearnTopicPage = () => {
             </div>
           </section>
 
+          {!isStocksTopic ? (
+            <LessonQuiz
+              questions={quizQuestions}
+              previousScore={progress.overview?.quizScore}
+              previousTotal={progress.overview?.quizTotal}
+              onComplete={(score, total) => markLessonComplete('overview', score, total)}
+            />
+          ) : null}
+
           <LearnResources topic={topic.id} />
         </article>
       </section>
     </main>
   )
+}
+
+export const LearnTopicPage = () => {
+  const { topicId } = useParams()
+  const { t } = useTranslation('common')
+  const topic = getLearnTopic(topicId)
+
+  if (!topic) {
+    return (
+      <main className="min-h-svh bg-background text-text-primary">
+        <header className="border-b-[0.5px] border-border">
+          <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-5 lg:px-8">
+            <Link
+              to="/"
+              className="font-heading text-2xl font-bold tracking-[0.28em] text-primary"
+            >
+              {t('brand.name')}
+            </Link>
+            <Link
+              to="/learn"
+              className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
+            >
+              {t('learnAcademy.topic.back')}
+            </Link>
+          </nav>
+        </header>
+
+        <section className="mx-auto grid max-w-3xl gap-6 px-6 py-16 lg:px-8">
+          <p className="text-sm font-semibold uppercase text-primary">
+            {t('learnAcademy.notFound.kicker')}
+          </p>
+          <h1 className="font-heading text-5xl font-bold leading-tight text-text-primary md:text-7xl">
+            {t('learnAcademy.notFound.title')}
+          </h1>
+          <p className="text-lg leading-8 text-text-muted">
+            {t('learnAcademy.notFound.description')}
+          </p>
+          <Link
+            to="/learn"
+            className="inline-flex w-fit rounded-md bg-primary px-5 py-3 text-sm font-bold text-background transition hover:bg-primary-hover"
+          >
+            {t('learnAcademy.notFound.cta')}
+          </Link>
+        </section>
+      </main>
+    )
+  }
+
+  return <LearnTopicContent key={topic.id} topic={topic} />
 }
