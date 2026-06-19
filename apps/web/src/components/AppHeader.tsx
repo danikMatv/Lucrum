@@ -36,13 +36,6 @@ export const AppHeader = ({ compact = false }: AppHeaderProps) => {
         {user?.firstName}
       </span>
       <Link
-        to="/profile"
-        onClick={() => setIsMenuOpen(false)}
-        className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
-      >
-        {t('nav.profile')}
-      </Link>
-      <Link
         to="/dashboard"
         onClick={() => setIsMenuOpen(false)}
         className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-background transition hover:opacity-90"

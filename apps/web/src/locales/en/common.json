@@ -3419,7 +3419,8 @@
     "stats": {
       "portfolio": "Portfolio Value",
       "calculations": "Saved Calculations",
-      "watchlist": "Watchlist"
+      "watchlist": "Watchlist",
+      "learning": "Learning"
     },
     "calculations": {
       "title": "Recent Calculations",
@@ -3433,6 +3434,9 @@
       "remove": "Remove",
       "empty": "Add tickers you want to follow.",
       "unknownCompany": "Company name unavailable"
+    },
+    "learning": {
+      "offlineBadges": "Using local badge list until the API is updated."
     }
   },
   "admin": {

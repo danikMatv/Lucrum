@@ -3419,7 +3419,8 @@
     "stats": {
       "portfolio": "Valeur du portefeuille",
       "calculations": "Calculs enregistrés",
-      "watchlist": "Liste de suivi"
+      "watchlist": "Liste de suivi",
+      "learning": "Apprentissage"
     },
     "calculations": {
       "title": "Calculs récents",
@@ -3433,6 +3434,9 @@
       "remove": "Retirer",
       "empty": "Ajoutez les tickers que vous voulez suivre.",
       "unknownCompany": "Nom de société indisponible"
+    },
+    "learning": {
+      "offlineBadges": "Liste locale des badges utilisée jusqu’à la mise à jour de l’API."
     }
   },
   "admin": {
