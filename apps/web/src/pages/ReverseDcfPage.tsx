@@ -148,7 +148,8 @@ export const ReverseDcfPage = () => {
       : currency.format(result.terminalPresentValue)
   const modeledPriceValue =
     result.modeledPrice === null ? unavailableValue : currency.format(result.modeledPrice)
-  const resultTone = result.verdict === 'aggressive' ? 'danger' : 'primary'
+  const resultTone =
+    result.verdict === 'aggressive' || result.verdict === 'unavailable' ? 'danger' : 'primary'
 
   const fundamentalsMutation = useMutation({
     mutationFn: async (tickerValue: string) => {

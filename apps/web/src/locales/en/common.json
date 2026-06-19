@@ -476,8 +476,8 @@
           "invalid_eps": "Reverse DCF needs positive EPS. Use a different valuation model for unprofitable companies.",
           "invalid_price": "Enter a positive market price to solve the implied growth rate.",
           "invalid_rates": "The discount rate must be higher than terminal growth.",
-          "below_range": "The market price implies growth below the modeled range.",
-          "above_range": "The market price implies growth above the modeled range."
+          "below_range": "The market price needs growth below the modeled range, so no exact EPS trajectory is shown.",
+          "above_range": "The market price needs growth above the modeled range, so no exact EPS trajectory is shown."
         }
       },
       "stats": {
@@ -825,8 +825,8 @@
           "invalid_eps": "Reverse DCF needs positive EPS. Use a different valuation model for unprofitable companies.",
           "invalid_price": "Enter a positive market price to solve the implied growth rate.",
           "invalid_rates": "The discount rate must be higher than terminal growth.",
-          "below_range": "The market price implies growth below the modeled range.",
-          "above_range": "The market price implies growth above the modeled range."
+          "below_range": "The market price needs growth below the modeled range, so no exact EPS trajectory is shown.",
+          "above_range": "The market price needs growth above the modeled range, so no exact EPS trajectory is shown."
         }
       },
       "stats": {

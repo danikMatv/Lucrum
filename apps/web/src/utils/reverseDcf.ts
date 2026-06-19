@@ -133,8 +133,13 @@ export const calculateReverseDcf = (input: ReverseDcfInput): ReverseDcfResult =>
 
   if (input.marketPrice < lowResult.modeledPrice) {
     return {
-      ...lowResult,
+      rows: [],
       impliedGrowthPercent: null,
+      yearFiveEps: null,
+      terminalValue: null,
+      terminalPresentValue: null,
+      forecastPresentValue: null,
+      modeledPrice: null,
       verdict: 'unavailable',
       unavailableReason: 'below_range',
     }
@@ -142,8 +147,13 @@ export const calculateReverseDcf = (input: ReverseDcfInput): ReverseDcfResult =>
 
   if (input.marketPrice > highResult.modeledPrice) {
     return {
-      ...highResult,
+      rows: [],
       impliedGrowthPercent: null,
+      yearFiveEps: null,
+      terminalValue: null,
+      terminalPresentValue: null,
+      forecastPresentValue: null,
+      modeledPrice: null,
       verdict: 'unavailable',
       unavailableReason: 'above_range',
     }

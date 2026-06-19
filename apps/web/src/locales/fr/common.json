@@ -476,8 +476,8 @@
           "invalid_eps": "Le Reverse DCF exige un EPS positif. Utilisez un autre modèle pour les sociétés déficitaires.",
           "invalid_price": "Saisissez un prix de marché positif pour résoudre la croissance implicite.",
           "invalid_rates": "Le taux d'actualisation doit être supérieur à la croissance terminale.",
-          "below_range": "Le prix de marché implique une croissance sous la plage modélisée.",
-          "above_range": "Le prix de marché implique une croissance au-dessus de la plage modélisée."
+          "below_range": "Le prix de marché exige une croissance sous la plage modélisée ; aucune trajectoire EPS exacte n’est affichée.",
+          "above_range": "Le prix de marché exige une croissance au-dessus de la plage modélisée ; aucune trajectoire EPS exacte n’est affichée."
         }
       },
       "stats": {
@@ -507,7 +507,7 @@
         "eps": "Prévision EPS",
         "discountFactor": "Facteur d'actualisation",
         "presentValue": "Valeur actuelle",
-        "unavailable": "Saisissez un EPS, un prix et des taux valides pour voir la trajectoire EPS."
+        "unavailable": "Saisissez un EPS, un prix et des taux valides, ou ajustez les hypothèses si le prix de marché sort de la plage modélisée."
       },
       "save": {
         "saved": "Enregistré"
@@ -825,8 +825,8 @@
           "invalid_eps": "Le Reverse DCF exige un EPS positif. Utilisez un autre modèle pour les sociétés déficitaires.",
           "invalid_price": "Saisissez un prix de marché positif pour résoudre la croissance implicite.",
           "invalid_rates": "Le taux d'actualisation doit être supérieur à la croissance terminale.",
-          "below_range": "Le prix de marché implique une croissance sous la plage modélisée.",
-          "above_range": "Le prix de marché implique une croissance au-dessus de la plage modélisée."
+          "below_range": "Le prix de marché exige une croissance sous la plage modélisée ; aucune trajectoire EPS exacte n’est affichée.",
+          "above_range": "Le prix de marché exige une croissance au-dessus de la plage modélisée ; aucune trajectoire EPS exacte n’est affichée."
         }
       },
       "stats": {
@@ -856,7 +856,7 @@
         "eps": "Prévision EPS",
         "discountFactor": "Facteur d'actualisation",
         "presentValue": "Valeur actuelle",
-        "unavailable": "Saisissez un EPS, un prix et des taux valides pour voir la trajectoire EPS."
+        "unavailable": "Saisissez un EPS, un prix et des taux valides, ou ajustez les hypothèses si le prix de marché sort de la plage modélisée."
       },
       "save": {
         "saved": "Enregistré"
