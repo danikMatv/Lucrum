@@ -3379,7 +3379,8 @@
       "score": "Результат: {{score}}/{{total}}",
       "bestScore": "Найкраще: {{score}}/{{total}}",
       "notCompleted": "Ще не пройдено",
-      "completed": "Квіз завершено: {{score}} правильних із {{total}}."
+      "completed": "Квіз завершено: {{score}} правильних із {{total}}.",
+      "jumpToQuiz": "Перейти до квізу"
     }
   },
   "auth": {

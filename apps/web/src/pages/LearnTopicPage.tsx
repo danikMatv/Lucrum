@@ -97,6 +97,14 @@ const LearnTopicContent = ({ topic }: LearnTopicContentProps) => {
                 </p>
               </div>
             ) : null}
+            {!isStocksTopic ? (
+              <a
+                href="#topic-quiz"
+                className="mt-5 inline-flex rounded-md bg-primary px-5 py-3 text-sm font-bold text-background transition hover:bg-primary-hover"
+              >
+                {t('learnAcademy.quiz.jumpToQuiz')}
+              </a>
+            ) : null}
           </section>
 
           {isStocksTopic ? (
@@ -273,12 +281,14 @@ const LearnTopicContent = ({ topic }: LearnTopicContentProps) => {
           </section>
 
           {!isStocksTopic ? (
-            <LessonQuiz
-              questions={quizQuestions}
-              previousScore={progress.overview?.quizScore}
-              previousTotal={progress.overview?.quizTotal}
-              onComplete={(score, total) => markLessonComplete('overview', score, total)}
-            />
+            <div id="topic-quiz" className="scroll-mt-6">
+              <LessonQuiz
+                questions={quizQuestions}
+                previousScore={progress.overview?.quizScore}
+                previousTotal={progress.overview?.quizTotal}
+                onComplete={(score, total) => markLessonComplete('overview', score, total)}
+              />
+            </div>
           ) : null}
 
           <LearnResources topic={topic.id} />

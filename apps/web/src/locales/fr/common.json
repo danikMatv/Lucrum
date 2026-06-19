@@ -3379,7 +3379,8 @@
       "score": "Score : {{score}}/{{total}}",
       "bestScore": "Meilleur : {{score}}/{{total}}",
       "notCompleted": "Pas encore terminé",
-      "completed": "Quiz terminé : {{score}} bonnes réponses sur {{total}}."
+      "completed": "Quiz terminé : {{score}} bonnes réponses sur {{total}}.",
+      "jumpToQuiz": "Aller au quiz"
     }
   },
   "auth": {
