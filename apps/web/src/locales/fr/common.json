@@ -1438,6 +1438,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "La réserve et le contrôle des dettes passent avant le choix d’une action. Le repère pratique est : Gardez 3 à 6 mois de dépenses hors actions avant d’investir agressivement. Le principal piège est : Investir l’argent nécessaire bientôt peut forcer une vente pendant une baisse normale de 20 à 40%."
+              },
+              {
+                "question": "Dans l'exemple de la leçon, pourquoi la personne qui a investi 1000 dollars risque-t-elle de vendre à perte deux mois plus tard ?",
+                "options": [
+                  "Parce qu'elle n'a pas de réserve et doit trouver du cash pour un imprévu personnel, pas parce que l'entreprise va mal.",
+                  "Parce que l'entreprise a publié un mauvais résultat trimestriel qui change la thèse d'investissement.",
+                  "Parce que le prix de l'action a définitivement cessé de monter."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'exemple montre que sans réserve, un problème de vie ordinaire (perte de revenu, ordinateur à remplacer) force la vente, alors que rien n'a changé du côté de l'entreprise. C'est exactement le risque que la réserve d'urgence permet d'éviter."
+              },
+              {
+                "question": "Selon les détails de la leçon, pourquoi une baisse de 20 à 40% d'une entreprise solide n'est-elle pas forcément un problème en soi ?",
+                "options": [
+                  "Parce que ces baisses font partie des fluctuations normales du marché, du cycle des taux ou de la peur des investisseurs, sans remettre en cause la solidité de l'entreprise.",
+                  "Parce que la bourse garantit toujours un retour au prix initial dans les six mois.",
+                  "Parce qu'une entreprise solide ne peut jamais perdre plus de 10% de sa valeur."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon précise que même une entreprise solide peut perdre 20 à 40% à cause du marché, des taux ou d'un résultat trimestriel, sans que la thèse d'investissement change. Le vrai danger n'est pas la baisse elle-même mais d'être obligé de vendre pendant celle-ci."
+              },
+              {
+                "question": "Karim a 2400 dollars d'épargne et aucune dette. Ses dépenses mensuelles sont d'environ 800 dollars. Que devrait-il faire avant d'investir agressivement en actions ?",
+                "options": [
+                  "Garder ses 2400 dollars (environ 3 mois de dépenses) comme réserve hors actions avant d'investir le reste de son cash-flow mensuel.",
+                  "Investir immédiatement toute son épargne puisqu'il n'a pas de dettes.",
+                  "Attendre d'avoir 12 mois de dépenses en réserve avant de commencer à investir le moindre dollar."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le repère pratique de la leçon est de garder 3 à 6 mois de dépenses hors actions avant d'investir agressivement. Avec 2400 dollars pour 800 dollars de dépenses mensuelles, Karim atteint déjà ce seuil et peut ensuite investir depuis son cash-flow futur."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, quel type d'argent ne devrait jamais être placé en actions ?",
+                "options": [
+                  "L'argent qui pourrait être nécessaire bientôt pour le loyer, la santé, les études, les impôts ou d'autres paiements obligatoires.",
+                  "L'argent épargné depuis plus de cinq ans sur un compte rémunéré.",
+                  "L'argent reçu en cadeau qui n'a pas d'usage prévu à court terme."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'avertissement est clair : investir de l'argent dont on aura besoin bientôt pour des obligations comme le loyer ou les impôts crée un risque de vente forcée en cas de baisse normale du marché."
               }
             ]
           },
@@ -1482,6 +1522,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Un plan écrit transforme le bruit du marché en règles préparées. Le repère pratique est : Définissez un horizon, une contribution mensuelle et un poids maximal par action, par exemple 5 à 8%. Le principal piège est : Changer de stratégie après chaque vidéo n’est pas de la discipline."
+              },
+              {
+                "question": "Dans le cas d'Owen, à quel pourcentage de son portefeuille la leçon suggère-t-elle de limiter une position pour éviter le stress d'une baisse de 18% ?",
+                "options": [
+                  "Sous 5% du portefeuille.",
+                  "Autour de 25% du portefeuille pour bien profiter de la hausse.",
+                  "Il n'y a pas de limite tant que l'entreprise est populaire."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le contrôle de décision appliqué au cas d'Owen précise qu'une position sous 5% rend la baisse de 18% beaucoup plus gérable, et que le renforcement ne doit venir qu'après lecture du rapport, pas après une vidéo."
+              },
+              {
+                "question": "Selon les détails de la leçon, pourquoi un bon plan doit-il rester court, assez court pour être relu en une minute ?",
+                "options": [
+                  "Pour pouvoir s'y référer rapidement et garder la tête froide au moment précis où le marché devient émotionnel.",
+                  "Parce que les plans longs sont interdits par les régulateurs financiers.",
+                  "Parce qu'un plan court garantit automatiquement un meilleur rendement."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon explique qu'un plan court et clair sert justement à être relu vite quand l'émotion monte, pour que les décisions restent guidées par des règles préparées plutôt que par la panique ou l'excitation du moment."
+              },
+              {
+                "question": "Lina vient de voir une vidéo enthousiaste sur une nouvelle action et veut immédiatement revoir tout son plan pour y consacrer 20% de son portefeuille. Que devrait-elle faire selon la leçon ?",
+                "options": [
+                  "Garder son plan existant et ne pas le modifier simplement sous l'effet de l'enthousiasme suscité par une vidéo.",
+                  "Modifier immédiatement son plan puisque chaque nouvelle opportunité mérite une révision rapide.",
+                  "Investir 20% tout de suite, puis ajuster le plan écrit après coup pour qu'il corresponde à la décision déjà prise."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'avertissement de la leçon est explicite : un plan qui change après chaque vidéo n'est pas un plan, c'est une réaction émotionnelle. Lina devrait conserver ses règles écrites avant l'achat plutôt que de les adapter à chaud."
+              },
+              {
+                "question": "D'après checkThree, à quel moment la règle de vente d'une action doit-elle être écrite ?",
+                "options": [
+                  "Avant l'achat de l'action.",
+                  "Seulement après avoir constaté une première baisse de prix.",
+                  "Une fois par an, lors d'une révision générale du portefeuille."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon insiste sur le fait que la règle de vente doit être écrite avant l'achat, afin qu'elle repose sur la thèse d'investissement et non sur l'émotion provoquée par une baisse déjà en cours."
               }
             ]
           },
@@ -1526,6 +1606,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Les mythes de marché doivent être vérifiés avec des faits. Le repère pratique est : Une baisse de 30% ne rend pas automatiquement une action bon marché si les profits baissent aussi. Le principal piège est : Confondre prix plus bas et risque plus bas mène à de mauvaises décisions."
+              },
+              {
+                "question": "Dans l'exemple, une action qui a monté de 80% en un an peut-elle rester un mauvais achat aujourd'hui ?",
+                "options": [
+                  "Oui, si le prix actuel suppose déjà un scénario parfait pour l'avenir.",
+                  "Non, une action qui a déjà fait +80% ne peut plus baisser.",
+                  "Non, car une forte hausse passée garantit toujours une suite positive."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon précise qu'une action ayant déjà beaucoup monté peut rester un mauvais achat si son prix intègre déjà un scénario parfait, laissant peu de marge en cas de déception future."
+              },
+              {
+                "question": "Selon les détails de la leçon, d'où viennent surtout les bons résultats d'un investisseur sur le long terme ?",
+                "options": [
+                  "De la discipline, de la diversification, du contrôle du risque et de la capacité à garder un plan dans la durée.",
+                  "De la chance de tomber sur le bon ticker au bon moment.",
+                  "De la confiance affichée par les personnes suivies sur les réseaux sociaux."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon rejette le mythe de l'action miracle et affirme que les résultats viennent surtout de la discipline, de la diversification, du contrôle du risque et d'un horizon long, pas de l'émotion ou de la popularité d'un ticker."
+              },
+              {
+                "question": "Yanis voit sur les réseaux qu'un ami a multiplié son argent par 5 en achetant au plus bas d'une action très volatile. Que devrait-il garder en tête avant de copier cette stratégie ?",
+                "options": [
+                  "Le biais du survivant : de nombreuses personnes ont tenté la même chose et ont perdu, mais ces histoires-là sont rarement racontées.",
+                  "Que toute action qui a beaucoup baissé va forcément remonter de la même façon.",
+                  "Que recopier exactement la stratégie d'un ami garantit le même résultat."
+                ],
+                "correctIndex": 0,
+                "explanation": "Comme dans le cas de Den, le biais du survivant met en avant les success stories et cache les nombreuses pertes similaires, ce qui rend l'investissement risqué de cet ami plus simple qu'il ne l'est réellement."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, que signifie souvent une opportunité présentée comme de l'argent facile et sans risque ?",
+                "options": [
+                  "Que le risque existe bel et bien, mais qu'il n'est simplement pas nommé.",
+                  "Qu'il s'agit forcément d'une arnaque illégale à éviter dans tous les cas.",
+                  "Que le risque a été éliminé grâce à une nouvelle technologie financière."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon avertit que les promesses de gains faciles et sans risque cachent presque toujours un risque réel qui n'est tout simplement pas mentionné, ce qui le rend plus dangereux car invisible."
               }
             ]
           },
@@ -1570,6 +1690,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "La tolérance au risque doit correspondre à l’horizon et à la stabilité des revenus. Le repère pratique est : L’argent nécessaire dans moins de 3 ans ne devrait pas dépendre d’actions volatiles. Le principal piège est : Prendre du risque actions sans temps de récupération crée des ventes forcées."
+              },
+              {
+                "question": "Dans l'exemple, pourquoi la même baisse de marché peut-elle être supportable pour une personne et dangereuse pour une autre ayant la même somme investie ?",
+                "options": [
+                  "Parce que leur horizon et leur besoin de cash diffèrent : l'une a 15 ans devant elle, l'autre a besoin d'un apport immobilier l'an prochain.",
+                  "Parce que l'une des deux a simplement plus de chance en bourse que l'autre.",
+                  "Parce que le montant exact investi détermine seul le niveau de risque réel."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'exemple montre que le risque réel dépend de l'horizon et de la stabilité du revenu, pas seulement du montant. Un besoin de cash à court terme rend la même baisse bien plus dangereuse."
+              },
+              {
+                "question": "Selon les détails de la leçon, pourquoi les débutants surestiment-ils souvent leur tolérance au risque ?",
+                "options": [
+                  "Parce qu'ils évaluent leur courage pendant les bons marchés et ne découvrent leur vrai niveau que pendant une vraie baisse.",
+                  "Parce qu'ils n'ont jamais lu les statistiques officielles sur la volatilité des marchés.",
+                  "Parce que les conseillers financiers les encouragent toujours à prendre plus de risque que nécessaire."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon précise que le profil de risque ne se mesure pas par le courage verbal affiché en période calme, mais par la réaction réelle quand le portefeuille baisse vraiment."
+              },
+              {
+                "question": "Sami a besoin de 8000 dollars dans 14 mois pour un projet personnel et envisage de les placer entièrement dans une action volatile. Que lui recommande le principe de cette leçon ?",
+                "options": [
+                  "Ne pas faire dépendre cet argent à court terme d'actions volatiles, car il pourrait être forcé de vendre à perte si le marché baisse avant l'échéance.",
+                  "Investir sans hésiter puisque 14 mois suffisent toujours pour absorber n'importe quelle baisse.",
+                  "Choisir l'action la plus volatile possible pour maximiser ses chances d'atteindre 8000 dollars rapidement."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le repère pratique de la leçon indique que l'argent nécessaire dans moins de 3 ans ne devrait pas dépendre d'actions volatiles, justement pour éviter une vente forcée si le marché baisse avant l'échéance."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, que devrait faire une personne qui ne supporte pas psychologiquement une baisse de 10% ?",
+                "options": [
+                  "Ne pas construire un portefeuille en supposant qu'une baisse de 50% serait facile à supporter.",
+                  "Investir uniquement dans l'action la plus volatile pour s'habituer rapidement aux baisses.",
+                  "Ignorer cette sensibilité, car elle disparaît automatiquement avec l'expérience."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon avertit que si une baisse de 10% empêche déjà de dormir, il serait incohérent de construire un portefeuille qui suppose un confort face à une baisse bien plus sévère de 50%."
               }
             ]
           },
@@ -1614,6 +1774,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Diversifier consiste à donner un rôle à plusieurs types d’actifs. Le repère pratique est : Une carte simple peut limiter une action à 5% et garder du cash pour les besoins proches. Le principal piège est : Posséder dix sociétés du même secteur reste un risque concentré."
+              },
+              {
+                "question": "Dans le cas d'Andrew, qui a 10 000 dollars, quelle structure de portefeuille la leçon propose-t-elle comme exemple pour apprendre sans tout transformer en pari ?",
+                "options": [
+                  "70% ETF large, 20% obligations ou cash, 10% actions individuelles.",
+                  "100% actions individuelles pour apprendre le plus vite possible.",
+                  "50% cash et 50% obligations, sans aucune action."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon propose cette répartition pour qu'Andrew puisse apprendre à choisir des actions individuelles tout en gardant le coeur de son portefeuille diversifié, afin que le résultat global ne dépende pas de quelques décisions risquées."
+              },
+              {
+                "question": "Selon les détails de la leçon, quel rôle jouent typiquement les obligations dans un portefeuille, par opposition aux actions ?",
+                "options": [
+                  "Elles peuvent stabiliser une partie du portefeuille, alors que les actions apportent de la croissance en échange de plus de volatilité.",
+                  "Elles offrent systématiquement un rendement plus élevé que les actions sur le long terme.",
+                  "Elles remplacent totalement le besoin de garder du cash disponible."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon distingue les rôles : les actions apportent de la croissance mais avec de la volatilité, tandis que les obligations servent davantage à stabiliser une partie du portefeuille."
+              },
+              {
+                "question": "Nora veut acheter une maison dans 18 mois et envisage de placer son apport dans une action technologique prometteuse. Que lui conseille le principe de cette leçon ?",
+                "options": [
+                  "Éviter une action volatile pour cet objectif proche, même si l'entreprise lui plaît, car ce n'est pas le bon outil pour un besoin à si court terme.",
+                  "Investir dans l'action qui a le plus progressé récemment pour maximiser son apport rapidement.",
+                  "Répartir son apport sur dix actions différentes du même secteur technologique pour réduire le risque."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'exemple de la leçon est explicite sur ce point : pour un objectif à 18 mois, une action volatile peut être le mauvais outil même si l'entreprise est appréciée, car le risque de baisse avant l'échéance est trop élevé."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, qu'est-ce qui ne transforme pas automatiquement un pari risqué en investissement raisonnable ?",
+                "options": [
+                  "Le simple fait de passer par une application de courtage pour l'acheter.",
+                  "Le fait que l'actif ait beaucoup baissé récemment.",
+                  "Le fait que l'actif appartienne à un secteur réglementé."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon avertit que l'outil utilisé pour acheter, comme une application de courtage, ne change pas la nature réelle du pari : ce n'est pas le canal d'achat qui rend un placement raisonnable ou non."
               }
             ]
           },
@@ -1658,6 +1858,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "La capitalisation fonctionne quand les gains restent investis assez longtemps. Le repère pratique est : À 8% par an, 1000 dollars peuvent devenir environ 4660 dollars en 20 ans avant taxes et frais. Le principal piège est : Interrompre trop souvent la capitalisation affaiblit le moteur principal."
+              },
+              {
+                "question": "Selon le repère pratique de la leçon, à combien environ peuvent monter 1000 dollars investis à 8% par an pendant 20 ans, avant taxes et frais ?",
+                "options": [
+                  "Environ 4660 dollars.",
+                  "Environ 1800 dollars.",
+                  "Environ 10 000 dollars."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon donne ce chiffre précis comme repère pratique : à 8% par an, 1000 dollars deviennent environ 4660 dollars en 20 ans avant taxes et frais, illustrant la puissance du temps sur la capitalisation."
+              },
+              {
+                "question": "Selon les détails de la leçon, pourquoi les débutants abandonnent-ils parfois une stratégie de versements réguliers ?",
+                "options": [
+                  "Parce que les premières années de capitalisation semblent lentes et peu spectaculaires, ce qui pousse à chercher un gain rapide ailleurs.",
+                  "Parce que les frais de courtage rendent les petits versements impossibles à réaliser.",
+                  "Parce que la loi limite le nombre de versements réguliers autorisés par an."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon explique que les intérêts composés demandent de la patience : les débuts paraissent lents, ce qui pousse certains débutants à abandonner une stratégie régulière pour chercher un résultat plus rapide, souvent au détriment du résultat final."
+              },
+              {
+                "question": "Tom investit 150 dollars chaque mois depuis 3 ans et trouve que son portefeuille progresse trop lentement. Il envisage de tout retirer pour tenter un pari plus risqué. Que suggère le principe de cette leçon ?",
+                "options": [
+                  "Continuer ses versements réguliers, car les premières années dépendent surtout des versements, et la base accumulée commencera à peser plus fort plus tard.",
+                  "Retirer tout immédiatement, car 3 ans sans résultat spectaculaire signifie que la stratégie a échoué.",
+                  "Doubler ses versements pendant un mois seulement, puis revenir au pari risqué initial."
+                ],
+                "correctIndex": 0,
+                "explanation": "Comme le montre le cas des deux investisseurs dans la leçon, c'est souvent celui qui reste régulier et investi qui garde l'avantage à long terme, pas celui qui interrompt sa stratégie pour chercher autre chose."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, quel type de rendement annuel ne devrait jamais être utilisé comme scénario de base dans un calcul de capitalisation ?",
+                "options": [
+                  "Un rendement de 30 à 50% par an, car il rend une mauvaise idée très belle à l'écran.",
+                  "Un rendement de 6 à 8% par an, jugé trop prudent pour être réaliste.",
+                  "Tout rendement qui n'est pas garanti par un contrat écrit."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon avertit explicitement que des hypothèses de 30 à 50% de rendement annuel ne sont pas un scénario de base raisonnable et peuvent masquer les faiblesses réelles d'une stratégie en l'embellissant artificiellement sur un calculateur."
               }
             ]
           },
@@ -1702,6 +1942,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "L’analyse fondamentale, technique et de sentiment répondent à des questions différentes. Le repère pratique est : Utilisez les fondamentaux pour la qualité du business et la technique surtout pour le timing ou le risque. Le principal piège est : Une figure graphique ne remplace pas la compréhension du chiffre d’affaires, des marges et du cash-flow."
+              },
+              {
+                "question": "Dans le cas de Peter, qu'est-ce qui s'est passé une semaine après qu'il a acheté une action sortie d'un range graphique ?",
+                "options": [
+                  "L'entreprise a annoncé une croissance plus lente, des marges plus faibles et des prévisions réduites.",
+                  "L'action a continué à monter exactement comme le signal technique le promettait.",
+                  "Le graphique a confirmé que l'entreprise était fondamentalement excellente."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cas de Peter montre précisément que le signal technique de sortie de range n'a pas anticipé la détérioration des fondamentaux de l'entreprise, révélée seulement une semaine plus tard par les annonces de résultats."
+              },
+              {
+                "question": "Selon les détails de la leçon, par quoi l'analyse fondamentale doit-elle commencer ?",
+                "options": [
+                  "Par l'entreprise elle-même : ce qu'elle vend, à qui, avec quelle marge, comment elle croît et combien de dette elle porte.",
+                  "Par l'étude des figures graphiques et des moyennes mobiles du titre.",
+                  "Par le sentiment général des autres investisseurs sur les réseaux sociaux."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon définit l'analyse fondamentale comme une démarche centrée sur la compréhension du business : ses ventes, ses marges, sa croissance et son endettement, contrairement à l'analyse technique qui se concentre sur le prix."
+              },
+              {
+                "question": "Léa voit qu'une action vient de franchir un niveau de résistance sur le graphique et veut acheter immédiatement sans avoir lu le dernier rapport de l'entreprise. Que suggère le principe de cette leçon ?",
+                "options": [
+                  "Comprendre d'abord l'entreprise et ses sources de profit avant de se fier uniquement au signal technique.",
+                  "Acheter tout de suite, car un franchissement de résistance suffit à valider une thèse d'investissement.",
+                  "Ignorer définitivement l'analyse technique puisqu'elle est jugée moins fiable que les fondamentaux."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon recommande d'utiliser les fondamentaux pour juger la qualité du business et la technique surtout pour le timing, donc Léa devrait vérifier l'entreprise avant d'agir sur un seul signal graphique."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, quelle erreur consiste à utiliser un signal technique comme excuse ?",
+                "options": [
+                  "Acheter une entreprise que l'on ne comprend pas simplement parce qu'un signal technique semble favorable.",
+                  "Vendre une action dès qu'elle franchit une moyenne mobile à la baisse.",
+                  "Consulter un graphique avant de lire le rapport annuel d'une entreprise."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'avertissement cible précisément ce piège : se servir d'un signal technique pour justifier l'achat d'une entreprise dont on ne comprend pas le métier, les marges ou le risque."
               }
             ]
           },
@@ -1746,6 +2026,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Les ETF peuvent diversifier pendant que vous apprenez l’analyse d’actions. Le repère pratique est : Un ETF large peut contenir des centaines de sociétés pour des frais comme 0,03 à 0,20% par an. Le principal piège est : Acheter seulement des actions individuelles trop tôt peut rendre les erreurs coûteuses."
+              },
+              {
+                "question": "Selon le repère pratique de la leçon, quels frais annuels peut coûter un ETF large contenant des centaines de sociétés ?",
+                "options": [
+                  "Environ 0,03 à 0,20% par an.",
+                  "Environ 2 à 5% par an.",
+                  "Environ 10% par an, comme la plupart des fonds actifs."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon donne ce repère concret : un ETF large peut offrir une diversification sur des centaines de sociétés pour des frais très faibles, de l'ordre de 0,03 à 0,20% par an, ce qui en fait une alternative de base peu coûteuse."
+              },
+              {
+                "question": "Selon les détails de la leçon, à quelle question chaque action individuelle doit-elle pouvoir répondre avant l'achat ?",
+                "options": [
+                  "Pourquoi prendre le risque d'une seule entreprise quand on peut acheter un panier diversifié via un ETF.",
+                  "Pourquoi cette action a-t-elle un nom de ticker court et facile à retenir.",
+                  "Pourquoi cette action est-elle actuellement la plus discutée sur les réseaux sociaux."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon pose l'ETF comme alternative de référence : toute action individuelle doit justifier pourquoi elle vaut le risque de concentration par rapport à un panier diversifié, sinon l'ETF reste le choix le plus honnête."
+              },
+              {
+                "question": "Hugo veut acheter une seule entreprise de biotechnologie parce que son cours a beaucoup progressé, mais il ne sait pas expliquer en quoi elle est meilleure qu'un ETF du secteur santé. Que suggère le principe de la leçon ?",
+                "options": [
+                  "Privilégier l'ETF sectoriel tant que l'avantage spécifique de l'entreprise reste flou et non démontré par les chiffres.",
+                  "Acheter l'entreprise individuelle, car une forte hausse récente du cours suffit à justifier la confiance.",
+                  "Acheter à la fois l'entreprise et l'ETF en parts égales pour éviter d'avoir à trancher la question."
+                ],
+                "correctIndex": 0,
+                "explanation": "Comme dans le cas de Sofia face à son ETF sectoriel, la leçon recommande de privilégier l'ETF quand l'avantage attendu d'une action individuelle n'est pas clairement démontré, car le risque de concentration n'est alors pas compensé."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, pourquoi ne faut-il pas acheter une action seulement parce qu'elle semble plus intéressante qu'un ETF ?",
+                "options": [
+                  "Parce que plus intéressant ne veut pas toujours dire meilleur en termes de risque ajusté ou de solidité réelle.",
+                  "Parce que les ETF sont légalement obligatoires pour tout nouvel investisseur.",
+                  "Parce qu'une action intéressante est presque toujours plus chère qu'un ETF équivalent."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'avertissement souligne que l'attrait ou l'excitation autour d'une action ne garantit pas qu'elle soit un meilleur choix que l'alternative diversifiée et peu coûteuse que représente l'ETF."
               }
             ]
           },
@@ -1790,6 +2110,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Une entreprise de qualité a une demande durable, des marges, du cash-flow et une bonne exécution. Le repère pratique est : Cherchez plusieurs années de croissance du chiffre d’affaires, du free cash-flow positif et une dette maîtrisée. Le principal piège est : Une marque connue ne suffit pas si l’économie du business se détériore."
+              },
+              {
+                "question": "Dans le cas étudié, pourquoi la hausse des ventes d'une marque populaire peut-elle cacher une faiblesse réelle ?",
+                "options": [
+                  "Parce que les ventes peuvent monter seulement à cause de dépenses marketing en forte hausse, pendant que les marges baissent.",
+                  "Parce qu'une marque populaire ne peut jamais être un bon investissement par définition.",
+                  "Parce que les ventes en hausse signifient toujours que la dette de l'entreprise augmente aussi."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cas de la leçon montre que des ventes en hausse financées par une explosion des dépenses marketing, avec des marges qui baissent, masquent un affaiblissement réel de l'économie du business derrière une image de marque toujours forte."
+              },
+              {
+                "question": "Selon les détails de la leçon, où la qualité d'une entreprise se manifeste-t-elle réellement, plutôt que dans une belle présentation ?",
+                "options": [
+                  "Dans des signes répétables : l'entreprise gagne de l'argent, garde ses clients, possède un avantage et survit aux cycles faibles.",
+                  "Dans le nombre de mentions positives reçues dans la presse financière.",
+                  "Dans la taille du budget marketing annoncé pour l'année suivante."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon insiste sur le fait que la qualité se prouve par des signes concrets et répétables comme la rétention des clients, l'avantage concurrentiel et la résistance aux cycles faibles, pas par une communication soignée."
+              },
+              {
+                "question": "Maya envisage d'investir dans une entreprise dont le slogan promet 'le meilleur produit du marché', mais elle ne trouve aucune donnée sur les marges ou la rétention des clients dans les comptes. Que suggère le principe de la leçon ?",
+                "options": [
+                  "Rester prudente, car un avantage qui ressemble à un slogan sans confirmation dans les comptes peut être une histoire plutôt qu'un vrai avantage.",
+                  "Investir avec confiance, car un slogan fort suffit à démontrer un avantage concurrentiel durable.",
+                  "Investir uniquement si l'entreprise est déjà très connue du grand public, peu importe les chiffres."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'avertissement de la leçon est direct sur ce point : un avantage qui n'apparaît pas dans les comptes, mais seulement dans la communication, ressemble davantage à une histoire qu'à un avantage réel et vérifiable."
+              },
+              {
+                "question": "D'après checkTwo, quels éléments concrets permettent de confirmer la qualité réelle d'une entreprise ?",
+                "options": [
+                  "Les marges, le cash-flow ou la rétention du chiffre d'affaires.",
+                  "Le nombre d'abonnés sur les réseaux sociaux de la marque.",
+                  "Le prix de l'action par rapport à ses concurrents directs."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon précise que la qualité doit être confirmée par des indicateurs financiers concrets comme les marges, le cash-flow ou la rétention, et non par des signaux externes comme la notoriété ou le prix de marché."
               }
             ]
           },
@@ -1834,6 +2194,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Le profil d’entreprise explique comment le business gagne vraiment de l’argent. Le repère pratique est : Avant d’acheter, nommez le segment qui génère le plus de revenus et son principal client. Le principal piège est : Acheter un ticker sans comprendre le modèle économique reste de la spéculation."
+              },
+              {
+                "question": "Dans l'exemple de la leçon, en quoi Netflix et un fabricant d'équipements industriels diffèrent-ils malgré une croissance similaire ?",
+                "options": [
+                  "L'un dépend des abonnés, du churn et des coûts de contenu, l'autre dépend des cycles de commandes et du carnet de commandes.",
+                  "L'un est cotée en bourse alors que l'autre ne l'est pas.",
+                  "L'un n'a aucun client identifiable alors que l'autre dépend d'un seul client unique."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'exemple montre que deux entreprises peuvent afficher la même croissance avec des moteurs économiques totalement différents : abonnements et attention pour l'une, cycles de commandes et capex client pour l'autre, ce qui change les indicateurs à surveiller."
+              },
+              {
+                "question": "Selon les détails de la leçon, pourquoi de bons chiffres peuvent-ils tromper en l'absence d'un profil clair de l'entreprise ?",
+                "options": [
+                  "Parce que le chiffre d'affaires, les marges ou le profit peuvent monter à cause de facteurs ponctuels ou de bruit comptable, sans amélioration réelle durable.",
+                  "Parce que les chiffres publiés par les entreprises sont rarement vérifiés par des auditeurs indépendants.",
+                  "Parce que le profil de l'entreprise n'a aucun lien avec la façon de lire ses résultats financiers."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon avertit que sans comprendre le profil de l'entreprise, on risque de prendre pour de la croissance réelle des hausses dues à des facteurs temporaires comme des coupes de coûts ponctuelles ou du bruit comptable."
+              },
+              {
+                "question": "Diego veut acheter une action qu'il a vue mentionnée plusieurs fois en ligne, mais il ne sait pas dire si elle vend des produits ou des services, ni qui sont ses principaux clients. Que suggère le principe de la leçon ?",
+                "options": [
+                  "Ne pas acheter avant de pouvoir expliquer simplement comment l'entreprise gagne de l'argent et qui sont ses clients.",
+                  "Acheter quand même, car la popularité en ligne remplace la nécessité de comprendre le modèle économique.",
+                  "Acheter une petite quantité d'abord, puis chercher les informations sur le profil de l'entreprise après l'achat."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'avertissement de la leçon est direct : il ne faut pas acheter une entreprise qu'on ne peut pas expliquer simplement à quelqu'un hors du marché, ce qui inclut connaître son activité réelle et ses clients."
+              },
+              {
+                "question": "D'après checkTwo, quelles dépendances clés faut-il identifier pour bien comprendre le profil d'une entreprise ?",
+                "options": [
+                  "Les taux d'intérêt, les matières premières, la régulation, le cycle économique, les clients ou la devise.",
+                  "Uniquement le nombre total d'employés de l'entreprise dans le monde.",
+                  "Uniquement la couleur du logo et l'ancienneté de la marque sur le marché."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon liste précisément ces dépendances clés à identifier, car elles déterminent quels indicateurs externes (taux, matières premières, régulation, devise) influencent réellement les résultats de l'entreprise."
               }
             ]
           },
@@ -1878,6 +2278,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Les trois états financiers montrent la performance sous des angles différents. Le repère pratique est : Chiffre d’affaires, résultat net, actifs, dettes et cash-flow doivent raconter une histoire cohérente. Le principal piège est : Lire un seul chiffre en une peut cacher une faible conversion en cash ou une dette qui monte."
+              },
+              {
+                "question": "Dans le cas étudié, l'entreprise annonce un profit record mais un free cash-flow presque nul. Où l'argent peut-il être bloqué selon la leçon ?",
+                "options": [
+                  "Dans les stocks ou les créances, ou consommé par des investissements importants.",
+                  "Dans des comptes bancaires à l'étranger non déclarés aux actionnaires.",
+                  "Dans le paiement anticipé de tous les dividendes prévus pour l'année."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cas explique que l'argent peut rester bloqué dans le besoin en fonds de roulement, comme les stocks ou les créances clients, ou être absorbé par des investissements, ce qui explique l'écart entre profit comptable et cash réel."
+              },
+              {
+                "question": "Selon les détails de la leçon, à quoi sert principalement le cash-flow par rapport au compte de résultat ?",
+                "options": [
+                  "À vérifier si le profit affiché se transforme réellement en argent disponible.",
+                  "À remplacer entièrement le besoin de lire le compte de résultat.",
+                  "À mesurer uniquement la dette totale de l'entreprise sur le long terme."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon explique que le cash-flow montre si le profit devient de l'argent réel, complétant ainsi le compte de résultat qui ne dit pas toujours si les bénéfices comptables se transforment en liquidités disponibles."
+              },
+              {
+                "question": "Une entreprise publie un chiffre d'affaires en forte hausse ce trimestre, et un investisseur veut acheter immédiatement en se basant uniquement sur ce résultat. Que suggère le principe de la leçon ?",
+                "options": [
+                  "Vérifier la tendance sur plusieurs années et croiser ce chiffre avec le profit et le cash-flow avant de construire une thèse.",
+                  "Acheter immédiatement, car un seul trimestre positif suffit à confirmer une nouvelle tendance durable.",
+                  "Attendre uniquement la publication du bilan, sans jamais regarder le compte de résultat."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon précise qu'un seul chiffre suffit rarement et que la tendance sur plusieurs années, ainsi que le lien entre chiffre d'affaires, profit et cash-flow, comptent davantage qu'un résultat isolé."
+              },
+              {
+                "question": "D'après l'avertissement de la leçon, pourquoi ne faut-il pas construire une thèse d'investissement sur un seul trimestre ?",
+                "options": [
+                  "Parce qu'un trimestre peut être du bruit ponctuel et non le signe d'une nouvelle tendance durable.",
+                  "Parce que les résultats trimestriels ne sont jamais vérifiés par des commissaires aux comptes.",
+                  "Parce que la loi interdit d'utiliser les résultats trimestriels dans une analyse d'investissement."
+                ],
+                "correctIndex": 0,
+                "explanation": "L'avertissement souligne que les variations d'un seul trimestre peuvent être du simple bruit statistique ou ponctuel, et qu'il faut donc plusieurs années de données pour distinguer une vraie tendance d'un accident isolé."
               }
             ]
           },
@@ -1922,6 +2362,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Le bilan montre la résilience financière et les obligations. Le repère pratique est : Comparez le cash et les actifs courants avec la dette et les passifs proches. Le principal piège est : Un fort levier peut transformer un petit raté de résultat en vrai problème."
+              },
+              {
+                "question": "Dans l’exemple de la leçon, qu’est-ce qui distingue la seconde entreprise de la première alors que leur profit est identique ?",
+                "options": [
+                  "Elle porte une dette importante à refinancer à des taux élevés.",
+                  "Elle a davantage de stocks que de créances clients.",
+                  "Elle verse un dividende plus généreux à ses actionnaires."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’exemple oppose une entreprise peu endettée à une autre qui doit refinancer une dette lourde à des taux élevés. Le profit identique cache donc une liberté financière très différente en période difficile."
+              },
+              {
+                "question": "Pourquoi une croissance rapide du chiffre d’affaires peut-elle quand même affaiblir le bilan d’un détaillant ?",
+                "options": [
+                  "Parce que les stocks et les passifs courts peuvent croître plus vite que les ventes, bloquant l’argent dans les produits.",
+                  "Parce que l’ouverture de nouveaux magasins réduit automatiquement les capitaux propres.",
+                  "Parce que les créances clients diminuent toujours quand les ventes augmentent vite."
+                ],
+                "correctIndex": 0,
+                "explanation": "Comme l’explique le cas pratique du détaillant, l’argent peut rester immobilisé dans les stocks pendant que les fournisseurs réclament un paiement rapide. La croissance des ventes ne garantit donc pas une trésorerie saine."
+              },
+              {
+                "question": "Une entreprise que vous suivez annonce un excellent trimestre, mais vous remarquez que sa dette court terme a doublé alors que sa trésorerie reste stable. Que devriez-vous faire selon cette leçon ?",
+                "options": [
+                  "Comparer la trésorerie et les actifs courants à cette dette avant de juger la solidité réelle de l’entreprise.",
+                  "Acheter immédiatement puisque le profit du trimestre est bon.",
+                  "Ignorer la dette court terme car seul le chiffre d’affaires compte vraiment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Un bon résultat ne dit rien sur la capacité de l’entreprise à absorber un choc si la dette proche dépasse largement ses liquidités. Le repère pratique de la leçon consiste justement à comparer ces deux masses avant de conclure."
+              },
+              {
+                "question": "Selon le warning de la leçon, dans quelle situation un bon profit avec un bilan fragile devient-il particulièrement dangereux ?",
+                "options": [
+                  "Quand les taux d’intérêt montent ou que les ventes baissent.",
+                  "Quand l’entreprise verse un dividende stable depuis plusieurs années.",
+                  "Quand le cours de l’action progresse plus vite que ses concurrents."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le warning précise que la fragilité du bilan se révèle surtout dans un environnement défavorable : hausse des taux ou baisse des ventes, qui rendent le refinancement de la dette plus coûteux ou plus difficile."
               }
             ]
           },
@@ -1966,6 +2446,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Le cash-flow montre si le profit comptable devient de l’argent utilisable. Le repère pratique est : Une société qui gagne 100 millions mais brûle du cash doit être expliquée clairement. Le principal piège est : Ignorer le free cash-flow peut faire paraître une entreprise chère comme bon marché."
+              },
+              {
+                "question": "Dans l’exemple de la leçon, pourquoi l’entreprise qui gagne 1 milliard de dollars a-t-elle une liberté financière limitée ?",
+                "options": [
+                  "Parce qu’elle doit dépenser 900 millions en équipements chaque année.",
+                  "Parce qu’elle verse la totalité de son profit en dividendes.",
+                  "Parce que son chiffre d’affaires baisse malgré le profit élevé."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’exemple montre que des capex de 900 millions absorbent presque tout le profit de 1 milliard, ne laissant que peu de free cash-flow disponible. C’est ce capex lourd, et non le profit, qui détermine la marge de manœuvre réelle."
+              },
+              {
+                "question": "Pourquoi le capex doit-il être analysé en distinguant maintenance et croissance plutôt que comme un seul chiffre global ?",
+                "options": [
+                  "Parce qu’un capex de maintenance limite la liberté financière alors qu’un capex de croissance peut préparer plus de profits futurs.",
+                  "Parce que seul le capex de croissance est inscrit dans les comptes officiels.",
+                  "Parce que le capex de maintenance n’a aucun impact sur le free cash-flow."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les détails de la leçon précisent que le capex sert soit à maintenir l’activité existante, soit à la développer. Un investisseur doit faire cette distinction pour juger si les dépenses construisent réellement de la valeur future."
+              },
+              {
+                "question": "Vous suivez une entreprise de logiciels qui annonce une perte comptable, mais son cash-flow opérationnel est positif et stable depuis trois ans. Quelle conclusion la leçon vous inviterait-elle à tirer ?",
+                "options": [
+                  "La perte comptable ne signifie pas forcément que l’entreprise manque de cash, il faut regarder le cash-flow réel.",
+                  "Une perte comptable signifie toujours que l’entreprise est en danger financier.",
+                  "Il faut ignorer le cash-flow opérationnel puisque le résultat net est négatif."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cas pratique évoque justement une entreprise SaaS qui peut afficher une perte comptable tout en générant du cash-flow opérationnel positif. Le résultat net seul ne suffit donc pas à juger la santé financière réelle."
+              },
+              {
+                "question": "Selon le warning de la leçon, quelle confusion un investisseur débutant doit-il éviter ?",
+                "options": [
+                  "Confondre une entreprise profitable avec une entreprise qui génère vraiment du cash libre.",
+                  "Confondre le chiffre d’affaires avec le nombre d’actions en circulation.",
+                  "Confondre le cash-flow opérationnel avec le dividende versé aux actionnaires."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le warning rappelle explicitement que profit comptable et cash libre réel ne sont pas la même chose. Une entreprise peut être profitable sur le papier tout en ayant peu ou pas de free cash-flow disponible."
               }
             ]
           },
@@ -2010,6 +2530,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "La rentabilité mesure l’efficacité avec laquelle le revenu devient profit. Le repère pratique est : Suivez marge brute, marge opérationnelle, marge nette, ROE et ROIC sur plusieurs années. Le principal piège est : Un pic de marge sur un an peut être temporaire et non une nouvelle norme."
+              },
+              {
+                "question": "Dans l’exemple de la leçon, que faut-il se demander si une entreprise augmente ses ventes de 30% mais voit sa marge passer de 20% à 5% ?",
+                "options": [
+                  "Si cette croissance est un investissement utile ou une croissance achetée trop cher.",
+                  "Si le chiffre d’affaires est correctement comptabilisé selon les normes locales.",
+                  "Si le nombre d’actions en circulation a augmenté en même temps."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’exemple montre qu’une forte hausse des ventes accompagnée d’une chute de marge n’est pas automatiquement positive. Il faut comprendre si ce sacrifice de marge construit un avantage durable ou s’il s’agit simplement de ventes obtenues à perte."
+              },
+              {
+                "question": "Pourquoi le ROE et le ROA mesurent-ils des choses différentes selon les détails de la leçon ?",
+                "options": [
+                  "Le ROE mesure l’efficacité du capital des actionnaires, tandis que le ROA mesure l’efficacité de l’ensemble des actifs.",
+                  "Le ROE mesure uniquement la marge brute, tandis que le ROA mesure la marge nette.",
+                  "Le ROE et le ROA mesurent exactement la même chose mais à des périodes différentes."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les détails précisent que le ROE évalue l’efficacité avec laquelle le capital propre génère du profit, alors que le ROA évalue l’ensemble des actifs, dette incluse. Une entreprise très endettée peut donc afficher un ROE élevé sans que ses actifs soient particulièrement performants."
+              },
+              {
+                "question": "Vous comparez deux entreprises du même secteur : l’une a une marge opérationnelle stable à 22% depuis 5 ans, l’autre a vu sa marge grimper de 10% à 24% en un seul trimestre grâce à une baisse ponctuelle des coûts. Que devriez-vous faire selon cette leçon ?",
+                "options": [
+                  "Rester prudent sur la seconde entreprise et vérifier si ce pic de marge est durable avant de le considérer comme la nouvelle norme.",
+                  "Préférer automatiquement la seconde entreprise puisque sa marge est désormais plus élevée.",
+                  "Ignorer la marge opérationnelle et ne comparer que le chiffre d’affaires total."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cas pratique avertit qu’un pic de marge sur un an peut être temporaire. Une marge stable sur plusieurs années est un signal plus fiable de la qualité réelle du modèle économique qu’une amélioration soudaine et récente."
+              },
+              {
+                "question": "Selon le checkThree de la leçon, quel risque faut-il vérifier avant de se réjouir d’un ROE élevé ?",
+                "options": [
+                  "Que ce ROE ne soit pas obtenu uniquement grâce à une dette excessive.",
+                  "Que ce ROE ne soit pas calculé sur un nombre d’actions trop faible.",
+                  "Que ce ROE ne soit pas inférieur à celui de l’année précédente."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le checkThree et le warning de la leçon insistent sur le fait qu’un fort effet de levier peut artificiellement gonfler le ROE sans que la qualité du business se soit améliorée. Il faut donc vérifier la source de cette rentabilité avant de la juger positive."
               }
             ]
           },
@@ -2054,6 +2614,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "La valorisation relie la qualité du business au prix payé. Le repère pratique est : Comparez P/E, P/S, rendement du free cash-flow, croissance et votre scénario central. Le principal piège est : Un multiple bas peut être un avertissement si le business rétrécit."
+              },
+              {
+                "question": "Dans l’exemple de la leçon, à quelle condition un P/E de 45 peut-il rester justifié ?",
+                "options": [
+                  "Si l’entreprise croît vite, a de fortes marges et un long potentiel.",
+                  "Si l’entreprise verse un dividende élevé chaque trimestre.",
+                  "Si le P/E est resté stable depuis plus de dix ans."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’exemple précise qu’un P/E élevé n’est pas un problème en soi tant que la croissance, les marges et le potentiel long terme le justifient. Le danger apparaît surtout si la croissance ralentit alors que les marges sont déjà au maximum."
+              },
+              {
+                "question": "Pourquoi deux entreprises avec le même P/E de 25 peuvent-elles avoir une valeur très différente, selon le cas pratique de la leçon ?",
+                "options": [
+                  "Parce que leur croissance, la stabilité de leur free cash-flow et leur niveau de dette diffèrent fortement.",
+                  "Parce que le P/E ne peut jamais être comparé entre deux entreprises différentes.",
+                  "Parce qu’un P/E identique signifie automatiquement un prix d’action identique."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cas pratique montre que l’une croît de 5% avec des marges cycliques alors que l’autre croît de 18% avec un free cash-flow stable et peu de dette. Un même multiple peut donc cacher des qualités d’entreprise très différentes."
+              },
+              {
+                "question": "Vous trouvez une entreprise avec un P/E très bas par rapport à son secteur, mais son chiffre d’affaires baisse depuis trois trimestres consécutifs. Que devriez-vous faire selon cette leçon ?",
+                "options": [
+                  "Vous méfier : ce P/E bas peut être un avertissement sur la détérioration du business plutôt qu’une bonne affaire.",
+                  "Acheter immédiatement puisqu’un P/E bas signifie toujours une action sous-évaluée.",
+                  "Ignorer le P/E et ne regarder que le prix de l’action en valeur absolue."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le warning et le contrôle de décision de la leçon rappellent qu’un faible P/E peut signaler un business qui rétrécit plutôt qu’une opportunité. Un chiffre d’affaires en baisse répétée renforce ce signal d’alerte plutôt que de confirmer une affaire bon marché."
+              },
+              {
+                "question": "Selon le checkTwo de la leçon, que devez-vous préparer avant de juger qu’une valorisation est attractive ?",
+                "options": [
+                  "Un scénario central, un scénario optimiste et un scénario défavorable.",
+                  "Une liste des dix plus grandes capitalisations du secteur.",
+                  "Un calendrier précis des prochains résultats trimestriels."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le checkTwo demande explicitement d’avoir envisagé plusieurs scénarios de croissance et de marges avant de conclure sur le prix. Cela évite de juger un multiple uniquement sur l’hypothèse la plus favorable."
               }
             ]
           },
@@ -2098,6 +2698,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "La stratégie d’entrée contrôle le risque de timing et la taille de position. Le repère pratique est : Diviser un achat prévu de 1200 dollars en 3 ou 4 parties peut réduire le regret et la pression. Le principal piège est : Tout investir sur la première idée laisse peu de place aux erreurs."
+              },
+              {
+                "question": "Dans l’exemple de la leçon, comment les 1200 dollars sont-ils répartis pour réduire le regret et la pression ?",
+                "options": [
+                  "25% maintenant, 25% après les résultats, 25% si le prix atteint la valorisation visée, 25% gardés en réserve.",
+                  "La moitié investie tout de suite et la moitié dans un an, sans condition particulière.",
+                  "100% investi immédiatement pour ne pas manquer la tendance actuelle."
+                ],
+                "correctIndex": 0,
+                "explanation": "L’exemple détaille un découpage en quatre tranches égales, chacune liée à une condition précise plutôt qu’à l’impulsion du moment. Cela ne garantit pas le meilleur prix, mais évite les décisions prises dans la panique ou l’euphorie."
+              },
+              {
+                "question": "Pourquoi le DCA et le lump sum ne conviennent-ils pas aux mêmes profils d’investisseurs selon les détails de la leçon ?",
+                "options": [
+                  "Le lump sum peut convenir si l’horizon est long et l’argent non vital, alors que le DCA réduit le risque d’un mauvais timing ponctuel.",
+                  "Le DCA est réservé aux très grosses sommes alors que le lump sum est réservé aux petites sommes.",
+                  "Le lump sum garantit toujours un meilleur rendement que le DCA, quel que soit le profil de l’investisseur."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les détails de la leçon précisent que chaque approche répond à une situation différente : le DCA étale le risque de timing, tandis que le lump sum suppose un horizon long et de l’argent dont on n’a pas besoin à court terme. Aucune des deux n’est universellement supérieure."
+              },
+              {
+                "question": "Vous avez prévu d’investir 2000 dollars dans une entreprise, mais le prix grimpe de 8% en une journée sur une rumeur non confirmée. Que recommande l’esprit de cette leçon ?",
+                "options": [
+                  "Suivre la règle d’entrée définie à l’avance plutôt que de réagir à l’émotion du moment.",
+                  "Investir immédiatement la totalité des 2000 dollars pour ne pas rater la hausse.",
+                  "Annuler définitivement le projet d’achat dès qu’un mouvement de prix imprévu survient."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon insiste sur le fait que la règle d’entrée doit être écrite avant l’achat, justement pour éviter que les émotions ou les mouvements de prix à court terme ne dictent la décision. S’en tenir au plan reste la meilleure protection contre les réactions impulsives."
+              },
+              {
+                "question": "Selon le warning de la leçon, à quelle condition est-il justifié de renforcer une position qui baisse ?",
+                "options": [
+                  "Seulement si la thèse d’investissement reste valide, et non parce que la perte affichée fait mal.",
+                  "Dès que la baisse dépasse 20%, quelle que soit la raison de cette baisse.",
+                  "Uniquement si d’autres investisseurs renforcent aussi leur position au même moment."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le warning met en garde contre le renforcement automatique d’une position en baisse. La seule justification valable est que la thèse initiale tienne toujours, pas la douleur psychologique de voir le portefeuille dans le rouge."
               }
             ]
           },
@@ -2142,6 +2782,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Les indicateurs techniques donnent du contexte, pas une thèse d’investissement. Le repère pratique est : Utilisez moyennes mobiles, RSI ou zones de support comme contrôles secondaires après l’analyse du business. Le principal piège est : Un signal peut échouer vite si la thèse ou le régime de marché change."
+              },
+              {
+                "question": "Dans le cas pratique d’Anna, quelle était la véritable cause du RSI sous 30, au-delà du signal technique ?",
+                "options": [
+                  "L’entreprise avait perdu un gros client, une cause fondamentale et non purement technique.",
+                  "Le volume d’échanges était anormalement élevé ce jour-là.",
+                  "Le marché entier traversait une correction généralisée sans lien avec l’entreprise."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le cas pratique montre qu’Anna a d’abord cru à un simple rebond technique avant de découvrir la perte d’un client majeur. Le RSI bas reflétait donc une dégradation réelle du business, pas seulement un excès de vente passager."
+              },
+              {
+                "question": "Pourquoi les détails de la leçon précisent-ils qu’un indicateur ne sait pas si l’entreprise est chère ou si son modèle économique est cassé ?",
+                "options": [
+                  "Parce que les indicateurs techniques se basent uniquement sur le comportement du prix et du volume, pas sur les fondamentaux du business.",
+                  "Parce que les indicateurs techniques sont calculés à partir des bénéfices déclarés par l’entreprise.",
+                  "Parce que les indicateurs techniques deviennent fiables uniquement pour les très grandes capitalisations."
+                ],
+                "correctIndex": 0,
+                "explanation": "Les moyennes mobiles, le RSI ou le volume mesurent le comportement du prix et la participation du marché, pas la qualité du business ou son prix réel. C’est pourquoi la leçon les présente comme une couche d’aide secondaire et non comme une analyse suffisante."
+              },
+              {
+                "question": "Vous remarquez qu’une action que vous suivez touche une zone de support historique pendant que l’entreprise publie de bons résultats et relève ses prévisions. Que recommande la leçon ?",
+                "options": [
+                  "Considérer ce signal technique comme un contrôle secondaire utile, en plus de l’analyse fondamentale positive.",
+                  "Acheter uniquement parce que le prix touche le support, sans tenir compte des résultats.",
+                  "Ignorer totalement le support car les indicateurs techniques n’ont jamais d’utilité."
+                ],
+                "correctIndex": 0,
+                "explanation": "La leçon recommande d’utiliser les indicateurs comme contrôle secondaire après l’analyse du business, pas comme seul déclencheur. Ici, le support renforce une thèse déjà soutenue par de bons fondamentaux, ce qui correspond exactement à l’usage recommandé."
+              },
+              {
+                "question": "Selon le warning de la leçon, que se passe-t-il souvent quand on ajoute de nombreux indicateurs sur un même graphique ?",
+                "options": [
+                  "Cela n’améliore pas forcément la décision et ajoute souvent seulement du bruit.",
+                  "Cela garantit automatiquement une meilleure précision sur le point d’entrée.",
+                  "Cela remplace complètement le besoin d’analyser les fondamentaux de l’entreprise."
+                ],
+                "correctIndex": 0,
+                "explanation": "Le warning prévient explicitement que multiplier les indicateurs ne rend pas la décision plus professionnelle. Plus de lignes sur un graphique peuvent au contraire brouiller le signal au lieu de le clarifier."
               }
             ]
           }

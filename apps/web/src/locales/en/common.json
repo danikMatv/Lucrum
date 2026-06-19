@@ -1438,6 +1438,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "A reserve and debt control come before stock selection. The practical anchor is: Keep 3-6 months of expenses outside stocks before investing aggressively. The main trap is: Investing money needed soon can force a sale during a normal 20-40% decline."
+              },
+              {
+                "question": "In the example, what happens to someone without a reserve who invested $1,000 and then loses part of their income two months later?",
+                "options": [
+                  "They may be forced to sell the stock at a loss even though the business is still healthy",
+                  "Their broker automatically pauses the investment until income returns",
+                  "The $1,000 is protected by law from being withdrawn during a hardship"
+                ],
+                "correctIndex": 0,
+                "explanation": "Without a reserve, a normal life problem can force a sale at a bad time, even if nothing changed about the company itself. That is exactly the forced-decision risk this lesson warns about."
+              },
+              {
+                "question": "Why does the lesson call the financial base 'not boring paperwork' but something that protects you from forced decisions?",
+                "options": [
+                  "Because a reserve lets you ride out a 20-40% stock decline without needing to sell for cash",
+                  "Because paperwork is required by brokers before you can open an account",
+                  "Because it guarantees the stock you bought will recover within 3-6 months"
+                ],
+                "correctIndex": 0,
+                "explanation": "A reserve separates ordinary life expenses from your investment decisions, so a market drop does not turn into a forced sale. It is about behavior under stress, not about paperwork or guarantees."
+              },
+              {
+                "question": "Daniel has no emergency reserve but feels confident because he reads about the market every day. His car needs an unexpected $900 repair right after a 25% dip in his only stock holding. What should he do, based on this lesson's principle?",
+                "options": [
+                  "Sell part of the stock to cover the repair, since he has no other reserve to draw from",
+                  "Ignore the repair and let the bill go unpaid until the stock price recovers",
+                  "Take on high-interest debt for the repair so the stock position stays untouched"
+                ],
+                "correctIndex": 0,
+                "explanation": "Without a reserve, Daniel is left with no good options. Confidence and research do not substitute for cash set aside, which is precisely why the lesson stresses building a reserve before investing aggressively."
+              },
+              {
+                "question": "According to the lesson's warning, which of these is the clearest example of money that should NOT be invested in stocks?",
+                "options": [
+                  "Funds set aside for next quarter's tax payment",
+                  "Money from a monthly budget surplus after all expenses and debt payments",
+                  "Savings specifically earmarked for retirement in 25 years"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning specifically lists rent, healthcare, education, and taxes as near-term obligations that should never be exposed to stock market volatility. Long-horizon savings and true surplus cash are different from money needed soon for required payments."
               }
             ]
           },
@@ -1482,6 +1522,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "A written plan turns market noise into pre-made rules. The practical anchor is: Set a horizon, monthly contribution, and maximum single-stock weight such as 5-8%. The main trap is: Changing strategy after every video is not discipline."
+              },
+              {
+                "question": "In the example plan, what maximum weight does the investor set for a single stock?",
+                "options": [
+                  "8% of the portfolio",
+                  "25% of the portfolio",
+                  "50% of the portfolio"
+                ],
+                "correctIndex": 0,
+                "explanation": "The example plan explicitly caps any single stock below 8% of the portfolio, which keeps one disappointing company from doing major damage to the whole plan."
+              },
+              {
+                "question": "Why does the lesson say a plan should be 'short enough to read in a minute when the market feels emotional'?",
+                "options": [
+                  "Because during stressful moments, a quick, clear reference helps you act on prior logic instead of panic",
+                  "Because longer plans are against brokerage regulations",
+                  "Because a one-minute plan is statistically proven to outperform longer ones"
+                ],
+                "correctIndex": 0,
+                "explanation": "The point of brevity is usability under stress: when emotions run high, you need to quickly recall your own rules rather than reconstruct your reasoning from scratch."
+              },
+              {
+                "question": "Priya buys a stock after a friend's tip, then sees a bearish video the next day and considers selling immediately, then sees a bullish post and considers buying more. What does this lesson suggest she's missing?",
+                "options": [
+                  "A written plan with selling rules and position limits that don't change with each new piece of content she sees",
+                  "A faster phone so she can react to news before other investors do",
+                  "A larger position size so small price moves matter less emotionally"
+                ],
+                "correctIndex": 0,
+                "explanation": "Reacting to each new video or post is the emotional pattern the lesson explicitly warns against. A written plan with a fixed selling rule would let Priya ignore the noise and follow a thesis instead."
+              },
+              {
+                "question": "Based on checkThree, when should your selling rule for a stock be decided?",
+                "options": [
+                  "Before you make the purchase",
+                  "After the first earnings report following purchase",
+                  "Only once the stock has fallen by double digits"
+                ],
+                "correctIndex": 0,
+                "explanation": "Deciding the selling rule before buying ensures the decision is made with a clear head, not under the pressure of an actual price move. Writing it down afterward usually means it's being shaped by emotion instead of logic."
               }
             ]
           },
@@ -1526,6 +1606,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Common market myths must be checked against evidence. The practical anchor is: A 30% fall does not automatically make a stock cheap if profits fall too. The main trap is: Confusing a lower price with lower risk leads to weak decisions."
+              },
+              {
+                "question": "In the lesson's example, what is true about a stock that rose 80% in one year?",
+                "options": [
+                  "It can still be a poor buy today if the price already assumes a perfect scenario",
+                  "It is automatically a safer investment than it was a year ago",
+                  "It cannot fall further because it has already proven strong demand"
+                ],
+                "correctIndex": 0,
+                "explanation": "Past performance does not tell you what is already priced in. A stock that already assumes a perfect future can be a poor buy today regardless of how well it performed previously."
+              },
+              {
+                "question": "Why does the lesson mention survivorship bias in Den's case study?",
+                "options": [
+                  "Because hearing only about big winners hides the many similar attempts that ended badly, making big bets look safer than they are",
+                  "Because Den's broker only shows him stocks that survived a stock split",
+                  "Because survivorship bias means old companies always outperform new ones"
+                ],
+                "correctIndex": 0,
+                "explanation": "Survivorship bias distorts perception by spotlighting winners and ignoring failures, which makes risky bets look more reliable than the real odds suggest."
+              },
+              {
+                "question": "Lucia hears that her coworker turned $2,000 into $11,000 buying a single volatile stock, and decides to put her entire savings into a similar trade. What does this lesson suggest she consider first?",
+                "options": [
+                  "That she is only hearing one success story and not the likely range of outcomes, including losses, behind similar trades",
+                  "That she should ask the coworker for the exact ticker symbol to copy the trade exactly",
+                  "That doubling her position size would have doubled the coworker's result too"
+                ],
+                "correctIndex": 0,
+                "explanation": "One anecdote is not evidence of typical results. The lesson stresses asking what happens in an average or bad outcome, not just chasing a story about an exceptional one."
+              },
+              {
+                "question": "Per the lesson's warning, what should you assume when an investment idea is marketed as 'easy money without risk'?",
+                "options": [
+                  "The risk is real but simply not being named",
+                  "The opportunity is regulated and therefore inherently safe",
+                  "It must be a long-term, low-volatility investment like a bond"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson is direct on this point: claims of easy, riskless money almost always have a hidden risk that has not been disclosed, not an actual absence of risk."
               }
             ]
           },
@@ -1570,6 +1690,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Risk tolerance must match time horizon and income stability. The practical anchor is: Money needed in under 3 years should not rely on volatile stocks. The main trap is: Taking equity risk without time to recover creates forced selling."
+              },
+              {
+                "question": "In the example, why might the same market drop be tolerable for one person but damaging for another?",
+                "options": [
+                  "Because one person has a stable income, reserve, and 15-year horizon, while the other needs a home deposit next year",
+                  "Because one person owns more shares in absolute number than the other",
+                  "Because risk tolerance is fixed by age and cannot differ between people with similar timelines"
+                ],
+                "correctIndex": 0,
+                "explanation": "Risk profile depends on circumstances like time horizon, income stability, and near-term cash needs, not just on the dollar amount invested. The same drop affects each person differently based on those factors."
+              },
+              {
+                "question": "Why does Ira's case study say her real risk is 'higher than the number of companies suggests' even though her portfolio holds many tickers?",
+                "options": [
+                  "Because 80% of her holdings are concentrated in technology, so they tend to fall together from the same shared risks",
+                  "Because owning many tickers always increases trading fees and therefore risk",
+                  "Because technology stocks are inherently riskier than every other sector at all times"
+                ],
+                "correctIndex": 0,
+                "explanation": "Owning many tickers in the same sector does not create real diversification, since they're all exposed to the same rate, valuation, and sentiment risks. True diversification requires spreading across uncorrelated exposures."
+              },
+              {
+                "question": "Tom needs $15,000 for a home deposit in 14 months, but currently holds that amount in a single volatile growth stock because he wants higher returns first. What does this lesson suggest about his approach?",
+                "options": [
+                  "His risk profile is mismatched with his timeline, since money needed soon should not rely on volatile stocks",
+                  "His approach is fine because growth stocks recover within any 14-month window historically",
+                  "His approach is acceptable as long as he diversifies into two stocks instead of one"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's practical anchor states that money needed in under 3 years should not rely on volatile stocks. Tom's short timeline makes this a mismatch regardless of how many stocks he holds."
+              },
+              {
+                "question": "The lesson's warning says if a 10% fall keeps you awake at night, what should you avoid doing?",
+                "options": [
+                  "Building a portfolio as if a 50% fall would be easy to handle",
+                  "Checking your portfolio balance more than once a week",
+                  "Investing in any asset class other than bonds"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning highlights a mismatch between emotional tolerance and portfolio construction. If small drops already cause distress, a portfolio built for large potential drawdowns is not aligned with the investor's real risk profile."
               }
             ]
           },
@@ -1614,6 +1774,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Diversification means assigning jobs to several asset types. The practical anchor is: A simple starter map can cap one stock at 5% and keep cash for near-term needs. The main trap is: Owning ten companies from one sector is still concentrated risk."
+              },
+              {
+                "question": "In Andrew's case study, what portfolio structure is suggested for his $10,000 so he can learn stock picking without making the whole portfolio a bet?",
+                "options": [
+                  "70% broad ETF, 20% bonds or cash, and 10% individual stocks",
+                  "100% individual stocks split across ten companies",
+                  "50% cash and 50% individual stocks for balance"
+                ],
+                "correctIndex": 0,
+                "explanation": "This structure gives Andrew a stable core (the ETF and bonds/cash) while still letting him practice stock picking with a limited, contained portion of his money."
+              },
+              {
+                "question": "Why does the lesson argue that a volatile single stock may be the 'wrong tool' for a goal that is 18 months away, even if you like the company?",
+                "options": [
+                  "Because the short timeline doesn't allow enough time to recover from a sharp price decline before the money is needed",
+                  "Because brokers restrict selling individual stocks within 18 months of purchase",
+                  "Because liking a company has no bearing on whether it is a quality business"
+                ],
+                "correctIndex": 0,
+                "explanation": "Asset choice should match the goal's timeline. A volatile holding might not recover in time if you need the cash on a fixed near-term date, regardless of how much you believe in the company."
+              },
+              {
+                "question": "Wei has $8,000 and wants to buy individual shares in ten different airline companies, believing this counts as full diversification. Based on this lesson, what is the issue?",
+                "options": [
+                  "Owning ten companies from one sector is still concentrated risk, not true diversification",
+                  "Ten companies is too few to track, so he should reduce it to three",
+                  "Airlines are the only sector where this kind of concentration is actually safe"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's decision check explicitly states that owning ten companies from one sector is still concentrated risk. Real diversification requires spreading across different sectors and asset classes, not just adding more tickers within the same one."
+              },
+              {
+                "question": "According to the lesson's warning, what mistake do people make when they call a risky bet an 'investment'?",
+                "options": [
+                  "They assume it qualifies as an investment simply because it was made through a brokerage app",
+                  "They assume it qualifies as an investment only if it loses money",
+                  "They assume it qualifies as an investment only if held for over 10 years"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson warns that using a normal brokerage app does not change the nature of a risky, speculative bet. The platform used has no bearing on whether the underlying decision is sound investing or speculation."
               }
             ]
           },
@@ -1658,6 +1858,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Compounding works when gains stay invested long enough. The practical anchor is: At 8% annual growth, $1,000 can become about $4,660 in 20 years before taxes and fees. The main trap is: Interrupting compounding too often weakens the main engine."
+              },
+              {
+                "question": "According to the lesson's practical anchor, what can $1,000 become after 20 years at 8% annual growth, before taxes and fees?",
+                "options": [
+                  "About $4,660",
+                  "About $2,000",
+                  "About $10,000"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson states this figure directly as its practical anchor, illustrating how compounding multiplies an initial sum nearly fivefold over two decades at a steady 8% rate."
+              },
+              {
+                "question": "Why does the lesson say early years of a monthly investing plan 'depend more on contributions than returns'?",
+                "options": [
+                  "Because the invested base is still small, so the new money added each month outweighs the growth generated by the existing balance",
+                  "Because returns are mathematically guaranteed to be zero in the first few years",
+                  "Because brokers charge higher fees during the first years of an account"
+                ],
+                "correctIndex": 0,
+                "explanation": "When the portfolio balance is small, the dollar amount you contribute matters more than the percentage return on a small base. As the base grows over years, the return itself starts contributing more."
+              },
+              {
+                "question": "Two friends each plan to invest $150 per month. One starts immediately; the other waits two years to find the 'perfect entry point' before starting. Based on this lesson, what is the likely outcome?",
+                "options": [
+                  "The one who started immediately likely has an edge from extra time in the market, not from picking a better moment",
+                  "The one who waited will likely end up ahead because they avoided early volatility",
+                  "Both will end up with identical results since the total contributed amount is what matters most"
+                ],
+                "correctIndex": 0,
+                "explanation": "The case study makes this exact point: time in the market often beats waiting for a perfect moment, because compounding rewards early, consistent starts rather than precise timing."
+              },
+              {
+                "question": "Per the lesson's warning, why is it risky to use a 30-50% annual return as your base-case assumption?",
+                "options": [
+                  "It can make a weak investment idea look beautiful on a screen, since unrealistic growth rates inflate projected outcomes",
+                  "It is illegal to model returns above 10% per year in most calculators",
+                  "It guarantees a tax penalty if the assumption is later proven wrong"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning is about distorted expectations: plugging in unrealistic return assumptions can make almost any plan or idea appear far more attractive than it would with a realistic, sustainable growth rate."
               }
             ]
           },
@@ -1702,6 +1942,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Fundamental, technical, and sentiment analysis answer different questions. The practical anchor is: Use fundamentals for business quality and technicals mainly for timing or risk control. The main trap is: A chart pattern cannot replace understanding revenue, margins, and cash flow."
+              },
+              {
+                "question": "In the lesson's example, what can happen to a stock that breaks out to a new high?",
+                "options": [
+                  "It can break out even while margins are falling and debt is getting more expensive",
+                  "It is guaranteed to have improving fundamentals because the market is efficient",
+                  "It can only happen after a positive earnings report has been released"
+                ],
+                "correctIndex": 0,
+                "explanation": "The example shows that price action and business fundamentals can diverge. A new high on the chart says nothing on its own about whether margins or debt are actually improving."
+              },
+              {
+                "question": "Why does the lesson say a chart 'without business understanding becomes guesswork' for a long-term investor?",
+                "options": [
+                  "Because price patterns describe past trading behavior but not whether the underlying business is fundamentally sound",
+                  "Because charts are only accurate for stocks trading above $100 per share",
+                  "Because technical analysis was designed exclusively for short-term day traders and cannot apply to anyone else"
+                ],
+                "correctIndex": 0,
+                "explanation": "Technical analysis describes price and sentiment, not business quality. For a long-term holder, not understanding the business behind the chart means decisions are based on incomplete information."
+              },
+              {
+                "question": "Sam notices a stock forming a bullish chart pattern and buys immediately without reading any recent news or financial reports. What does this lesson suggest Sam skipped?",
+                "options": [
+                  "Verifying the fundamental thesis, such as revenue, margins, and cash flow, before treating the chart as a buy signal",
+                  "Checking whether the chart pattern has a official, government-approved name",
+                  "Waiting for a second identical pattern to form before acting"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's action step is explicit: explain the business and profit sources first, then look at the chart. Sam reversed that order, treating a technical signal as sufficient justification on its own."
+              },
+              {
+                "question": "Based on the lesson's warning, what should a technical signal never be used as?",
+                "options": [
+                  "An excuse to buy a company you do not understand",
+                  "A secondary confirmation after fundamental research is complete",
+                  "A tool for thinking about position size and risk control"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning specifically targets using technicals as a substitute for understanding the business, not as a tool that can support timing decisions once the fundamentals are already understood."
               }
             ]
           },
@@ -1746,6 +2026,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "ETFs can provide diversification while you learn individual stock analysis. The practical anchor is: A broad ETF may hold hundreds of companies for one fee such as 0.03-0.20% per year. The main trap is: Buying only single stocks too early can make learning mistakes expensive."
+              },
+              {
+                "question": "According to the lesson's practical anchor, what kind of annual fee might a broad ETF charge while holding hundreds of companies?",
+                "options": [
+                  "Something in the range of 0.03-0.20% per year",
+                  "Around 2-3% per year",
+                  "A flat $500 per year regardless of account size"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson cites this low fee range as a key reason ETFs can be an efficient baseline: broad diversification for a very small annual cost."
+              },
+              {
+                "question": "Why does the lesson say an ETF 'gives you a baseline alternative that your idea must beat'?",
+                "options": [
+                  "Because if a single stock's expected advantage over the basket is unclear while its risk is higher, the index may be the better decision",
+                  "Because ETFs always outperform individual stocks over any holding period",
+                  "Because regulations require investors to own an ETF before buying individual stocks"
+                ],
+                "correctIndex": 0,
+                "explanation": "The ETF functions as a reasonable default. Choosing a single stock instead should require a clear, evidence-based reason to expect it to outperform that default on a risk-adjusted basis."
+              },
+              {
+                "question": "Marcus wants to buy a single retail stock because he 'likes the brand,' without comparing it to a retail sector ETF on growth, margins, or valuation. What step is he skipping, per this lesson?",
+                "options": [
+                  "Comparing the company against its sector ETF or the S&P 500 to see if there's a real, evidence-based edge",
+                  "Calling the company's investor relations department for permission to buy",
+                  "Waiting for the ETF's price to drop before making any comparison"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's action step calls for comparing the single stock to a relevant ETF on growth, margins, valuation, and risk. Liking a brand is not a substitute for that comparison."
+              },
+              {
+                "question": "Per the lesson's warning, what is not always true even if a single stock 'feels more exciting' than an ETF?",
+                "options": [
+                  "That it is automatically the better investment choice",
+                  "That it pays a dividend",
+                  "That it has lower fees than the ETF"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning directly states that more exciting does not always mean better, pushing back against choosing a stock based on emotional appeal rather than a measured comparison."
               }
             ]
           },
@@ -1790,6 +2110,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "A quality company has durable demand, margins, cash flow, and execution. The practical anchor is: Look for several years of revenue growth, positive free cash flow, and manageable debt. The main trap is: A famous brand is not enough if the economics are deteriorating."
+              },
+              {
+                "question": "According to the lesson's practical anchor, what three things should you look for as signs of business quality?",
+                "options": [
+                  "Several years of revenue growth, positive free cash flow, and manageable debt",
+                  "A rising stock price over the last month and high trading volume",
+                  "A large advertising budget and a trending social media presence"
+                ],
+                "correctIndex": 0,
+                "explanation": "These are the concrete, numbers-based signs of quality the lesson highlights, in contrast to surface impressions like brand popularity or recent price action."
+              },
+              {
+                "question": "Why does the lesson say a popular brand is 'not automatically a quality investment' in its case study?",
+                "options": [
+                  "Because if sales only grow due to exploding marketing spend while margins fall, the underlying economics may actually be weakening",
+                  "Because popular brands are required by law to disclose lower profit margins",
+                  "Because brand recognition has no correlation whatsoever with business performance"
+                ],
+                "correctIndex": 0,
+                "explanation": "The case study shows that revenue growth funded by heavy marketing spend, while margins shrink, can mask weakening economics behind a still-recognizable brand."
+              },
+              {
+                "question": "Aisha is considering a company with a beloved logo and loyal social media following, but its margins have shrunk every year for the last three years. Based on this lesson, what should she check before investing?",
+                "options": [
+                  "Whether the declining margins point to a fading competitive edge, even though brand loyalty seems strong",
+                  "Whether the company's logo has been redesigned recently",
+                  "Whether the social media following is large enough compared to competitors"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's decision check warns that a famous brand isn't enough if the economics are deteriorating. Shrinking margins are a numbers-based red flag that brand popularity alone cannot offset."
+              },
+              {
+                "question": "Per the lesson's warning, what should you suspect if a company's competitive advantage 'sounds like an ad slogan' but doesn't show up in the financials?",
+                "options": [
+                  "It may be a story rather than a real edge",
+                  "It is likely a sign of an upcoming stock split",
+                  "It means the company is undervalued by the market"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning draws a direct line between marketing language and substance: if the claimed advantage cannot be verified in margins, retention, or cash flow, it is likely narrative rather than fact."
               }
             ]
           },
@@ -1834,6 +2194,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "A company profile explains how the business actually makes money. The practical anchor is: Before buying, name the segment that drives most revenue and its main customer group. The main trap is: Buying a ticker without understanding the business model is speculation."
+              },
+              {
+                "question": "In the case study, what is the key difference between Netflix and an industrial equipment maker, despite both showing the same revenue growth number?",
+                "options": [
+                  "One depends on subscribers, churn, and content costs, while the other depends on order cycles, customer capex, and backlog",
+                  "One is allowed to report revenue in a different currency than the other",
+                  "One is a much older company, which automatically makes its growth more reliable"
+                ],
+                "correctIndex": 0,
+                "explanation": "The case study shows that an identical growth number can come from very different business drivers. Understanding those drivers is necessary to judge whether growth is high quality or fragile."
+              },
+              {
+                "question": "Why does the lesson warn that 'even good numbers can mislead you' without understanding the company profile?",
+                "options": [
+                  "Because revenue may grow from a one-off factor, or margins may rise from temporary cost cuts that won't repeat",
+                  "Because all financial statements are required to round numbers up by 5%",
+                  "Because good numbers always indicate an accounting error that needs correcting"
+                ],
+                "correctIndex": 0,
+                "explanation": "Numbers without context can hide temporary or unsustainable causes, such as a one-off revenue boost or short-lived cost cutting, that make results look stronger than the ongoing business truly is."
+              },
+              {
+                "question": "Jordan buys shares in a company labeled 'fintech' without checking what drives its revenue, only to discover later that its profits are highly sensitive to interest rate changes. What step did Jordan skip?",
+                "options": [
+                  "Identifying the company's main dependencies, such as rates, before forming an investment thesis",
+                  "Reading the company's mission statement on its homepage",
+                  "Confirming the company's stock ticker symbol matches its legal name"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's checkTwo asks investors to identify main dependencies like rates, commodities, regulation, or currency. Jordan invested without first understanding what actually drives the company's results."
+              },
+              {
+                "question": "Based on the lesson's warning, what should you avoid doing when considering a stock purchase?",
+                "options": [
+                  "Buying a business you cannot explain in plain language to someone outside the market",
+                  "Buying a business that operates in more than one country",
+                  "Buying a business that has reported one weak quarter in the last five years"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning is about basic comprehension: if you can't describe in plain terms how the company makes money, you don't yet have the understanding needed to make an informed decision."
               }
             ]
           },
@@ -1878,6 +2278,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "The three financial statements show performance from different angles. The practical anchor is: Revenue, net income, assets, liabilities, and cash flow should tell a consistent story. The main trap is: Reading only one headline number can hide weak cash conversion or rising debt."
+              },
+              {
+                "question": "In the case study, what does it mean when a company reports record profit but free cash flow is close to zero?",
+                "options": [
+                  "Money may be stuck in inventory or receivables, or the business may need heavy equipment spending",
+                  "The company is guaranteed to be committing accounting fraud",
+                  "The company's profit figure must be incorrectly reported and should be ignored"
+                ],
+                "correctIndex": 0,
+                "explanation": "The case study explains this gap as a sign that profit on paper hasn't yet converted into available cash, often due to working-capital needs or heavy capital spending, not necessarily fraud."
+              },
+              {
+                "question": "Why does the lesson recommend looking at the trend over several years and the connection between metrics, rather than one number alone?",
+                "options": [
+                  "Because one number rarely tells the full story; the relationship between metrics like revenue, profit, and cash flow over time reveals more",
+                  "Because companies are only required to report accurate numbers every five years",
+                  "Because a single year of data is always inflated due to seasonal effects"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson emphasizes that a snapshot can mislead, while a multi-year trend combined with cross-checking metrics against each other gives a much more reliable picture of the business."
+              },
+              {
+                "question": "Felix sees that a company's revenue grew 15% this year and decides to invest immediately without checking net income or cash flow. What is he missing, according to this lesson?",
+                "options": [
+                  "Whether the revenue growth is reflected in net income and cash flow, since revenue alone doesn't reveal margin or cash conversion issues",
+                  "Whether the company's stock price moved up or down on the day of the earnings report",
+                  "Whether 15% growth is higher than the growth rate from two years ago"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's example specifically warns that revenue growing while net income falls is a signal worth investigating. Felix is looking at only one part of the consistent story the statements should tell together."
+              },
+              {
+                "question": "Per the lesson's warning, why shouldn't you build an investment thesis from a single quarter's results?",
+                "options": [
+                  "Because a single quarter can be noise rather than the start of a new trend",
+                  "Because quarterly reports are not legally binding and can be revised at any time",
+                  "Because quarterly numbers always understate true annual performance"
+                ],
+                "correctIndex": 0,
+                "explanation": "One quarter can be influenced by short-term factors that don't represent the ongoing trend. The lesson advises looking at multiple years rather than overreacting to one data point."
               }
             ]
           },
@@ -1922,6 +2362,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "The balance sheet shows financial resilience and obligations. The practical anchor is: Compare cash and current assets with debt and near-term liabilities. The main trap is: High leverage can turn a small earnings miss into a serious problem."
+              },
+              {
+                "question": "In the example comparing two companies with the same profit, what is the key difference between them?",
+                "options": [
+                  "One has plenty of cash and little debt, while the other has large debt that must be refinanced at higher rates",
+                  "One pays a dividend while the other does not",
+                  "One is publicly traded while the other is privately held"
+                ],
+                "correctIndex": 0,
+                "explanation": "Despite identical profit figures, their balance sheets create very different risk profiles. The company with heavy refinancing needs has far less flexibility if conditions become difficult."
+              },
+              {
+                "question": "Why does the lesson say the balance sheet asks 'whether the business can survive a bad year without panic moves'?",
+                "options": [
+                  "Because it reveals debt, cash, and liquidity levels that determine how much cushion a company has during stress",
+                  "Because the balance sheet is updated daily, unlike the income statement",
+                  "Because only companies with a balance sheet are eligible to be publicly traded"
+                ],
+                "correctIndex": 0,
+                "explanation": "The balance sheet shows the resources and obligations that determine resilience. A company with strong liquidity and low debt has more room to absorb a difficult year than one stretched thin."
+              },
+              {
+                "question": "Greta is excited about a fast-growing retailer that's opening new stores every month, but she notices its short-term liabilities are climbing faster than its sales. Based on the case study in this lesson, what should concern her?",
+                "options": [
+                  "That growth may be lower quality than it looks, since cash could be stuck in inventory while suppliers need to be paid",
+                  "That opening new stores always reduces a retailer's risk profile",
+                  "That faster-growing short-term liabilities are simply a sign of strong supplier relationships"
+                ],
+                "correctIndex": 0,
+                "explanation": "This mirrors the lesson's retailer case study exactly: liabilities and inventory growing faster than sales can signal that growth isn't being matched by healthy cash conversion."
+              },
+              {
+                "question": "Per the lesson's warning, what can happen when strong earnings are paired with a weak balance sheet?",
+                "options": [
+                  "It can become a serious problem quickly when rates rise or sales fall",
+                  "Nothing, because earnings are always a more reliable indicator than the balance sheet",
+                  "The company is required to issue new shares to fix the imbalance"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning is clear that strong current earnings can mask fragility. If rates rise or sales soften, a weak balance sheet can turn a manageable situation into a real crisis quickly."
               }
             ]
           },
@@ -1966,6 +2446,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Cash flow shows whether accounting profit becomes usable money. The practical anchor is: A company earning $100 million but burning cash needs a stronger explanation. The main trap is: Ignoring free cash flow can make an expensive business look cheap."
+              },
+              {
+                "question": "In the example, what happens to financial freedom when a company earns $1B in net income but needs $900M of equipment spending every year?",
+                "options": [
+                  "It is limited, because most of the profit must be reinvested into the business just to maintain it",
+                  "It increases, since high capex signals strong future growth regardless of cost",
+                  "It is unaffected, since net income is the only number that matters for shareholders"
+                ],
+                "correctIndex": 0,
+                "explanation": "Heavy capital expenditure requirements eat into the cash actually available to shareholders, even when net income looks strong, which is why the lesson treats free cash flow as more revealing."
+              },
+              {
+                "question": "Why does the lesson say free cash flow 'often shows the real strength of a business for shareholders' better than net income alone?",
+                "options": [
+                  "Because free cash flow accounts for necessary spending, showing what's actually left over after the business sustains and grows itself",
+                  "Because free cash flow is calculated using a stricter accounting standard required by regulators",
+                  "Because net income always includes one-time, non-recurring gains that distort the picture"
+                ],
+                "correctIndex": 0,
+                "explanation": "Free cash flow nets out capital spending needs, revealing what cash truly remains for shareholders rather than just an accounting profit figure that may not reflect real spending requirements."
+              },
+              {
+                "question": "Hannah is evaluating a manufacturer with consistently positive net income, but learns it constantly reinvests huge sums into new factories every year. Based on this lesson, what should she check next?",
+                "options": [
+                  "Whether free cash flow remains healthy after accounting for that heavy reinvestment, not just whether net income is positive",
+                  "Whether the factories are insured against natural disasters",
+                  "Whether the manufacturer's net income is reported in the same currency as its competitors"
+                ],
+                "correctIndex": 0,
+                "explanation": "The case study draws this exact distinction: a manufacturer that constantly reinvests heavily needs its free cash flow checked separately from net income, since the two can tell very different stories."
+              },
+              {
+                "question": "Per the lesson's warning, what mistake can investors make by ignoring free cash flow?",
+                "options": [
+                  "They might confuse a profitable company with one that truly generates free cash",
+                  "They might overestimate how much debt the company carries",
+                  "They might mistakenly assume the company pays no taxes"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning draws a direct line between profit on paper and actual cash generation. These are not the same thing, and confusing them can lead to overpaying for a business that doesn't generate much real cash."
               }
             ]
           },
@@ -2010,6 +2530,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Profitability measures how efficiently revenue becomes profit. The practical anchor is: Track gross margin, operating margin, net margin, ROE, and ROIC over several years. The main trap is: A one-year margin spike may be temporary rather than a new normal."
+              },
+              {
+                "question": "In the example, what happens to a company that grows sales 30% while its margin falls from 20% to 5%?",
+                "options": [
+                  "Shareholders should question whether this is smart investment in the future or revenue bought too expensively",
+                  "The company automatically becomes a better investment because of the higher sales growth",
+                  "The drop in margin is always temporary and corrects itself within one quarter"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson explicitly raises this as a question to ask, not a settled conclusion. Strong revenue growth funded by a collapsing margin doesn't necessarily mean the business created more value."
+              },
+              {
+                "question": "Why does the lesson recommend comparing margins to a company's own history and to its peers, rather than judging them against one universal standard?",
+                "options": [
+                  "Because normal margin levels differ by sector, so context from history and peers is needed to judge whether a margin is healthy",
+                  "Because peer comparison is a legal requirement before publishing investment research",
+                  "Because comparing margins to history and peers always produces the same result as comparing to a fixed benchmark"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson notes margins vary significantly between sectors, so judging a margin in isolation, without sector context, can lead to the wrong conclusion about whether it's strong or weak."
+              },
+              {
+                "question": "Diego sees a company's ROE jump from 12% to 30% in one year and assumes this proves dramatically improved capital efficiency, without checking its debt levels. What might he be missing, per this lesson?",
+                "options": [
+                  "Whether the higher ROE comes from added leverage rather than genuine business improvement",
+                  "Whether the company changed its logo during that same year",
+                  "Whether ROE is reported quarterly or annually by the company"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's warning specifically flags that high ROE can be a trap when it's driven by leverage rather than real operating improvement. Diego should check whether debt increased before celebrating the jump."
+              },
+              {
+                "question": "Based on the case study comparing two companies with 25% and 8% operating margins, what additional factor should an investor consider beyond the margin level itself?",
+                "options": [
+                  "Whether the higher margin is stable over time or has been falling, which could signal a fading competitive advantage",
+                  "Which of the two companies has a more recognizable logo",
+                  "Which company has more total employees"
+                ],
+                "correctIndex": 0,
+                "explanation": "The case study warns that a high margin that erodes every year may indicate weakening competitive advantage, even though it currently looks stronger than the competitor's lower margin."
               }
             ]
           },
@@ -2054,6 +2614,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Valuation connects business quality with the price you pay. The practical anchor is: Compare P/E, P/S, free cash flow yield, growth, and your base-case scenario. The main trap is: A cheap multiple can be a warning if the business is shrinking."
+              },
+              {
+                "question": "In the example, why might a company with a P/E of 45 not automatically be a bad investment?",
+                "options": [
+                  "Because it could be justified by quick growth, high margins, and a long runway ahead",
+                  "Because a P/E above 40 is mathematically impossible for the market to sustain",
+                  "Because P/E ratios above 30 are always corrected by stock splits"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson explains that a high multiple can be reasonable if strong growth and margins justify it. The number alone, without that context, doesn't tell you whether the price is fair."
+              },
+              {
+                "question": "Why does the lesson say 'no multiple works alone' when evaluating valuation?",
+                "options": [
+                  "Because a high valuation may be justified by strong growth but dangerous if expectations are already too optimistic",
+                  "Because regulators require at least three different valuation multiples to be disclosed together",
+                  "Because multiples like P/E and P/S are calculated using completely unrelated financial data"
+                ],
+                "correctIndex": 0,
+                "explanation": "Multiples need context from growth, margins, and assumptions about the future. A multiple in isolation can't tell you whether the price already reflects an overly optimistic scenario."
+              },
+              {
+                "question": "Two companies both trade at a P/E of 30. Yara assumes they must carry similar risk and value since the multiple is identical, without checking growth or margins. Based on the case study in this lesson, what is the flaw in her reasoning?",
+                "options": [
+                  "The same multiple does not mean the same value, since one company's growth, cash flow, and debt profile could be very different from the other's",
+                  "P/E ratios cannot legally be identical between two different companies",
+                  "A P/E of 30 is always considered overvalued regardless of the company"
+                ],
+                "correctIndex": 0,
+                "explanation": "This mirrors the lesson's case study directly: an identical P/E can hide very different underlying quality, growth, and risk, so the multiple alone is not sufficient for comparison."
+              },
+              {
+                "question": "Per the lesson's warning, what might a low P/E sometimes signal, rather than a bargain?",
+                "options": [
+                  "A warning sign about the business, not a market gift",
+                  "Guaranteed strong future earnings growth",
+                  "That the company has no debt on its balance sheet"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning flips the common assumption that 'cheap' always means a good deal. A low P/E can reflect the market correctly pricing in deteriorating fundamentals rather than mispricing a healthy company."
               }
             ]
           },
@@ -2098,6 +2698,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Entry strategy controls timing risk and position size. The practical anchor is: Splitting a planned $1,200 purchase into 3-4 parts can reduce regret and timing pressure. The main trap is: Going all-in on the first idea leaves little room for mistakes."
+              },
+              {
+                "question": "In the example, how is the planned $1,200 purchase split to reduce regret and timing pressure?",
+                "options": [
+                  "25% now, 25% after earnings, 25% if the price reaches a target valuation, and 25% kept for a better opportunity",
+                  "100% invested immediately to avoid missing any further upside",
+                  "50% now and 50% exactly one year later, regardless of price or news"
+                ],
+                "correctIndex": 0,
+                "explanation": "The lesson's example shows a staged approach tied to specific triggers like earnings and valuation targets, rather than a single all-at-once purchase or an arbitrary time-based split."
+              },
+              {
+                "question": "Why does the lesson say the key to an entry rule is to know it 'before emotions start steering the action'?",
+                "options": [
+                  "Because deciding the approach in advance prevents impulsive decisions once the price is actually moving",
+                  "Because brokers require entry rules to be submitted in writing before any trade",
+                  "Because emotional decisions are illegal under securities regulations"
+                ],
+                "correctIndex": 0,
+                "explanation": "Pre-deciding your method, whether DCA, a limit price, or staged buying, removes the influence of in-the-moment emotion, which tends to produce impulsive and inconsistent decisions."
+              },
+              {
+                "question": "After a stock Tara owns drops 15% following a disappointing earnings report showing lost customers and weaker guidance, she considers buying more because 'it's cheaper now.' Based on the case study in this lesson, what should she check first?",
+                "options": [
+                  "Whether the drop reflects a worsening of the underlying business, in which case a lower price does not make the idea better",
+                  "Whether the stock has a recognizable brand name",
+                  "Whether other investors are also buying the dip at the same time"
+                ],
+                "correctIndex": 0,
+                "explanation": "This matches Nazar's case study closely: a drop caused by genuine business deterioration, like lost customers and weak guidance, is different from a drop caused by a broad market move, and the lower price alone doesn't justify buying more."
+              },
+              {
+                "question": "Per the lesson's warning, when should you add to a losing position by averaging down?",
+                "options": [
+                  "Only when the original thesis is still alive, not simply because the red number feels uncomfortable",
+                  "Whenever the position has fallen more than 20%, regardless of the reason",
+                  "Only after consulting a financial advisor about the specific stock"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning draws a clear line: adding to a position should be driven by the thesis still holding up, not by emotional discomfort with seeing a loss on the screen."
               }
             ]
           },
@@ -2142,6 +2782,46 @@
                 ],
                 "correctIndex": 0,
                 "explanation": "Technical indicators are tools for context, not investment theses. The practical anchor is: Use moving averages, RSI, or support zones as secondary checks after business analysis. The main trap is: A signal can fail quickly when the company thesis or market regime changes."
+              },
+              {
+                "question": "In the example, when might a quality company falling to its long-term moving average during a broad selloff be worth deeper research?",
+                "options": [
+                  "When the decline is part of a broad market selloff rather than a company-specific problem",
+                  "Whenever RSI is below 30, regardless of the reason for the decline",
+                  "Only after the moving average itself has been recalculated by the exchange"
+                ],
+                "correctIndex": 0,
+                "explanation": "The example distinguishes between a broad market-driven dip, which may be a research opportunity for a quality company, and a company-specific decline, which requires more caution."
+              },
+              {
+                "question": "Why does the lesson say an indicator 'does not know whether the company is expensive' or whether 'earnings are growing'?",
+                "options": [
+                  "Because indicators are built purely from price and volume data, not from business fundamentals like earnings or valuation",
+                  "Because indicators are recalculated only once per year, lagging behind earnings reports",
+                  "Because indicators only work for companies that pay a dividend"
+                ],
+                "correctIndex": 0,
+                "explanation": "Technical indicators are mathematical functions of price and volume. They have no information about a company's earnings, valuation, or balance sheet, which is why they can't replace fundamental analysis."
+              },
+              {
+                "question": "Leo sees a stock's RSI drop below 30 and immediately buys, assuming it's 'oversold' and due for a bounce, without checking any recent news. Based on Anna's case study in this lesson, what risk is he taking?",
+                "options": [
+                  "The low RSI might reflect a real fundamental problem, like a lost major customer, rather than a temporary overreaction",
+                  "RSI below 30 is mathematically guaranteed to bounce within a week",
+                  "RSI cannot be calculated correctly for stocks that have recently dropped"
+                ],
+                "correctIndex": 0,
+                "explanation": "This mirrors Anna's case study exactly: a low RSI caused by a genuine fundamental deterioration, such as losing a major customer, does not mean the stock is attractively oversold."
+              },
+              {
+                "question": "Per the lesson's warning, what happens when more indicators are added to a chart?",
+                "options": [
+                  "It does not necessarily make the decision more professional and can just create more noise",
+                  "It always improves the accuracy of entry and exit timing",
+                  "It automatically reduces the position's overall risk"
+                ],
+                "correctIndex": 0,
+                "explanation": "The warning pushes back on the idea that complexity equals quality. Stacking more indicators onto a chart can add conflicting signals and noise rather than genuinely better decision-making."
               }
             ]
           }
