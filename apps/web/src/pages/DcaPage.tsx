@@ -18,7 +18,7 @@ import {
 } from '../components/calculators/CompanySearchInput.tsx'
 import { HeroMetric, Panel, StatCard, StatGrid } from '../components/calculators/ResultCards.tsx'
 import { SidebarLayout } from '../components/calculators/SidebarLayout.tsx'
-import { calculateDcaSimulation, type DcaInput } from '../utils/dca.ts'
+import type { DcaInput } from '../utils/dca.ts'
 import { toolsService } from '../services/toolsService.ts'
 import { normalizeCompanyQuery } from '../utils/companySearch.ts'
 import { getNumberParam, getSearchParams, getStringParam } from '../utils/urlParams.ts'
@@ -112,11 +112,9 @@ export const DcaPage = () => {
     [inflation, monthlyInvestment, startDate, ticker],
   )
   const currentInputKey = getDcaInputKey(currentInput)
-  const fallbackResult = useMemo(() => calculateDcaSimulation(currentInput), [currentInput])
   const activeApiResult = apiResult?.key === currentInputKey ? apiResult.result : null
   const activeDcaError = dcaError?.key === currentInputKey ? dcaError.message : ''
-  const result = activeApiResult ?? fallbackResult
-  const isEstimatedResult = !activeApiResult && Boolean(activeDcaError)
+  const result = activeApiResult
 
   const { mutate: fetchDca, isPending: isDcaPending } = useMutation({
     mutationFn: (input: DcaInput) =>
@@ -127,7 +125,7 @@ export const DcaPage = () => {
         setApiResult(null)
         setDcaError({
           key,
-          message: t('tools.dca.notice.fallback', { ticker: input.ticker }),
+          message: t('tools.dca.notice.unavailable', { ticker: input.ticker }),
         })
         return
       }
@@ -143,7 +141,7 @@ export const DcaPage = () => {
       setApiResult(null)
       setDcaError({
         key,
-        message: t('tools.dca.notice.fallback', { ticker: input.ticker }),
+        message: t('tools.dca.notice.unavailable', { ticker: input.ticker }),
       })
     },
   })
@@ -206,9 +204,9 @@ export const DcaPage = () => {
           }}
         />
 
-        {isEstimatedResult ? (
-          <Panel className="border-primary/40 bg-primary-dim">
-            <h2 className="text-lg font-bold text-primary">{t('tools.dca.notice.title')}</h2>
+        {activeDcaError ? (
+          <Panel className="border-danger bg-surface">
+            <h2 className="text-lg font-bold text-danger">{t('tools.dca.notice.errorTitle')}</h2>
             <p className="mt-3 text-sm leading-6 text-text-muted">{activeDcaError}</p>
           </Panel>
         ) : null}
