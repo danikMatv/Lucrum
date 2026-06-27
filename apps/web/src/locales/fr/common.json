@@ -3413,6 +3413,10 @@
       "kicker": "Non autorisé",
       "title": "Accès administrateur requis",
       "description": "Cet espace est réservé aux administrateurs de Lucrum."
+    },
+    "validation": {
+      "required": "Ce champ est obligatoire.",
+      "email": "Saisissez une adresse e-mail valide."
     }
   },
   "dashboard": {
@@ -3595,7 +3599,11 @@
     },
     "contact": {
       "title": "Contact",
-      "description": "Pour le feedback, les problèmes de données ou les questions produit, contactez l'équipe Lucrum via le propriétaire du projet pendant la préparation du canal public."
+      "description": "Pour le feedback, les problèmes de données ou les questions produit, contactez l'équipe Lucrum via le propriétaire du projet pendant la préparation du canal public.",
+      "email": {
+        "title": "E-mail direct",
+        "description": "Envoyez les retours produit, problèmes de données ou questions de collaboration directement au propriétaire du projet."
+      }
     }
   },
   "footer": {

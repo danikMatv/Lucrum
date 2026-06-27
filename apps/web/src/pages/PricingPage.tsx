@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { AppHeader } from '../components/AppHeader.tsx'
 import { AppFooter } from '../components/AppFooter.tsx'
 
 const stubItems = [
@@ -13,22 +14,7 @@ export const PricingPage = () => {
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
-      <header className="border-b-[0.5px] border-border">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-5 lg:px-8">
-          <Link
-            to="/"
-            className="font-heading text-2xl font-bold tracking-[0.28em] text-primary"
-          >
-            {t('brand.name')}
-          </Link>
-          <Link
-            to="/tools"
-            className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
-          >
-            {t('tools.common.allTools')}
-          </Link>
-        </nav>
-      </header>
+      <AppHeader />
 
       <section className="mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[1fr_420px] lg:px-8">
         <div className="max-w-3xl">

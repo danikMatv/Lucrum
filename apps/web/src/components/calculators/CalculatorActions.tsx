@@ -55,7 +55,7 @@ export const CalculatorActions = ({
       <button
         type="button"
         onClick={onReset}
-        className="rounded-md border-[0.5px] border-border px-4 py-3 text-sm font-bold text-text-primary transition hover:border-border-hover hover:bg-surface-alt"
+        className="rounded-md border-[0.5px] border-border px-4 py-3 text-sm font-bold text-text-muted transition hover:border-danger/70 hover:bg-danger/10 hover:text-danger"
       >
         {t('tools.common.reset')}
       </button>

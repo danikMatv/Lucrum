@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { LessonQuiz } from '../components/learn/LessonQuiz.tsx'
 import { LearnResources } from '../components/learn/LearnResources.tsx'
 import { getQuizQuestions } from '../components/learn/quizUtils.ts'
+import { AppHeader } from '../components/AppHeader.tsx'
 import { getLearnTopic, learnTopics, type LearnTopic } from '../data/learnTopics.ts'
 import { useLessonProgress } from '../hooks/useLessonProgress.ts'
 import { useAuthStore } from '../store/useAuthStore.ts'
@@ -33,22 +34,7 @@ const LearnTopicContent = ({ topic }: LearnTopicContentProps) => {
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
-      <header className="border-b-[0.5px] border-border">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-5 lg:px-8">
-          <Link
-            to="/"
-            className="font-heading text-2xl font-bold tracking-[0.28em] text-primary"
-          >
-            {t('brand.name')}
-          </Link>
-          <Link
-            to="/learn"
-            className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
-          >
-            {t('learnAcademy.topic.back')}
-          </Link>
-        </nav>
-      </header>
+      <AppHeader />
 
       <section className="mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[260px_minmax(0,1fr)] lg:px-8">
         <aside className="h-fit rounded-lg border-[0.5px] border-border bg-surface p-5 lg:sticky lg:top-6">
@@ -306,22 +292,7 @@ export const LearnTopicPage = () => {
   if (!topic) {
     return (
       <main className="min-h-svh bg-background text-text-primary">
-        <header className="border-b-[0.5px] border-border">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-5 lg:px-8">
-            <Link
-              to="/"
-              className="font-heading text-2xl font-bold tracking-[0.28em] text-primary"
-            >
-              {t('brand.name')}
-            </Link>
-            <Link
-              to="/learn"
-              className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
-            >
-              {t('learnAcademy.topic.back')}
-            </Link>
-          </nav>
-        </header>
+        <AppHeader />
 
         <section className="mx-auto grid max-w-3xl gap-6 px-6 py-16 lg:px-8">
           <p className="text-sm font-semibold uppercase text-primary">

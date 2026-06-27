@@ -119,6 +119,9 @@ export const App = ({ locale }: AppProps) => {
             <PlaceholderPage
               titleKey="pages.contact.title"
               descriptionKey="pages.contact.description"
+              bannerTitleKey="pages.contact.email.title"
+              bannerDescriptionKey="pages.contact.email.description"
+              bannerEmail="healthvoklen@gmail.com"
             />
           }
         />

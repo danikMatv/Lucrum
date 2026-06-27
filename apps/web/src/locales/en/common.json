@@ -3413,6 +3413,10 @@
       "kicker": "Not authorized",
       "title": "Admin access required",
       "description": "This workspace is limited to Lucrum administrators."
+    },
+    "validation": {
+      "required": "This field is required.",
+      "email": "Enter a valid email address."
     }
   },
   "dashboard": {
@@ -3595,7 +3599,11 @@
     },
     "contact": {
       "title": "Contact",
-      "description": "For feedback, data issues or product questions, contact the Lucrum team through the project owner while the public support channel is being prepared."
+      "description": "For feedback, data issues or product questions, contact the Lucrum team through the project owner while the public support channel is being prepared.",
+      "email": {
+        "title": "Direct email",
+        "description": "Send product feedback, data issues, or collaboration questions directly to the project owner."
+      }
     }
   },
   "footer": {

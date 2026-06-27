@@ -114,7 +114,7 @@ export const DcaPage = () => {
   const currentInputKey = getDcaInputKey(currentInput)
   const activeApiResult = apiResult?.key === currentInputKey ? apiResult.result : null
   const activeDcaError = dcaError?.key === currentInputKey ? dcaError.message : ''
-  const result = activeApiResult
+  const result = activeApiResult ?? apiResult?.result ?? null
 
   const { mutate: fetchDca, isPending: isDcaPending } = useMutation({
     mutationFn: (input: DcaInput) =>

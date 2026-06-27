@@ -68,7 +68,7 @@ export const LandingPage = () => {
     <main className="min-h-svh bg-background text-text-primary">
       <AppHeader />
 
-      <section className="mx-auto grid max-w-7xl gap-14 px-6 py-16 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-24">
+      <section className="mx-auto grid max-w-7xl gap-14 px-6 py-14 lg:grid-cols-[1fr_0.9fr] lg:px-8 lg:py-16">
         <div className="flex flex-col justify-center">
           <p className="mb-5 text-sm font-semibold uppercase text-primary">{t('landing.hero.kicker')}</p>
           <h1 className="font-heading text-6xl font-bold leading-none text-text-primary md:text-7xl lg:text-8xl">
@@ -210,7 +210,7 @@ export const LandingPage = () => {
                   isLockedForGuest ? 'border-primary/40' : 'border-border'
                 }`}
               >
-                <div className={isLockedForGuest ? 'opacity-25 blur-[1px]' : ''}>
+                <div className={isLockedForGuest ? 'opacity-70' : ''}>
                   <div className="mb-6 flex items-center justify-between">
                     <span className="grid h-10 w-10 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
                       {tool.icon}
@@ -242,6 +242,7 @@ export const LandingPage = () => {
                       <p className="text-sm font-bold text-primary">
                         {t('toolsDirectory.lockedOverlay.title')}
                       </p>
+                      <p className="text-sm font-bold text-text-primary">{t(tool.titleKey)}</p>
                       <p className="text-xs font-semibold leading-5 text-text-primary">
                         {t('toolsDirectory.lockedOverlay.text')}
                       </p>

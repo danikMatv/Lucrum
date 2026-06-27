@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { AppHeader } from '../components/AppHeader.tsx'
 import { AppFooter } from '../components/AppFooter.tsx'
 import { useAuthStore } from '../store/useAuthStore.ts'
 
@@ -65,22 +66,7 @@ export const ToolsPage = () => {
 
   return (
     <main className="min-h-svh bg-background text-text-primary">
-      <header className="border-b-[0.5px] border-border">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-6 py-5 lg:px-8">
-          <Link
-            to="/"
-            className="font-heading text-2xl font-bold tracking-[0.28em] text-primary"
-          >
-            {t('brand.name')}
-          </Link>
-          <Link
-            to="/"
-            className="rounded-md border-[0.5px] border-border px-4 py-2 text-sm font-semibold text-text-primary transition hover:border-border-hover hover:bg-surface"
-          >
-            {t('buttons.backHome')}
-          </Link>
-        </nav>
-      </header>
+      <AppHeader />
 
       <section className="mx-auto grid max-w-7xl gap-10 px-6 py-12 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-[1fr_360px] lg:items-end">
@@ -129,14 +115,12 @@ export const ToolsPage = () => {
                     ? t('toolsDirectory.lockedOverlay.ariaLabel', { tool: t(tool.titleKey) })
                     : undefined
                 }
-                className={`group relative flex min-h-72 flex-col overflow-hidden rounded-lg border-[0.5px] bg-surface p-5 transition hover:border-border-hover hover:bg-surface-alt ${
+                className={`group relative flex flex-col overflow-hidden rounded-lg border-[0.5px] bg-surface p-5 transition hover:border-border-hover hover:bg-surface-alt ${
                   isLockedForGuest ? 'border-primary/40' : 'border-border'
                 }`}
               >
                 <div
-                  className={`flex flex-1 flex-col ${
-                    isLockedForGuest ? 'opacity-25 blur-[1px]' : ''
-                  }`}
+                  className={`flex flex-1 flex-col ${isLockedForGuest ? 'opacity-70' : ''}`}
                 >
                   <div className="mb-6 flex items-start justify-between gap-4">
                     <span className="grid h-12 w-12 place-items-center rounded-md bg-primary-dim text-sm font-bold text-primary">
@@ -170,6 +154,7 @@ export const ToolsPage = () => {
                       <p className="text-lg font-bold text-primary">
                         {t('toolsDirectory.lockedOverlay.title')}
                       </p>
+                      <p className="text-base font-bold text-text-primary">{t(tool.titleKey)}</p>
                       <p className="max-w-xs text-sm font-semibold leading-6 text-text-primary">
                         {t('toolsDirectory.lockedOverlay.text')}
                       </p>
