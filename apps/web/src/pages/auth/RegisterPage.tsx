@@ -80,7 +80,11 @@ export const RegisterPage = () => {
       await register(trimmedFirstName, trimmedLastName, trimmedEmail, password)
       navigate(returnTo)
     } catch (registerError) {
-      setError(parseApiError(registerError, t('errors.generic')))
+      setError(
+        parseApiError(registerError, t('errors.generic'), undefined, {
+          EMAIL_EXISTS: t('auth.register.emailExists'),
+        }),
+      )
     }
   }
 

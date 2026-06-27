@@ -3400,14 +3400,16 @@
     },
     "login": {
       "title": "З поверненням",
-      "noAccount": "Ще немає акаунта?"
+      "noAccount": "Ще немає акаунта?",
+      "invalidCredentials": "Неправильний email або пароль."
     },
     "register": {
       "title": "Створіть акаунт",
       "submit": "Створити акаунт",
       "hasAccount": "Уже маєте акаунт?",
       "passwordLength": "Пароль має містити щонайменше 8 символів.",
-      "passwordMismatch": "Паролі не збігаються."
+      "passwordMismatch": "Паролі не збігаються.",
+      "emailExists": "Акаунт із таким email уже існує."
     },
     "forbidden": {
       "kicker": "Немає доступу",

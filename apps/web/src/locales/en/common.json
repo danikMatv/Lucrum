@@ -3400,14 +3400,16 @@
     },
     "login": {
       "title": "Welcome back",
-      "noAccount": "No account yet?"
+      "noAccount": "No account yet?",
+      "invalidCredentials": "Invalid email or password."
     },
     "register": {
       "title": "Create your account",
       "submit": "Create account",
       "hasAccount": "Already have an account?",
       "passwordLength": "Password must be at least 8 characters.",
-      "passwordMismatch": "Passwords do not match."
+      "passwordMismatch": "Passwords do not match.",
+      "emailExists": "An account with this email already exists."
     },
     "forbidden": {
       "kicker": "Not authorized",

@@ -23,7 +23,7 @@ export const PlaceholderPage = ({
   return (
     <main className="flex min-h-svh flex-col bg-background text-text-primary">
       <AppHeader />
-      <section className="mx-auto flex w-full max-w-3xl flex-1 flex-col justify-center px-6 py-16">
+      <section className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 pb-16 pt-10 lg:pt-12">
         <p className="mb-4 text-sm font-semibold uppercase text-primary">{t('pages.placeholder.kicker')}</p>
         <h1 className="font-heading text-5xl font-bold leading-tight text-text-primary md:text-7xl">
           {t(titleKey)}

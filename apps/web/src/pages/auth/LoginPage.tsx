@@ -55,7 +55,11 @@ export const LoginPage = () => {
       await login(trimmedEmail, password)
       navigate(returnTo)
     } catch (loginError) {
-      setError(parseApiError(loginError, t('errors.generic')))
+      setError(
+        parseApiError(loginError, t('errors.generic'), undefined, {
+          INVALID_CREDENTIALS: t('auth.login.invalidCredentials'),
+        }),
+      )
     }
   }
 
